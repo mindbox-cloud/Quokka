@@ -1,0 +1,1 @@
+${ Recipient | GetProperty("Name") | ToUpper | GetCharactes("1", "3", "5" }

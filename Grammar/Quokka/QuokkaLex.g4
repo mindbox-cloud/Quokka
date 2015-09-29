@@ -83,6 +83,16 @@ MemberAccessOperator
 		'.'
 	;
 	
+Pipe
+	:
+		'|'
+	;
+	
+CommaSeparator
+	:
+		','
+	;
+	
 LeftParen
 	:
 		'('
@@ -167,6 +177,11 @@ Digit
 	:
 		('0'..'9')
 	; 
+	
+DoubleQuotedString
+	:
+		'"' ~'"'* '"'
+	;
 	
 Identifier
     :

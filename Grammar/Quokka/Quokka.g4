@@ -29,13 +29,47 @@ constantBlock
 outputInstruction
 	:
 		OutputInstructionStart
-		(parameterValueExpression | arithmeticExpression)
+		(
+			filteredParameterValueExpression | arithmeticExpression
+		)
 		InstructionEnd
 	;
 	
 parameterValueExpression
 	:
 		parameterExpression | parameterMemberExpression
+	;
+
+filteredParameterValueExpression
+	:
+		parameterValueExpression filterChain?
+	;
+	
+filterChain
+	:
+		(
+			Pipe
+			filter
+		)+
+	;
+	
+filter
+	:
+		Identifier
+		filterArgumentList?
+	;
+
+filterArgumentList
+	:	
+		LeftParen
+		filterArgumentValue
+		(CommaSeparator filterArgumentValue)*
+		RightParen
+	;
+
+filterArgumentValue
+	:
+		DoubleQuotedString
 	;
 	
 parameterExpression

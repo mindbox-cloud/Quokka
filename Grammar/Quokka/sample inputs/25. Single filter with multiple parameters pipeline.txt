@@ -1,0 +1,1 @@
+${ Recipient | GetProperties("Name", "Last name", "Real name")}
