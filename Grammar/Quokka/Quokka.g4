@@ -29,7 +29,7 @@ constantBlock
 outputInstruction
 	:
 		OutputInstructionStart
-		parameterValueExpression
+		(parameterValueExpression | arithmeticExpression)
 		InstructionEnd
 	;
 	
@@ -175,11 +175,44 @@ notExpression
 	:
 		Not booleanAtom
 	;
-
+	
 booleanAtom
 	:
 		parameterValueExpression
+		| arithmeticComparisonExpression
 		| notExpression
 		| LeftParen booleanExpression RightParen		
 	;
+
+arithmeticComparisonExpression
+	:
+		arithmeticExpression
+		(Equals | NotEquals | LessThan | GreaterThan | LessThanOrEquals | GreaterThanOrEquals)
+		arithmeticExpression
+	;
+
+arithmeticExpression
+	:
+		multiplicationExpression
+		((Plus | Minus) multiplicationExpression)*
+	;
+
+multiplicationExpression
+	:
+		arithmeticAtom
+		((Multiply | Divide) arithmeticAtom)*
+	;
+
+negationExpression
+	:
+		Minus
+		arithmeticAtom
+	;
 	
+arithmeticAtom
+	:
+		Number
+		| parameterValueExpression
+		| negationExpression
+		| LeftParen arithmeticExpression RightParen	
+	;

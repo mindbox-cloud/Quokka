@@ -102,13 +102,73 @@ Not
 	:
 		[Nn][Oo][Tt]
 	;
-  
+
+Equals
+	:
+		'='
+	;
+	
+NotEquals
+	:
+		'!='
+	;
+	
+GreaterThan
+	:
+		'>'
+	; 
+
+LessThan
+	:
+		'<'
+	;
+	
+GreaterThanOrEquals
+	:
+		'>='
+	;
+	
+LessThanOrEquals
+	:
+		'<='
+	;
+	
+Plus
+	:
+		'+'
+	;
+	
+Minus
+	:
+		'-'
+	;
  
+Multiply
+	:
+		'*'
+	;
+	
+Divide
+	:
+		'/'
+	;
+
+Number
+	:
+		Digit+
+	;
+
+Digit
+	:
+		('0'..'9')
+	; 
+	
 Identifier
     :
         [a-zA-Z] [a-zA-Z0-9]*
     ;
-    
+
+
 WhiteSpace
 	:
 		(' ' | '\t' | '\r' | '\n') -> skip
