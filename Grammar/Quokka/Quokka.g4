@@ -140,6 +140,8 @@ endForInstruction
 
 commentBlock
 	:
+		SingleInstructionComment
+		|		
 		commentInstruction
 		templateBlock
 		endCommentInstruction

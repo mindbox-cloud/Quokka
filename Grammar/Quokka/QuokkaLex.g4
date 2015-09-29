@@ -1,5 +1,10 @@
 lexer grammar QuokkaLex;
 
+SingleInstructionComment
+	:
+		'@{*' ~'}'* '*}'
+	;
+
 OutputInstructionStart
 	:
 		'${' -> pushMode(Instruction)
