@@ -73,16 +73,42 @@ EndComment
 		End WhiteSpace+ Comment
 	;
    
+MemberAccessOperator
+	:
+		'.'
+	;
+	
+LeftParen
+	:
+		'('
+	;
+	
+RightParen
+	:
+		')'
+	;
+	
+And
+	:
+		[Aa][Nn][Dd]
+	;
+	
+Or
+	:
+		[Oo][Rr]
+	;
+	
+Not
+	:
+		[Nn][Oo][Tt]
+	;
+  
+ 
 Identifier
     :
         [a-zA-Z] [a-zA-Z0-9]*
     ;
     
-MemberAccessOperator
-	:
-		'.'
-	;
-
 WhiteSpace
 	:
 		(' ' | '\t' | '\r' | '\n') -> skip

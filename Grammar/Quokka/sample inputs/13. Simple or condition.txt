@@ -1,0 +1,3 @@
+@{ if A or B }
+	It's either A or B
+@{ end if }

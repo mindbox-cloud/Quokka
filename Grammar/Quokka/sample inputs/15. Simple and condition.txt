@@ -1,0 +1,3 @@
+@{ if A and B }
+	It's both A and B.
+@{ end if }

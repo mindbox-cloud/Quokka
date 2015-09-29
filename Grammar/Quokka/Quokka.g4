@@ -29,11 +29,11 @@ constantBlock
 outputInstruction
 	:
 		OutputInstructionStart
-		valueExpression
+		parameterValueExpression
 		InstructionEnd
 	;
 	
-valueExpression
+parameterValueExpression
 	:
 		parameterExpression | parameterMemberExpression
 	;
@@ -54,11 +54,6 @@ memberAccessExpression
 		MemberAccessOperator
 		Identifier
 		memberAccessExpression?
-	;
-	
-booleanExpression
-	:
-		parameterExpression
 	;
 	
 ifStatement
@@ -127,7 +122,7 @@ forStatement
 forInstruction
 	:
 		ControlInstructionStart
-		For	iterationVariable In parameterExpression
+		For	iterationVariable In parameterValueExpression
 		InstructionEnd
 	;
 	
@@ -163,3 +158,28 @@ endCommentInstruction
 		EndComment
 		InstructionEnd
 	;
+	
+booleanExpression
+	:
+		andExpression
+		(Or andExpression)*
+	;
+	
+andExpression
+	:
+		booleanAtom
+		(And booleanAtom)*
+	;	
+
+notExpression
+	:
+		Not booleanAtom
+	;
+
+booleanAtom
+	:
+		parameterValueExpression
+		| notExpression
+		| LeftParen booleanExpression RightParen		
+	;
+	

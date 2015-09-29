@@ -1,0 +1,3 @@
+@{ if Recipient.IsMale and Recipient.IsOld }
+	Goor morning, Sir
+@{ end if }

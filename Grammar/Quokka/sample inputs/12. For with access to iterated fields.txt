@@ -1,0 +1,4 @@
+@{ for someObject in inputObjects }
+	${ someObject.Property1 }
+	${ someObject.Property2 }
+@{ end for }
