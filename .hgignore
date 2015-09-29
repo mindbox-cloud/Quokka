@@ -1,0 +1,5 @@
+syntax: glob
+Grammar/.metadata/*
+Grammar/Quokka/target/*
+Grammar/Quokka/.settings/*
+Grammar/Quokka/.project
