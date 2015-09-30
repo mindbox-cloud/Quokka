@@ -3,3 +3,7 @@ Grammar/.metadata/*
 Grammar/Quokka/target/*
 Grammar/Quokka/.settings/*
 Grammar/Quokka/.project
+Engine/packages/*
+*/bin/*
+*/obj/*
+Engine/.vs/*
