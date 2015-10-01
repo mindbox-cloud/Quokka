@@ -23,7 +23,7 @@ namespace Quokka.Sandbox
 
 		static void Main(string[] args)
 		{
-			var template = ParseFileContents(@"c:\Code\Quokka\Grammar\Quokka\sample inputs\100. Temp 1.txt");
+			var template = ParseFileContents(@"c:\Code\Quokka\Grammar\Quokka\sample inputs\7. If block with else if blocks and else block.txt");
 
 			foreach (var debugMessage in template.GetDebugMessages())
 				Console.WriteLine(debugMessage);

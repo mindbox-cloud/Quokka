@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace Quokka
 {
-	internal class SomeNode : TemplateNodeBase
+	internal class ConditionBlock : TemplateNodeBase
 	{
-		private readonly string nodeKind;
+		private readonly ITemplateNode content;
 
-		public SomeNode(string nodeKind)
+		public ConditionBlock(ITemplateNode content)
 		{
-			this.nodeKind = nodeKind;
+			this.content = content;
 		}
 	}
 }

@@ -98,19 +98,19 @@ ifStatement
 ifCondition
 	:
 		ifInstruction
-		templateBlock
+		templateBlock?
 	;
 
 elseCondition
 	:
 		elseInstruction
-		templateBlock
+		templateBlock?
 	;
 	
 elseIfCondition
 	:
 		elseIfInstruction
-		templateBlock
+		templateBlock?
 	;
 	
 ifInstruction
@@ -146,7 +146,7 @@ endIfInstruction
 forStatement
 	:
 		forInstruction
-		templateBlock
+		templateBlock?
 		endForInstruction
 	;
 

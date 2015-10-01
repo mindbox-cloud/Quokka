@@ -1,10 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-
-using Antlr4.Runtime;
-using Antlr4.Runtime.Tree;
-
 using Quokka.Generated;
 
 namespace Quokka
@@ -59,10 +55,20 @@ namespace Quokka
 
 		public override ITemplateNode VisitIfStatement(QuokkaParser.IfStatementContext context)
 		{
-			AddDebugMessage("If block");
-			return new SomeNode("if");
-		}
+			var conditionsVisitor = new ConditionsVisitor();
 
+			var conditions = new List<ConditionBlock>
+			{
+				context.ifCondition().Accept(conditionsVisitor)
+			};
+			conditions.AddRange(context.elseIfCondition()
+				.Select(elseIf => elseIf.Accept(conditionsVisitor)));
+			if (context.elseCondition() != null)
+				conditions.Add(context.elseCondition().Accept(conditionsVisitor));
+
+			return new IfBlock(conditions);
+		}
+		
 		private void AddDebugMessage(string message)
 		{
 			if (message == null)
