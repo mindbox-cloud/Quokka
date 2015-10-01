@@ -61,11 +61,11 @@ public interface IQuokkaVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <return>The visitor result.</return>
 	Result VisitConstantBlock([NotNull] QuokkaParser.ConstantBlockContext context);
 	/// <summary>
-	/// Visit a parse tree produced by <see cref="QuokkaParser.outputInstruction"/>.
+	/// Visit a parse tree produced by <see cref="QuokkaParser.outputBlock"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
-	Result VisitOutputInstruction([NotNull] QuokkaParser.OutputInstructionContext context);
+	Result VisitOutputBlock([NotNull] QuokkaParser.OutputBlockContext context);
 	/// <summary>
 	/// Visit a parse tree produced by <see cref="QuokkaParser.parameterValueExpression"/>.
 	/// </summary>

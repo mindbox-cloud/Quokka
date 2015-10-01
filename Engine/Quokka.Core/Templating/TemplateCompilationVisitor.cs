@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 using Antlr4.Runtime;
 using Antlr4.Runtime.Tree;
@@ -22,37 +23,38 @@ namespace Quokka
 
 		public override ITemplateNode VisitTemplateBlock(QuokkaParser.TemplateBlockContext context)
 		{
-			AddDebugMessage("TemplateBlock");
-			var childBlocks = new List<ITemplateNode>();
-
-			for (int i = 0; i < context.ChildCount; i++)
-				childBlocks.Add(context.GetChild(i).Accept(this));
-
-			return new TemplateBlock(childBlocks);
+			return new TemplateBlock(
+				context.children.Select(child => child.Accept(this)));
 		}
 
 		public override ITemplateNode VisitStaticBlock(QuokkaParser.StaticBlockContext context)
 		{
-			AddDebugMessage("StaticBlock");
-			return new SomeNode("static");
+			return new StaticBlock(
+				context.children.Select(child => child.Accept(this)),
+				context.GetText());
 		}
-
-		public override ITemplateNode VisitDynamicBlock(QuokkaParser.DynamicBlockContext context)
-		{
-			AddDebugMessage("DynamicBlock");
-			return base.VisitDynamicBlock(context);
-		}
-
+		
 		public override ITemplateNode VisitConstantBlock(QuokkaParser.ConstantBlockContext context)
 		{
-			AddDebugMessage(context.GetText());
-			return new SomeNode("Constant");
+			return new ConstantBlock(context.GetText());
 		}
 
-		public override ITemplateNode VisitOutputInstruction(QuokkaParser.OutputInstructionContext context)
+		public override ITemplateNode VisitOutputBlock(QuokkaParser.OutputBlockContext context)
 		{
-			AddDebugMessage("Output instruction");
-			return base.VisitOutputInstruction(context);
+			AddDebugMessage("Output block");
+
+			return context.filteredParameterValueExpression()?.Accept(this) ??
+					context.arithmeticExpression()?.Accept(this);
+		}
+
+		public override ITemplateNode VisitFilteredParameterValueExpression(QuokkaParser.FilteredParameterValueExpressionContext context)
+		{
+			var filters = context.filterChain();
+			if (filters != null)
+				throw new NotImplementedException("Parameters with filter chain are not supported");
+
+			var parameter = context.parameterValueExpression().Accept(new ParameterVisitor(ParameterType.Primitive));
+			return new ParameterOutputBlock(parameter);
 		}
 
 		public override ITemplateNode VisitIfStatement(QuokkaParser.IfStatementContext context)

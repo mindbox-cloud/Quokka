@@ -41,7 +41,7 @@ public partial class QuokkaParser : Parser {
 		Digit=35, DoubleQuotedString=36, Identifier=37, WhiteSpace=38;
 	public const int
 		RULE_template = 0, RULE_templateBlock = 1, RULE_staticBlock = 2, RULE_dynamicBlock = 3, 
-		RULE_constantBlock = 4, RULE_outputInstruction = 5, RULE_parameterValueExpression = 6, 
+		RULE_constantBlock = 4, RULE_outputBlock = 5, RULE_parameterValueExpression = 6, 
 		RULE_parameterExpression = 7, RULE_memberAccessExpression = 8, RULE_filteredParameterValueExpression = 9, 
 		RULE_filterChain = 10, RULE_filter = 11, RULE_filterArgumentList = 12, 
 		RULE_filterArgumentValue = 13, RULE_ifStatement = 14, RULE_ifCondition = 15, 
@@ -55,15 +55,15 @@ public partial class QuokkaParser : Parser {
 		RULE_arithmeticAtom = 37;
 	public static readonly string[] ruleNames = {
 		"template", "templateBlock", "staticBlock", "dynamicBlock", "constantBlock", 
-		"outputInstruction", "parameterValueExpression", "parameterExpression", 
-		"memberAccessExpression", "filteredParameterValueExpression", "filterChain", 
-		"filter", "filterArgumentList", "filterArgumentValue", "ifStatement", 
-		"ifCondition", "elseCondition", "elseIfCondition", "ifInstruction", "elseIfInstruction", 
-		"elseInstruction", "endIfInstruction", "forStatement", "forInstruction", 
-		"iterationVariable", "endForInstruction", "commentBlock", "commentInstruction", 
-		"endCommentInstruction", "booleanExpression", "andExpression", "notExpression", 
-		"booleanAtom", "arithmeticComparisonExpression", "arithmeticExpression", 
-		"multiplicationExpression", "negationExpression", "arithmeticAtom"
+		"outputBlock", "parameterValueExpression", "parameterExpression", "memberAccessExpression", 
+		"filteredParameterValueExpression", "filterChain", "filter", "filterArgumentList", 
+		"filterArgumentValue", "ifStatement", "ifCondition", "elseCondition", 
+		"elseIfCondition", "ifInstruction", "elseIfInstruction", "elseInstruction", 
+		"endIfInstruction", "forStatement", "forInstruction", "iterationVariable", 
+		"endForInstruction", "commentBlock", "commentInstruction", "endCommentInstruction", 
+		"booleanExpression", "andExpression", "notExpression", "booleanAtom", 
+		"arithmeticComparisonExpression", "arithmeticExpression", "multiplicationExpression", 
+		"negationExpression", "arithmeticAtom"
 	};
 
 	private static readonly string[] _LiteralNames = {
@@ -226,11 +226,11 @@ public partial class QuokkaParser : Parser {
 		public ConstantBlockContext constantBlock(int i) {
 			return GetRuleContext<ConstantBlockContext>(i);
 		}
-		public OutputInstructionContext[] outputInstruction() {
-			return GetRuleContexts<OutputInstructionContext>();
+		public OutputBlockContext[] outputBlock() {
+			return GetRuleContexts<OutputBlockContext>();
 		}
-		public OutputInstructionContext outputInstruction(int i) {
-			return GetRuleContext<OutputInstructionContext>(i);
+		public OutputBlockContext outputBlock(int i) {
+			return GetRuleContext<OutputBlockContext>(i);
 		}
 		public StaticBlockContext(ParserRuleContext parent, int invokingState)
 			: base(parent, invokingState)
@@ -268,7 +268,7 @@ public partial class QuokkaParser : Parser {
 						break;
 					case OutputInstructionStart:
 						{
-						State = 85; outputInstruction();
+						State = 85; outputBlock();
 						}
 						break;
 					default:
@@ -413,7 +413,7 @@ public partial class QuokkaParser : Parser {
 		return _localctx;
 	}
 
-	public partial class OutputInstructionContext : ParserRuleContext {
+	public partial class OutputBlockContext : ParserRuleContext {
 		public ITerminalNode OutputInstructionStart() { return GetToken(QuokkaParser.OutputInstructionStart, 0); }
 		public ITerminalNode InstructionEnd() { return GetToken(QuokkaParser.InstructionEnd, 0); }
 		public FilteredParameterValueExpressionContext filteredParameterValueExpression() {
@@ -422,22 +422,22 @@ public partial class QuokkaParser : Parser {
 		public ArithmeticExpressionContext arithmeticExpression() {
 			return GetRuleContext<ArithmeticExpressionContext>(0);
 		}
-		public OutputInstructionContext(ParserRuleContext parent, int invokingState)
+		public OutputBlockContext(ParserRuleContext parent, int invokingState)
 			: base(parent, invokingState)
 		{
 		}
-		public override int RuleIndex { get { return RULE_outputInstruction; } }
+		public override int RuleIndex { get { return RULE_outputBlock; } }
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			IQuokkaVisitor<TResult> typedVisitor = visitor as IQuokkaVisitor<TResult>;
-			if (typedVisitor != null) return typedVisitor.VisitOutputInstruction(this);
+			if (typedVisitor != null) return typedVisitor.VisitOutputBlock(this);
 			else return visitor.VisitChildren(this);
 		}
 	}
 
 	[RuleVersion(0)]
-	public OutputInstructionContext outputInstruction() {
-		OutputInstructionContext _localctx = new OutputInstructionContext(Context, State);
-		EnterRule(_localctx, 10, RULE_outputInstruction);
+	public OutputBlockContext outputBlock() {
+		OutputBlockContext _localctx = new OutputBlockContext(Context, State);
+		EnterRule(_localctx, 10, RULE_outputBlock);
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{

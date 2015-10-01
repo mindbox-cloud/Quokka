@@ -49,9 +49,15 @@
     <Compile Include="Generated\QuokkaParser.cs" />
     <Compile Include="Generated\QuokkaVisitor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Templating\Nodes\OutputBlock.cs" />
+    <Compile Include="Templating\ParameterType.cs" />
+    <Compile Include="Templating\Nodes\ConstantBlock.cs" />
     <Compile Include="Templating\Nodes\SomeNode.cs" />
+    <Compile Include="Templating\Nodes\StaticBlock.cs" />
     <Compile Include="Templating\Nodes\TemplateBlock.cs" />
     <Compile Include="Templating\Nodes\TemplateRoot.cs" />
+    <Compile Include="Templating\ParameterMetadata.cs" />
+    <Compile Include="Templating\ParameterVisitor.cs" />
     <Compile Include="Templating\Template.cs" />
     <Compile Include="Templating\Nodes\Base\ITemplateNode.cs" />
     <Compile Include="Templating\Nodes\Base\TemplateNodeBase.cs" />

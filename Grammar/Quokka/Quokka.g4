@@ -13,7 +13,7 @@ templateBlock
 	
 staticBlock
 	:
-		(constantBlock | outputInstruction)+
+		(constantBlock | outputBlock)+
 	;
 
 dynamicBlock
@@ -26,7 +26,7 @@ constantBlock
 		Fluff+
 	;
 
-outputInstruction
+outputBlock
 	:
 		OutputInstructionStart
 		(
