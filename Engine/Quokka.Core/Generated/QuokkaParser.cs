@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-// Generated from C:\code\Quokka\Grammar\Quokka\Quokka.g4 by ANTLR 4.5.1
+// Generated from C:\Code\Quokka\Grammar\Quokka\Quokka.g4 by ANTLR 4.5.1
 
 // Unreachable code detected
 #pragma warning disable 0162
@@ -112,14 +112,6 @@ public partial class QuokkaParser : Parser {
 		{
 		}
 		public override int RuleIndex { get { return RULE_template; } }
-		public override void EnterRule(IParseTreeListener listener) {
-			IQuokkaListener typedListener = listener as IQuokkaListener;
-			if (typedListener != null) typedListener.EnterTemplate(this);
-		}
-		public override void ExitRule(IParseTreeListener listener) {
-			IQuokkaListener typedListener = listener as IQuokkaListener;
-			if (typedListener != null) typedListener.ExitTemplate(this);
-		}
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			IQuokkaVisitor<TResult> typedVisitor = visitor as IQuokkaVisitor<TResult>;
 			if (typedVisitor != null) return typedVisitor.VisitTemplate(this);
@@ -166,14 +158,6 @@ public partial class QuokkaParser : Parser {
 		{
 		}
 		public override int RuleIndex { get { return RULE_templateBlock; } }
-		public override void EnterRule(IParseTreeListener listener) {
-			IQuokkaListener typedListener = listener as IQuokkaListener;
-			if (typedListener != null) typedListener.EnterTemplateBlock(this);
-		}
-		public override void ExitRule(IParseTreeListener listener) {
-			IQuokkaListener typedListener = listener as IQuokkaListener;
-			if (typedListener != null) typedListener.ExitTemplateBlock(this);
-		}
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			IQuokkaVisitor<TResult> typedVisitor = visitor as IQuokkaVisitor<TResult>;
 			if (typedVisitor != null) return typedVisitor.VisitTemplateBlock(this);
@@ -255,14 +239,6 @@ public partial class QuokkaParser : Parser {
 		{
 		}
 		public override int RuleIndex { get { return RULE_staticBlock; } }
-		public override void EnterRule(IParseTreeListener listener) {
-			IQuokkaListener typedListener = listener as IQuokkaListener;
-			if (typedListener != null) typedListener.EnterStaticBlock(this);
-		}
-		public override void ExitRule(IParseTreeListener listener) {
-			IQuokkaListener typedListener = listener as IQuokkaListener;
-			if (typedListener != null) typedListener.ExitStaticBlock(this);
-		}
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			IQuokkaVisitor<TResult> typedVisitor = visitor as IQuokkaVisitor<TResult>;
 			if (typedVisitor != null) return typedVisitor.VisitStaticBlock(this);
@@ -340,14 +316,6 @@ public partial class QuokkaParser : Parser {
 		{
 		}
 		public override int RuleIndex { get { return RULE_dynamicBlock; } }
-		public override void EnterRule(IParseTreeListener listener) {
-			IQuokkaListener typedListener = listener as IQuokkaListener;
-			if (typedListener != null) typedListener.EnterDynamicBlock(this);
-		}
-		public override void ExitRule(IParseTreeListener listener) {
-			IQuokkaListener typedListener = listener as IQuokkaListener;
-			if (typedListener != null) typedListener.ExitDynamicBlock(this);
-		}
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			IQuokkaVisitor<TResult> typedVisitor = visitor as IQuokkaVisitor<TResult>;
 			if (typedVisitor != null) return typedVisitor.VisitDynamicBlock(this);
@@ -397,14 +365,6 @@ public partial class QuokkaParser : Parser {
 		{
 		}
 		public override int RuleIndex { get { return RULE_constantBlock; } }
-		public override void EnterRule(IParseTreeListener listener) {
-			IQuokkaListener typedListener = listener as IQuokkaListener;
-			if (typedListener != null) typedListener.EnterConstantBlock(this);
-		}
-		public override void ExitRule(IParseTreeListener listener) {
-			IQuokkaListener typedListener = listener as IQuokkaListener;
-			if (typedListener != null) typedListener.ExitConstantBlock(this);
-		}
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			IQuokkaVisitor<TResult> typedVisitor = visitor as IQuokkaVisitor<TResult>;
 			if (typedVisitor != null) return typedVisitor.VisitConstantBlock(this);
@@ -466,14 +426,6 @@ public partial class QuokkaParser : Parser {
 		{
 		}
 		public override int RuleIndex { get { return RULE_outputInstruction; } }
-		public override void EnterRule(IParseTreeListener listener) {
-			IQuokkaListener typedListener = listener as IQuokkaListener;
-			if (typedListener != null) typedListener.EnterOutputInstruction(this);
-		}
-		public override void ExitRule(IParseTreeListener listener) {
-			IQuokkaListener typedListener = listener as IQuokkaListener;
-			if (typedListener != null) typedListener.ExitOutputInstruction(this);
-		}
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			IQuokkaVisitor<TResult> typedVisitor = visitor as IQuokkaVisitor<TResult>;
 			if (typedVisitor != null) return typedVisitor.VisitOutputInstruction(this);
@@ -528,14 +480,6 @@ public partial class QuokkaParser : Parser {
 		{
 		}
 		public override int RuleIndex { get { return RULE_parameterValueExpression; } }
-		public override void EnterRule(IParseTreeListener listener) {
-			IQuokkaListener typedListener = listener as IQuokkaListener;
-			if (typedListener != null) typedListener.EnterParameterValueExpression(this);
-		}
-		public override void ExitRule(IParseTreeListener listener) {
-			IQuokkaListener typedListener = listener as IQuokkaListener;
-			if (typedListener != null) typedListener.ExitParameterValueExpression(this);
-		}
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			IQuokkaVisitor<TResult> typedVisitor = visitor as IQuokkaVisitor<TResult>;
 			if (typedVisitor != null) return typedVisitor.VisitParameterValueExpression(this);
@@ -587,14 +531,6 @@ public partial class QuokkaParser : Parser {
 		{
 		}
 		public override int RuleIndex { get { return RULE_filteredParameterValueExpression; } }
-		public override void EnterRule(IParseTreeListener listener) {
-			IQuokkaListener typedListener = listener as IQuokkaListener;
-			if (typedListener != null) typedListener.EnterFilteredParameterValueExpression(this);
-		}
-		public override void ExitRule(IParseTreeListener listener) {
-			IQuokkaListener typedListener = listener as IQuokkaListener;
-			if (typedListener != null) typedListener.ExitFilteredParameterValueExpression(this);
-		}
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			IQuokkaVisitor<TResult> typedVisitor = visitor as IQuokkaVisitor<TResult>;
 			if (typedVisitor != null) return typedVisitor.VisitFilteredParameterValueExpression(this);
@@ -648,14 +584,6 @@ public partial class QuokkaParser : Parser {
 		{
 		}
 		public override int RuleIndex { get { return RULE_filterChain; } }
-		public override void EnterRule(IParseTreeListener listener) {
-			IQuokkaListener typedListener = listener as IQuokkaListener;
-			if (typedListener != null) typedListener.EnterFilterChain(this);
-		}
-		public override void ExitRule(IParseTreeListener listener) {
-			IQuokkaListener typedListener = listener as IQuokkaListener;
-			if (typedListener != null) typedListener.ExitFilterChain(this);
-		}
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			IQuokkaVisitor<TResult> typedVisitor = visitor as IQuokkaVisitor<TResult>;
 			if (typedVisitor != null) return typedVisitor.VisitFilterChain(this);
@@ -708,14 +636,6 @@ public partial class QuokkaParser : Parser {
 		{
 		}
 		public override int RuleIndex { get { return RULE_filter; } }
-		public override void EnterRule(IParseTreeListener listener) {
-			IQuokkaListener typedListener = listener as IQuokkaListener;
-			if (typedListener != null) typedListener.EnterFilter(this);
-		}
-		public override void ExitRule(IParseTreeListener listener) {
-			IQuokkaListener typedListener = listener as IQuokkaListener;
-			if (typedListener != null) typedListener.ExitFilter(this);
-		}
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			IQuokkaVisitor<TResult> typedVisitor = visitor as IQuokkaVisitor<TResult>;
 			if (typedVisitor != null) return typedVisitor.VisitFilter(this);
@@ -771,14 +691,6 @@ public partial class QuokkaParser : Parser {
 		{
 		}
 		public override int RuleIndex { get { return RULE_filterArgumentList; } }
-		public override void EnterRule(IParseTreeListener listener) {
-			IQuokkaListener typedListener = listener as IQuokkaListener;
-			if (typedListener != null) typedListener.EnterFilterArgumentList(this);
-		}
-		public override void ExitRule(IParseTreeListener listener) {
-			IQuokkaListener typedListener = listener as IQuokkaListener;
-			if (typedListener != null) typedListener.ExitFilterArgumentList(this);
-		}
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			IQuokkaVisitor<TResult> typedVisitor = visitor as IQuokkaVisitor<TResult>;
 			if (typedVisitor != null) return typedVisitor.VisitFilterArgumentList(this);
@@ -831,14 +743,6 @@ public partial class QuokkaParser : Parser {
 		{
 		}
 		public override int RuleIndex { get { return RULE_filterArgumentValue; } }
-		public override void EnterRule(IParseTreeListener listener) {
-			IQuokkaListener typedListener = listener as IQuokkaListener;
-			if (typedListener != null) typedListener.EnterFilterArgumentValue(this);
-		}
-		public override void ExitRule(IParseTreeListener listener) {
-			IQuokkaListener typedListener = listener as IQuokkaListener;
-			if (typedListener != null) typedListener.ExitFilterArgumentValue(this);
-		}
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			IQuokkaVisitor<TResult> typedVisitor = visitor as IQuokkaVisitor<TResult>;
 			if (typedVisitor != null) return typedVisitor.VisitFilterArgumentValue(this);
@@ -874,14 +778,6 @@ public partial class QuokkaParser : Parser {
 		{
 		}
 		public override int RuleIndex { get { return RULE_parameterExpression; } }
-		public override void EnterRule(IParseTreeListener listener) {
-			IQuokkaListener typedListener = listener as IQuokkaListener;
-			if (typedListener != null) typedListener.EnterParameterExpression(this);
-		}
-		public override void ExitRule(IParseTreeListener listener) {
-			IQuokkaListener typedListener = listener as IQuokkaListener;
-			if (typedListener != null) typedListener.ExitParameterExpression(this);
-		}
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			IQuokkaVisitor<TResult> typedVisitor = visitor as IQuokkaVisitor<TResult>;
 			if (typedVisitor != null) return typedVisitor.VisitParameterExpression(this);
@@ -922,14 +818,6 @@ public partial class QuokkaParser : Parser {
 		{
 		}
 		public override int RuleIndex { get { return RULE_parameterMemberExpression; } }
-		public override void EnterRule(IParseTreeListener listener) {
-			IQuokkaListener typedListener = listener as IQuokkaListener;
-			if (typedListener != null) typedListener.EnterParameterMemberExpression(this);
-		}
-		public override void ExitRule(IParseTreeListener listener) {
-			IQuokkaListener typedListener = listener as IQuokkaListener;
-			if (typedListener != null) typedListener.ExitParameterMemberExpression(this);
-		}
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			IQuokkaVisitor<TResult> typedVisitor = visitor as IQuokkaVisitor<TResult>;
 			if (typedVisitor != null) return typedVisitor.VisitParameterMemberExpression(this);
@@ -970,14 +858,6 @@ public partial class QuokkaParser : Parser {
 		{
 		}
 		public override int RuleIndex { get { return RULE_memberAccessExpression; } }
-		public override void EnterRule(IParseTreeListener listener) {
-			IQuokkaListener typedListener = listener as IQuokkaListener;
-			if (typedListener != null) typedListener.EnterMemberAccessExpression(this);
-		}
-		public override void ExitRule(IParseTreeListener listener) {
-			IQuokkaListener typedListener = listener as IQuokkaListener;
-			if (typedListener != null) typedListener.ExitMemberAccessExpression(this);
-		}
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			IQuokkaVisitor<TResult> typedVisitor = visitor as IQuokkaVisitor<TResult>;
 			if (typedVisitor != null) return typedVisitor.VisitMemberAccessExpression(this);
@@ -1037,14 +917,6 @@ public partial class QuokkaParser : Parser {
 		{
 		}
 		public override int RuleIndex { get { return RULE_ifStatement; } }
-		public override void EnterRule(IParseTreeListener listener) {
-			IQuokkaListener typedListener = listener as IQuokkaListener;
-			if (typedListener != null) typedListener.EnterIfStatement(this);
-		}
-		public override void ExitRule(IParseTreeListener listener) {
-			IQuokkaListener typedListener = listener as IQuokkaListener;
-			if (typedListener != null) typedListener.ExitIfStatement(this);
-		}
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			IQuokkaVisitor<TResult> typedVisitor = visitor as IQuokkaVisitor<TResult>;
 			if (typedVisitor != null) return typedVisitor.VisitIfStatement(this);
@@ -1110,14 +982,6 @@ public partial class QuokkaParser : Parser {
 		{
 		}
 		public override int RuleIndex { get { return RULE_ifCondition; } }
-		public override void EnterRule(IParseTreeListener listener) {
-			IQuokkaListener typedListener = listener as IQuokkaListener;
-			if (typedListener != null) typedListener.EnterIfCondition(this);
-		}
-		public override void ExitRule(IParseTreeListener listener) {
-			IQuokkaListener typedListener = listener as IQuokkaListener;
-			if (typedListener != null) typedListener.ExitIfCondition(this);
-		}
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			IQuokkaVisitor<TResult> typedVisitor = visitor as IQuokkaVisitor<TResult>;
 			if (typedVisitor != null) return typedVisitor.VisitIfCondition(this);
@@ -1159,14 +1023,6 @@ public partial class QuokkaParser : Parser {
 		{
 		}
 		public override int RuleIndex { get { return RULE_elseCondition; } }
-		public override void EnterRule(IParseTreeListener listener) {
-			IQuokkaListener typedListener = listener as IQuokkaListener;
-			if (typedListener != null) typedListener.EnterElseCondition(this);
-		}
-		public override void ExitRule(IParseTreeListener listener) {
-			IQuokkaListener typedListener = listener as IQuokkaListener;
-			if (typedListener != null) typedListener.ExitElseCondition(this);
-		}
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			IQuokkaVisitor<TResult> typedVisitor = visitor as IQuokkaVisitor<TResult>;
 			if (typedVisitor != null) return typedVisitor.VisitElseCondition(this);
@@ -1208,14 +1064,6 @@ public partial class QuokkaParser : Parser {
 		{
 		}
 		public override int RuleIndex { get { return RULE_elseIfCondition; } }
-		public override void EnterRule(IParseTreeListener listener) {
-			IQuokkaListener typedListener = listener as IQuokkaListener;
-			if (typedListener != null) typedListener.EnterElseIfCondition(this);
-		}
-		public override void ExitRule(IParseTreeListener listener) {
-			IQuokkaListener typedListener = listener as IQuokkaListener;
-			if (typedListener != null) typedListener.ExitElseIfCondition(this);
-		}
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			IQuokkaVisitor<TResult> typedVisitor = visitor as IQuokkaVisitor<TResult>;
 			if (typedVisitor != null) return typedVisitor.VisitElseIfCondition(this);
@@ -1257,14 +1105,6 @@ public partial class QuokkaParser : Parser {
 		{
 		}
 		public override int RuleIndex { get { return RULE_ifInstruction; } }
-		public override void EnterRule(IParseTreeListener listener) {
-			IQuokkaListener typedListener = listener as IQuokkaListener;
-			if (typedListener != null) typedListener.EnterIfInstruction(this);
-		}
-		public override void ExitRule(IParseTreeListener listener) {
-			IQuokkaListener typedListener = listener as IQuokkaListener;
-			if (typedListener != null) typedListener.ExitIfInstruction(this);
-		}
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			IQuokkaVisitor<TResult> typedVisitor = visitor as IQuokkaVisitor<TResult>;
 			if (typedVisitor != null) return typedVisitor.VisitIfInstruction(this);
@@ -1308,14 +1148,6 @@ public partial class QuokkaParser : Parser {
 		{
 		}
 		public override int RuleIndex { get { return RULE_elseIfInstruction; } }
-		public override void EnterRule(IParseTreeListener listener) {
-			IQuokkaListener typedListener = listener as IQuokkaListener;
-			if (typedListener != null) typedListener.EnterElseIfInstruction(this);
-		}
-		public override void ExitRule(IParseTreeListener listener) {
-			IQuokkaListener typedListener = listener as IQuokkaListener;
-			if (typedListener != null) typedListener.ExitElseIfInstruction(this);
-		}
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			IQuokkaVisitor<TResult> typedVisitor = visitor as IQuokkaVisitor<TResult>;
 			if (typedVisitor != null) return typedVisitor.VisitElseIfInstruction(this);
@@ -1356,14 +1188,6 @@ public partial class QuokkaParser : Parser {
 		{
 		}
 		public override int RuleIndex { get { return RULE_elseInstruction; } }
-		public override void EnterRule(IParseTreeListener listener) {
-			IQuokkaListener typedListener = listener as IQuokkaListener;
-			if (typedListener != null) typedListener.EnterElseInstruction(this);
-		}
-		public override void ExitRule(IParseTreeListener listener) {
-			IQuokkaListener typedListener = listener as IQuokkaListener;
-			if (typedListener != null) typedListener.ExitElseInstruction(this);
-		}
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			IQuokkaVisitor<TResult> typedVisitor = visitor as IQuokkaVisitor<TResult>;
 			if (typedVisitor != null) return typedVisitor.VisitElseInstruction(this);
@@ -1403,14 +1227,6 @@ public partial class QuokkaParser : Parser {
 		{
 		}
 		public override int RuleIndex { get { return RULE_endIfInstruction; } }
-		public override void EnterRule(IParseTreeListener listener) {
-			IQuokkaListener typedListener = listener as IQuokkaListener;
-			if (typedListener != null) typedListener.EnterEndIfInstruction(this);
-		}
-		public override void ExitRule(IParseTreeListener listener) {
-			IQuokkaListener typedListener = listener as IQuokkaListener;
-			if (typedListener != null) typedListener.ExitEndIfInstruction(this);
-		}
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			IQuokkaVisitor<TResult> typedVisitor = visitor as IQuokkaVisitor<TResult>;
 			if (typedVisitor != null) return typedVisitor.VisitEndIfInstruction(this);
@@ -1456,14 +1272,6 @@ public partial class QuokkaParser : Parser {
 		{
 		}
 		public override int RuleIndex { get { return RULE_forStatement; } }
-		public override void EnterRule(IParseTreeListener listener) {
-			IQuokkaListener typedListener = listener as IQuokkaListener;
-			if (typedListener != null) typedListener.EnterForStatement(this);
-		}
-		public override void ExitRule(IParseTreeListener listener) {
-			IQuokkaListener typedListener = listener as IQuokkaListener;
-			if (typedListener != null) typedListener.ExitForStatement(this);
-		}
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			IQuokkaVisitor<TResult> typedVisitor = visitor as IQuokkaVisitor<TResult>;
 			if (typedVisitor != null) return typedVisitor.VisitForStatement(this);
@@ -1510,14 +1318,6 @@ public partial class QuokkaParser : Parser {
 		{
 		}
 		public override int RuleIndex { get { return RULE_forInstruction; } }
-		public override void EnterRule(IParseTreeListener listener) {
-			IQuokkaListener typedListener = listener as IQuokkaListener;
-			if (typedListener != null) typedListener.EnterForInstruction(this);
-		}
-		public override void ExitRule(IParseTreeListener listener) {
-			IQuokkaListener typedListener = listener as IQuokkaListener;
-			if (typedListener != null) typedListener.ExitForInstruction(this);
-		}
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			IQuokkaVisitor<TResult> typedVisitor = visitor as IQuokkaVisitor<TResult>;
 			if (typedVisitor != null) return typedVisitor.VisitForInstruction(this);
@@ -1558,14 +1358,6 @@ public partial class QuokkaParser : Parser {
 		{
 		}
 		public override int RuleIndex { get { return RULE_iterationVariable; } }
-		public override void EnterRule(IParseTreeListener listener) {
-			IQuokkaListener typedListener = listener as IQuokkaListener;
-			if (typedListener != null) typedListener.EnterIterationVariable(this);
-		}
-		public override void ExitRule(IParseTreeListener listener) {
-			IQuokkaListener typedListener = listener as IQuokkaListener;
-			if (typedListener != null) typedListener.ExitIterationVariable(this);
-		}
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			IQuokkaVisitor<TResult> typedVisitor = visitor as IQuokkaVisitor<TResult>;
 			if (typedVisitor != null) return typedVisitor.VisitIterationVariable(this);
@@ -1603,14 +1395,6 @@ public partial class QuokkaParser : Parser {
 		{
 		}
 		public override int RuleIndex { get { return RULE_endForInstruction; } }
-		public override void EnterRule(IParseTreeListener listener) {
-			IQuokkaListener typedListener = listener as IQuokkaListener;
-			if (typedListener != null) typedListener.EnterEndForInstruction(this);
-		}
-		public override void ExitRule(IParseTreeListener listener) {
-			IQuokkaListener typedListener = listener as IQuokkaListener;
-			if (typedListener != null) typedListener.ExitEndForInstruction(this);
-		}
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			IQuokkaVisitor<TResult> typedVisitor = visitor as IQuokkaVisitor<TResult>;
 			if (typedVisitor != null) return typedVisitor.VisitEndForInstruction(this);
@@ -1657,14 +1441,6 @@ public partial class QuokkaParser : Parser {
 		{
 		}
 		public override int RuleIndex { get { return RULE_commentBlock; } }
-		public override void EnterRule(IParseTreeListener listener) {
-			IQuokkaListener typedListener = listener as IQuokkaListener;
-			if (typedListener != null) typedListener.EnterCommentBlock(this);
-		}
-		public override void ExitRule(IParseTreeListener listener) {
-			IQuokkaListener typedListener = listener as IQuokkaListener;
-			if (typedListener != null) typedListener.ExitCommentBlock(this);
-		}
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			IQuokkaVisitor<TResult> typedVisitor = visitor as IQuokkaVisitor<TResult>;
 			if (typedVisitor != null) return typedVisitor.VisitCommentBlock(this);
@@ -1717,14 +1493,6 @@ public partial class QuokkaParser : Parser {
 		{
 		}
 		public override int RuleIndex { get { return RULE_commentInstruction; } }
-		public override void EnterRule(IParseTreeListener listener) {
-			IQuokkaListener typedListener = listener as IQuokkaListener;
-			if (typedListener != null) typedListener.EnterCommentInstruction(this);
-		}
-		public override void ExitRule(IParseTreeListener listener) {
-			IQuokkaListener typedListener = listener as IQuokkaListener;
-			if (typedListener != null) typedListener.ExitCommentInstruction(this);
-		}
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			IQuokkaVisitor<TResult> typedVisitor = visitor as IQuokkaVisitor<TResult>;
 			if (typedVisitor != null) return typedVisitor.VisitCommentInstruction(this);
@@ -1764,14 +1532,6 @@ public partial class QuokkaParser : Parser {
 		{
 		}
 		public override int RuleIndex { get { return RULE_endCommentInstruction; } }
-		public override void EnterRule(IParseTreeListener listener) {
-			IQuokkaListener typedListener = listener as IQuokkaListener;
-			if (typedListener != null) typedListener.EnterEndCommentInstruction(this);
-		}
-		public override void ExitRule(IParseTreeListener listener) {
-			IQuokkaListener typedListener = listener as IQuokkaListener;
-			if (typedListener != null) typedListener.ExitEndCommentInstruction(this);
-		}
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			IQuokkaVisitor<TResult> typedVisitor = visitor as IQuokkaVisitor<TResult>;
 			if (typedVisitor != null) return typedVisitor.VisitEndCommentInstruction(this);
@@ -1818,14 +1578,6 @@ public partial class QuokkaParser : Parser {
 		{
 		}
 		public override int RuleIndex { get { return RULE_booleanExpression; } }
-		public override void EnterRule(IParseTreeListener listener) {
-			IQuokkaListener typedListener = listener as IQuokkaListener;
-			if (typedListener != null) typedListener.EnterBooleanExpression(this);
-		}
-		public override void ExitRule(IParseTreeListener listener) {
-			IQuokkaListener typedListener = listener as IQuokkaListener;
-			if (typedListener != null) typedListener.ExitBooleanExpression(this);
-		}
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			IQuokkaVisitor<TResult> typedVisitor = visitor as IQuokkaVisitor<TResult>;
 			if (typedVisitor != null) return typedVisitor.VisitBooleanExpression(this);
@@ -1885,14 +1637,6 @@ public partial class QuokkaParser : Parser {
 		{
 		}
 		public override int RuleIndex { get { return RULE_andExpression; } }
-		public override void EnterRule(IParseTreeListener listener) {
-			IQuokkaListener typedListener = listener as IQuokkaListener;
-			if (typedListener != null) typedListener.EnterAndExpression(this);
-		}
-		public override void ExitRule(IParseTreeListener listener) {
-			IQuokkaListener typedListener = listener as IQuokkaListener;
-			if (typedListener != null) typedListener.ExitAndExpression(this);
-		}
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			IQuokkaVisitor<TResult> typedVisitor = visitor as IQuokkaVisitor<TResult>;
 			if (typedVisitor != null) return typedVisitor.VisitAndExpression(this);
@@ -1946,14 +1690,6 @@ public partial class QuokkaParser : Parser {
 		{
 		}
 		public override int RuleIndex { get { return RULE_notExpression; } }
-		public override void EnterRule(IParseTreeListener listener) {
-			IQuokkaListener typedListener = listener as IQuokkaListener;
-			if (typedListener != null) typedListener.EnterNotExpression(this);
-		}
-		public override void ExitRule(IParseTreeListener listener) {
-			IQuokkaListener typedListener = listener as IQuokkaListener;
-			if (typedListener != null) typedListener.ExitNotExpression(this);
-		}
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			IQuokkaVisitor<TResult> typedVisitor = visitor as IQuokkaVisitor<TResult>;
 			if (typedVisitor != null) return typedVisitor.VisitNotExpression(this);
@@ -2003,14 +1739,6 @@ public partial class QuokkaParser : Parser {
 		{
 		}
 		public override int RuleIndex { get { return RULE_booleanAtom; } }
-		public override void EnterRule(IParseTreeListener listener) {
-			IQuokkaListener typedListener = listener as IQuokkaListener;
-			if (typedListener != null) typedListener.EnterBooleanAtom(this);
-		}
-		public override void ExitRule(IParseTreeListener listener) {
-			IQuokkaListener typedListener = listener as IQuokkaListener;
-			if (typedListener != null) typedListener.ExitBooleanAtom(this);
-		}
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			IQuokkaVisitor<TResult> typedVisitor = visitor as IQuokkaVisitor<TResult>;
 			if (typedVisitor != null) return typedVisitor.VisitBooleanAtom(this);
@@ -2082,14 +1810,6 @@ public partial class QuokkaParser : Parser {
 		{
 		}
 		public override int RuleIndex { get { return RULE_arithmeticComparisonExpression; } }
-		public override void EnterRule(IParseTreeListener listener) {
-			IQuokkaListener typedListener = listener as IQuokkaListener;
-			if (typedListener != null) typedListener.EnterArithmeticComparisonExpression(this);
-		}
-		public override void ExitRule(IParseTreeListener listener) {
-			IQuokkaListener typedListener = listener as IQuokkaListener;
-			if (typedListener != null) typedListener.ExitArithmeticComparisonExpression(this);
-		}
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			IQuokkaVisitor<TResult> typedVisitor = visitor as IQuokkaVisitor<TResult>;
 			if (typedVisitor != null) return typedVisitor.VisitArithmeticComparisonExpression(this);
@@ -2148,14 +1868,6 @@ public partial class QuokkaParser : Parser {
 		{
 		}
 		public override int RuleIndex { get { return RULE_arithmeticExpression; } }
-		public override void EnterRule(IParseTreeListener listener) {
-			IQuokkaListener typedListener = listener as IQuokkaListener;
-			if (typedListener != null) typedListener.EnterArithmeticExpression(this);
-		}
-		public override void ExitRule(IParseTreeListener listener) {
-			IQuokkaListener typedListener = listener as IQuokkaListener;
-			if (typedListener != null) typedListener.ExitArithmeticExpression(this);
-		}
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			IQuokkaVisitor<TResult> typedVisitor = visitor as IQuokkaVisitor<TResult>;
 			if (typedVisitor != null) return typedVisitor.VisitArithmeticExpression(this);
@@ -2226,14 +1938,6 @@ public partial class QuokkaParser : Parser {
 		{
 		}
 		public override int RuleIndex { get { return RULE_multiplicationExpression; } }
-		public override void EnterRule(IParseTreeListener listener) {
-			IQuokkaListener typedListener = listener as IQuokkaListener;
-			if (typedListener != null) typedListener.EnterMultiplicationExpression(this);
-		}
-		public override void ExitRule(IParseTreeListener listener) {
-			IQuokkaListener typedListener = listener as IQuokkaListener;
-			if (typedListener != null) typedListener.ExitMultiplicationExpression(this);
-		}
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			IQuokkaVisitor<TResult> typedVisitor = visitor as IQuokkaVisitor<TResult>;
 			if (typedVisitor != null) return typedVisitor.VisitMultiplicationExpression(this);
@@ -2294,14 +1998,6 @@ public partial class QuokkaParser : Parser {
 		{
 		}
 		public override int RuleIndex { get { return RULE_negationExpression; } }
-		public override void EnterRule(IParseTreeListener listener) {
-			IQuokkaListener typedListener = listener as IQuokkaListener;
-			if (typedListener != null) typedListener.EnterNegationExpression(this);
-		}
-		public override void ExitRule(IParseTreeListener listener) {
-			IQuokkaListener typedListener = listener as IQuokkaListener;
-			if (typedListener != null) typedListener.ExitNegationExpression(this);
-		}
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			IQuokkaVisitor<TResult> typedVisitor = visitor as IQuokkaVisitor<TResult>;
 			if (typedVisitor != null) return typedVisitor.VisitNegationExpression(this);
@@ -2349,14 +2045,6 @@ public partial class QuokkaParser : Parser {
 		{
 		}
 		public override int RuleIndex { get { return RULE_arithmeticAtom; } }
-		public override void EnterRule(IParseTreeListener listener) {
-			IQuokkaListener typedListener = listener as IQuokkaListener;
-			if (typedListener != null) typedListener.EnterArithmeticAtom(this);
-		}
-		public override void ExitRule(IParseTreeListener listener) {
-			IQuokkaListener typedListener = listener as IQuokkaListener;
-			if (typedListener != null) typedListener.ExitArithmeticAtom(this);
-		}
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			IQuokkaVisitor<TResult> typedVisitor = visitor as IQuokkaVisitor<TResult>;
 			if (typedVisitor != null) return typedVisitor.VisitArithmeticAtom(this);

@@ -8,7 +8,7 @@ function GenerateGrammarFiles ($grammarFile)
 		"-lib" "..\..\Engine\Quokka.Core\Generated" `
 		"-encoding" "UTF-8" `
 		"-visitor" `
-		"-listener" `
+		"-no-listener" `
 		"-package" "Quokka.Generated" `
 		"-Dlanguage=CSharp" `
 		"-Werror" `
