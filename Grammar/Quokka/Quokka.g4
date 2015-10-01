@@ -13,12 +13,12 @@ templateBlock
 	
 staticBlock
 	:
-		(constantBlock | outputInstruction | commentBlock)+
+		(constantBlock | outputInstruction)+
 	;
 
 dynamicBlock
 	:
-		ifStatement | forStatement
+		ifStatement | forStatement  | commentBlock
 	;
 
 constantBlock
@@ -37,8 +37,22 @@ outputInstruction
 	
 parameterValueExpression
 	:
-		parameterExpression | parameterMemberExpression
+		parameterExpression
+		memberAccessExpression?
 	;
+
+parameterExpression
+	:
+		Identifier
+	;
+	
+memberAccessExpression
+	:
+		MemberAccessOperator
+		Identifier
+		memberAccessExpression?
+	;
+	
 
 filteredParameterValueExpression
 	:
@@ -72,24 +86,7 @@ filterArgumentValue
 		DoubleQuotedString
 	;
 	
-parameterExpression
-	:
-		Identifier
-	;
-	
-parameterMemberExpression
-	:
-		parameterExpression
-		memberAccessExpression
-	;
-	
-memberAccessExpression
-	:
-		MemberAccessOperator
-		Identifier
-		memberAccessExpression?
-	;
-	
+
 ifStatement
 	:
 		ifCondition
