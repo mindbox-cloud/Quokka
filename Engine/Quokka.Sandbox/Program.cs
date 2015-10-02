@@ -23,11 +23,8 @@ namespace Quokka.Sandbox
 
 		static void Main(string[] args)
 		{
-			var template = ParseFileContents(@"c:\Code\Quokka\Grammar\Quokka\sample inputs\7. If block with else if blocks and else block.txt");
-
-			foreach (var debugMessage in template.GetDebugMessages())
-				Console.WriteLine(debugMessage);
-
+			var template = ParseFileContents(@"c:\Code\Quokka\Grammar\Quokka\sample inputs\16. Complex condition.txt");
+			
 			Console.WriteLine("Press Enter to exit:");
 			Console.ReadLine();
 		}

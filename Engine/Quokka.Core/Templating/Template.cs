@@ -12,8 +12,6 @@ namespace Quokka
 {
 	public class Template
 	{
-		private readonly TemplateCompilationVisitor compilationVisitor;
-
 		public Template(string templateText)
 		{
 			if (templateText == null)
@@ -24,14 +22,9 @@ namespace Quokka
 			var commonTokenStream = new CommonTokenStream(lexer);
 			var parser = new QuokkaParser(commonTokenStream);
 
-			compilationVisitor = new TemplateCompilationVisitor();
+			var compilationVisitor = new TemplateCompilationVisitor();
 			var root = compilationVisitor.Visit(parser.template());
 			root = null;
 		}
-
-		public IEnumerable<string> GetDebugMessages()
-		{
-			return compilationVisitor.DebugMessages;
-		} 
 	}
 }

@@ -51,8 +51,7 @@ memberAccessExpression
 		MemberAccessOperator
 		Identifier
 		memberAccessExpression?
-	;
-	
+	;	
 
 filteredParameterValueExpression
 	:
@@ -209,12 +208,17 @@ notExpression
 		Not booleanAtom
 	;
 	
+parenthesizedBooleanExpression
+	:
+		LeftParen booleanExpression RightParen	
+	;
+	
 booleanAtom
 	:
 		parameterValueExpression
 		| arithmeticComparisonExpression
 		| notExpression
-		| LeftParen booleanExpression RightParen		
+		| parenthesizedBooleanExpression
 	;
 
 arithmeticComparisonExpression

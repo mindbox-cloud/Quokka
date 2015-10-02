@@ -7,13 +7,8 @@ namespace Quokka
 {
 	internal class TemplateCompilationVisitor : QuokkaBaseVisitor<ITemplateNode>
 	{
-		private readonly List<string> debugMessages = new List<string>();
-
-		public IEnumerable<string> DebugMessages => debugMessages.AsReadOnly();
-
 		public override ITemplateNode VisitTemplate(QuokkaParser.TemplateContext context)
 		{
-			AddDebugMessage("Template");
 			return new TemplateRoot((TemplateBlock)context.templateBlock().Accept(this));
 		}
 
@@ -37,8 +32,6 @@ namespace Quokka
 
 		public override ITemplateNode VisitOutputBlock(QuokkaParser.OutputBlockContext context)
 		{
-			AddDebugMessage("Output block");
-
 			return context.filteredParameterValueExpression()?.Accept(this) ??
 					context.arithmeticExpression()?.Accept(this);
 		}
@@ -67,14 +60,6 @@ namespace Quokka
 				conditions.Add(context.elseCondition().Accept(conditionsVisitor));
 
 			return new IfBlock(conditions);
-		}
-		
-		private void AddDebugMessage(string message)
-		{
-			if (message == null)
-				throw new ArgumentNullException(nameof(message));
-
-			debugMessages.Add(message);
 		}
 	}
 }

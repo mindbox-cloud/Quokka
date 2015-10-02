@@ -1,18 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Quokka
+﻿namespace Quokka
 {
 	internal class ConditionBlock : TemplateNodeBase
 	{
-		private readonly ITemplateNode content;
-
-		public ConditionBlock(ITemplateNode content)
+		private readonly IBooleanExpression condition;
+		private readonly ITemplateNode block;
+		
+		public ConditionBlock(IBooleanExpression condition, ITemplateNode block)
 		{
-			this.content = content;
+			this.block = block;
+			this.condition = condition;
 		}
 	}
 }

@@ -223,6 +223,12 @@ public interface IQuokkaVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <return>The visitor result.</return>
 	Result VisitNotExpression([NotNull] QuokkaParser.NotExpressionContext context);
 	/// <summary>
+	/// Visit a parse tree produced by <see cref="QuokkaParser.parenthesizedBooleanExpression"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitParenthesizedBooleanExpression([NotNull] QuokkaParser.ParenthesizedBooleanExpressionContext context);
+	/// <summary>
 	/// Visit a parse tree produced by <see cref="QuokkaParser.booleanAtom"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>

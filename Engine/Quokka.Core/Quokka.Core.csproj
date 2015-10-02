@@ -49,6 +49,13 @@
     <Compile Include="Generated\QuokkaParser.cs" />
     <Compile Include="Generated\QuokkaVisitor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Templating\Nodes\Boolean\AndExpression.cs" />
+    <Compile Include="Templating\Nodes\Boolean\ArithmeticComparisonExpression.cs" />
+    <Compile Include="Templating\Nodes\Boolean\BooleanParameterValueExpression.cs" />
+    <Compile Include="Templating\Nodes\Boolean\IBooleanExpression.cs" />
+    <Compile Include="Templating\Nodes\Boolean\NotExpression.cs" />
+    <Compile Include="Templating\Nodes\Boolean\OrExpression.cs" />
+    <Compile Include="Templating\Nodes\Boolean\TrueExpression.cs" />
     <Compile Include="Templating\Nodes\ConditionBlock.cs" />
     <Compile Include="Templating\Nodes\IfBlock.cs" />
     <Compile Include="Templating\Nodes\OutputBlock.cs" />
@@ -61,6 +68,7 @@
     <Compile Include="Templating\Template.cs" />
     <Compile Include="Templating\Nodes\Base\ITemplateNode.cs" />
     <Compile Include="Templating\Nodes\Base\TemplateNodeBase.cs" />
+    <Compile Include="Templating\Visitors\BooleanExpresionVisitor.cs" />
     <Compile Include="Templating\Visitors\ConditionsVisitor.cs" />
     <Compile Include="Templating\Visitors\ParameterVisitor.cs" />
     <Compile Include="Templating\Visitors\TemplateCompilationVisitor.cs" />
