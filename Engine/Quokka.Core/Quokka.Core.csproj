@@ -81,7 +81,7 @@
     <Compile Include="Templating\Nodes\Base\TemplateNodeBase.cs" />
     <Compile Include="Templating\Visitors\AdditionalExpressionVisitor.cs" />
     <Compile Include="Templating\Visitors\ArithmeticExpressionVisitor.cs" />
-    <Compile Include="Templating\Visitors\BooleanExpresionVisitor.cs" />
+    <Compile Include="Templating\Visitors\BooleanExpressionVisitor.cs" />
     <Compile Include="Templating\Visitors\ConditionsVisitor.cs" />
     <Compile Include="Templating\Visitors\MultiplicativeExpressionVisitor.cs" />
     <Compile Include="Templating\Visitors\VariableVisitor.cs" />

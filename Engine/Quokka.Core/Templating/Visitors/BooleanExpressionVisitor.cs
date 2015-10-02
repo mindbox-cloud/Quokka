@@ -4,7 +4,7 @@ using Quokka.Generated;
 
 namespace Quokka
 {
-	internal class BooleanExpresionVisitor : QuokkaBaseVisitor<IBooleanExpression>
+	internal class BooleanExpressionVisitor : QuokkaBaseVisitor<IBooleanExpression>
 	{
 		public override IBooleanExpression VisitBooleanExpression(QuokkaParser.BooleanExpressionContext context)
 		{
