@@ -57,20 +57,23 @@
     <Compile Include="Templating\Nodes\Boolean\OrExpression.cs" />
     <Compile Include="Templating\Nodes\Boolean\TrueExpression.cs" />
     <Compile Include="Templating\Nodes\ConditionBlock.cs" />
+    <Compile Include="Templating\Nodes\ForBlock.cs" />
     <Compile Include="Templating\Nodes\IfBlock.cs" />
     <Compile Include="Templating\Nodes\OutputBlock.cs" />
-    <Compile Include="Templating\ParameterType.cs" />
+    <Compile Include="Templating\Variables\IterationVariableDeclaration.cs" />
+    <Compile Include="Templating\Variables\VariableDeclaration.cs" />
+    <Compile Include="Templating\Variables\VariableOccurence.cs" />
+    <Compile Include="Templating\Variables\VariableType.cs" />
     <Compile Include="Templating\Nodes\ConstantBlock.cs" />
     <Compile Include="Templating\Nodes\StaticBlock.cs" />
     <Compile Include="Templating\Nodes\TemplateBlock.cs" />
     <Compile Include="Templating\Nodes\TemplateRoot.cs" />
-    <Compile Include="Templating\ParameterMetadata.cs" />
     <Compile Include="Templating\Template.cs" />
     <Compile Include="Templating\Nodes\Base\ITemplateNode.cs" />
     <Compile Include="Templating\Nodes\Base\TemplateNodeBase.cs" />
     <Compile Include="Templating\Visitors\BooleanExpresionVisitor.cs" />
     <Compile Include="Templating\Visitors\ConditionsVisitor.cs" />
-    <Compile Include="Templating\Visitors\ParameterVisitor.cs" />
+    <Compile Include="Templating\Visitors\VariableVisitor.cs" />
     <Compile Include="Templating\Visitors\TemplateCompilationVisitor.cs" />
   </ItemGroup>
   <ItemGroup />

@@ -42,8 +42,8 @@ namespace Quokka
 			if (filters != null)
 				throw new NotImplementedException("Parameters with filter chain are not supported");
 
-			var parameter = context.parameterValueExpression().Accept(new ParameterVisitor(ParameterType.Primitive));
-			return new ParameterOutputBlock(parameter);
+			var parameter = context.parameterValueExpression().Accept(new VariableVisitor(VariableType.Primitive));
+			return new VariableOutputBlock(parameter);
 		}
 
 		public override ITemplateNode VisitIfStatement(QuokkaParser.IfStatementContext context)
@@ -60,6 +60,21 @@ namespace Quokka
 				conditions.Add(context.elseCondition().Accept(conditionsVisitor));
 
 			return new IfBlock(conditions);
+		}
+
+		public override ITemplateNode VisitForStatement(QuokkaParser.ForStatementContext context)
+		{
+			var forInstruction = context.forInstruction();
+			var collectionVariable = forInstruction.parameterValueExpression().Accept(new VariableVisitor(VariableType.Array));
+
+			return new ForBlock(
+				Visit(context.templateBlock()),
+				collectionVariable,
+				new IterationVariableDeclaration(
+					forInstruction.iterationVariable().Identifier().GetText(),
+					VariableType.Composite,
+					member: null,
+					collectionVariable: collectionVariable));
 		}
 	}
 }

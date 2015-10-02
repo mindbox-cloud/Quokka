@@ -1,12 +1,12 @@
 ﻿namespace Quokka
 {
-	internal class ParameterOutputBlock : TemplateNodeBase
+	internal class VariableOutputBlock : TemplateNodeBase
 	{
-		public ParameterMetadata Parameter { get; }
+		public VariableOccurence VariableOccurence { get; }
 
-		public ParameterOutputBlock(ParameterMetadata parameter)
+		public VariableOutputBlock(VariableOccurence variableOccurence)
 		{
-			Parameter = parameter;
+			VariableOccurence = variableOccurence;
 		}
 	}
 }

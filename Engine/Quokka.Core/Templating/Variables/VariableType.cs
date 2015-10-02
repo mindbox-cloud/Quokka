@@ -1,6 +1,6 @@
 ﻿namespace Quokka
 {
-	public enum ParameterType
+	public enum VariableType
 	{
 		Boolean,
 		Integer,
