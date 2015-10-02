@@ -231,13 +231,33 @@ arithmeticComparisonExpression
 arithmeticExpression
 	:
 		multiplicationExpression
-		((Plus | Minus) multiplicationExpression)*
+		(plusOperand | minusOperand)*
+	;
+	
+plusOperand
+	:
+		Plus multiplicationExpression
+	;
+	
+minusOperand
+	:
+		Minus multiplicationExpression
 	;
 
 multiplicationExpression
 	:
 		arithmeticAtom
-		((Multiply | Divide) arithmeticAtom)*
+		(multiplicationOperand | divisionOperand)*
+	;
+	
+multiplicationOperand
+	:
+		Multiply arithmeticAtom
+	;
+	
+divisionOperand
+	:
+		Divide arithmeticAtom
 	;
 
 negationExpression

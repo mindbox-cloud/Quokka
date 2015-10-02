@@ -23,7 +23,7 @@ namespace Quokka.Sandbox
 
 		static void Main(string[] args)
 		{
-			var template = ParseFileContents(@"c:\Code\Quokka\Grammar\Quokka\sample inputs\12. For with access to iterated fields.txt");
+			var template = ParseFileContents(@"c:\Code\Quokka\Grammar\Quokka\sample inputs\20. Complex arithmetic expression.txt");
 			
 			Console.WriteLine("Press Enter to exit:");
 			Console.ReadLine();

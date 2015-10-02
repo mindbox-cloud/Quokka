@@ -7,11 +7,6 @@ namespace Quokka
 {
 	internal class TemplateCompilationVisitor : QuokkaBaseVisitor<ITemplateNode>
 	{
-		public override ITemplateNode VisitTemplate(QuokkaParser.TemplateContext context)
-		{
-			return new TemplateRoot((TemplateBlock)context.templateBlock().Accept(this));
-		}
-
 		public override ITemplateNode VisitTemplateBlock(QuokkaParser.TemplateBlockContext context)
 		{
 			return new TemplateBlock(
@@ -32,8 +27,15 @@ namespace Quokka
 
 		public override ITemplateNode VisitOutputBlock(QuokkaParser.OutputBlockContext context)
 		{
-			return context.filteredParameterValueExpression()?.Accept(this) ??
-					context.arithmeticExpression()?.Accept(this);
+			var filteredParameterValue = context.filteredParameterValueExpression();
+			if (filteredParameterValue != null)
+				return Visit(filteredParameterValue);
+
+			var arithmeticExpression = context.arithmeticExpression();
+			if (arithmeticExpression != null)
+				return new ArithmeticExpressionOutputBlock(arithmeticExpression.Accept(new ArithmeticExpressionVisitor()));
+
+			throw new InvalidOperationException("Unknown alternative");
 		}
 
 		public override ITemplateNode VisitFilteredParameterValueExpression(QuokkaParser.FilteredParameterValueExpressionContext context)

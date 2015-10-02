@@ -247,11 +247,35 @@ public interface IQuokkaVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <return>The visitor result.</return>
 	Result VisitArithmeticExpression([NotNull] QuokkaParser.ArithmeticExpressionContext context);
 	/// <summary>
+	/// Visit a parse tree produced by <see cref="QuokkaParser.plusOperand"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitPlusOperand([NotNull] QuokkaParser.PlusOperandContext context);
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="QuokkaParser.minusOperand"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitMinusOperand([NotNull] QuokkaParser.MinusOperandContext context);
+	/// <summary>
 	/// Visit a parse tree produced by <see cref="QuokkaParser.multiplicationExpression"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
 	Result VisitMultiplicationExpression([NotNull] QuokkaParser.MultiplicationExpressionContext context);
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="QuokkaParser.multiplicationOperand"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitMultiplicationOperand([NotNull] QuokkaParser.MultiplicationOperandContext context);
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="QuokkaParser.divisionOperand"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitDivisionOperand([NotNull] QuokkaParser.DivisionOperandContext context);
 	/// <summary>
 	/// Visit a parse tree produced by <see cref="QuokkaParser.negationExpression"/>.
 	/// </summary>
