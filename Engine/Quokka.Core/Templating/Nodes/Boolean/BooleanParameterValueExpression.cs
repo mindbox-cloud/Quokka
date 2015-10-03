@@ -15,7 +15,7 @@ namespace Quokka
 		{
 			// TODO: this is very temporary and should be removed. 
 			// For now we consider the parameter to always be True if it's a complex parameter (member access), otherwise False.
-			return variableOccurence.Members.Any();
+			return variableOccurence.Member != null;
 		}
 	}
 }

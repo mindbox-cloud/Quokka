@@ -16,5 +16,11 @@ namespace Quokka
 			this.children = children.ToList().AsReadOnly();
 			this.unprocessedText = unprocessedText;
 		}
+
+		public override void CompileVariableDefinitions(VariableCollection variableCollection, ISemanticErrorListener errorListener)
+		{
+			foreach (var child in children)
+				child.CompileVariableDefinitions(variableCollection, errorListener);
+		}
 	}
 }

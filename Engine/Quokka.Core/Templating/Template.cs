@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 using Antlr4.Runtime;
 
 using Quokka.Generated;
@@ -12,6 +7,8 @@ namespace Quokka
 {
 	public class Template
 	{
+		private readonly TemplateBlock rootBlock;
+
 		public Template(string templateText)
 		{
 			if (templateText == null)
@@ -22,9 +19,15 @@ namespace Quokka
 			var commonTokenStream = new CommonTokenStream(lexer);
 			var parser = new QuokkaParser(commonTokenStream);
 
-			var compilationVisitor = new TemplateCompilationVisitor();
-			var root = compilationVisitor.Visit(parser.template());
-			root = null;
+			var compilationVisitor = new RootTemplateVisitor();
+			rootBlock = compilationVisitor.Visit(parser.template());
+
+			var variables = new VariableCollection();
+			var errorListener = new SemanticErrorListener();
+			
+			rootBlock.CompileVariableDefinitions(variables, errorListener);
+
+			errorListener = null;
 		}
 	}
 }

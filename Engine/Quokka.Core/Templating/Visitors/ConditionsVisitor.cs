@@ -7,14 +7,14 @@ namespace Quokka
 		public override ConditionBlock VisitIfCondition(QuokkaParser.IfConditionContext context)
 		{
 			return new ConditionBlock(
-				context.ifInstruction().booleanExpression().Accept(new BooleanExpresionVisitor()),
+				context.ifInstruction().booleanExpression().Accept(new BooleanExpressionVisitor()),
 				context.templateBlock()?.Accept(new TemplateCompilationVisitor()));
 		}
 
 		public override ConditionBlock VisitElseIfCondition(QuokkaParser.ElseIfConditionContext context)
 		{
 			return new ConditionBlock(
-				context.elseIfInstruction().booleanExpression().Accept(new BooleanExpresionVisitor()),
+				context.elseIfInstruction().booleanExpression().Accept(new BooleanExpressionVisitor()),
 				context.templateBlock()?.Accept(new TemplateCompilationVisitor()));
 		}
 

@@ -1,12 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Quokka
 {
 	internal abstract class TemplateNodeBase : ITemplateNode
 	{
+		public virtual void CompileVariableDefinitions(VariableCollection variableCollection, ISemanticErrorListener errorListener)
+		{
+		}
 	}
 }

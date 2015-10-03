@@ -13,5 +13,11 @@ namespace Quokka
 				.ToList()
 				.AsReadOnly();
 		}
+
+		public override void CompileVariableDefinitions(VariableCollection variableCollection, ISemanticErrorListener errorListener)
+		{
+			foreach (var child in children)
+				child.CompileVariableDefinitions(variableCollection, errorListener);
+		}
 	}
 }
