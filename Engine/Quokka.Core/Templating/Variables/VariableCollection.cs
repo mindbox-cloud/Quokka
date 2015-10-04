@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
 
 namespace Quokka
 {
@@ -9,6 +11,15 @@ namespace Quokka
 		public VariableCollection()
 		{
 			variables = new Dictionary<string, VariableDefinition>();
+		}
+
+		public ReadOnlyCollection<IParameterDefinition> GetParameterDefinitions()
+		{
+			return variables
+				.Select(kvp => kvp.Value.ToParameterDefinition())
+				.OrderBy(parameter => parameter.Name)
+				.ToList()
+				.AsReadOnly();
 		}
 
 		public bool CheckIfVariableExists(string variableName)
@@ -50,10 +61,7 @@ namespace Quokka
 					errorListener,
 					$"{fullNamePrefix}{variableOccurence.Name}.");
 			}
-			else
-			{
-				return definition;
-			}
+			return definition;
 		}
 	}
 }

@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+﻿using System;
 
 namespace Quokka
 {
@@ -37,5 +37,35 @@ namespace Quokka
 			Type = type;
 			Fields = new VariableCollection();
 		}
+
+		public IParameterDefinition ToParameterDefinition()
+		{
+			switch (Type)
+			{
+				case VariableType.Composite:
+
+					return new CompositeParameterDefinition(
+						Name,
+						Type,
+						Fields.GetParameterDefinitions());
+
+				case VariableType.Array:
+					if (CollectionElementVariable == null)
+						throw new InvalidOperationException(
+							"The variable is of an array type but the collection variable is not set");
+
+					return new ArrayParameterDefinition(
+						Name,
+						Type,
+						CollectionElementVariable.Fields.GetParameterDefinitions());
+
+				default:
+					return new ParameterDefinition(
+						Name, 
+						Type);
+			}
+		}
+
+		
 	}
 }

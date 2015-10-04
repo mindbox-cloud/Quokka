@@ -11,6 +11,15 @@
 // Generated from C:\Code\Quokka\Grammar\Quokka\Quokka.g4 by ANTLR 4.5.1
 
 // Unreachable code detected
+
+using System;
+using System.CodeDom.Compiler;
+
+using Antlr4.Runtime;
+using Antlr4.Runtime.Atn;
+using Antlr4.Runtime.Misc;
+using Antlr4.Runtime.Tree;
+
 #pragma warning disable 0162
 // The variable '...' is assigned but its value is never used
 #pragma warning disable 0219
@@ -18,18 +27,8 @@
 #pragma warning disable 1591
 
 namespace Quokka.Generated {
-using System;
-using System.Text;
-using System.Diagnostics;
-using System.Collections.Generic;
-using Antlr4.Runtime;
-using Antlr4.Runtime.Atn;
-using Antlr4.Runtime.Misc;
-using Antlr4.Runtime.Tree;
-using DFA = Antlr4.Runtime.Dfa.DFA;
-
-[System.CodeDom.Compiler.GeneratedCode("ANTLR", "4.5.1")]
-[System.CLSCompliant(false)]
+	[GeneratedCode("ANTLR", "4.5.1")]
+[CLSCompliant(false)]
 public partial class QuokkaParser : Parser {
 	public const int
 		SingleInstructionComment=1, OutputInstructionStart=2, ControlInstructionStart=3, 
@@ -208,7 +207,7 @@ public partial class QuokkaParser : Parser {
 				State = 92;
 				ErrorHandler.Sync(this);
 				_alt = Interpreter.AdaptivePredict(TokenStream,1,Context);
-			} while ( _alt!=2 && _alt!=global::Antlr4.Runtime.Atn.ATN.InvalidAltNumber );
+			} while ( _alt!=2 && _alt!=ATN.InvalidAltNumber );
 			}
 		}
 		catch (RecognitionException re) {
@@ -285,7 +284,7 @@ public partial class QuokkaParser : Parser {
 				State = 98;
 				ErrorHandler.Sync(this);
 				_alt = Interpreter.AdaptivePredict(TokenStream,3,Context);
-			} while ( _alt!=2 && _alt!=global::Antlr4.Runtime.Atn.ATN.InvalidAltNumber );
+			} while ( _alt!=2 && _alt!=ATN.InvalidAltNumber );
 			}
 		}
 		catch (RecognitionException re) {
@@ -402,7 +401,7 @@ public partial class QuokkaParser : Parser {
 				State = 108;
 				ErrorHandler.Sync(this);
 				_alt = Interpreter.AdaptivePredict(TokenStream,5,Context);
-			} while ( _alt!=2 && _alt!=global::Antlr4.Runtime.Atn.ATN.InvalidAltNumber );
+			} while ( _alt!=2 && _alt!=ATN.InvalidAltNumber );
 			}
 		}
 		catch (RecognitionException re) {
@@ -897,7 +896,7 @@ public partial class QuokkaParser : Parser {
 			State = 159;
 			ErrorHandler.Sync(this);
 			_alt = Interpreter.AdaptivePredict(TokenStream,13,Context);
-			while ( _alt!=2 && _alt!=global::Antlr4.Runtime.Atn.ATN.InvalidAltNumber ) {
+			while ( _alt!=2 && _alt!=ATN.InvalidAltNumber ) {
 				if ( _alt==1 ) {
 					{
 					{

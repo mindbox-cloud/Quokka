@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace Quokka
+﻿namespace Quokka
 {
 	internal interface ITemplateNode
 	{

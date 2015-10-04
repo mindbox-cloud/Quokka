@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+
 using Quokka.Generated;
 
 namespace Quokka
@@ -74,9 +75,7 @@ namespace Quokka
 				collectionVariable,
 				new IterationVariableDeclaration(
 					forInstruction.iterationVariable().Identifier().GetText(),
-					VariableType.Composite,
-					member: null,
-					collectionVariable: collectionVariable));
+					VariableType.Composite, null, collectionVariable));
 		}
 	}
 }

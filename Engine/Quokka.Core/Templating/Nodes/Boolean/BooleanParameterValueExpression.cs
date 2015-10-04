@@ -1,6 +1,4 @@
-﻿using System.Linq;
-
-namespace Quokka
+﻿namespace Quokka
 {
 	internal class BooleanParameterValueExpression : BooleanExpressionBase
 	{

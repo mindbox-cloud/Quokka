@@ -4,7 +4,7 @@ namespace Quokka
 {
 	internal class Scope
 	{
-		private readonly VariableCollection variables = new VariableCollection();
+		public VariableCollection Variables { get; } = new VariableCollection();
 		private readonly Scope parentScope;
 		private readonly List<Scope> childScopes = new List<Scope>();
 
@@ -37,12 +37,12 @@ namespace Quokka
 			VariableOccurence variableOccurence,
 			ISemanticErrorListener errorListener)
 		{
-			return variables.CreateOrUpdateVariableDefinition(variableOccurence, errorListener);
+			return Variables.CreateOrUpdateVariableDefinition(variableOccurence, errorListener);
 		}
 
 		private Scope GetDeclarationScopeForVariable(VariableOccurence variableOccurence)
 		{
-			return variables.CheckIfVariableExists(variableOccurence.Name) 
+			return Variables.CheckIfVariableExists(variableOccurence.Name) 
 				? this 
 				: parentScope?.GetDeclarationScopeForVariable(variableOccurence);
 		}

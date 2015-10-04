@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+
 using Antlr4.Runtime;
 
 using Quokka.Generated;
@@ -8,6 +10,7 @@ namespace Quokka
 	public class Template
 	{
 		private readonly TemplateBlock rootBlock;
+		private readonly VariableCollection externalVariables;
 
 		public Template(string templateText)
 		{
@@ -26,8 +29,13 @@ namespace Quokka
 			var errorListener = new SemanticErrorListener();
 			
 			rootBlock.CompileVariableDefinitions(scope, errorListener);
-
+			externalVariables = scope.Variables;
 			errorListener = null;
+		}
+
+		public IList<IParameterDefinition> GetParameterDefinitions()
+		{
+			return externalVariables.GetParameterDefinitions();
 		}
 	}
 }

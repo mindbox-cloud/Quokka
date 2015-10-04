@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Quokka
+﻿namespace Quokka
 {
 	internal abstract class TemplateNodeBase : ITemplateNode
 	{
