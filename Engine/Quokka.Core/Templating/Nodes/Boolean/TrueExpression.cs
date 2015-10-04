@@ -1,8 +1,8 @@
 ﻿namespace Quokka
 {
-	internal class TrueExpression : IBooleanExpression
+	internal class TrueExpression : BooleanExpressionBase
 	{
-		public bool Evaluate()
+		public override bool Evaluate()
 		{
 			return true;
 		}

@@ -4,6 +4,6 @@ namespace Quokka
 {
 	internal interface ITemplateNode
 	{
-		void CompileVariableDefinitions(VariableCollection variableCollection, ISemanticErrorListener errorListener);
+		void CompileVariableDefinitions(Scope scope, ISemanticErrorListener errorListener);
 	}
 }

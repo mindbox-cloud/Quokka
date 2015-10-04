@@ -63,6 +63,7 @@
     <Compile Include="Templating\Nodes\Arithmetic\NumberExpression.cs" />
     <Compile Include="Templating\Nodes\Boolean\AndExpression.cs" />
     <Compile Include="Templating\Nodes\Boolean\ArithmeticComparisonExpression.cs" />
+    <Compile Include="Templating\Nodes\Boolean\BooleanExpressionBase.cs" />
     <Compile Include="Templating\Nodes\Boolean\BooleanParameterValueExpression.cs" />
     <Compile Include="Templating\Nodes\Boolean\IBooleanExpression.cs" />
     <Compile Include="Templating\Nodes\Boolean\NotExpression.cs" />
@@ -72,12 +73,13 @@
     <Compile Include="Templating\Nodes\ForBlock.cs" />
     <Compile Include="Templating\Nodes\IfBlock.cs" />
     <Compile Include="Templating\Nodes\VariableOutputBlock.cs" />
-    <Compile Include="Templating\Nodes\Variables\IterationVariableDeclaration.cs" />
-    <Compile Include="Templating\Nodes\Variables\VariableCollection.cs" />
-    <Compile Include="Templating\Nodes\Variables\VariableDeclaration.cs" />
-    <Compile Include="Templating\Nodes\Variables\VariableDefinition.cs" />
-    <Compile Include="Templating\Nodes\Variables\VariableOccurence.cs" />
-    <Compile Include="Templating\Nodes\Variables\VariableType.cs" />
+    <Compile Include="Templating\Variables\IterationVariableDeclaration.cs" />
+    <Compile Include="Templating\Variables\Scope.cs" />
+    <Compile Include="Templating\Variables\VariableCollection.cs" />
+    <Compile Include="Templating\Variables\VariableDeclaration.cs" />
+    <Compile Include="Templating\Variables\VariableDefinition.cs" />
+    <Compile Include="Templating\Variables\VariableOccurence.cs" />
+    <Compile Include="Templating\Variables\VariableType.cs" />
     <Compile Include="Templating\Nodes\ConstantBlock.cs" />
     <Compile Include="Templating\Nodes\StaticBlock.cs" />
     <Compile Include="Templating\Nodes\TemplateBlock.cs" />

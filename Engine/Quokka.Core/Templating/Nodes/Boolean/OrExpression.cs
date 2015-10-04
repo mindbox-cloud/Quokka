@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace Quokka
 {
-	internal class OrExpression : IBooleanExpression
+	internal class OrExpression : BooleanExpressionBase
 	{
 		private readonly IReadOnlyCollection<IBooleanExpression> subExpressions;
 
@@ -12,9 +12,15 @@ namespace Quokka
 			this.subExpressions = subExpressions.ToList().AsReadOnly();
 		}
 
-		public bool Evaluate()
+		public override bool Evaluate()
 		{
 			return subExpressions.Any(subExpression => subExpression.Evaluate());
+		}
+
+		public override void CompileVariableDefinitions(Scope scope, ISemanticErrorListener errorListener)
+		{
+			foreach (var subExpression in subExpressions)
+				subExpression.CompileVariableDefinitions(scope, errorListener);
 		}
 	}
 }

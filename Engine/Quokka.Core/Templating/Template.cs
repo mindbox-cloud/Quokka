@@ -22,10 +22,10 @@ namespace Quokka
 			var compilationVisitor = new RootTemplateVisitor();
 			rootBlock = compilationVisitor.Visit(parser.template());
 
-			var variables = new VariableCollection();
+			var scope = new Scope();
 			var errorListener = new SemanticErrorListener();
 			
-			rootBlock.CompileVariableDefinitions(variables, errorListener);
+			rootBlock.CompileVariableDefinitions(scope, errorListener);
 
 			errorListener = null;
 		}

@@ -17,10 +17,9 @@ namespace Quokka
 			VariableOccurence collectionVariable)
 			: base(name, requiredType, member)
 		{
-			if (collectionVariable == null)
-				throw new ArgumentNullException(nameof(collectionVariable));
-			if (collectionVariable.RequiredType != VariableType.Array)
-				throw new InvalidOperationException("collectionVariable.RequiredType != VariableType.Array");
+			var leafMember = collectionVariable.GetLeafMember();
+			if (leafMember.RequiredType != VariableType.Array)
+				throw new InvalidOperationException("leafMember.RequiredType != VariableType.Array");
 
 			this.collectionVariable = collectionVariable;
 		}

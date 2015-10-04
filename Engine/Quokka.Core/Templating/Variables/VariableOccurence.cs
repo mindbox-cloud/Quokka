@@ -15,5 +15,9 @@
 				Member = member;
 		}
 
+		public VariableOccurence GetLeafMember()
+		{
+			return Member == null ? this : Member.GetLeafMember();
+		}
 	}
 }

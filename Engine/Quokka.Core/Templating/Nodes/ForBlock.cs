@@ -12,5 +12,15 @@
 			this.collection = collection;
 			this.iterationVariable = iterationVariable;
 		}
+
+		public override void CompileVariableDefinitions(Scope scope, ISemanticErrorListener errorListener)
+		{
+			var collectionVariableDefinition = 
+				scope.CreateOrUpdateVariableDefinition(collection, errorListener);
+			var innerScope = scope.CreateChildScope();
+			var iterationVariableDefinition = innerScope.CreateOrUpdateVariableDefinition(iterationVariable, errorListener);
+			collectionVariableDefinition.CollectionElementVariable = iterationVariableDefinition;
+            block.CompileVariableDefinitions(innerScope, errorListener);
+		}
 	}
 }

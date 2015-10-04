@@ -11,14 +11,19 @@ namespace Quokka
 			variables = new Dictionary<string, VariableDefinition>();
 		}
 
-		public void ProcessVariableOccurence(
+		public bool CheckIfVariableExists(string variableName)
+		{
+			return variables.ContainsKey(variableName);
+		}
+
+		public VariableDefinition CreateOrUpdateVariableDefinition(
 			VariableOccurence variableOccurence,
 			ISemanticErrorListener errorListener)
 		{
-			ProcessVariableOccurence(variableOccurence, errorListener, null);
+			return CreateOrUpdateVariableDefinition(variableOccurence, errorListener, null);
 		}
 
-		private void ProcessVariableOccurence(
+		private VariableDefinition CreateOrUpdateVariableDefinition(
 			VariableOccurence variableOccurence,
 			ISemanticErrorListener errorListener,
 			string fullNamePrefix)
@@ -40,10 +45,14 @@ namespace Quokka
 
 			if (variableOccurence.Member != null)
 			{
-				definition.Fields.ProcessVariableOccurence(
+				return definition.Fields.CreateOrUpdateVariableDefinition(
 					variableOccurence.Member,
 					errorListener,
 					$"{fullNamePrefix}{variableOccurence.Name}.");
+			}
+			else
+			{
+				return definition;
 			}
 		}
 	}

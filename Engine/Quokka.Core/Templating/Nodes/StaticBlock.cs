@@ -17,10 +17,10 @@ namespace Quokka
 			this.unprocessedText = unprocessedText;
 		}
 
-		public override void CompileVariableDefinitions(VariableCollection variableCollection, ISemanticErrorListener errorListener)
+		public override void CompileVariableDefinitions(Scope scope, ISemanticErrorListener errorListener)
 		{
 			foreach (var child in children)
-				child.CompileVariableDefinitions(variableCollection, errorListener);
+				child.CompileVariableDefinitions(scope, errorListener);
 		}
 	}
 }

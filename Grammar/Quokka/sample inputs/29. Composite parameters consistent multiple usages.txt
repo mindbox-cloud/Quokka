@@ -10,3 +10,8 @@ ${ Recipient.Email }
 ${ Recipient.Order }
 ${ Recipient.Order.Staff }
 ${ Context.DayOfWeek }
+
+@{ for item in Recipient.Friends }
+	${ item.Name }
+	${ item.Age }
+@{ end for }

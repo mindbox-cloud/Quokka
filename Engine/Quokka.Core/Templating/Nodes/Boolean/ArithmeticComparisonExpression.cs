@@ -2,9 +2,9 @@
 
 namespace Quokka
 {
-	internal class ArithmeticComparisonExpression : IBooleanExpression
+	internal class ArithmeticComparisonExpression : BooleanExpressionBase
 	{
-		public bool Evaluate()
+		public override bool Evaluate()
 		{
 			throw new NotImplementedException("Arithmetic comparison is not supported in conditions");
 		}

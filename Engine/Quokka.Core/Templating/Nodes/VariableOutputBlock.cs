@@ -9,9 +9,9 @@
 			this.variableOccurence = variableOccurence;
 		}
 
-		public override void CompileVariableDefinitions(VariableCollection variableCollection, ISemanticErrorListener errorListener)
+		public override void CompileVariableDefinitions(Scope scope, ISemanticErrorListener errorListener)
 		{
-			variableCollection.ProcessVariableOccurence(variableOccurence, errorListener);
+			scope.CreateOrUpdateVariableDefinition(variableOccurence, errorListener);
 		}
 	}
 }

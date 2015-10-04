@@ -1,6 +1,6 @@
 ﻿namespace Quokka
 {
-	internal class NotExpression : IBooleanExpression
+	internal class NotExpression : BooleanExpressionBase
 	{
 		private readonly IBooleanExpression inner;
 
@@ -9,9 +9,14 @@
 			this.inner = inner;
 		}
 
-		public bool Evaluate()
+		public override bool Evaluate()
 		{
 			return !inner.Evaluate();
+		}
+
+		public override void CompileVariableDefinitions(Scope scope, ISemanticErrorListener errorListener)
+		{
+			inner.CompileVariableDefinitions(scope, errorListener);
 		}
 	}
 }
