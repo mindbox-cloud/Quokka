@@ -436,7 +436,7 @@ namespace Quokka.Tests
 		}
 
 		[TestMethod]
-		public void ParameterDiscovery_ForLoop_InnerForUsingFieldOfOuterForElement()
+		public void ParameterDiscovery_NestedForLoops_UsingFieldFromOuterForElement()
 		{
 			var parameterDefinitions = new Template(@"
 				@{ for offer in Offers } 
@@ -567,6 +567,43 @@ namespace Quokka.Tests
 							new ParameterDefinition(
 								"Url",
 								VariableType.Primitive)
+						})
+				},
+				parameterDefinitions);
+		}
+
+		[TestMethod]
+		public void ParameterDiscovery_AdjacentForLoops_SecondLevelElementFieldsForSameCollection()
+		{
+			var parameterDefinitions = new Template(@"
+				@{ for offer in Offers } 
+					${ offer.Details.Price }
+				@{ end for }
+
+				@{ for myOffer in Offers } 
+					${ myOffer.Details.Url }
+				@{ end for }
+				")
+				.GetParameterDefinitions();
+
+			TemplateAssert.AreParameterDefinitionsEqual(
+				new[]
+				{
+					new ArrayParameterDefinition(
+						"Offers",
+						new IParameterDefinition[]
+						{
+							new CompositeParameterDefinition(
+								"Details",
+								new IParameterDefinition[]
+								{
+									new ParameterDefinition(
+										"Price",
+										VariableType.Primitive),
+									new ParameterDefinition(
+										"Url",
+										VariableType.Primitive)
+								})
 						})
 				},
 				parameterDefinitions);
