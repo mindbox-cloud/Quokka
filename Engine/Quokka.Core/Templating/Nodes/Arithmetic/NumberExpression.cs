@@ -1,6 +1,6 @@
 ﻿namespace Quokka
 {
-	internal class NumberExpression : IArithmeticExpression
+	internal class NumberExpression : ArithmeticExpressionBase
 	{
 		private readonly double number;
 
@@ -9,7 +9,7 @@
 			this.number = number;
 		}
 
-		public double GetValue()
+		public override double GetValue()
 		{
 			return number;
 		}

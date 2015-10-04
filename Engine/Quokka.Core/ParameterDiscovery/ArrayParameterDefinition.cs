@@ -8,9 +8,8 @@ namespace Quokka
 
 		public ArrayParameterDefinition(
 			string name,
-			VariableType type,
 			IList<IParameterDefinition> elementFields)
-			: base(name, type)
+			: base(name, VariableType.Array)
 		{
 			ElementFields = elementFields;
 		}

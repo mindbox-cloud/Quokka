@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 using Antlr4.Runtime;
 
@@ -30,7 +31,11 @@ namespace Quokka
 			
 			rootBlock.CompileVariableDefinitions(scope, errorListener);
 			externalVariables = scope.Variables;
-			errorListener = null;
+			var errors = errorListener.GetErrors();
+			if (errors.Any())
+				throw new InvalidOperationException(
+					string.Concat(
+						errors.Select(error => error.Message)));
 		}
 
 		public IList<IParameterDefinition> GetParameterDefinitions()

@@ -6,6 +6,8 @@
 		public VariableType RequiredType { get; }
 		public VariableOccurence Member { get; }
 
+		public virtual bool IsGlobal => true;
+
 		public VariableOccurence(string name, VariableType requiredType, VariableOccurence member)
 		{ 
 			Name = name;

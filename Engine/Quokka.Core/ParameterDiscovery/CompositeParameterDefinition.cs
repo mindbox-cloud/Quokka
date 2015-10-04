@@ -6,8 +6,8 @@ namespace Quokka
 	{
 		public IList<IParameterDefinition> Fields { get; }
 
-		public CompositeParameterDefinition(string name, VariableType type, IList<IParameterDefinition> fields)
-			: base(name, type)
+		public CompositeParameterDefinition(string name, IList<IParameterDefinition> fields)
+			: base(name, VariableType.Composite)
 		{
 			Fields = fields;
 		}

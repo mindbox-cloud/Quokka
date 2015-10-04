@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Quokka
 {
@@ -28,14 +30,19 @@ namespace Quokka
 		/// (it'll give us information about fields that we should expect every element of the collection to have).
 		/// </summary>
 		/// <remarks>Only relevant for collection variables.</remarks>
-		public VariableDefinition CollectionElementVariable { get; set; }
+		public List<VariableDefinition> CollectionElementVariables { get; } = new List<VariableDefinition>();
 
 		public VariableDefinition(string name, string fullName, VariableType type)
+			: this(name, fullName, type, new VariableCollection())
+		{
+		}
+
+		private VariableDefinition(string name, string fullName, VariableType type, VariableCollection fields)
 		{
 			Name = name;
 			FullName = fullName;
 			Type = type;
-			Fields = new VariableCollection();
+			Fields = fields;
 		}
 
 		public IParameterDefinition ToParameterDefinition()
@@ -46,18 +53,19 @@ namespace Quokka
 
 					return new CompositeParameterDefinition(
 						Name,
-						Type,
 						Fields.GetParameterDefinitions());
 
 				case VariableType.Array:
-					if (CollectionElementVariable == null)
+					if (!CollectionElementVariables.Any())
 						throw new InvalidOperationException(
-							"The variable is of an array type but the collection variable is not set");
+							"The variable is of an array type but no collection variables found");
+
+					var collectionElementDefinition = VariableCollection
+						.Merge(CollectionElementVariables.Select(variable => variable.Fields));
 
 					return new ArrayParameterDefinition(
 						Name,
-						Type,
-						CollectionElementVariable.Fields.GetParameterDefinitions());
+						collectionElementDefinition.GetParameterDefinitions());
 
 				default:
 					return new ParameterDefinition(
@@ -66,6 +74,34 @@ namespace Quokka
 			}
 		}
 
+		public static VariableDefinition Merge(IList<VariableDefinition> definitions)
+		{
+			VariableType type = default(VariableType);
+			string name = null;
+			bool firstDefinitionProcessed = false;
+
+			foreach (var definition in definitions)
+			{
+				if (!firstDefinitionProcessed)
+				{
+					type = definition.Type;
+					name = definition.Name;
+					firstDefinitionProcessed = true;
+				}
+				else
+				{
+					if (definition.Type != type)
+						//TODO: change it to be an analysis error
+						throw new InvalidOperationException("Inconsistent typing");
+					if (definition.Name != name)
+						throw new InvalidOperationException("definition.Name != Name");
+				}
+			}
+
+			var fields = VariableCollection.Merge(definitions.Select(definition => definition.Fields));
+
+            return new VariableDefinition(name, name, type, fields);
+		}
 		
 	}
 }

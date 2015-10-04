@@ -2,11 +2,11 @@
 {
 	internal abstract class MultiplicationOperand
 	{
-		private readonly IArithmeticExpression expression;
+		public IArithmeticExpression Expression { get; }
 
 		protected MultiplicationOperand(IArithmeticExpression expression)
 		{
-			this.expression = expression;
+			this.Expression = expression;
 		}
 
 		public abstract double Calculate(double leftOperand);
@@ -30,7 +30,7 @@
 
 			public override double Calculate(double leftOperand)
 			{
-				return leftOperand * expression.GetValue();
+				return leftOperand * Expression.GetValue();
 			}
 		}
 
@@ -43,7 +43,7 @@
 
 			public override double Calculate(double leftOperand)
 			{
-				return leftOperand / expression.GetValue();
+				return leftOperand / Expression.GetValue();
 			}
 		}
 	}

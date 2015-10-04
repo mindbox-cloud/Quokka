@@ -19,7 +19,7 @@
 				scope.CreateOrUpdateVariableDefinition(collection, errorListener);
 			var innerScope = scope.CreateChildScope();
 			var iterationVariableDefinition = innerScope.CreateOrUpdateVariableDefinition(iterationVariable, errorListener);
-			collectionVariableDefinition.CollectionElementVariable = iterationVariableDefinition;
+			collectionVariableDefinition.CollectionElementVariables.Add(iterationVariableDefinition);
             block.CompileVariableDefinitions(innerScope, errorListener);
 		}
 	}

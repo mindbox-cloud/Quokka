@@ -1,6 +1,6 @@
 ﻿namespace Quokka
 {
-	internal class NegationExpression : IArithmeticExpression
+	internal class NegationExpression : ArithmeticExpressionBase
 	{
 		private readonly IArithmeticExpression innerExpression;
 
@@ -9,9 +9,14 @@
 			this.innerExpression = innerExpression;
 		}
 
-		public double GetValue()
+		public override double GetValue()
 		{
 			return -1.0 * innerExpression.GetValue();
+		}
+
+		public override void CompileVariableDefinitions(Scope scope, ISemanticErrorListener errorListener)
+		{
+			innerExpression.CompileVariableDefinitions(scope, errorListener);
 		}
 	}
 }

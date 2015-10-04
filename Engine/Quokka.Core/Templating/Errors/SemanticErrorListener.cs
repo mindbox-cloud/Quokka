@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace Quokka
 {
@@ -10,6 +11,11 @@ namespace Quokka
 		{
 			errors.Add(error);
 		}
+
+		public IReadOnlyCollection<Error> GetErrors()
+		{
+			return errors.AsReadOnly();
+		} 
 
 		public void AddInconsistentVariableTypesError(VariableDefinition definition, VariableOccurence occurence)
 		{

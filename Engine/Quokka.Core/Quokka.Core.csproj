@@ -60,6 +60,7 @@
     <Compile Include="Templating\Errors\SemanticErrorListener.cs" />
     <Compile Include="Templating\Nodes\ArithmeticExpressionOutputBlock.cs" />
     <Compile Include="Templating\Nodes\Arithmetic\AdditionExpression.cs" />
+    <Compile Include="Templating\Nodes\Arithmetic\ArithmeticExpressionBase.cs" />
     <Compile Include="Templating\Nodes\Arithmetic\ArithmeticParameterValueExpression.cs" />
     <Compile Include="Templating\Nodes\Arithmetic\MultiplicationExpression.cs" />
     <Compile Include="Templating\Nodes\Arithmetic\MultiplicationOperand.cs" />

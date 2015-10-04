@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace Quokka
 {
-	internal class AdditionExpression : IArithmeticExpression
+	internal class AdditionExpression : ArithmeticExpressionBase
 	{
 		private readonly IReadOnlyCollection<AdditionOperand> operands;
 
@@ -12,10 +12,16 @@ namespace Quokka
 			this.operands = operands.ToList().AsReadOnly();
 		}
 
-		public double GetValue()
+		public override double GetValue()
 		{
 			return operands
 				.Aggregate(0.0, (current, operand) => operand.Calculate(current));
+		}
+
+		public override void CompileVariableDefinitions(Scope scope, ISemanticErrorListener errorListener)
+		{
+			foreach (var operand in operands)
+				operand.Expression.CompileVariableDefinitions(scope, errorListener);
 		}
 	}
 }

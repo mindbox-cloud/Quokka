@@ -29,7 +29,10 @@ namespace Quokka
 			VariableOccurence variableOccurence,
 			ISemanticErrorListener errorListener)
 		{
-			var variableScope = GetDeclarationScopeForVariable(variableOccurence) ?? this;
+			var variableScope = GetDeclarationScopeForVariable(variableOccurence);
+			if (variableScope == null)
+				variableScope = variableOccurence.IsGlobal ? GetTopmostScope() : this;
+
 			return variableScope.CreateOrUpdateVariableDefinitionIgnoringParentScopes(variableOccurence, errorListener);
 		}
 
@@ -38,6 +41,11 @@ namespace Quokka
 			ISemanticErrorListener errorListener)
 		{
 			return Variables.CreateOrUpdateVariableDefinition(variableOccurence, errorListener);
+		}
+
+		private Scope GetTopmostScope()
+		{
+			return parentScope == null ? this : parentScope.GetTopmostScope();
 		}
 
 		private Scope GetDeclarationScopeForVariable(VariableOccurence variableOccurence)
