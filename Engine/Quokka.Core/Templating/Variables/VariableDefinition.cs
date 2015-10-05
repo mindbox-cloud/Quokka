@@ -17,7 +17,7 @@ namespace Quokka
 	{
 		public string Name { get; }
 		public string FullName { get; }
-		public VariableType Type { get; }
+		public VariableType Type { get; set; }
 		
 		/// <summary>
 		/// Own fields of the variable.
@@ -60,12 +60,12 @@ namespace Quokka
 						throw new InvalidOperationException(
 							"The variable is of an array type but no collection variables found");
 
-					var collectionElementDefinition = VariableCollection
-						.Merge(CollectionElementVariables.Select(variable => variable.Fields));
-
+					var collectionElementDefinition = Merge(CollectionElementVariables.ToList());
+					
 					return new ArrayParameterDefinition(
 						Name,
-						collectionElementDefinition.GetParameterDefinitions());
+						collectionElementDefinition.Type,
+						collectionElementDefinition.Fields.GetParameterDefinitions());
 
 				default:
 					return new ParameterDefinition(
@@ -93,12 +93,10 @@ namespace Quokka
 					if (definition.Type != type)
 						//TODO: change it to be an analysis error
 						throw new InvalidOperationException("Inconsistent typing");
-					if (definition.Name != name)
-						throw new InvalidOperationException("definition.Name != Name");
 				}
 			}
 
-			var fields = VariableCollection.Merge(definitions.Select(definition => definition.Fields));
+			var fields = VariableCollection.Merge(definitions.Select(definition => definition.Fields).ToList());
 
             return new VariableDefinition(name, name, type, fields);
 		}

@@ -273,33 +273,13 @@ namespace Quokka.Tests
 				},
 				parameterDefinitions);
 		}
-
-		[TestMethod]
-		public void ParameterDiscovery_ForLoop_FirstLevelParameterAsCollection()
-		{
-			var parameterDefinitions = new Template(@"
-				@{ for element in Offers } 
-					Text
-				@{ end for }
-				")
-				.GetParameterDefinitions();
-
-			TemplateAssert.AreParameterDefinitionsEqual(
-				new[]
-				{
-					new ArrayParameterDefinition(
-						"Offers",
-						new IParameterDefinition[0])
-				},
-				parameterDefinitions);
-		}
-
+		
 		[TestMethod]
 		public void ParameterDiscovery_ForLoop_SecondLevelParameterAsCollection()
 		{
 			var parameterDefinitions = new Template(@"
 				@{ for element in Customer.Orders } 
-					Text
+					${ element.Id }
 				@{ end for }
 				")
 				.GetParameterDefinitions();
@@ -313,7 +293,13 @@ namespace Quokka.Tests
 						{
 							new ArrayParameterDefinition(
 								"Orders",
-								new IParameterDefinition[0])
+								VariableType.Composite,
+								new IParameterDefinition[]
+								{
+									new ParameterDefinition(
+										"Id",
+										VariableType.Primitive) 
+								})
 						})
 				},
 				parameterDefinitions);
@@ -334,6 +320,7 @@ namespace Quokka.Tests
 				{
 					new ArrayParameterDefinition(
 						"Offers",
+						VariableType.Composite,
 						new IParameterDefinition[]
 						{
 							new ParameterDefinition(
@@ -360,6 +347,7 @@ namespace Quokka.Tests
 				{
 					new ArrayParameterDefinition(
 						"Offers",
+						VariableType.Composite,
 						new IParameterDefinition[]
 						{
 							new ParameterDefinition(
@@ -389,6 +377,7 @@ namespace Quokka.Tests
 				{
 					new ArrayParameterDefinition(
 						"Offers",
+						VariableType.Composite,
 						new IParameterDefinition[]
 						{
 							new CompositeParameterDefinition(
@@ -425,6 +414,7 @@ namespace Quokka.Tests
 				{
 					new ArrayParameterDefinition(
 						"Offers",
+						VariableType.Composite,
 						new IParameterDefinition[]
 						{
 							new ParameterDefinition(
@@ -454,6 +444,7 @@ namespace Quokka.Tests
 				{
 					new ArrayParameterDefinition(
 						"Offers",
+						VariableType.Composite,
 						new IParameterDefinition[]
 						{
 							new ParameterDefinition(
@@ -465,6 +456,7 @@ namespace Quokka.Tests
 						}),
 					new ArrayParameterDefinition(
 						"Seasons",
+						VariableType.Unknown,
 						new IParameterDefinition[0]
 					)
 				},
@@ -490,6 +482,7 @@ namespace Quokka.Tests
 				{
 					new ArrayParameterDefinition(
 						"Offers",
+						VariableType.Composite,
 						new IParameterDefinition[]
 						{
 							new ParameterDefinition(
@@ -498,6 +491,7 @@ namespace Quokka.Tests
 						}),
 					new ArrayParameterDefinition(
 						"OtherOffers",
+						VariableType.Composite,
 						new IParameterDefinition[]
 						{
 							new ParameterDefinition(
@@ -527,6 +521,7 @@ namespace Quokka.Tests
 				{
 					new ArrayParameterDefinition(
 						"Offers",
+						VariableType.Composite,
 						new IParameterDefinition[]
 						{
 							new ParameterDefinition(
@@ -559,6 +554,7 @@ namespace Quokka.Tests
 				{
 					new ArrayParameterDefinition(
 						"Offers",
+						VariableType.Composite,
 						new IParameterDefinition[]
 						{
 							new ParameterDefinition(
@@ -577,7 +573,7 @@ namespace Quokka.Tests
 		{
 			var parameterDefinitions = new Template(@"
 				@{ for offer in Offers } 
-					${ offer.Details.Price }
+					${$ offer.Details.Price }
 				@{ end for }
 
 				@{ for myOffer in Offers } 
@@ -591,6 +587,7 @@ namespace Quokka.Tests
 				{
 					new ArrayParameterDefinition(
 						"Offers",
+						VariableType.Composite,
 						new IParameterDefinition[]
 						{
 							new CompositeParameterDefinition(
@@ -605,6 +602,104 @@ namespace Quokka.Tests
 										VariableType.Primitive)
 								})
 						})
+				},
+				parameterDefinitions);
+		}
+
+		[TestMethod]
+		public void ParameterDiscovery_NestedForLoops_IterationOverCollectionElement()
+		{
+			var parameterDefinitions = new Template(@"
+				@{ for order in Orders } 
+					@{ for product in order.Products }
+						${ product.Name }
+					@{ end for }
+				@{ end for }
+				")
+				.GetParameterDefinitions();
+
+			TemplateAssert.AreParameterDefinitionsEqual(
+				new[]
+				{
+					new ArrayParameterDefinition(
+						"Orders",
+						VariableType.Composite,
+						new IParameterDefinition[]
+						{
+							new ArrayParameterDefinition(
+								"Products",
+								VariableType.Composite,
+								new IParameterDefinition[]
+								{
+									new ParameterDefinition(
+										"Name",
+										VariableType.Primitive)
+								})
+						})
+				},
+				parameterDefinitions);
+		}
+
+		[TestMethod]
+		public void ParameterDiscovery_NestedForLoops_MultipleIterationsOverCollectionElement()
+		{
+			var parameterDefinitions = new Template(@"
+				@{ for order in Orders } 
+					@{ for product in order.Products }
+						${ product.Name }
+					@{ end for }
+
+					@{ for date in order.Dates }
+						${ date }
+					@{ end for }
+				@{ end for }
+				")
+				.GetParameterDefinitions();
+
+			TemplateAssert.AreParameterDefinitionsEqual(
+				new[]
+				{
+					new ArrayParameterDefinition(
+						"Orders",
+						VariableType.Composite,
+						new IParameterDefinition[]
+						{
+							new ArrayParameterDefinition(
+								"Dates",
+								VariableType.Primitive,
+								new IParameterDefinition[0]),
+
+							new ArrayParameterDefinition(
+								"Products",
+								VariableType.Composite,
+								new IParameterDefinition[]
+								{
+									new ParameterDefinition(
+										"Name",
+										VariableType.Primitive)
+								})
+						})
+				},
+				parameterDefinitions);
+		}
+
+		[TestMethod]
+		public void ParameterDiscovery_ForLoop_CollectionElementWithoutUsages()
+		{
+			var parameterDefinitions = new Template(@"
+				@{ for element in Offers } 
+					Text
+				@{ end for }
+				")
+				.GetParameterDefinitions();
+
+			TemplateAssert.AreParameterDefinitionsEqual(
+				new[]
+				{
+					new ArrayParameterDefinition(
+						"Offers",
+						VariableType.Unknown,
+						new IParameterDefinition[0])
 				},
 				parameterDefinitions);
 		}

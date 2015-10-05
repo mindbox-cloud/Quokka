@@ -44,16 +44,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ParameterDiscovery\ArrayParameterDefinition.cs" />
-    <Compile Include="ParameterDiscovery\CompositeParameterDefinition.cs" />
+    <Compile Include="Parameters\ArrayParameterDefinition.cs" />
+    <Compile Include="Parameters\CompositeParameterDefinition.cs" />
     <Compile Include="Generated\QuokkaBaseVisitor.cs" />
     <Compile Include="Generated\QuokkaLex.cs" />
     <Compile Include="Generated\QuokkaParser.cs" />
     <Compile Include="Generated\QuokkaVisitor.cs" />
-    <Compile Include="ParameterDiscovery\IArrayParameterDefinition.cs" />
-    <Compile Include="ParameterDiscovery\ICompositeParameterDefinition.cs" />
-    <Compile Include="ParameterDiscovery\IParameterDefinition.cs" />
-    <Compile Include="ParameterDiscovery\ParameterDefinition.cs" />
+    <Compile Include="Parameters\IArrayParameterDefinition.cs" />
+    <Compile Include="Parameters\ICompositeParameterDefinition.cs" />
+    <Compile Include="Parameters\IParameterDefinition.cs" />
+    <Compile Include="Parameters\ParameterDefinition.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Templating\Errors\Error.cs" />
     <Compile Include="Templating\Errors\ISemanticErrorListener.cs" />

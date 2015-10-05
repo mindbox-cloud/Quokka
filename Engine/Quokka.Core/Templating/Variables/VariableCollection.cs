@@ -49,7 +49,12 @@ namespace Quokka
 			if (variables.TryGetValue(variableOccurence.Name, out definition))
 			{
 				if (definition.Type != variableOccurence.RequiredType)
-					errorListener.AddInconsistentVariableTypesError(definition, variableOccurence);
+				{
+					if (definition.Type == VariableType.Unknown)
+						definition.Type = variableOccurence.RequiredType;
+					else
+						errorListener.AddInconsistentVariableTypesError(definition, variableOccurence);
+				}
 			}
 			else
 			{
@@ -70,8 +75,11 @@ namespace Quokka
 			return definition;
 		}
 
-		public static VariableCollection Merge(IEnumerable<VariableCollection> collections)
+		public static VariableCollection Merge(IList<VariableCollection> collections)
 		{
+			if (collections.Count == 1)
+				return collections.Single();
+
 			var fields = collections
 				.SelectMany(fieldCollection => fieldCollection.variables.Values)
 				.GroupBy(

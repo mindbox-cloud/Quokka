@@ -53,6 +53,7 @@ namespace Quokka.Tests
 						Assert.IsInstanceOfType(actualDefinition, typeof(IArrayParameterDefinition));
 						var actualArrayDefinition = (IArrayParameterDefinition)actualDefinition;
 
+						Assert.AreEqual(expectedArrayDefinition.ElementType, actualArrayDefinition.ElementType);
 						AreParameterDefinitionsEqual(expectedArrayDefinition.ElementFields, actualArrayDefinition.ElementFields);
 						break;
 				}

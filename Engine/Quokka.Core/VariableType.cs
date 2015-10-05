@@ -2,6 +2,7 @@
 {
 	public enum VariableType
 	{
+		Unknown,
 		Boolean,
 		Integer,
 		String,

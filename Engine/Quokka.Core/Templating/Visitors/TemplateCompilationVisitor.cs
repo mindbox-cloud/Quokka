@@ -75,7 +75,9 @@ namespace Quokka
 				collectionVariable,
 				new IterationVariableDeclaration(
 					forInstruction.iterationVariable().Identifier().GetText(),
-					VariableType.Composite, null, collectionVariable));
+					VariableType.Unknown,
+					null,
+					collectionVariable));
 		}
 	}
 }
