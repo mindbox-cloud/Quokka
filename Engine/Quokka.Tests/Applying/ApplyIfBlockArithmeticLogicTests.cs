@@ -6,7 +6,7 @@ namespace Quokka.Tests
 	public class ApplyIfBlockArithmeticLogicTests
 	{
 		[TestMethod]
-		public void Apply_IfLogic_MoreThan_True()
+		public void Apply_IfArithmeticLogic_MoreThan_True()
 		{
 			var template = new Template(@"
 				@{ if A > 5 }
@@ -28,7 +28,7 @@ namespace Quokka.Tests
 		}
 
 		[TestMethod]
-		public void Apply_IfLogic_MoreThan_FalseBeсauseLess()
+		public void Apply_IfArithmeticLogic_MoreThan_FalseBeсauseLess()
 		{
 			var template = new Template(@"
 				@{ if A > 5 }
@@ -48,7 +48,7 @@ namespace Quokka.Tests
 		}
 
 		[TestMethod]
-		public void Apply_IfLogic_MoreThan_FalseBeсauseEquals()
+		public void Apply_IfArithmeticLogic_MoreThan_FalseBeсauseEquals()
 		{
 			var template = new Template(@"
 				@{ if A > 5 }
@@ -68,7 +68,7 @@ namespace Quokka.Tests
 		}
 		
 		[TestMethod]
-		public void Apply_IfLogic_LessThan_True()
+		public void Apply_IfArithmeticLogic_LessThan_True()
 		{
 			var template = new Template(@"
 				@{ if A < 23 }
@@ -90,7 +90,7 @@ namespace Quokka.Tests
 		}
 
 		[TestMethod]
-		public void Apply_IfLogic_LessThan_FalseBeсauseMore()
+		public void Apply_IfArithmeticLogic_LessThan_FalseBeсauseMore()
 		{
 			var template = new Template(@"
 				@{ if A < 23 }
@@ -110,7 +110,7 @@ namespace Quokka.Tests
 		}
 
 		[TestMethod]
-		public void Apply_IfLogic_LessThan_FalseBeсauseEquals()
+		public void Apply_IfArithmeticLogic_LessThan_FalseBeсauseEquals()
 		{
 			var template = new Template(@"
 				@{ if A < 23 }
@@ -130,7 +130,7 @@ namespace Quokka.Tests
 		}
 
 		[TestMethod]
-		public void Apply_IfLogic_Equals_True()
+		public void Apply_IfArithmeticLogic_Equals_True()
 		{
 			var template = new Template(@"
 				@{ if A = 2323 }
@@ -152,7 +152,7 @@ namespace Quokka.Tests
 		}
 
 		[TestMethod]
-		public void Apply_IfLogic_Equals_FalseBeсauseMore()
+		public void Apply_IfArithmeticLogic_Equals_FalseBeсauseMore()
 		{
 			var template = new Template(@"
 				@{ if A = 2323 }
@@ -172,7 +172,7 @@ namespace Quokka.Tests
 		}
 
 		[TestMethod]
-		public void Apply_IfLogic_Equals_FalseBeсauseLess()
+		public void Apply_IfArithmeticLogic_Equals_FalseBeсauseLess()
 		{
 			var template = new Template(@"
 				@{ if A = 2323 }
@@ -192,7 +192,7 @@ namespace Quokka.Tests
 		}
 
 		[TestMethod]
-		public void Apply_IfLogic_Equals_True_Precision()
+		public void Apply_IfArithmeticLogic_Equals_True_Precision()
 		{
 			var template = new Template(@"
 				@{ if (3 / 7) = (9000000 / 21000001) }
@@ -213,7 +213,7 @@ namespace Quokka.Tests
 		}
 
 		[TestMethod]
-		public void Apply_IfLogic_NotEquals_FalseBecauseEquals()
+		public void Apply_IfArithmeticLogic_NotEquals_FalseBecauseEquals()
 		{
 			var template = new Template(@"
 				@{ if A != 90 }
@@ -233,7 +233,7 @@ namespace Quokka.Tests
 		}
 
 		[TestMethod]
-		public void Apply_IfLogic_NotEquals_TrueBeсauseMore()
+		public void Apply_IfArithmeticLogic_NotEquals_TrueBeсauseMore()
 		{
 			var template = new Template(@"
 				@{ if A != 90 }
@@ -255,7 +255,7 @@ namespace Quokka.Tests
 		}
 
 		[TestMethod]
-		public void Apply_IfLogic_NotEquals_TrueBeсauseLess()
+		public void Apply_IfArithmeticLogic_NotEquals_TrueBeсauseLess()
 		{
 			var template = new Template(@"
 				@{ if A != 90 }
@@ -277,7 +277,7 @@ namespace Quokka.Tests
 		}
 
 		[TestMethod]
-		public void Apply_IfLogic_LessThanOrEquals_TrueBecauseLess()
+		public void Apply_IfArithmeticLogic_LessThanOrEquals_TrueBecauseLess()
 		{
 			var template = new Template(@"
 				@{ if A <= 23 }
@@ -299,7 +299,7 @@ namespace Quokka.Tests
 		}
 
 		[TestMethod]
-		public void Apply_IfLogic_LessThanOrEquals_TrueBecauseEquals()
+		public void Apply_IfArithmeticLogic_LessThanOrEquals_TrueBecauseEquals()
 		{
             var template = new Template(@"
 				@{ if A <= 23 }
@@ -321,7 +321,7 @@ namespace Quokka.Tests
 		}
 
 		[TestMethod]
-		public void Apply_IfLogic_LessThanOrEquals_False()
+		public void Apply_IfArithmeticLogic_LessThanOrEquals_False()
 		{
 			var template = new Template(@"
 				@{ if A <= 23 }
@@ -341,7 +341,7 @@ namespace Quokka.Tests
 		}
 
 		[TestMethod]
-		public void Apply_IfLogic_MoreThanOrEquals_TrueBecauseMore()
+		public void Apply_IfArithmeticLogic_MoreThanOrEquals_TrueBecauseMore()
 		{
 			var template = new Template(@"
 				@{ if A >= 23 }
@@ -363,7 +363,7 @@ namespace Quokka.Tests
 		}
 
 		[TestMethod]
-		public void Apply_IfLogic_MoreThanOrEquals_TrueBecauseEquals()
+		public void Apply_IfArithmeticLogic_MoreThanOrEquals_TrueBecauseEquals()
 		{
 			var template = new Template(@"
 				@{ if A >= 23 }
@@ -385,7 +385,7 @@ namespace Quokka.Tests
 		}
 
 		[TestMethod]
-		public void Apply_IfLogic_MoreThanOrEquals_False()
+		public void Apply_IfArithmeticLogic_MoreThanOrEquals_False()
 		{
 			var template = new Template(@"
 				@{ if A >= 23 }
@@ -398,6 +398,36 @@ namespace Quokka.Tests
 					new ParameterField("A", 22)));
 
 			var expected = @"
+				
+			";
+
+			Assert.AreEqual(expected, result);
+		}
+
+		[TestMethod]
+		public void Apply_IfArithmeticLogic_ComplexExpression()
+		{
+			// A smoke test
+			var template = new Template(@"
+				@{ if (24 + 3) + (10 * 25)/5 - (24 * 7 / 8*9) * (242) + A.Value * B.Value.Length = 77 }
+					Correct.
+				@{ end if }
+			");
+
+			var result = template.Apply(
+				new CompositeParameterValue(
+					new ParameterField("A",
+						new CompositeParameterValue(
+							new ParameterField("Value", 189))),
+					new ParameterField("B",
+						new CompositeParameterValue(
+							new ParameterField("Value",
+								new CompositeParameterValue(
+									new ParameterField("Length", 242)))))));
+
+			var expected = @"
+				
+					Correct.
 				
 			";
 

@@ -50,6 +50,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="Applying\ApplyArithmeticOutputTests.cs" />
     <Compile Include="Applying\ApplyIfBlockArithmeticLogicTests.cs" />
     <Compile Include="Applying\ApplyIfBlockBasicTests.cs" />
     <Compile Include="Applying\ApplyIfBlockBooleanLogicTests.cs" />

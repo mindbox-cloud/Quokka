@@ -1,6 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace Quokka
+namespace Quokka.Tests
 {
 	[TestClass]
 	public class ApplyIfBlockBasicTests

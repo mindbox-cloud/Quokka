@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.Text;
 
 namespace Quokka
@@ -25,7 +26,7 @@ namespace Quokka
 			if (Math.Abs(value - (int)value) < epsilon)
 				resultBuilder.Append((int)value);
 			else
-				resultBuilder.AppendFormat("{0:0.00}", value);
+				resultBuilder.Append(value.ToString("0.00", CultureInfo.CurrentCulture));
 		}
 	}
 }

@@ -1,4 +1,6 @@
-﻿namespace Quokka
+﻿using System;
+
+namespace Quokka
 {
 	internal class ArithmeticParameterValueExpression : ArithmeticExpressionBase
 	{
