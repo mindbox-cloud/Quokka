@@ -81,6 +81,7 @@
     <Compile Include="Templating\Nodes\Boolean\ArithmeticComparisonExpression.cs" />
     <Compile Include="Templating\Nodes\Boolean\BooleanExpressionBase.cs" />
     <Compile Include="Templating\Nodes\Boolean\BooleanParameterValueExpression.cs" />
+    <Compile Include="Templating\Nodes\Boolean\ComparisonOperation.cs" />
     <Compile Include="Templating\Nodes\Boolean\IBooleanExpression.cs" />
     <Compile Include="Templating\Nodes\Boolean\NotExpression.cs" />
     <Compile Include="Templating\Nodes\Boolean\OrExpression.cs" />

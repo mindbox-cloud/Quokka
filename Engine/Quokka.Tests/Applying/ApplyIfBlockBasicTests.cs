@@ -301,6 +301,35 @@ namespace Quokka
 		}
 
 		[TestMethod]
+		public void Apply_IfCondition_ThirLevelMember()
+		{
+			var template = new Template(@"
+				@{ if Context.Values.IsTest }
+					It's a test
+				@{ else if Context.Values.IsStaging }
+					It's staging
+				@{ end if }
+			");
+
+			var result = template.Apply(
+				new CompositeParameterValue(
+					new ParameterField("Context",
+						new CompositeParameterValue(
+							new ParameterField("Values",
+								new CompositeParameterValue(
+									new ParameterField("IsTest", false),
+									new ParameterField("IsStaging", true)))))));
+
+			var expected = @"
+				
+					It's staging
+				
+			";
+
+			Assert.AreEqual(expected, result);
+		}
+
+		[TestMethod]
 		public void Apply_If_InstructionsCaseInsensitivity()
 		{
 			var template = new Template(@"
