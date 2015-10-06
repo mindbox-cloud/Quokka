@@ -3,7 +3,7 @@
 namespace Quokka
 {
 	[TestClass]
-	public class ApplyIfBlockTests
+	public class ApplyIfBlockBasicTests
 	{
 		[TestMethod]
 		public void Apply_IfSimpleConditionIsTrue()
@@ -272,6 +272,55 @@ namespace Quokka
 			var expected = @"
 				
 					Unknown color
+				
+			";
+
+			Assert.AreEqual(expected, result);
+		}
+
+		[TestMethod]
+		public void Apply_IfSimpleCondition_Parentheses()
+		{
+			var template = new Template(@"
+				@{ if (((IsTest))) }
+					It's a test
+				@{ end if }
+			");
+
+			var result = template.Apply(
+				new CompositeParameterValue(
+					new ParameterField("IsTest", true)));
+
+			var expected = @"
+				
+					It's a test
+				
+			";
+
+			Assert.AreEqual(expected, result);
+		}
+
+		[TestMethod]
+		public void Apply_If_InstructionsCaseInsensitivity()
+		{
+			var template = new Template(@"
+				@{ If IsRed }
+					Red
+				@{ eLsE iF IsGreen }
+					Green
+				@{ ElSe }
+					Unknown color
+				@{ ENd IF }
+			");
+
+			var result = template.Apply(
+				new CompositeParameterValue(
+					new ParameterField("IsRed", false),
+					new ParameterField("IsGreen", true)));
+
+			var expected = @"
+				
+					Green
 				
 			";
 

@@ -7,3 +7,4 @@ Engine/packages/*
 */bin/*
 */obj/*
 Engine/.vs/*
+Engine/*DotSettings.user
