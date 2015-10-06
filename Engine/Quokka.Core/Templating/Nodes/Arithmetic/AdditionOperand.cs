@@ -6,10 +6,10 @@
 
 		protected AdditionOperand(IArithmeticExpression expression)
 		{
-			this.Expression = expression;
+			Expression = expression;
 		}
 
-		public abstract double Calculate(double leftOperand);
+		public abstract double Calculate(double leftOperand, VariableValueStorage valueStorage);
 
 		public static AdditionOperand Plus(IArithmeticExpression expression)
 		{
@@ -28,9 +28,9 @@
 			{
 			}
 
-			public override double Calculate(double leftOperand)
+			public override double Calculate(double leftOperand, VariableValueStorage valueStorage)
 			{
-				return leftOperand + Expression.GetValue();
+				return leftOperand + Expression.GetValue(valueStorage);
 			}
 		}
 
@@ -41,9 +41,9 @@
 			{
 			}
 
-			public override double Calculate(double leftOperand)
+			public override double Calculate(double leftOperand, VariableValueStorage valueStorage)
 			{
-				return leftOperand - Expression.GetValue();
+				return leftOperand - Expression.GetValue(valueStorage);
 			}
 		}
 	}

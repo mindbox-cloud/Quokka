@@ -9,7 +9,7 @@
 			this.number = number;
 		}
 
-		public override double GetValue()
+		public override double GetValue(VariableValueStorage variableValueStorage)
 		{
 			return number;
 		}

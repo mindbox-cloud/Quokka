@@ -1,4 +1,7 @@
-﻿namespace Quokka
+﻿using System;
+using System.Text;
+
+namespace Quokka
 {
 	internal class ConditionBlock : TemplateNodeBase
 	{
@@ -15,6 +18,16 @@
 		{
 			condition.CompileVariableDefinitions(scope, errorListener);
 			block.CompileVariableDefinitions(scope, errorListener);
+		}
+
+		public override void Render(StringBuilder resultBuilder, VariableValueStorage valueStorage)
+		{
+			block.Render(resultBuilder, valueStorage);
+		}
+
+		public bool ShouldRender(VariableValueStorage valueStorage)
+		{
+			return condition.Evaluate(valueStorage);
 		}
 	}
 }

@@ -2,7 +2,7 @@
 {
 	internal interface IBooleanExpression
 	{
-		bool Evaluate();
+		bool Evaluate(VariableValueStorage valueStorage);
 
 		void CompileVariableDefinitions(Scope scope, ISemanticErrorListener errorListener);
 	}

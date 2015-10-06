@@ -2,7 +2,7 @@ grammar Quokka;
 options { tokenVocab = QuokkaLex; }
 
 template
-	: 
+	:
 		templateBlock
 	;
 

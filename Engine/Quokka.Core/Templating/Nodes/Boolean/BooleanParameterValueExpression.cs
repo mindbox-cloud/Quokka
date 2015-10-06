@@ -9,11 +9,10 @@
 			this.variableOccurence = variableOccurence;
 		}
 
-		public override bool Evaluate()
+		public override bool Evaluate(VariableValueStorage valueStorage)
 		{
-			// TODO: this is very temporary and should be removed. 
-			// For now we consider the parameter to always be True if it's a complex parameter (member access), otherwise False.
-			return variableOccurence.Member != null;
+			var value = (bool)valueStorage.GetValue(variableOccurence);
+			return value;
 		}
 
 		public override void CompileVariableDefinitions(Scope scope, ISemanticErrorListener errorListener)

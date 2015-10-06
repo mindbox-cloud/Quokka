@@ -9,11 +9,9 @@
 			this.variableOccurence = variableOccurence;
 		}
 
-		public override double GetValue()
+		public override double GetValue(VariableValueStorage variableValueStorage)
 		{
-			// TODO: this is very temporary and should be removed. 
-			// For now we consider the parameter to always be True if it's a complex parameter (member access), otherwise False.
-			return variableOccurence.Name.Length;
+			return (int)variableValueStorage.GetValue(variableOccurence);
 		}
 
 		public override void CompileVariableDefinitions(Scope scope, ISemanticErrorListener errorListener)

@@ -1,4 +1,6 @@
-﻿namespace Quokka
+﻿using System.Text;
+
+namespace Quokka
 {
 	internal class ForBlock : TemplateNodeBase
 	{
@@ -21,6 +23,11 @@
 			var iterationVariableDefinition = innerScope.CreateOrUpdateVariableDefinition(iterationVariable, errorListener);
 			collectionVariableDefinition.CollectionElementVariables.Add(iterationVariableDefinition);
             block.CompileVariableDefinitions(innerScope, errorListener);
+		}
+
+		public override void Render(StringBuilder resultBuilder, VariableValueStorage valueStorage)
+		{
+			throw new System.NotImplementedException();
 		}
 	}
 }

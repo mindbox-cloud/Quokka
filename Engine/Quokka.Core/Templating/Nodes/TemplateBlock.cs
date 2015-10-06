@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 
 namespace Quokka
 {
@@ -18,6 +19,12 @@ namespace Quokka
 		{
 			foreach (var child in children)
 				child.CompileVariableDefinitions(scope, errorListener);
+		}
+
+		public override void Render(StringBuilder resultBuilder, VariableValueStorage valueStorage)
+		{
+			foreach (var child in children)
+				child.Render(resultBuilder, valueStorage);
 		}
 	}
 }

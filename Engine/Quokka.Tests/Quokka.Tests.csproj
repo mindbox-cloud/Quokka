@@ -50,8 +50,10 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="Applying\ApplyIfBlock_BasicTests.cs" />
+    <Compile Include="Applying\ApplyParameterOutputTests.cs" />
     <Compile Include="Helpers\TemplateAssert.cs" />
-    <Compile Include="ParameterDiscoveryTests.cs" />
+    <Compile Include="ParameterDiscovery\ParameterDiscoveryTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

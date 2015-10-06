@@ -9,7 +9,7 @@
 			this.Expression = expression;
 		}
 
-		public abstract double Calculate(double leftOperand);
+		public abstract double Calculate(double leftOperand, VariableValueStorage valueStorage);
 
 		public static MultiplicationOperand Multiply(IArithmeticExpression expression)
 		{
@@ -28,9 +28,9 @@
 			{
 			}
 
-			public override double Calculate(double leftOperand)
+			public override double Calculate(double leftOperand, VariableValueStorage valueStorage)
 			{
-				return leftOperand * Expression.GetValue();
+				return leftOperand * Expression.GetValue(valueStorage);
 			}
 		}
 
@@ -41,9 +41,9 @@
 			{
 			}
 
-			public override double Calculate(double leftOperand)
+			public override double Calculate(double leftOperand, VariableValueStorage valueStorage)
 			{
-				return leftOperand / Expression.GetValue();
+				return leftOperand / Expression.GetValue(valueStorage);
 			}
 		}
 	}

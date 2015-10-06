@@ -17,8 +17,7 @@ namespace Quokka
 		public override ITemplateNode VisitStaticBlock(QuokkaParser.StaticBlockContext context)
 		{
 			return new StaticBlock(
-				context.children.Select(child => child.Accept(this)),
-				context.GetText());
+				context.children.Select(child => child.Accept(this)));
 		}
 		
 		public override ITemplateNode VisitConstantBlock(QuokkaParser.ConstantBlockContext context)

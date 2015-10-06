@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 
 using Antlr4.Runtime;
 
@@ -26,6 +27,9 @@ namespace Quokka
 			var compilationVisitor = new RootTemplateVisitor();
 			rootBlock = compilationVisitor.Visit(parser.template());
 
+			if (parser.NumberOfSyntaxErrors > 0)
+				throw new InvalidOperationException("Syntax errors in the template");
+
 			var scope = new Scope();
 			var errorListener = new SemanticErrorListener();
 			
@@ -41,6 +45,17 @@ namespace Quokka
 		public IList<IParameterDefinition> GetParameterDefinitions()
 		{
 			return externalVariables.GetParameterDefinitions();
+		}
+
+		public string Apply(ICompositeParameterValue model)
+		{
+			if (model == null)
+				throw new ArgumentNullException(nameof(model));
+
+			var valueStorage = VariableValueStorage.CreateStorageFromValue(model);
+			var builder = new StringBuilder();
+			rootBlock.Render(builder, valueStorage);
+			return builder.ToString();
 		}
 	}
 }
