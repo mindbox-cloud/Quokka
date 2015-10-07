@@ -9,9 +9,9 @@
 			this.inner = inner;
 		}
 
-		public override bool Evaluate(VariableValueStorage valueStorage)
+		public override bool Evaluate(RuntimeVariableScope variableScope)
 		{
-			return !inner.Evaluate(valueStorage);
+			return !inner.Evaluate(variableScope);
 		}
 
 		public override void CompileVariableDefinitions(Scope scope, ISemanticErrorListener errorListener)

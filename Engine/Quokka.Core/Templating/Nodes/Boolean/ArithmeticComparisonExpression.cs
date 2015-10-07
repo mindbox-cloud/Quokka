@@ -20,10 +20,10 @@ namespace Quokka
 			this.right = right;
 		}
 
-		public override bool Evaluate(VariableValueStorage valueStorage)
+		public override bool Evaluate(RuntimeVariableScope variableScope)
 		{
-			double leftValue = left.GetValue(valueStorage);
-			double rightValue = right.GetValue(valueStorage);
+			double leftValue = left.GetValue(variableScope);
+			double rightValue = right.GetValue(variableScope);
 
 			switch (operation)
 			{

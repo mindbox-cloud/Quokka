@@ -9,9 +9,9 @@
 			this.innerExpression = innerExpression;
 		}
 
-		public override double GetValue(VariableValueStorage variableValueStorage)
+		public override double GetValue(RuntimeVariableScope variableScope)
 		{
-			return -1.0 * innerExpression.GetValue(variableValueStorage);
+			return -1.0 * innerExpression.GetValue(variableScope);
 		}
 
 		public override void CompileVariableDefinitions(Scope scope, ISemanticErrorListener errorListener)

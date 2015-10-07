@@ -9,9 +9,9 @@
 			this.variableOccurence = variableOccurence;
 		}
 
-		public override bool Evaluate(VariableValueStorage valueStorage)
+		public override bool Evaluate(RuntimeVariableScope variableScope)
 		{
-			var value = (bool)valueStorage.GetValue(variableOccurence);
+			var value = (bool)variableScope.GetVariableValue(variableOccurence);
 			return value;
 		}
 

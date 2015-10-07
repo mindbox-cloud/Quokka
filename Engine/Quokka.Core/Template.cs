@@ -52,9 +52,9 @@ namespace Quokka
 			if (model == null)
 				throw new ArgumentNullException(nameof(model));
 
-			var valueStorage = VariableValueStorage.CreateStorageFromValue(model);
+			var valueStorage = VariableValueStorage.CreateStorageForValue(model);
 			var builder = new StringBuilder();
-			rootBlock.Render(builder, valueStorage);
+			rootBlock.Render(builder, new RuntimeVariableScope(valueStorage));
 			return builder.ToString();
 		}
 	}

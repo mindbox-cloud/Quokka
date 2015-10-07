@@ -6,9 +6,14 @@ namespace Quokka
 {
 	internal abstract class VariableValueStorage
 	{
-		public abstract object GetValue(VariableOccurence variableOccurence);
+		public abstract object TryGetValue(VariableOccurence variableOccurence);
 
-		public static VariableValueStorage CreateStorageFromValue(IParameterValue value)
+		public static VariableValueStorage CreateCompositeStorage(string fieldName, VariableValueStorage fieldValueStorage)
+		{
+			return new CompositeVariableValueStorage(fieldName, fieldValueStorage);
+		}
+
+		public static VariableValueStorage CreateStorageForValue(IParameterValue value)
 		{
 			if (value == null)
 				throw new ArgumentNullException(nameof(value));
@@ -37,7 +42,7 @@ namespace Quokka
 				this.value = value;
 			}
 
-			public override object GetValue(VariableOccurence variableOccurence)
+			public override object TryGetValue(VariableOccurence variableOccurence)
 			{
 				if (variableOccurence.Member != null)
 					throw new InvalidOperationException(
@@ -75,14 +80,30 @@ namespace Quokka
 					.Fields
 					.ToDictionary(
 						field => field.Name,
-						field => CreateStorageFromValue(field.Value),
+						field => CreateStorageForValue(field.Value),
 						StringComparer.InvariantCultureIgnoreCase);
 			}
 
-			public override object GetValue(VariableOccurence variableOccurence)
+			public CompositeVariableValueStorage(string fieldName, VariableValueStorage fieldValueStorage)
 			{
-				var field = fields[variableOccurence.Name];
-				return field.GetValue(variableOccurence.Member ?? variableOccurence);
+				if (fieldName == null)
+					throw new ArgumentNullException(nameof(fieldName));
+				if (fieldValueStorage == null)
+					throw new ArgumentNullException(nameof(fieldValueStorage));
+
+				fields = new Dictionary<string, VariableValueStorage>(StringComparer.InvariantCultureIgnoreCase)
+				{
+					{ fieldName, fieldValueStorage }
+				};
+			}
+
+			public override object TryGetValue(VariableOccurence variableOccurence)
+			{
+				VariableValueStorage field;
+				if (fields.TryGetValue(variableOccurence.Name, out field))
+					return field.TryGetValue(variableOccurence.Member ?? variableOccurence);
+				else
+					return null;
 			}
 		}
 
@@ -97,12 +118,12 @@ namespace Quokka
 
 				elements = parameterValue
 					.Values
-					.Select(CreateStorageFromValue)
+					.Select(CreateStorageForValue)
 					.ToList()
 					.AsReadOnly();
 			}
 
-			public override object GetValue(VariableOccurence variableOccurence)
+			public override object TryGetValue(VariableOccurence variableOccurence)
 			{
 				return elements;
 			}

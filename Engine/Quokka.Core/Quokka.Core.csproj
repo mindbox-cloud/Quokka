@@ -90,6 +90,7 @@
     <Compile Include="Templating\Nodes\ForBlock.cs" />
     <Compile Include="Templating\Nodes\IfBlock.cs" />
     <Compile Include="Templating\Nodes\VariableOutputBlock.cs" />
+    <Compile Include="Templating\Values\RuntimeVariableScope.cs" />
     <Compile Include="Templating\Values\VariableValueStorage.cs" />
     <Compile Include="Templating\Variables\IterationVariableDeclaration.cs" />
     <Compile Include="Templating\Variables\Scope.cs" />

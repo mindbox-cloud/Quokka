@@ -19,10 +19,10 @@ namespace Quokka
 				child.CompileVariableDefinitions(scope, errorListener);
 		}
 
-		public override void Render(StringBuilder resultBuilder, VariableValueStorage valueStorage)
+		public override void Render(StringBuilder resultBuilder, RuntimeVariableScope variableScope)
 		{
 			foreach (var child in children)
-				child.Render(resultBuilder, valueStorage);
+				child.Render(resultBuilder, variableScope);
 		}
 	}
 }

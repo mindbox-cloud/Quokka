@@ -19,13 +19,13 @@ namespace Quokka
 				condition.CompileVariableDefinitions(scope, errorListener);
 		}
 
-		public override void Render(StringBuilder resultBuilder, VariableValueStorage valueStorage)
+		public override void Render(StringBuilder resultBuilder, RuntimeVariableScope variableScope)
 		{
 			foreach (var condition in conditions)
 			{
-				if (condition.ShouldRender(valueStorage))
+				if (condition.ShouldRender(variableScope))
 				{
-					condition.Render(resultBuilder, valueStorage);
+					condition.Render(resultBuilder, variableScope);
 					break;
 				}
 			}

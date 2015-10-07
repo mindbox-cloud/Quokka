@@ -8,6 +8,6 @@ namespace Quokka
 		{
 		}
 
-		public abstract void Render(StringBuilder resultBuilder, VariableValueStorage valueStorage);
+		public abstract void Render(StringBuilder resultBuilder, RuntimeVariableScope variableScope);
 	}
 }

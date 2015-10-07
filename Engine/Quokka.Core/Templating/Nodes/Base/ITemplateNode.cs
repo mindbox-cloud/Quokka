@@ -6,6 +6,6 @@ namespace Quokka
 	{
 		void CompileVariableDefinitions(Scope scope, ISemanticErrorListener errorListener);
 
-		void Render(StringBuilder resultBuilder, VariableValueStorage valueStorage);
+		void Render(StringBuilder resultBuilder, RuntimeVariableScope variableScope);
 	}
 }

@@ -11,9 +11,9 @@ namespace Quokka
 			this.variableOccurence = variableOccurence;
 		}
 
-		public override double GetValue(VariableValueStorage variableValueStorage)
+		public override double GetValue(RuntimeVariableScope variableScope)
 		{
-			return (int)variableValueStorage.GetValue(variableOccurence);
+			return (int)variableScope.GetVariableValue(variableOccurence);
 		}
 
 		public override void CompileVariableDefinitions(Scope scope, ISemanticErrorListener errorListener)

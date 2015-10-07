@@ -20,14 +20,14 @@ namespace Quokka
 			block.CompileVariableDefinitions(scope, errorListener);
 		}
 
-		public override void Render(StringBuilder resultBuilder, VariableValueStorage valueStorage)
+		public override void Render(StringBuilder resultBuilder, RuntimeVariableScope variableScope)
 		{
-			block.Render(resultBuilder, valueStorage);
+			block.Render(resultBuilder, variableScope);
 		}
 
-		public bool ShouldRender(VariableValueStorage valueStorage)
+		public bool ShouldRender(RuntimeVariableScope variableScope)
 		{
-			return condition.Evaluate(valueStorage);
+			return condition.Evaluate(variableScope);
 		}
 	}
 }

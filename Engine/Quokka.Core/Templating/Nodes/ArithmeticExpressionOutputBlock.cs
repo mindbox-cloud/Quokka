@@ -19,9 +19,9 @@ namespace Quokka
 			expression.CompileVariableDefinitions(scope, errorListener);
 		}
 
-		public override void Render(StringBuilder resultBuilder, VariableValueStorage valueStorage)
+		public override void Render(StringBuilder resultBuilder, RuntimeVariableScope variableScope)
 		{
-			double value = expression.GetValue(valueStorage);
+			double value = expression.GetValue(variableScope);
 
 			if (Math.Abs(value - (int)value) < epsilon)
 				resultBuilder.Append((int)value);

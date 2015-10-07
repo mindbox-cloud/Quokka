@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace Quokka
 {
@@ -6,9 +7,11 @@ namespace Quokka
 	{
 		public IList<IParameterValue> Values { get; }
 
-		public ArrayParameterValue(IList<IParameterValue> values)
+		public ArrayParameterValue(params IParameterValue[] values)
 		{
-			Values = values;
+			Values = values
+				.ToList()
+				.AsReadOnly();
 		}
 	}
 }

@@ -2,7 +2,7 @@
 {
 	internal interface IArithmeticExpression
 	{
-		double GetValue(VariableValueStorage valueStorage);
+		double GetValue(RuntimeVariableScope variableScope);
 
 		void CompileVariableDefinitions(Scope scope, ISemanticErrorListener errorListener);
 	}

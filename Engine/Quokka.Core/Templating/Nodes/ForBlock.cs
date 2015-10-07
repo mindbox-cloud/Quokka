@@ -1,4 +1,6 @@
-﻿using System.Text;
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
 
 namespace Quokka
 {
@@ -25,9 +27,17 @@ namespace Quokka
             block.CompileVariableDefinitions(innerScope, errorListener);
 		}
 
-		public override void Render(StringBuilder resultBuilder, VariableValueStorage valueStorage)
+		public override void Render(StringBuilder resultBuilder, RuntimeVariableScope variableScope)
 		{
-			throw new System.NotImplementedException();
+			var collectionValue = (IEnumerable<VariableValueStorage>)variableScope.GetVariableValue(collection);
+			foreach (var collectionElement in collectionValue)
+			{
+				var innerScope = new RuntimeVariableScope(
+					VariableValueStorage.CreateCompositeStorage(iterationVariable.Name, collectionElement),
+					variableScope);
+
+				block.Render(resultBuilder, innerScope);
+			}
 		}
 	}
 }

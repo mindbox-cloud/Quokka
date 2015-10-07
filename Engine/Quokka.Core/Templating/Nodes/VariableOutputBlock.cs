@@ -16,9 +16,9 @@ namespace Quokka
 			scope.CreateOrUpdateVariableDefinition(variableOccurence, errorListener);
 		}
 
-		public override void Render(StringBuilder resultBuilder, VariableValueStorage valueStorage)
+		public override void Render(StringBuilder resultBuilder, RuntimeVariableScope variableScope)
 		{
-			resultBuilder.Append(valueStorage.GetValue(variableOccurence));
+			resultBuilder.Append(variableScope.GetVariableValue(variableOccurence));
 		}
 	}
 }

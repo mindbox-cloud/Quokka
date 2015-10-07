@@ -12,9 +12,9 @@ namespace Quokka
 			this.subExpressions = subExpressions.ToList().AsReadOnly();
 		}
 
-		public override bool Evaluate(VariableValueStorage valueStorage)
+		public override bool Evaluate(RuntimeVariableScope variableScope)
 		{
-			return subExpressions.Any(subExpression => subExpression.Evaluate(valueStorage));
+			return subExpressions.Any(subExpression => subExpression.Evaluate(variableScope));
 		}
 
 		public override void CompileVariableDefinitions(Scope scope, ISemanticErrorListener errorListener)

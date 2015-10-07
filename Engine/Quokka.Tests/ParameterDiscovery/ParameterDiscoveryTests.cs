@@ -640,6 +640,41 @@ namespace Quokka.Tests
 				parameterDefinitions);
 		}
 
+		[Ignore]
+		[TestMethod]
+		public void ParameterDiscovery_NestedForLoops_IterationOverCollectionElementItself()
+		{
+			var parameterDefinitions = new Template(@"
+				@{ for order in Orders } 
+					@{ for product in order }
+						${ product.Name }
+					@{ end for }
+				@{ end for }
+				")
+				.GetParameterDefinitions();
+
+			TemplateAssert.AreParameterDefinitionsEqual(
+				new[]
+				{
+					new ArrayParameterDefinition(
+						"Orders",
+						VariableType.Array,
+						new IParameterDefinition[]
+						{
+							new ArrayParameterDefinition(
+								"Products",
+								VariableType.Composite,
+								new IParameterDefinition[]
+								{
+									new ParameterDefinition(
+										"Name",
+										VariableType.Primitive)
+								})
+						})
+				},
+				parameterDefinitions);
+		}
+
 		[TestMethod]
 		public void ParameterDiscovery_NestedForLoops_MultipleIterationsOverCollectionElement()
 		{

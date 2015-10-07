@@ -12,10 +12,10 @@ namespace Quokka
 			this.operands = operands.ToList().AsReadOnly();
 		}
 
-		public override double GetValue(VariableValueStorage variableValueStorage)
+		public override double GetValue(RuntimeVariableScope variableScope)
 		{
 			return operands
-				.Aggregate(0.0, (current, operand) => operand.Calculate(current, variableValueStorage));
+				.Aggregate(0.0, (current, operand) => operand.Calculate(current, variableScope));
 		}
 
 		public override void CompileVariableDefinitions(Scope scope, ISemanticErrorListener errorListener)

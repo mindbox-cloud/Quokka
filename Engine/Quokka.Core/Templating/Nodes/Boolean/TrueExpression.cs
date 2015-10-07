@@ -2,7 +2,7 @@
 {
 	internal class TrueExpression : BooleanExpressionBase
 	{
-		public override bool Evaluate(VariableValueStorage valueStorage)
+		public override bool Evaluate(RuntimeVariableScope variableScope)
 		{
 			return true;
 		}
