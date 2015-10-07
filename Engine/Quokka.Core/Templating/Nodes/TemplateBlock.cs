@@ -15,6 +15,11 @@ namespace Quokka
 				.AsReadOnly();
 		}
 
+		public static TemplateBlock Empty()
+		{
+			return new TemplateBlock(Enumerable.Empty<ITemplateNode>());
+		}
+
 		public override void CompileVariableDefinitions(Scope scope, ISemanticErrorListener errorListener)
 		{
 			foreach (var child in children)

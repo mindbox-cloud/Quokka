@@ -11,7 +11,9 @@ namespace Quokka
 		public override ITemplateNode VisitTemplateBlock(QuokkaParser.TemplateBlockContext context)
 		{
 			return new TemplateBlock(
-				context.children.Select(child => child.Accept(this)));
+				context.children
+					.Select(child => child.Accept(this))
+					.Where(x => x != null));
 		}
 
 		public override ITemplateNode VisitStaticBlock(QuokkaParser.StaticBlockContext context)
@@ -62,6 +64,11 @@ namespace Quokka
 				conditions.Add(context.elseCondition().Accept(conditionsVisitor));
 
 			return new IfBlock(conditions);
+		}
+
+		public override ITemplateNode VisitCommentBlock(QuokkaParser.CommentBlockContext context)
+		{
+			return null;
 		}
 
 		public override ITemplateNode VisitForStatement(QuokkaParser.ForStatementContext context)

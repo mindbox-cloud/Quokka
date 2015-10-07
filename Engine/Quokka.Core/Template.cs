@@ -25,7 +25,7 @@ namespace Quokka
 			var parser = new QuokkaParser(commonTokenStream);
 
 			var compilationVisitor = new RootTemplateVisitor();
-			rootBlock = compilationVisitor.Visit(parser.template());
+			rootBlock = compilationVisitor.Visit(parser.template()) ?? TemplateBlock.Empty();
 
 			if (parser.NumberOfSyntaxErrors > 0)
 				throw new InvalidOperationException("Syntax errors in the template");

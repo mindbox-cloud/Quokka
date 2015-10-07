@@ -3,7 +3,7 @@ options { tokenVocab = QuokkaLex; }
 
 template
 	:
-		templateBlock
+		templateBlock*
 	;
 
 templateBlock

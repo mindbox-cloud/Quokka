@@ -6,16 +6,6 @@ namespace Quokka.Tests
 	public class ApplyParameterOutputTests
 	{
 		[TestMethod]
-		public void Apply_SingleConstantBlock()
-		{
-			var template = new Template("Happy new year!");
-
-			Assert.AreEqual(
-				"Happy new year!",
-				template.Apply(new CompositeParameterValue()));
-		}
-
-		[TestMethod]
 		public void Apply_SingleStringParameter()
 		{
 			var template = new Template("${ Name }");

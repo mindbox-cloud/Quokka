@@ -11,14 +11,6 @@
 // Generated from C:\Code\Quokka\Grammar\Quokka\QuokkaLex.g4 by ANTLR 4.5.1
 
 // Unreachable code detected
-
-using System;
-using System.CodeDom.Compiler;
-
-using Antlr4.Runtime;
-using Antlr4.Runtime.Atn;
-using Antlr4.Runtime.Misc;
-
 #pragma warning disable 0162
 // The variable '...' is assigned but its value is never used
 #pragma warning disable 0219
@@ -26,8 +18,14 @@ using Antlr4.Runtime.Misc;
 #pragma warning disable 1591
 
 namespace Quokka.Generated {
-	[GeneratedCode("ANTLR", "4.5.1")]
-[CLSCompliant(false)]
+using System;
+using Antlr4.Runtime;
+using Antlr4.Runtime.Atn;
+using Antlr4.Runtime.Misc;
+using DFA = Antlr4.Runtime.Dfa.DFA;
+
+[System.CodeDom.Compiler.GeneratedCode("ANTLR", "4.5.1")]
+[System.CLSCompliant(false)]
 public partial class QuokkaLex : Lexer {
 	public const int
 		SingleInstructionComment=1, OutputInstructionStart=2, ControlInstructionStart=3, 
