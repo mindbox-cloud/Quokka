@@ -470,5 +470,39 @@ namespace Quokka.Tests
 
 			Assert.AreEqual(expected, result);
 		}
+
+		[TestMethod]
+		public void Apply_IfLogic_ComplexExpression()
+		{
+			var template = new Template(@"
+				@{ if Recipient.IsMale or A or B and C or (D or E) or not(F) and (G or (H and K)) and (((bingo))) }
+					Trust me, it's true.
+				@{ end if }
+			");
+
+			var result = template.Apply(
+				new CompositeParameterValue(
+					new ParameterField("Recipient",
+						new CompositeParameterValue(
+							new ParameterField("IsMale", false))),
+					new ParameterField("A", false),
+					new ParameterField("B", false),
+					new ParameterField("C", false),
+					new ParameterField("D", false),
+					new ParameterField("E", false),
+					new ParameterField("F", false),
+					new ParameterField("G", true),
+					new ParameterField("H", true),
+					new ParameterField("K", false),
+					new ParameterField("bingo", true)));
+
+			var expected = @"
+				
+					Trust me, it's true.
+				
+			";
+
+			Assert.AreEqual(expected, result);
+		}
 	}
 }
