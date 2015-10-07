@@ -29,7 +29,7 @@ namespace Quokka.Tests
 		[TestMethod]
 		public void Apply_CommentFullSyntax()
 		{
-			var template = new Template("Visible @{comment} Not Visible @{ end comment } Visible");
+			var template = new Template("Visible @{* Not Visible *} Visible");
 
 			Assert.AreEqual(
 				"Visible  Visible",

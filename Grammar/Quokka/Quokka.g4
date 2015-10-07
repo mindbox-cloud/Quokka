@@ -171,10 +171,12 @@ endForInstruction
 commentBlock
 	:
 		SingleInstructionComment
+		/*
 		|		
 		commentInstruction
 		templateBlock
-		endCommentInstruction
+		endCommentInstruction		
+		*/
 	;
 
 commentInstruction
