@@ -7,6 +7,12 @@ namespace Quokka
 {
 	internal class ArithmeticExpressionVisitor : QuokkaBaseVisitor<IArithmeticExpression>
 	{
+		public static ArithmeticExpressionVisitor Instance { get; } = new ArithmeticExpressionVisitor();
+
+		private ArithmeticExpressionVisitor()
+		{
+		}
+
 		public override IArithmeticExpression VisitArithmeticExpression(QuokkaParser.ArithmeticExpressionContext context)
 		{
 			var operands = new List<AdditionOperand>
@@ -16,7 +22,7 @@ namespace Quokka
 			operands.AddRange(context
 				.children
 				.Skip(1)
-				.Select(child => child.Accept(new AdditionalExpressionVisitor())));
+				.Select(child => child.Accept(AdditionalExpressionVisitor.Instance)));
 			return new AdditionExpression(operands);
 		}
 
@@ -29,7 +35,7 @@ namespace Quokka
 			operands.AddRange(context
 				.children
 				.Skip(1)
-				.Select(child => child.Accept(new MultiplicativeExpressionVisitor())));
+				.Select(child => child.Accept(MultiplicativeExpressionVisitor.Instance)));
 			return new MultiplicationExpression(operands);
 		}
 

@@ -1,6 +1,6 @@
 ﻿namespace Quokka
 {
-	public enum ComparisonOperation
+	internal enum ComparisonOperation
 	{
 		Equals,
 		NotEquals,

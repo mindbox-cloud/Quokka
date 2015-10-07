@@ -27,7 +27,7 @@ namespace Quokka.Tests
 		}
 
 		[TestMethod]
-		public void Apply_CommentFullSyntax()
+		public void Apply_CommentShortSyntax()
 		{
 			var template = new Template("Visible @{* Not Visible *} Visible");
 

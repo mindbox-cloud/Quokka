@@ -1,13 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-
 using Quokka.Generated;
 
 namespace Quokka
 {
 	internal class TemplateCompilationVisitor : QuokkaBaseVisitor<ITemplateNode>
 	{
+		public static TemplateCompilationVisitor Instance { get; } = new TemplateCompilationVisitor();
+
+		private TemplateCompilationVisitor()
+		{
+		}
+
 		public override ITemplateNode VisitTemplateBlock(QuokkaParser.TemplateBlockContext context)
 		{
 			return new TemplateBlock(
@@ -35,7 +40,7 @@ namespace Quokka
 
 			var arithmeticExpression = context.arithmeticExpression();
 			if (arithmeticExpression != null)
-				return new ArithmeticExpressionOutputBlock(arithmeticExpression.Accept(new ArithmeticExpressionVisitor()));
+				return new ArithmeticExpressionOutputBlock(arithmeticExpression.Accept(ArithmeticExpressionVisitor.Instance));
 
 			throw new InvalidOperationException("Unknown alternative");
 		}
@@ -52,16 +57,14 @@ namespace Quokka
 
 		public override ITemplateNode VisitIfStatement(QuokkaParser.IfStatementContext context)
 		{
-			var conditionsVisitor = new ConditionsVisitor();
-
 			var conditions = new List<ConditionBlock>
 			{
-				context.ifCondition().Accept(conditionsVisitor)
+				context.ifCondition().Accept(ConditionsVisitor.Instance)
 			};
 			conditions.AddRange(context.elseIfCondition()
-				.Select(elseIf => elseIf.Accept(conditionsVisitor)));
+				.Select(elseIf => elseIf.Accept(ConditionsVisitor.Instance)));
 			if (context.elseCondition() != null)
-				conditions.Add(context.elseCondition().Accept(conditionsVisitor));
+				conditions.Add(context.elseCondition().Accept(ConditionsVisitor.Instance));
 
 			return new IfBlock(conditions);
 		}
@@ -75,9 +78,9 @@ namespace Quokka
 		{
 			var forInstruction = context.forInstruction();
 			var collectionVariable = forInstruction.parameterValueExpression().Accept(new VariableVisitor(VariableType.Array));
-
+			
 			return new ForBlock(
-				Visit(context.templateBlock()),
+				context.templateBlock()?.Accept(this),
 				collectionVariable,
 				new IterationVariableDeclaration(
 					forInstruction.iterationVariable().Identifier().GetText(),

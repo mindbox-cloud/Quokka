@@ -355,5 +355,20 @@ namespace Quokka.Tests
 
 			Assert.AreEqual(expected, result);
 		}
+
+		[TestMethod]
+		public void Apply_If_EmptyBlocks()
+		{
+			var template = new Template(@"@{ if IsRed }@{ else if IsGreen }@{ else }@{ end if }");
+
+			var result = template.Apply(
+				new CompositeParameterValue(
+					new ParameterField("IsRed", false),
+					new ParameterField("IsGreen", true)));
+
+			var expected = @"";
+
+			Assert.AreEqual(expected, result);
+		}
 	}
 }

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Text;
+﻿using System.Text;
 
 namespace Quokka
 {
@@ -17,12 +16,12 @@ namespace Quokka
 		public override void CompileVariableDefinitions(Scope scope, ISemanticErrorListener errorListener)
 		{
 			condition.CompileVariableDefinitions(scope, errorListener);
-			block.CompileVariableDefinitions(scope, errorListener);
+			block?.CompileVariableDefinitions(scope, errorListener);
 		}
 
 		public override void Render(StringBuilder resultBuilder, RuntimeVariableScope variableScope)
 		{
-			block.Render(resultBuilder, variableScope);
+			block?.Render(resultBuilder, variableScope);
 		}
 
 		public bool ShouldRender(RuntimeVariableScope variableScope)

@@ -7,6 +7,17 @@ namespace Quokka.Tests
 	public class ParameterDiscoveryTests
 	{
 		[TestMethod]
+		public void ParameterDiscovery_EmptyTemplate()
+		{
+			var parameterDefinitions = new Template("")
+				.GetParameterDefinitions();
+
+			TemplateAssert.AreParameterDefinitionsEqual(
+				new ParameterDefinition[0],
+				parameterDefinitions);
+		}
+
+		[TestMethod]
 		public void ParameterDiscovery_SingleOutputParameter()
 		{
 			var parameterDefinitions = new Template(

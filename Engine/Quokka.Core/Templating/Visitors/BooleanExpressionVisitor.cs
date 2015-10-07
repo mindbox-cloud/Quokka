@@ -7,14 +7,26 @@ namespace Quokka
 {
 	internal class BooleanExpressionVisitor : QuokkaBaseVisitor<IBooleanExpression>
 	{
+		public static BooleanExpressionVisitor Instance { get; } = new BooleanExpressionVisitor();
+
+		private BooleanExpressionVisitor()
+		{
+		}
+
 		public override IBooleanExpression VisitBooleanExpression(QuokkaParser.BooleanExpressionContext context)
 		{
-			return new OrExpression(context.andExpression().Select(Visit));
+			var andExpressions = context.andExpression().Select(Visit).ToList();
+			return andExpressions.Count > 1
+				? new OrExpression(andExpressions)
+				: andExpressions.Single();
 		}
 
 		public override IBooleanExpression VisitAndExpression(QuokkaParser.AndExpressionContext context)
 		{
-			return new AndExpression(context.booleanAtom().Select(Visit));
+			var atoms = context.booleanAtom().Select(Visit).ToList();
+			return atoms.Count > 1
+				? new AndExpression(atoms)
+				: atoms.Single();
 		}
 
 		public override IBooleanExpression VisitParameterValueExpression(QuokkaParser.ParameterValueExpressionContext context)
@@ -47,8 +59,8 @@ namespace Quokka
 
 			return new ArithmeticComparisonExpression(
 				operation,
-				context.arithmeticExpression(0).Accept(new ArithmeticExpressionVisitor()),
-				context.arithmeticExpression(1).Accept(new ArithmeticExpressionVisitor()));
+				context.arithmeticExpression(0).Accept(ArithmeticExpressionVisitor.Instance),
+				context.arithmeticExpression(1).Accept(ArithmeticExpressionVisitor.Instance));
 		}
 		
 		public override IBooleanExpression VisitNotExpression(QuokkaParser.NotExpressionContext context)
@@ -58,6 +70,7 @@ namespace Quokka
 
 		protected override IBooleanExpression AggregateResult(IBooleanExpression aggregate, IBooleanExpression nextResult)
 		{
+			// Works for Atom alternatives: we'll take the first alternative that is present.
 			return aggregate ?? nextResult;
 		}
 	}

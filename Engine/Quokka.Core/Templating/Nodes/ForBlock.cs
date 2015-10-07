@@ -24,11 +24,14 @@ namespace Quokka
 			var innerScope = scope.CreateChildScope();
 			var iterationVariableDefinition = innerScope.CreateOrUpdateVariableDefinition(iterationVariable, errorListener);
 			collectionVariableDefinition.CollectionElementVariables.Add(iterationVariableDefinition);
-            block.CompileVariableDefinitions(innerScope, errorListener);
+			block?.CompileVariableDefinitions(innerScope, errorListener);
 		}
 
 		public override void Render(StringBuilder resultBuilder, RuntimeVariableScope variableScope)
 		{
+			if (block == null)
+				return;
+
 			var collectionValue = (IEnumerable<VariableValueStorage>)variableScope.GetVariableValue(collection);
 			foreach (var collectionElement in collectionValue)
 			{

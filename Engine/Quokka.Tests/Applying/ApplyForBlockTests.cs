@@ -390,5 +390,53 @@ namespace Quokka.Tests
 
 			Assert.AreEqual(expected, result);
 		}
+
+		[TestMethod]
+		public void Apply_ForBlock_CaseInsensitivity()
+		{
+			var template = new Template(@"
+				@{ FoR item In Collection }
+					List element
+				@{ eNd fOr }
+			");
+
+			var result = template.Apply(
+				new CompositeParameterValue(
+					new ParameterField("coLLectiON",
+						new ArrayParameterValue(
+							new PrimitiveParameterValue(1),
+							new PrimitiveParameterValue(2),
+							new PrimitiveParameterValue(3)))));
+
+			var expected = @"
+				
+					List element
+				
+					List element
+				
+					List element
+				
+			";
+
+			Assert.AreEqual(expected, result);
+		}
+
+		[TestMethod]
+		public void Apply_ForBlock_EmptyBlock()
+		{
+			var template = new Template(@"@{ for item in Collection }@{ end for }");
+
+			var result = template.Apply(
+				new CompositeParameterValue(
+					new ParameterField("Collection",
+						new ArrayParameterValue(
+							new PrimitiveParameterValue(1),
+							new PrimitiveParameterValue(2),
+							new PrimitiveParameterValue(3)))));
+
+			var expected = @"";
+
+			Assert.AreEqual(expected, result);
+		}
 	}
 }
