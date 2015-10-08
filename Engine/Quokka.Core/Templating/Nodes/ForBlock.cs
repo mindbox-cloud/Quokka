@@ -8,9 +8,9 @@ namespace Quokka
 	{
 		private readonly ITemplateNode block;
 		private readonly VariableOccurence collection;
-		private readonly IterationVariableDeclaration iterationVariable;
+		private readonly VariableDeclaration iterationVariable;
 
-		public ForBlock(ITemplateNode block, VariableOccurence collection, IterationVariableDeclaration iterationVariable)
+		public ForBlock(ITemplateNode block, VariableOccurence collection, VariableDeclaration iterationVariable)
 		{
 			this.block = block;
 			this.collection = collection;

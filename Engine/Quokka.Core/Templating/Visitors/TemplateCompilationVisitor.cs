@@ -82,11 +82,10 @@ namespace Quokka
 			return new ForBlock(
 				context.templateBlock()?.Accept(this),
 				collectionVariable,
-				new IterationVariableDeclaration(
+				new VariableDeclaration(
 					forInstruction.iterationVariable().Identifier().GetText(),
 					VariableType.Unknown,
-					null,
-					collectionVariable));
+					null));
 		}
 	}
 }
