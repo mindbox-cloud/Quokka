@@ -2,8 +2,7 @@
 {
 	public interface ITemplateError
 	{
-		int Line { get; }
-		int Column { get; }
+		Location Location { get; }
 		string Message { get; }
 	}
 }

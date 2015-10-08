@@ -3,14 +3,12 @@
 	internal abstract class TemplateErrorBase : ITemplateError
 	{
 		public string Message { get; }
-		public int Line { get; }
-		public int Column { get; }
+		public Location Location { get; }
 
-		protected TemplateErrorBase(string message, int line, int column)
+		protected TemplateErrorBase(string message, Location location)
 		{
 			Message = message;
-			Line = line;
-			Column = column;
+			Location = location;
 		}
 	}
 }

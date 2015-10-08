@@ -14,9 +14,9 @@ namespace Quokka
 			this.expression = expression;
 		}
 
-		public override void CompileVariableDefinitions(Scope scope, ISemanticErrorListener errorListener)
+		public override void CompileVariableDefinitions(CompilationVariableScope scope)
 		{
-			expression.CompileVariableDefinitions(scope, errorListener);
+			expression.CompileVariableDefinitions(scope);
 		}
 
 		public override void Render(StringBuilder resultBuilder, RuntimeVariableScope variableScope)

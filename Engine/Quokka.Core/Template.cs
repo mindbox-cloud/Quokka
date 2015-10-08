@@ -12,7 +12,7 @@ namespace Quokka
 	public class Template
 	{
 		private readonly TemplateBlock rootBlock;
-		private readonly VariableCollection externalVariables;
+		private readonly IReadOnlyCollection<IParameterDefinition> parameterDefinitions;
 
 		public Template(string templateText)
 		{
@@ -30,11 +30,12 @@ namespace Quokka
 			if (parser.NumberOfSyntaxErrors > 0)
 				throw new InvalidOperationException("Syntax errors in the template");
 
-			var scope = new Scope();
+			var scope = new CompilationVariableScope();
+			rootBlock.CompileVariableDefinitions(scope);
+
 			var errorListener = new SemanticErrorListener();
-			
-			rootBlock.CompileVariableDefinitions(scope, errorListener);
-			externalVariables = scope.Variables;
+			parameterDefinitions = scope.Variables.GetParameterDefinitions(errorListener);
+
 			var errors = errorListener.GetErrors();
 			if (errors.Any())
 				throw new InvalidOperationException(
@@ -44,7 +45,7 @@ namespace Quokka
 
 		public IList<IParameterDefinition> GetParameterDefinitions()
 		{
-			return externalVariables.GetParameterDefinitions();
+			return parameterDefinitions.ToList();
 		}
 
 		public string Apply(ICompositeParameterValue model)

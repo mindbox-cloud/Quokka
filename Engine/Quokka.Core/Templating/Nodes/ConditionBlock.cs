@@ -13,10 +13,10 @@ namespace Quokka
 			this.condition = condition;
 		}
 
-		public override void CompileVariableDefinitions(Scope scope, ISemanticErrorListener errorListener)
+		public override void CompileVariableDefinitions(CompilationVariableScope scope)
 		{
-			condition.CompileVariableDefinitions(scope, errorListener);
-			block?.CompileVariableDefinitions(scope, errorListener);
+			condition.CompileVariableDefinitions(scope);
+			block?.CompileVariableDefinitions(scope);
 		}
 
 		public override void Render(StringBuilder resultBuilder, RuntimeVariableScope variableScope)

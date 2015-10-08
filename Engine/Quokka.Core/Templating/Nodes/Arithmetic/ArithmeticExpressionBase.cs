@@ -6,7 +6,7 @@ namespace Quokka
 	{
 		public abstract double GetValue(RuntimeVariableScope variableScope);
 
-		public virtual void CompileVariableDefinitions(Scope scope, ISemanticErrorListener errorListener)
+		public virtual void CompileVariableDefinitions(CompilationVariableScope scope)
 		{
 		}
 	}

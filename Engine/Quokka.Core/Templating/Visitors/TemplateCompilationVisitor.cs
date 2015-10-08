@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+
+using Antlr4.Runtime.Tree;
+
 using Quokka.Generated;
 
 namespace Quokka
@@ -78,13 +81,16 @@ namespace Quokka
 		{
 			var forInstruction = context.forInstruction();
 			var collectionVariable = forInstruction.parameterValueExpression().Accept(new VariableVisitor(VariableType.Array));
-			
+
+			var iterationVariableIdentifier = forInstruction.iterationVariable().Identifier();
+
 			return new ForBlock(
 				context.templateBlock()?.Accept(this),
 				collectionVariable,
 				new VariableDeclaration(
-					forInstruction.iterationVariable().Identifier().GetText(),
-					VariableType.Unknown,
+					iterationVariableIdentifier.GetText(),
+					GetLocationFromToken(iterationVariableIdentifier.Symbol),
+                    VariableType.Unknown,
 					null));
 		}
 	}

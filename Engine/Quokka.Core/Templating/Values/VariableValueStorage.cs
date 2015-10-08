@@ -79,7 +79,7 @@ namespace Quokka
 				fields = parameterValue
 					.Fields
 					.ToDictionary(
-						field => field.Name,
+						field => field.Name.Trim(),
 						field => CreateStorageForValue(field.Value),
 						StringComparer.InvariantCultureIgnoreCase);
 			}
@@ -99,6 +99,9 @@ namespace Quokka
 
 			public override object TryGetValue(VariableOccurence variableOccurence)
 			{
+				if (variableOccurence.Member != null && variableOccurence.RequiredType != VariableType.Composite)
+					throw new InvalidOperationException("Trying to get the composite value for a variable of a wrong type");
+
 				VariableValueStorage field;
 				if (fields.TryGetValue(variableOccurence.Name, out field))
 					return field.TryGetValue(variableOccurence.Member ?? variableOccurence);
@@ -125,6 +128,8 @@ namespace Quokka
 
 			public override object TryGetValue(VariableOccurence variableOccurence)
 			{
+				if (variableOccurence.RequiredType != VariableType.Array)
+					throw new InvalidOperationException("Trying to get the array value for a variable of a wrong type");
 				return elements;
 			}
 		}

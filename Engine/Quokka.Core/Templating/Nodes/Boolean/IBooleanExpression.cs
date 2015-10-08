@@ -4,6 +4,6 @@
 	{
 		bool Evaluate(RuntimeVariableScope variableScope);
 
-		void CompileVariableDefinitions(Scope scope, ISemanticErrorListener errorListener);
+		void CompileVariableDefinitions(CompilationVariableScope scope);
 	}
 }

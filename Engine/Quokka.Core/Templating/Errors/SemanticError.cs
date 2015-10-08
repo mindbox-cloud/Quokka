@@ -2,8 +2,8 @@
 {
 	internal class SemanticError : TemplateErrorBase
 	{
-		public SemanticError(string message, int line, int column)
-			: base(message, line, column)
+		public SemanticError(string message, Location location)
+			: base(message, location)
 		{
 		}
 	}

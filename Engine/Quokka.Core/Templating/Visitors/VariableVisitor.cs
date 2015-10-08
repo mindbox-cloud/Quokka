@@ -1,4 +1,6 @@
-﻿using Quokka.Generated;
+﻿using Antlr4.Runtime;
+
+using Quokka.Generated;
 
 namespace Quokka
 {
@@ -15,8 +17,10 @@ namespace Quokka
 		{
 			var member = context.memberAccessExpression()?.Accept(this);
 
+			var identifier = context.parameterExpression().Identifier();
 			return new VariableOccurence(
-				context.parameterExpression().Identifier().GetText(),
+				identifier.GetText(),
+				GetLocationFromToken(identifier.Symbol),
 				member == null
 					? requiredVariableExpressionType
 					: VariableType.Composite,
@@ -26,9 +30,12 @@ namespace Quokka
 		public override VariableOccurence VisitMemberAccessExpression(QuokkaParser.MemberAccessExpressionContext context)
 		{
 			var subMember = context.memberAccessExpression()?.Accept(this);
+			var identifier = context.Identifier();
+
 			return new VariableOccurence(
-				context.Identifier().GetText(),
-				subMember == null 
+				identifier.GetText(),
+				GetLocationFromToken(identifier.Symbol),
+                subMember == null 
 					? requiredVariableExpressionType
 					: VariableType.Composite,
 				subMember);

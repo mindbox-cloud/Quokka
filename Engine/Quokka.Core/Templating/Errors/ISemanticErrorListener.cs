@@ -4,8 +4,11 @@ namespace Quokka
 {
 	internal interface ISemanticErrorListener
 	{
-		void AddInconsistentVariableTypesError(VariableDefinition definition, VariableOccurence occurence);
+		void AddInconsistentVariableTypingError(
+			VariableDefinition definition,
+			VariableOccurence faultyOccurence,
+			VariableType correctType);
 
-		IReadOnlyCollection<Error> GetErrors();
+		IReadOnlyCollection<SemanticError> GetErrors();
 	}
 }

@@ -13,10 +13,10 @@ namespace Quokka
 			this.conditions = conditions.ToList().AsReadOnly();
 		}
 
-		public override void CompileVariableDefinitions(Scope scope, ISemanticErrorListener errorListener)
+		public override void CompileVariableDefinitions(CompilationVariableScope scope)
 		{
 			foreach (var condition in conditions)
-				condition.CompileVariableDefinitions(scope, errorListener);
+				condition.CompileVariableDefinitions(scope);
 		}
 
 		public override void Render(StringBuilder resultBuilder, RuntimeVariableScope variableScope)

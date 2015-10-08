@@ -4,7 +4,7 @@
 	{
 		public abstract bool Evaluate(RuntimeVariableScope variableScope);
 
-		public virtual void CompileVariableDefinitions(Scope scope, ISemanticErrorListener errorListener)
+		public virtual void CompileVariableDefinitions(CompilationVariableScope scope)
 		{
 		}
 	}

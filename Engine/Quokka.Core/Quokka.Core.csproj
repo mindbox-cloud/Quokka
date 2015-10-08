@@ -44,6 +44,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Generated.Partials\QuokkaBaseVisitor.cs" />
     <Compile Include="Parameters\Definitions\ArrayParameterDefinition.cs" />
     <Compile Include="Parameters\Definitions\CompositeParameterDefinition.cs" />
     <Compile Include="Generated\QuokkaBaseVisitor.cs" />
@@ -64,9 +65,9 @@
     <Compile Include="Parameters\InputValues\ParameterField.cs" />
     <Compile Include="Parameters\InputValues\PrimitiveParameterValue.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Templating\Errors\Error.cs" />
     <Compile Include="Templating\Errors\ISemanticErrorListener.cs" />
     <Compile Include="Templating\Errors\ITemplateError.cs" />
+    <Compile Include="Templating\Errors\Location.cs" />
     <Compile Include="Templating\Errors\SemanticError.cs" />
     <Compile Include="Templating\Errors\SemanticErrorListener.cs" />
     <Compile Include="Templating\Errors\SyntaxError.cs" />
@@ -96,7 +97,7 @@
     <Compile Include="Templating\Nodes\VariableOutputBlock.cs" />
     <Compile Include="Templating\Values\RuntimeVariableScope.cs" />
     <Compile Include="Templating\Values\VariableValueStorage.cs" />
-    <Compile Include="Templating\Variables\Scope.cs" />
+    <Compile Include="Templating\Variables\CompilationVariableScope.cs" />
     <Compile Include="Templating\Variables\VariableCollection.cs" />
     <Compile Include="Templating\Variables\VariableDeclaration.cs" />
     <Compile Include="Templating\Variables\VariableDefinition.cs" />

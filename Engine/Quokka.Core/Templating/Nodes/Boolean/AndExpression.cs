@@ -17,10 +17,10 @@ namespace Quokka
 			return subExpressions.All(subExpression => subExpression.Evaluate(variableScope));
 		}
 
-		public override void CompileVariableDefinitions(Scope scope, ISemanticErrorListener errorListener)
+		public override void CompileVariableDefinitions(CompilationVariableScope scope)
 		{
 			foreach (var subExpression in subExpressions)
-				subExpression.CompileVariableDefinitions(scope, errorListener);
+				subExpression.CompileVariableDefinitions(scope);
 		}
 	}
 }

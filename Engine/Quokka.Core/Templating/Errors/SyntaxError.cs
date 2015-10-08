@@ -8,8 +8,8 @@ namespace Quokka
 {
 	internal class SyntaxError : TemplateErrorBase
 	{
-		public SyntaxError(string message, int line, int column)
-			: base(message, line, column)
+		public SyntaxError(string message, Location location)
+			: base(message, location)
 		{
 		}
 	}

@@ -317,6 +317,35 @@ namespace Quokka.Tests
 		}
 
 		[TestMethod]
+		public void ParameterDiscovery_ForLoop_GlobalParameterInsideTheLoop()
+		{
+			var parameterDefinitions = new Template(@"
+				@{ for element in Customer.Orders } 
+					${ SomethingGlobal }
+				@{ end for }
+				")
+				.GetParameterDefinitions();
+
+			TemplateAssert.AreParameterDefinitionsEqual(
+				new[]
+				{
+					new CompositeParameterDefinition(
+						"Customer",
+						new IParameterDefinition[]
+						{
+							new ArrayParameterDefinition(
+								"Orders",
+								VariableType.Unknown,
+								new IParameterDefinition[0])
+						}),
+					new ParameterDefinition(
+						"SomethingGlobal",
+						VariableType.Primitive)
+				},
+				parameterDefinitions);
+		}
+
+		[TestMethod]
 		public void ParameterDiscovery_ForLoop_ElementFirstLevelField()
 		{
 			var parameterDefinitions = new Template(@"
@@ -687,7 +716,7 @@ namespace Quokka.Tests
 		}
 
 		[TestMethod]
-		public void ParameterDiscovery_NestedForLoops_MultipleIterationsOverCollectionElement()
+		public void ParameterDiscovery_NestedForLoops_MultipleIterationsOverDifferentCollectionElements()
 		{
 			var parameterDefinitions = new Template(@"
 				@{ for order in Orders } 
@@ -722,6 +751,88 @@ namespace Quokka.Tests
 								{
 									new ParameterDefinition(
 										"Name",
+										VariableType.Primitive)
+								})
+						})
+				},
+				parameterDefinitions);
+		}
+
+		[TestMethod]
+		public void ParameterDiscovery_NestedForLoops_MultipleIterationsOverSameCollectionElements_SameName()
+		{
+			var parameterDefinitions = new Template(@"
+				@{ for order in Orders } 
+					@{ for product in order.Products }
+						${ product.Name }
+					@{ end for }
+
+					@{ for product in order.Products }
+						${ product.Price }
+					@{ end for }
+				@{ end for }
+				")
+				.GetParameterDefinitions();
+
+			TemplateAssert.AreParameterDefinitionsEqual(
+				new[]
+				{
+					new ArrayParameterDefinition(
+						"Orders",
+						VariableType.Composite,
+						new IParameterDefinition[]
+						{
+							new ArrayParameterDefinition(
+								"Products",
+								VariableType.Composite,
+								new IParameterDefinition[]
+								{
+									new ParameterDefinition(
+										"Name",
+										VariableType.Primitive),
+									new ParameterDefinition(
+										"Price",
+										VariableType.Primitive)
+								})
+						})
+				},
+				parameterDefinitions);
+		}
+
+		[TestMethod]
+		public void ParameterDiscovery_NestedForLoops_MultipleIterationsOverSameCollectionElements_DifferentNames()
+		{
+			var parameterDefinitions = new Template(@"
+				@{ for order in Orders } 
+					@{ for product in order.Products }
+						${ product.Name }
+					@{ end for }
+
+					@{ for product2 in order.Products }
+						${ product2.Price }
+					@{ end for }
+				@{ end for }
+				")
+				.GetParameterDefinitions();
+
+			TemplateAssert.AreParameterDefinitionsEqual(
+				new[]
+				{
+					new ArrayParameterDefinition(
+						"Orders",
+						VariableType.Composite,
+						new IParameterDefinition[]
+						{
+							new ArrayParameterDefinition(
+								"Products",
+								VariableType.Composite,
+								new IParameterDefinition[]
+								{
+									new ParameterDefinition(
+										"Name",
+										VariableType.Primitive),
+									new ParameterDefinition(
+										"Price",
 										VariableType.Primitive)
 								})
 						})

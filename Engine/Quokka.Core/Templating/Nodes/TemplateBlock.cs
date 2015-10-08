@@ -20,10 +20,10 @@ namespace Quokka
 			return new TemplateBlock(Enumerable.Empty<ITemplateNode>());
 		}
 
-		public override void CompileVariableDefinitions(Scope scope, ISemanticErrorListener errorListener)
+		public override void CompileVariableDefinitions(CompilationVariableScope scope)
 		{
 			foreach (var child in children)
-				child.CompileVariableDefinitions(scope, errorListener);
+				child.CompileVariableDefinitions(scope);
 		}
 
 		public override void Render(StringBuilder resultBuilder, RuntimeVariableScope variableScope)

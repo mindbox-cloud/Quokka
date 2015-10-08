@@ -1,26 +1,30 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 
 namespace Quokka
 {
 	internal class SemanticErrorListener : ISemanticErrorListener
 	{
-		private readonly List<Error> errors = new List<Error>();
+		private readonly List<SemanticError> errors = new List<SemanticError>();
 
-		protected void AddError(Error error)
+		protected void AddError(SemanticError error)
 		{
 			errors.Add(error);
 		}
 
-		public IReadOnlyCollection<Error> GetErrors()
+		public IReadOnlyCollection<SemanticError> GetErrors()
 		{
 			return errors.AsReadOnly();
 		} 
 
-		public void AddInconsistentVariableTypesError(VariableDefinition definition, VariableOccurence occurence)
+		public void AddInconsistentVariableTypingError(
+			VariableDefinition definition,
+			VariableOccurence faultyOccurence,
+			VariableType correctType)
 		{
-			AddError(new Error($"Параметр {definition.FullName} не может использоваться как {occurence.RequiredType}, " +
-								$"так как он уже используется в качестве {definition.Type}"));
+			AddError(new SemanticError(
+				$"Параметр {definition.FullName} не может использоваться как {faultyOccurence.RequiredType}, " +
+				$"так как в других местах он используется как {correctType}",
+				faultyOccurence.Location));
 		}
 
 	}

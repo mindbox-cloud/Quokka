@@ -14,9 +14,9 @@
 			return -1.0 * innerExpression.GetValue(variableScope);
 		}
 
-		public override void CompileVariableDefinitions(Scope scope, ISemanticErrorListener errorListener)
+		public override void CompileVariableDefinitions(CompilationVariableScope scope)
 		{
-			innerExpression.CompileVariableDefinitions(scope, errorListener);
+			innerExpression.CompileVariableDefinitions(scope);
 		}
 	}
 }

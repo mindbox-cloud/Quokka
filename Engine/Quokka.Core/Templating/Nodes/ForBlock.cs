@@ -17,14 +17,14 @@ namespace Quokka
 			this.iterationVariable = iterationVariable;
 		}
 
-		public override void CompileVariableDefinitions(Scope scope, ISemanticErrorListener errorListener)
+		public override void CompileVariableDefinitions(CompilationVariableScope scope)
 		{
 			var collectionVariableDefinition = 
-				scope.CreateOrUpdateVariableDefinition(collection, errorListener);
+				scope.CreateOrUpdateVariableDefinition(collection);
 			var innerScope = scope.CreateChildScope();
-			var iterationVariableDefinition = innerScope.CreateOrUpdateVariableDefinition(iterationVariable, errorListener);
+			var iterationVariableDefinition = innerScope.CreateOrUpdateVariableDefinition(iterationVariable);
 			collectionVariableDefinition.CollectionElementVariables.Add(iterationVariableDefinition);
-			block?.CompileVariableDefinitions(innerScope, errorListener);
+			block?.CompileVariableDefinitions(innerScope);
 		}
 
 		public override void Render(StringBuilder resultBuilder, RuntimeVariableScope variableScope)

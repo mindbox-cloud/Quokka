@@ -18,10 +18,10 @@ namespace Quokka
 				.Aggregate(0.0, (current, operand) => operand.Calculate(current, variableScope));
 		}
 
-		public override void CompileVariableDefinitions(Scope scope, ISemanticErrorListener errorListener)
+		public override void CompileVariableDefinitions(CompilationVariableScope scope)
 		{
 			foreach (var operand in operands)
-				operand.Expression.CompileVariableDefinitions(scope, errorListener);
+				operand.Expression.CompileVariableDefinitions(scope);
 		}
 	}
 }

@@ -2,10 +2,10 @@
 {
 	internal class VariableDeclaration : VariableOccurence
 	{
-		public override bool IsGlobal => false;
+		public override bool IsExternal => false;
 
-		public VariableDeclaration(string name, VariableType requiredType, VariableOccurence member)
-			: base(name, requiredType, member)
+		public VariableDeclaration(string name, Location location, VariableType requiredType, VariableOccurence member)
+			: base(name, location, requiredType, member)
 		{
 		}
 	}

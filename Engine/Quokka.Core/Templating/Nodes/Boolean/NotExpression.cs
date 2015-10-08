@@ -14,9 +14,9 @@
 			return !inner.Evaluate(variableScope);
 		}
 
-		public override void CompileVariableDefinitions(Scope scope, ISemanticErrorListener errorListener)
+		public override void CompileVariableDefinitions(CompilationVariableScope scope)
 		{
-			inner.CompileVariableDefinitions(scope, errorListener);
+			inner.CompileVariableDefinitions(scope);
 		}
 	}
 }

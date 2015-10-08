@@ -11,9 +11,9 @@ namespace Quokka
 			this.variableOccurence = variableOccurence;
 		}
 
-		public override void CompileVariableDefinitions(Scope scope, ISemanticErrorListener errorListener)
+		public override void CompileVariableDefinitions(CompilationVariableScope scope)
 		{
-			scope.CreateOrUpdateVariableDefinition(variableOccurence, errorListener);
+			scope.CreateOrUpdateVariableDefinition(variableOccurence);
 		}
 
 		public override void Render(StringBuilder resultBuilder, RuntimeVariableScope variableScope)

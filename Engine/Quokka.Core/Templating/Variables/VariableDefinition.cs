@@ -15,9 +15,10 @@ namespace Quokka
 	/// </remarks>
 	internal class VariableDefinition
 	{
+		private readonly IList<VariableOccurence> occurences; 
+
 		public string Name { get; }
 		public string FullName { get; }
-		public VariableType Type { get; set; }
 		
 		/// <summary>
 		/// Own fields of the variable.
@@ -26,79 +27,123 @@ namespace Quokka
 		public VariableCollection Fields { get; }
 
 		/// <summary>
-		/// Variable that is used to iterate over this element if it's a collection
+		/// Variables that are used to iterate over this element if it's a collection
 		/// (it'll give us information about fields that we should expect every element of the collection to have).
 		/// </summary>
 		/// <remarks>Only relevant for collection variables.</remarks>
 		public List<VariableDefinition> CollectionElementVariables { get; } = new List<VariableDefinition>();
 
-		public VariableDefinition(string name, string fullName, VariableType type)
-			: this(name, fullName, type, new VariableCollection())
+		public VariableDefinition(string name, string fullName)
+			: this(name, fullName, new VariableCollection(), new List<VariableOccurence>())
 		{
 		}
 
-		private VariableDefinition(string name, string fullName, VariableType type, VariableCollection fields)
+		private VariableDefinition(
+			string name,
+			string fullName,
+			VariableCollection fields,
+			IList<VariableOccurence> occurences)
 		{
 			Name = name;
 			FullName = fullName;
-			Type = type;
 			Fields = fields;
+			this.occurences = occurences;
 		}
 
-		public IParameterDefinition ToParameterDefinition()
+		public void AddOccurence(VariableOccurence occurence)
 		{
-			switch (Type)
+			if (!string.Equals(occurence.Name, Name, StringComparison.InvariantCultureIgnoreCase))
+				throw new InvalidOperationException("Variable occurence name doesn't match the definition");
+
+			occurences.Add(occurence);
+		}
+
+		public VariableType DetermineType(ISemanticErrorListener errorListener)
+		{
+			if (!occurences.Any())
+				throw new InvalidOperationException("Variable has no occurences");
+
+			if (occurences.Count == 1)
+				return occurences.Single().RequiredType;
+
+			var occurencesByTypePriority = occurences
+				.OrderByDescending(oc => (int)oc.RequiredType);
+
+			VariableType? resultingType = null;
+
+			foreach (var occurence in occurencesByTypePriority)
+			{
+				if (resultingType == null)
+				{
+					resultingType = occurence.RequiredType;
+				}
+				else
+				{
+					if (occurence.RequiredType != resultingType)
+					{
+						if (!IsTypeCompatibleWithAnotherType(occurence.RequiredType, resultingType.Value))
+						{
+							errorListener.AddInconsistentVariableTypingError(
+								this,
+								occurence,
+								resultingType.Value);
+						}
+					}
+				}
+			}
+
+			return resultingType.Value;
+		}
+
+		private bool IsTypeCompatibleWithAnotherType(VariableType typeA, VariableType typeB)
+		{
+			// todo: implement the correct logic
+			return typeA == VariableType.Unknown;
+		}
+
+		public IParameterDefinition ToParameterDefinition(ISemanticErrorListener errorListener)
+		{
+			var type = DetermineType(errorListener);
+			switch (type)
 			{
 				case VariableType.Composite:
 
 					return new CompositeParameterDefinition(
 						Name,
-						Fields.GetParameterDefinitions());
+						Fields.GetParameterDefinitions(errorListener));
 
 				case VariableType.Array:
 					if (!CollectionElementVariables.Any())
 						throw new InvalidOperationException(
 							"The variable is of an array type but no collection variables found");
 
-					var collectionElementDefinition = Merge(CollectionElementVariables.ToList());
+					var collectionElementDefinition = Merge(
+						//$"{FullName}[...].Element",
+						"CollectionElement",
+						CollectionElementVariables.ToList());
 					
 					return new ArrayParameterDefinition(
 						Name,
-						collectionElementDefinition.Type,
-						collectionElementDefinition.Fields.GetParameterDefinitions());
+						collectionElementDefinition.DetermineType(errorListener),
+						collectionElementDefinition.Fields.GetParameterDefinitions(errorListener));
 
 				default:
 					return new ParameterDefinition(
 						Name, 
-						Type);
+						type);
 			}
 		}
 
-		public static VariableDefinition Merge(IList<VariableDefinition> definitions)
+		public static VariableDefinition Merge(string resultName, IList<VariableDefinition> definitions)
 		{
-			VariableType type = default(VariableType);
-			string name = null;
-			bool firstDefinitionProcessed = false;
-
-			foreach (var definition in definitions)
-			{
-				if (!firstDefinitionProcessed)
-				{
-					type = definition.Type;
-					name = definition.Name;
-					firstDefinitionProcessed = true;
-				}
-				else
-				{
-					if (definition.Type != type)
-						//TODO: change it to be an analysis error
-						throw new InvalidOperationException("Inconsistent typing");
-				}
-			}
-
 			var fields = VariableCollection.Merge(definitions.Select(definition => definition.Fields).ToList());
+			var occurences = definitions.SelectMany(definition => definition.occurences);
 
-            return new VariableDefinition(name, name, type, fields);
+			return new VariableDefinition(
+				resultName,
+				resultName,
+				fields,
+				occurences.ToList());
 		}
 		
 	}
