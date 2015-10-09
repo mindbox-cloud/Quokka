@@ -23,14 +23,14 @@ namespace Quokka
 			this.items = items;
 		}
 
-		public ICompositeModelDefinition ToParameterDefinition(ISemanticErrorListener errorListener)
+		public ICompositeModelDefinition ToModelDefinition(ISemanticErrorListener errorListener)
 		{
 			return new CompositeModelDefinition(
 				new ReadOnlyDictionary<string, IModelDefinition>(
 					items
 						.ToDictionary(
 							kvp => kvp.Key,
-							kvp => kvp.Value.ToParameterDefinition(errorListener),
+							kvp => kvp.Value.ToModelDefinition(errorListener),
 							StringComparer.InvariantCultureIgnoreCase)));
 		}
 

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Quokka
 {
-	public interface IParameterValue
+	public interface IModelValue
 	{
 	}
 }

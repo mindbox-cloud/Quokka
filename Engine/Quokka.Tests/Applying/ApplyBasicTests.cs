@@ -13,7 +13,7 @@ namespace Quokka.Tests
 
 			Assert.AreEqual(
 				"Happy new year!",
-				template.Apply(new CompositeParameterValue()));
+				template.Apply(new CompositeModelValue()));
 		}
 
 		[TestMethod]
@@ -23,7 +23,7 @@ namespace Quokka.Tests
 
 			Assert.AreEqual(
 				"",
-				template.Apply(new CompositeParameterValue()));
+				template.Apply(new CompositeModelValue()));
 		}
 
 		[TestMethod]
@@ -33,7 +33,7 @@ namespace Quokka.Tests
 
 			Assert.AreEqual(
 				"Visible  Visible",
-				template.Apply(new CompositeParameterValue()));
+				template.Apply(new CompositeModelValue()));
 		}
 	}
 }

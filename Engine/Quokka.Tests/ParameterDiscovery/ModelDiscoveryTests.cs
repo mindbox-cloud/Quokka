@@ -21,7 +21,7 @@ namespace Quokka.Tests
 		[TestMethod]
 		public void ModelDiscovery_SingleOutputParameter()
 		{
-			var parameterDefinitions = new Template(
+			var model = new Template(
 				"${ Name }")
 				.GetModelDefinition();
 
@@ -30,13 +30,13 @@ namespace Quokka.Tests
 				{
 					{ "Name", new PrimitiveModelDefinition(VariableType.Primitive) }
 				}),
-				parameterDefinitions);
+				model);
 		}
 
 		[TestMethod]
 		public void ModelDiscovery_MultipleOutputParameters()
 		{
-			var parameterDefinitions = new Template(
+			var model = new Template(
 				"${ FirstName } ${ LastName } ${ Age }")
 				.GetModelDefinition();
 
@@ -47,13 +47,13 @@ namespace Quokka.Tests
 					{ "FirstName", new PrimitiveModelDefinition(VariableType.Primitive) },
 					{ "LastName", new PrimitiveModelDefinition(VariableType.Primitive) }
 				}),
-				parameterDefinitions);
+				model);
 		}
 
 		[TestMethod]
 		public void ModelDiscovery_CompositeParameter()
 		{
-			var parameterDefinitions = new Template(
+			var model = new Template(
 				"${ Customer.Email }")
 				.GetModelDefinition();
 
@@ -67,13 +67,13 @@ namespace Quokka.Tests
 						})
 					}
 				}),
-				parameterDefinitions);
+				model);
 		}
 
 		[TestMethod]
 		public void ModelDiscovery_CompositeParameterWithTwoFields()
 		{
-			var parameterDefinitions = new Template(
+			var model = new Template(
 				"${ Customer.Email } ${ Customer.MobilePhone }")
 				.GetModelDefinition();
 
@@ -95,13 +95,13 @@ namespace Quokka.Tests
 						})
 					}
 				}),
-				parameterDefinitions);
+				model);
 		}
 
 		[TestMethod]
 		public void ModelDiscovery_CompositeParameter_CaseInsensitive()
 		{
-			var parameterDefinitions = new Template(
+			var model = new Template(
 				"${ Customer.Email } ${ CUSTOMER.MobilePhone } ${ cUsToMeR.Id }")
 				.GetModelDefinition();
 
@@ -127,13 +127,13 @@ namespace Quokka.Tests
 						})
 					}
 				}),
-				parameterDefinitions);
+				model);
 		}
 
 		[TestMethod]
 		public void ModelDiscovery_SecondLevelCompositeParameterWithTwoFields()
 		{
-			var parameterDefinitions = new Template(
+			var model = new Template(
 				"${ Customer.Contacts.Email } ${ Customer.Contacts.MobilePhone }")
 				.GetModelDefinition();
 
@@ -153,14 +153,14 @@ namespace Quokka.Tests
 						})
 					}
 				}),
-				parameterDefinitions);
+				model);
 		}
 
 
 		[TestMethod]
 		public void ModelDiscovery_IfCondition_FirstLevelParameter()
 		{
-			var parameterDefinitions = new Template(
+			var model = new Template(
 				@"@{ if IsDebug } 
 					Text
 				@{ end if }")
@@ -171,13 +171,13 @@ namespace Quokka.Tests
 				{
 					{ "IsDebug", new PrimitiveModelDefinition(VariableType.Boolean) }
 				}),
-				parameterDefinitions);
+				model);
 		}
 
 		[TestMethod]
 		public void ModelDiscovery_IfCondition_SecondLevelParameters()
 		{
-			var parameterDefinitions = new Template(@"
+			var model = new Template(@"
 				@{ if Context.IsDebug or Context.IsStaging } 
 					Text
 				@{ end if }
@@ -195,14 +195,14 @@ namespace Quokka.Tests
 						})
 					}
 				}),
-				parameterDefinitions);
+				model);
 		}
 
 
 		[TestMethod]
 		public void ModelDiscovery_IfCondition_SecondLevelParameter_AnotherFieldOnFirstLevel()
 		{
-			var parameterDefinitions = new Template(@"
+			var model = new Template(@"
 				${ Context.Time }
 
 				@{ if context.IsDebug } 
@@ -222,7 +222,7 @@ namespace Quokka.Tests
 						})
 					}
 				}),
-				parameterDefinitions);
+				model);
 		}
 
 
@@ -230,7 +230,7 @@ namespace Quokka.Tests
 		[TestMethod]
 		public void ModelDiscovery_ArithmeticExpression_FirstLevelParameter()
 		{
-			var parameterDefinitions = new Template(
+			var model = new Template(
 				"${ ClickCount * 2 }")
 				.GetModelDefinition();
 
@@ -239,14 +239,14 @@ namespace Quokka.Tests
 				{
 					{ "ClickCount", new PrimitiveModelDefinition(VariableType.Integer) }
 				}),
-				parameterDefinitions);
+				model);
 		}
 
 
 		[TestMethod]
 		public void ModelDiscovery_ArithmeticExpression_SecondLevelParameters()
 		{
-			var parameterDefinitions = new Template(
+			var model = new Template(
 				"${ 100 * Statistics.ClickCount / Statistics.SentCount }")
 				.GetModelDefinition();
 
@@ -261,14 +261,14 @@ namespace Quokka.Tests
 						})
 					}
 				}),
-				parameterDefinitions);
+				model);
 		}
 
 
 		[TestMethod]
 		public void ModelDiscovery_ForLoop_SecondLevelParameterAsCollection()
 		{
-			var parameterDefinitions = new Template(@"
+			var model = new Template(@"
 				@{ for element in Customer.Orders } 
 					${ element.Id }
 				@{ end for }
@@ -290,13 +290,13 @@ namespace Quokka.Tests
 						})
 					}
 				}),
-				parameterDefinitions);
+				model);
 		}
 
 		[TestMethod]
 		public void ModelDiscovery_ForLoop_GlobalParameterInsideTheLoop()
 		{
-			var parameterDefinitions = new Template(@"
+			var model = new Template(@"
 				@{ for element in Customer.Orders } 
 					${ SomethingGlobal }
 				@{ end for }
@@ -316,13 +316,13 @@ namespace Quokka.Tests
 					},
 					{ "SomethingGlobal", new PrimitiveModelDefinition(VariableType.Primitive) }
 				}),
-				parameterDefinitions);
+				model);
 		}
 
 		[TestMethod]
 		public void ModelDiscovery_ForLoop_ElementFirstLevelField()
 		{
-			var parameterDefinitions = new Template(@"
+			var model = new Template(@"
 				@{ for element in Offers } 
 					${ element.Date }
 				@{ end for }
@@ -339,13 +339,13 @@ namespace Quokka.Tests
 						}))
 					}
 				}),
-				parameterDefinitions);
+				model);
 		}
 
 		[TestMethod]
 		public void ModelDiscovery_ForLoop_MultipleElementFirstLevelFields()
 		{
-			var parameterDefinitions = new Template(@"
+			var model = new Template(@"
 				@{ for element in Offers } 
 					${ element.Date }
 					${ element.Url }
@@ -364,13 +364,13 @@ namespace Quokka.Tests
 						}))
 					}
 				}),
-				parameterDefinitions);
+				model);
 		}
 
 		[TestMethod]
 		public void ModelDiscovery_ForLoop_MultipleElementSecondLevelFields()
 		{
-			var parameterDefinitions = new Template(@"
+			var model = new Template(@"
 				@{ for element in Offers } 
 					${ element.Product.Price }
 					${ element.Product.Name }
@@ -394,13 +394,13 @@ namespace Quokka.Tests
 						}))
 					}
 				}),
-				parameterDefinitions);
+				model);
 		}
 
 		[TestMethod]
 		public void ModelDiscovery_ForLoop_IfConditionOnElementVariable()
 		{
-			var parameterDefinitions = new Template(@"
+			var model = new Template(@"
 				@{ for element in Offers } 
 					@{ if element.IsOpen }
 						Try our offer
@@ -419,13 +419,13 @@ namespace Quokka.Tests
 						}))
 					}
 				}),
-				parameterDefinitions);
+				model);
 		}
 
 		[TestMethod]
 		public void ModelDiscovery_NestedForLoops_UsingFieldFromOuterForElement()
 		{
-			var parameterDefinitions = new Template(@"
+			var model = new Template(@"
 				@{ for offer in Offers } 
 					${ offer.Date }
 
@@ -450,13 +450,13 @@ namespace Quokka.Tests
 						"Seasons", new ArrayModelDefinition(CompositeModelDefinition.Empty)
 					}
 				}),
-				parameterDefinitions);
+				model);
 		}
 
 		[TestMethod]
 		public void ModelDiscovery_AdjacentForLoops_SameElementVariableNameForDifferentCollections()
 		{
-			var parameterDefinitions = new Template(@"
+			var model = new Template(@"
 				@{ for offer in Offers } 
 					${ offer.Text }
 				@{ end for }
@@ -483,13 +483,13 @@ namespace Quokka.Tests
 						}))
 					}
 				}),
-				parameterDefinitions);
+				model);
 		}
 
 		[TestMethod]
 		public void ModelDiscovery_AdjacentForLoops_SameElementVariableNameForSameCollection()
 		{
-			var parameterDefinitions = new Template(@"
+			var model = new Template(@"
 				@{ for offer in Offers } 
 					${ offer.Text }
 				@{ end for }
@@ -511,13 +511,13 @@ namespace Quokka.Tests
 						}))
 					}
 				}),
-				parameterDefinitions);
+				model);
 		}
 
 		[TestMethod]
 		public void ModelDiscovery_AdjacentForLoops_DifferentElementVariableNameForSameCollection()
 		{
-			var parameterDefinitions = new Template(@"
+			var model = new Template(@"
 				@{ for offer in Offers } 
 					${ offer.Text }
 				@{ end for }
@@ -539,13 +539,13 @@ namespace Quokka.Tests
 						}))
 					}
 				}),
-				parameterDefinitions);
+				model);
 		}
 
 		[TestMethod]
 		public void ModelDiscovery_AdjacentForLoops_SecondLevelElementFieldsForSameCollection()
 		{
-			var parameterDefinitions = new Template(@"
+			var model = new Template(@"
 				@{ for offer in Offers } 
 					${$ offer.Details.Price }
 				@{ end for }
@@ -572,13 +572,13 @@ namespace Quokka.Tests
 						}))
 					}
 				}),
-				parameterDefinitions);
+				model);
 		}
 
 		[TestMethod]
 		public void ModelDiscovery_NestedForLoops_IterationOverCollectionElement()
 		{
-			var parameterDefinitions = new Template(@"
+			var model = new Template(@"
 				@{ for order in Orders } 
 					@{ for product in order.Products }
 						${ product.Name }
@@ -602,13 +602,13 @@ namespace Quokka.Tests
 						}))
 					}
 				}),
-				parameterDefinitions);
+				model);
 		}
 		
 		[TestMethod]
 		public void ModelDiscovery_NestedForLoops_IterationOverCollectionElementItself()
 		{
-			var parameterDefinitions = new Template(@"
+			var model = new Template(@"
 				@{ for order in Orders } 
 					@{ for product in order }
 						${ product.Name }
@@ -632,13 +632,13 @@ namespace Quokka.Tests
 						}))
 					}
 				}),
-				parameterDefinitions);
+				model);
 		}
 
 		[TestMethod]
 		public void ModelDiscovery_NestedForLoops_MultipleIterationsOverDifferentCollectionElements()
 		{
-			var parameterDefinitions = new Template(@"
+			var model = new Template(@"
 				@{ for order in Orders } 
 					@{ for product in order.Products }
 						${ product.Name }
@@ -669,13 +669,13 @@ namespace Quokka.Tests
 						}))
 					}
 				}),
-				parameterDefinitions);
+				model);
 		}
 
 		[TestMethod]
 		public void ModelDiscovery_NestedForLoops_MultipleIterationsOverSameCollectionElements_SameName()
 		{
-			var parameterDefinitions = new Template(@"
+			var model = new Template(@"
 				@{ for order in Orders } 
 					@{ for product in order.Products }
 						${ product.Name }
@@ -704,13 +704,13 @@ namespace Quokka.Tests
 						}))
 					}
 				}),
-				parameterDefinitions);
+				model);
 		}
 
 		[TestMethod]
 		public void ModelDiscovery_NestedForLoops_MultipleIterationsOverSameCollectionElements_DifferentNames()
 		{
-			var parameterDefinitions = new Template(@"
+			var model = new Template(@"
 				@{ for order in Orders } 
 					@{ for product in order.Products }
 						${ product.Name }
@@ -739,13 +739,13 @@ namespace Quokka.Tests
 						}))
 					}
 				}),
-				parameterDefinitions);
+				model);
 		}
 
 		[TestMethod]
 		public void ModelDiscovery_ForLoop_CollectionElementWithoutUsages()
 		{
-			var parameterDefinitions = new Template(@"
+			var model = new Template(@"
 				@{ for element in Offers } 
 					Text
 				@{ end for }
@@ -759,7 +759,7 @@ namespace Quokka.Tests
 						"Offers", new ArrayModelDefinition(CompositeModelDefinition.Empty)
 					}
 				}),
-				parameterDefinitions);
+				model);
 		}
 	}
 }

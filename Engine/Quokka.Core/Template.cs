@@ -34,7 +34,7 @@ namespace Quokka
 			rootBlock.CompileVariableDefinitions(scope);
 
 			var errorListener = new SemanticErrorListener();
-			externalModelDefinition = scope.Variables.ToParameterDefinition(errorListener);
+			externalModelDefinition = scope.Variables.ToModelDefinition(errorListener);
 
 			var errors = errorListener.GetErrors();
 			if (errors.Any())
@@ -49,7 +49,7 @@ namespace Quokka
 			return externalModelDefinition;
 		}
 
-		public string Apply(ICompositeParameterValue model)
+		public string Apply(ICompositeModelValue model)
 		{
 			if (model == null)
 				throw new ArgumentNullException(nameof(model));

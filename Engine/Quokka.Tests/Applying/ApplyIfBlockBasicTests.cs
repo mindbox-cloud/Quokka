@@ -15,8 +15,8 @@ namespace Quokka.Tests
 			");
 
 			var result = template.Apply(
-				new CompositeParameterValue(
-					new ParameterField("IsTest", true)));
+				new CompositeModelValue(
+					new ModelField("IsTest", true)));
 
 			var expected = @"
 				
@@ -37,8 +37,8 @@ namespace Quokka.Tests
 			");
 
 			var result = template.Apply(
-				new CompositeParameterValue(
-					new ParameterField("IsTest", false)));
+				new CompositeModelValue(
+					new ModelField("IsTest", false)));
 
 			var expected = @"
 				
@@ -59,8 +59,8 @@ namespace Quokka.Tests
 			");
 
 			var result = template.Apply(
-				new CompositeParameterValue(
-					new ParameterField("IsTest", true)));
+				new CompositeModelValue(
+					new ModelField("IsTest", true)));
 
 			var expected = @"
 				
@@ -83,8 +83,8 @@ namespace Quokka.Tests
 			");
 
 			var result = template.Apply(
-				new CompositeParameterValue(
-					new ParameterField("IsTest", false)));
+				new CompositeModelValue(
+					new ModelField("IsTest", false)));
 
 			var expected = @"
 				
@@ -107,9 +107,9 @@ namespace Quokka.Tests
 			");
 
 			var result = template.Apply(
-				new CompositeParameterValue(
-					new ParameterField("IsTest", true),
-					new ParameterField("IsStaging", true)));
+				new CompositeModelValue(
+					new ModelField("IsTest", true),
+					new ModelField("IsStaging", true)));
 
 			var expected = @"
 				
@@ -132,9 +132,9 @@ namespace Quokka.Tests
 			");
 
 			var result = template.Apply(
-				new CompositeParameterValue(
-					new ParameterField("IsTest", true),
-					new ParameterField("IsStaging", false)));
+				new CompositeModelValue(
+					new ModelField("IsTest", true),
+					new ModelField("IsStaging", false)));
 
 			var expected = @"
 				
@@ -157,9 +157,9 @@ namespace Quokka.Tests
 			");
 
 			var result = template.Apply(
-				new CompositeParameterValue(
-					new ParameterField("IsTest", false),
-					new ParameterField("IsStaging", true)));
+				new CompositeModelValue(
+					new ModelField("IsTest", false),
+					new ModelField("IsStaging", true)));
 
 			var expected = @"
 				
@@ -182,9 +182,9 @@ namespace Quokka.Tests
 			");
 
 			var result = template.Apply(
-				new CompositeParameterValue(
-					new ParameterField("IsTest", false),
-					new ParameterField("IsStaging", false)));
+				new CompositeModelValue(
+					new ModelField("IsTest", false),
+					new ModelField("IsStaging", false)));
 
 			var expected = @"
 				
@@ -209,11 +209,11 @@ namespace Quokka.Tests
 			");
 
 			var result = template.Apply(
-				new CompositeParameterValue(
-					new ParameterField("IsRed", false),
-					new ParameterField("IsGreen", false),
-					new ParameterField("IsBlue", true),
-					new ParameterField("IsYellow", false)));
+				new CompositeModelValue(
+					new ModelField("IsRed", false),
+					new ModelField("IsGreen", false),
+					new ModelField("IsBlue", true),
+					new ModelField("IsYellow", false)));
 
 			var expected = @"
 				
@@ -238,9 +238,9 @@ namespace Quokka.Tests
 			");
 
 			var result = template.Apply(
-				new CompositeParameterValue(
-					new ParameterField("IsRed", false),
-					new ParameterField("IsGreen", true)));
+				new CompositeModelValue(
+					new ModelField("IsRed", false),
+					new ModelField("IsGreen", true)));
 
 			var expected = @"
 				
@@ -265,9 +265,9 @@ namespace Quokka.Tests
 			");
 
 			var result = template.Apply(
-				new CompositeParameterValue(
-					new ParameterField("IsRed", false),
-					new ParameterField("IsGreen", false)));
+				new CompositeModelValue(
+					new ModelField("IsRed", false),
+					new ModelField("IsGreen", false)));
 
 			var expected = @"
 				
@@ -288,8 +288,8 @@ namespace Quokka.Tests
 			");
 
 			var result = template.Apply(
-				new CompositeParameterValue(
-					new ParameterField("IsTest", true)));
+				new CompositeModelValue(
+					new ModelField("IsTest", true)));
 
 			var expected = @"
 				
@@ -312,13 +312,13 @@ namespace Quokka.Tests
 			");
 
 			var result = template.Apply(
-				new CompositeParameterValue(
-					new ParameterField("Context",
-						new CompositeParameterValue(
-							new ParameterField("Values",
-								new CompositeParameterValue(
-									new ParameterField("IsTest", false),
-									new ParameterField("IsStaging", true)))))));
+				new CompositeModelValue(
+					new ModelField("Context",
+						new CompositeModelValue(
+							new ModelField("Values",
+								new CompositeModelValue(
+									new ModelField("IsTest", false),
+									new ModelField("IsStaging", true)))))));
 
 			var expected = @"
 				
@@ -343,9 +343,9 @@ namespace Quokka.Tests
 			");
 
 			var result = template.Apply(
-				new CompositeParameterValue(
-					new ParameterField("IsRed", false),
-					new ParameterField("IsGreen", true)));
+				new CompositeModelValue(
+					new ModelField("IsRed", false),
+					new ModelField("IsGreen", true)));
 
 			var expected = @"
 				
@@ -362,9 +362,9 @@ namespace Quokka.Tests
 			var template = new Template(@"@{ if IsRed }@{ else if IsGreen }@{ else }@{ end if }");
 
 			var result = template.Apply(
-				new CompositeParameterValue(
-					new ParameterField("IsRed", false),
-					new ParameterField("IsGreen", true)));
+				new CompositeModelValue(
+					new ModelField("IsRed", false),
+					new ModelField("IsGreen", true)));
 
 			var expected = @"";
 

@@ -15,12 +15,12 @@ namespace Quokka.Tests
 			");
 
 			var result = template.Apply(
-				new CompositeParameterValue(
-					new ParameterField("Collection",
-						new ArrayParameterValue(
-							new PrimitiveParameterValue(1),
-							new PrimitiveParameterValue(2),
-							new PrimitiveParameterValue(3)))));
+				new CompositeModelValue(
+					new ModelField("Collection",
+						new ArrayModelValue(
+							new PrimitiveModelValue(1),
+							new PrimitiveModelValue(2),
+							new PrimitiveModelValue(3)))));
 
 			var expected = @"
 				
@@ -45,12 +45,12 @@ namespace Quokka.Tests
 			");
 
 			var result = template.Apply(
-				new CompositeParameterValue(
-					new ParameterField("Collection",
-						new ArrayParameterValue(
-							new PrimitiveParameterValue(1),
-							new PrimitiveParameterValue(2),
-							new PrimitiveParameterValue(3)))));
+				new CompositeModelValue(
+					new ModelField("Collection",
+						new ArrayModelValue(
+							new PrimitiveModelValue(1),
+							new PrimitiveModelValue(2),
+							new PrimitiveModelValue(3)))));
 
 			var expected = @"
 				
@@ -75,15 +75,15 @@ namespace Quokka.Tests
 			");
 
 			var result = template.Apply(
-				new CompositeParameterValue(
-					new ParameterField("Collection",
-						new ArrayParameterValue(
-							new CompositeParameterValue(
-								new ParameterField("Name", "Carl")),
-							new CompositeParameterValue(
-								new ParameterField("Name", "Ashley")),
-							new CompositeParameterValue(
-								new ParameterField("Name", "Malcolm"))))));
+				new CompositeModelValue(
+					new ModelField("Collection",
+						new ArrayModelValue(
+							new CompositeModelValue(
+								new ModelField("Name", "Carl")),
+							new CompositeModelValue(
+								new ModelField("Name", "Ashley")),
+							new CompositeModelValue(
+								new ModelField("Name", "Malcolm"))))));
 
 			var expected = @"
 				
@@ -108,15 +108,15 @@ namespace Quokka.Tests
 			");
 
 			var result = template.Apply(
-				new CompositeParameterValue(
-					new ParameterField("Collection",
-						new ArrayParameterValue(
-							new CompositeParameterValue(
-								new ParameterField("Name", "Carl")),
-							new CompositeParameterValue(
-								new ParameterField("Name", "Ashley")),
-							new CompositeParameterValue(
-								new ParameterField("Name", "Malcolm"))))));
+				new CompositeModelValue(
+					new ModelField("Collection",
+						new ArrayModelValue(
+							new CompositeModelValue(
+								new ModelField("Name", "Carl")),
+							new CompositeModelValue(
+								new ModelField("Name", "Ashley")),
+							new CompositeModelValue(
+								new ModelField("Name", "Malcolm"))))));
 
 			var expected = @"
 				
@@ -141,9 +141,9 @@ namespace Quokka.Tests
 			");
 
 			var result = template.Apply(
-				new CompositeParameterValue(
-					new ParameterField("Collection",
-						new ArrayParameterValue())));
+				new CompositeModelValue(
+					new ModelField("Collection",
+						new ArrayModelValue())));
 
 			var expected = @"
 				(start)(end)
@@ -162,16 +162,16 @@ namespace Quokka.Tests
 			");
 
 			var result = template.Apply(
-				new CompositeParameterValue(
-					new ParameterField("Context",
-						new CompositeParameterValue(
-							new ParameterField("Data",
-								new CompositeParameterValue(
-									new ParameterField("Elements",
-										new ArrayParameterValue(
-											new PrimitiveParameterValue(1),
-											new PrimitiveParameterValue(2),
-											new PrimitiveParameterValue(3)))))))));
+				new CompositeModelValue(
+					new ModelField("Context",
+						new CompositeModelValue(
+							new ModelField("Data",
+								new CompositeModelValue(
+									new ModelField("Elements",
+										new ArrayModelValue(
+											new PrimitiveModelValue(1),
+											new PrimitiveModelValue(2),
+											new PrimitiveModelValue(3)))))))));
 
 			var expected = @"
 				
@@ -198,12 +198,12 @@ namespace Quokka.Tests
 			");
 
 			var result = template.Apply(
-				new CompositeParameterValue(
-					new ParameterField("Elements",
-						new ArrayParameterValue(
-							new PrimitiveParameterValue(1),
-							new PrimitiveParameterValue(2),
-							new PrimitiveParameterValue(3)))));
+				new CompositeModelValue(
+					new ModelField("Elements",
+						new ArrayModelValue(
+							new PrimitiveModelValue(1),
+							new PrimitiveModelValue(2),
+							new PrimitiveModelValue(3)))));
 
 			var expected = @"
 				
@@ -234,15 +234,15 @@ namespace Quokka.Tests
 			");
 
 			var result = template.Apply(
-				new CompositeParameterValue(
-					new ParameterField("Coefficients",
-						new ArrayParameterValue(
-							new PrimitiveParameterValue(2),
-							new PrimitiveParameterValue(3))),
-					new ParameterField("Values",
-						new ArrayParameterValue(
-							new PrimitiveParameterValue(5),
-							new PrimitiveParameterValue(6)))));
+				new CompositeModelValue(
+					new ModelField("Coefficients",
+						new ArrayModelValue(
+							new PrimitiveModelValue(2),
+							new PrimitiveModelValue(3))),
+					new ModelField("Values",
+						new ArrayModelValue(
+							new PrimitiveModelValue(5),
+							new PrimitiveModelValue(6)))));
 
 			var expected = @"
 				
@@ -275,21 +275,21 @@ namespace Quokka.Tests
 			");
 
 			var result = template.Apply(
-				new CompositeParameterValue(
-					new ParameterField("Values",
-						new ArrayParameterValue(
-							new CompositeParameterValue(
-								new ParameterField("Number", 2),
-								new ParameterField("Coefficients",
-									new ArrayParameterValue(
-										new PrimitiveParameterValue(5),
-										new PrimitiveParameterValue(6)))),
-							new CompositeParameterValue(
-								new ParameterField("Number", 3),
-								new ParameterField("Coefficients",
-									new ArrayParameterValue(
-										new PrimitiveParameterValue(5),
-										new PrimitiveParameterValue(6))))))));
+				new CompositeModelValue(
+					new ModelField("Values",
+						new ArrayModelValue(
+							new CompositeModelValue(
+								new ModelField("Number", 2),
+								new ModelField("Coefficients",
+									new ArrayModelValue(
+										new PrimitiveModelValue(5),
+										new PrimitiveModelValue(6)))),
+							new CompositeModelValue(
+								new ModelField("Number", 3),
+								new ModelField("Coefficients",
+									new ArrayModelValue(
+										new PrimitiveModelValue(5),
+										new PrimitiveModelValue(6))))))));
 
 			var expected = @"
 				
@@ -322,15 +322,15 @@ namespace Quokka.Tests
 			");
 
 			var result = template.Apply(
-				new CompositeParameterValue(
-					new ParameterField("Arrays",
-						new ArrayParameterValue(
-							new ArrayParameterValue(
-								new PrimitiveParameterValue(22),
-								new PrimitiveParameterValue(24)),
-							new ArrayParameterValue(
-								new PrimitiveParameterValue(52),
-								new PrimitiveParameterValue(54))))));
+				new CompositeModelValue(
+					new ModelField("Arrays",
+						new ArrayModelValue(
+							new ArrayModelValue(
+								new PrimitiveModelValue(22),
+								new PrimitiveModelValue(24)),
+							new ArrayModelValue(
+								new PrimitiveModelValue(52),
+								new PrimitiveModelValue(54))))));
 
 			var expected = @"
 				
@@ -364,12 +364,12 @@ namespace Quokka.Tests
 			");
 
 			var result = template.Apply(
-				new CompositeParameterValue(
-					new ParameterField("Collection",
-						new ArrayParameterValue(
-							new PrimitiveParameterValue(1),
-							new PrimitiveParameterValue(2),
-							new PrimitiveParameterValue(3)))));
+				new CompositeModelValue(
+					new ModelField("Collection",
+						new ArrayModelValue(
+							new PrimitiveModelValue(1),
+							new PrimitiveModelValue(2),
+							new PrimitiveModelValue(3)))));
 
 			var expected = @"
 				
@@ -401,12 +401,12 @@ namespace Quokka.Tests
 			");
 
 			var result = template.Apply(
-				new CompositeParameterValue(
-					new ParameterField("coLLectiON",
-						new ArrayParameterValue(
-							new PrimitiveParameterValue(1),
-							new PrimitiveParameterValue(2),
-							new PrimitiveParameterValue(3)))));
+				new CompositeModelValue(
+					new ModelField("coLLectiON",
+						new ArrayModelValue(
+							new PrimitiveModelValue(1),
+							new PrimitiveModelValue(2),
+							new PrimitiveModelValue(3)))));
 
 			var expected = @"
 				
@@ -427,12 +427,12 @@ namespace Quokka.Tests
 			var template = new Template(@"@{ for item in Collection }@{ end for }");
 
 			var result = template.Apply(
-				new CompositeParameterValue(
-					new ParameterField("Collection",
-						new ArrayParameterValue(
-							new PrimitiveParameterValue(1),
-							new PrimitiveParameterValue(2),
-							new PrimitiveParameterValue(3)))));
+				new CompositeModelValue(
+					new ModelField("Collection",
+						new ArrayModelValue(
+							new PrimitiveModelValue(1),
+							new PrimitiveModelValue(2),
+							new PrimitiveModelValue(3)))));
 
 			var expected = @"";
 

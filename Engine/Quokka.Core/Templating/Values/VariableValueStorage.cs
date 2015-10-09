@@ -13,20 +13,20 @@ namespace Quokka
 			return new CompositeVariableValueStorage(fieldName, fieldValueStorage);
 		}
 
-		public static VariableValueStorage CreateStorageForValue(IParameterValue value)
+		public static VariableValueStorage CreateStorageForValue(IModelValue value)
 		{
 			if (value == null)
 				throw new ArgumentNullException(nameof(value));
 
-			var primitiveValue = value as IPrimitiveParameterValue;
+			var primitiveValue = value as IPrimitiveModelValue;
 			if (primitiveValue != null)
 				return new PrimitiveVariableValueStorage(primitiveValue.Value);
 
-			var compositeValue = value as ICompositeParameterValue;
+			var compositeValue = value as ICompositeModelValue;
 			if (compositeValue != null)
 				return new CompositeVariableValueStorage(compositeValue);
 
-			var arrayValue = value as IArrayParameterValue;
+			var arrayValue = value as IArrayModelValue;
 			if (arrayValue != null)
 				return new ArrayVariableValueStorage(arrayValue);
 
@@ -71,12 +71,12 @@ namespace Quokka
 		{
 			private readonly IDictionary<string, VariableValueStorage> fields;
 
-			public CompositeVariableValueStorage(ICompositeParameterValue parameterValue)
+			public CompositeVariableValueStorage(ICompositeModelValue modelValue)
 			{
-				if (parameterValue == null)
-					throw new ArgumentNullException(nameof(parameterValue));
+				if (modelValue == null)
+					throw new ArgumentNullException(nameof(modelValue));
 
-				fields = parameterValue
+				fields = modelValue
 					.Fields
 					.ToDictionary(
 						field => field.Name.Trim(),
@@ -114,12 +114,12 @@ namespace Quokka
 		{
 			private readonly IEnumerable<VariableValueStorage> elements;
 
-			public ArrayVariableValueStorage(IArrayParameterValue parameterValue)
+			public ArrayVariableValueStorage(IArrayModelValue modelValue)
 			{
-				if (parameterValue == null)
-					throw new ArgumentNullException(nameof(parameterValue));
+				if (modelValue == null)
+					throw new ArgumentNullException(nameof(modelValue));
 
-				elements = parameterValue
+				elements = modelValue
 					.Values
 					.Select(CreateStorageForValue)
 					.ToList()

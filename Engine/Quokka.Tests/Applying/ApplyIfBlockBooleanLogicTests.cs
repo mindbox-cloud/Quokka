@@ -15,9 +15,9 @@ namespace Quokka.Tests
 			");
 
 			var result = template.Apply(
-				new CompositeParameterValue(
-					new ParameterField("A", true),
-					new ParameterField("B", true)));
+				new CompositeModelValue(
+					new ModelField("A", true),
+					new ModelField("B", true)));
 
 			var expected = @"
 				
@@ -38,9 +38,9 @@ namespace Quokka.Tests
 			");
 
 			var result = template.Apply(
-				new CompositeParameterValue(
-					new ParameterField("A", true),
-					new ParameterField("B", false)));
+				new CompositeModelValue(
+					new ModelField("A", true),
+					new ModelField("B", false)));
 
 			var expected = @"
 				
@@ -59,9 +59,9 @@ namespace Quokka.Tests
 			");
 
 			var result = template.Apply(
-				new CompositeParameterValue(
-					new ParameterField("A", false),
-					new ParameterField("B", true)));
+				new CompositeModelValue(
+					new ModelField("A", false),
+					new ModelField("B", true)));
 
 			var expected = @"
 				
@@ -80,9 +80,9 @@ namespace Quokka.Tests
 			");
 
 			var result = template.Apply(
-				new CompositeParameterValue(
-					new ParameterField("A", false),
-					new ParameterField("B", false)));
+				new CompositeModelValue(
+					new ModelField("A", false),
+					new ModelField("B", false)));
 
 			var expected = @"
 				
@@ -101,10 +101,10 @@ namespace Quokka.Tests
 			");
 
 			var result = template.Apply(
-				new CompositeParameterValue(
-					new ParameterField("A", true),
-					new ParameterField("B", true),
-					new ParameterField("C", true)));
+				new CompositeModelValue(
+					new ModelField("A", true),
+					new ModelField("B", true),
+					new ModelField("C", true)));
 
 			var expected = @"
 				
@@ -125,11 +125,11 @@ namespace Quokka.Tests
 			");
 
 			var result = template.Apply(
-				new CompositeParameterValue(
-					new ParameterField("A", true),
-					new ParameterField("B", true),
-					new ParameterField("C", true),
-					new ParameterField("D", false)));
+				new CompositeModelValue(
+					new ModelField("A", true),
+					new ModelField("B", true),
+					new ModelField("C", true),
+					new ModelField("D", false)));
 
 			var expected = @"
 				
@@ -148,9 +148,9 @@ namespace Quokka.Tests
 			");
 
 			var result = template.Apply(
-				new CompositeParameterValue(
-					new ParameterField("A", true),
-					new ParameterField("B", true)));
+				new CompositeModelValue(
+					new ModelField("A", true),
+					new ModelField("B", true)));
 
 			var expected = @"
 				
@@ -171,9 +171,9 @@ namespace Quokka.Tests
 			");
 
 			var result = template.Apply(
-				new CompositeParameterValue(
-					new ParameterField("A", true),
-					new ParameterField("B", false)));
+				new CompositeModelValue(
+					new ModelField("A", true),
+					new ModelField("B", false)));
 
 			var expected = @"
 				
@@ -194,9 +194,9 @@ namespace Quokka.Tests
 			");
 
 			var result = template.Apply(
-				new CompositeParameterValue(
-					new ParameterField("A", false),
-					new ParameterField("B", true)));
+				new CompositeModelValue(
+					new ModelField("A", false),
+					new ModelField("B", true)));
 
 			var expected = @"
 				
@@ -217,9 +217,9 @@ namespace Quokka.Tests
 			");
 
 			var result = template.Apply(
-				new CompositeParameterValue(
-					new ParameterField("A", false),
-					new ParameterField("B", false)));
+				new CompositeModelValue(
+					new ModelField("A", false),
+					new ModelField("B", false)));
 
 			var expected = @"
 				
@@ -238,10 +238,10 @@ namespace Quokka.Tests
 			");
 
 			var result = template.Apply(
-				new CompositeParameterValue(
-					new ParameterField("A", false),
-					new ParameterField("B", false),
-					new ParameterField("C", true)));
+				new CompositeModelValue(
+					new ModelField("A", false),
+					new ModelField("B", false),
+					new ModelField("C", true)));
 
 			var expected = @"
 				
@@ -262,8 +262,8 @@ namespace Quokka.Tests
 			");
 
 			var result = template.Apply(
-				new CompositeParameterValue(
-					new ParameterField("A", true)));
+				new CompositeModelValue(
+					new ModelField("A", true)));
 
 			var expected = @"
 				
@@ -282,8 +282,8 @@ namespace Quokka.Tests
 			");
 
 			var result = template.Apply(
-				new CompositeParameterValue(
-					new ParameterField("A", false)));
+				new CompositeModelValue(
+					new ModelField("A", false)));
 
 			var expected = @"
 				
@@ -304,10 +304,10 @@ namespace Quokka.Tests
 			");
 
 			var result = template.Apply(
-				new CompositeParameterValue(
-					new ParameterField("A", false),
-					new ParameterField("B", true),
-					new ParameterField("C", false)));
+				new CompositeModelValue(
+					new ModelField("A", false),
+					new ModelField("B", true),
+					new ModelField("C", false)));
 
 			var expected = @"
 				
@@ -326,10 +326,10 @@ namespace Quokka.Tests
 			");
 
 			var result = template.Apply(
-				new CompositeParameterValue(
-					new ParameterField("A", false),
-					new ParameterField("B", true),
-					new ParameterField("C", false)));
+				new CompositeModelValue(
+					new ModelField("A", false),
+					new ModelField("B", true),
+					new ModelField("C", false)));
 
 			var expected = @"
 				
@@ -348,9 +348,9 @@ namespace Quokka.Tests
 			");
 
 			var result = template.Apply(
-				new CompositeParameterValue(
-					new ParameterField("A", false),
-					new ParameterField("B", true)));
+				new CompositeModelValue(
+					new ModelField("A", false),
+					new ModelField("B", true)));
 
 			var expected = @"
 				
@@ -369,9 +369,9 @@ namespace Quokka.Tests
 			");
 
 			var result = template.Apply(
-				new CompositeParameterValue(
-					new ParameterField("A", false),
-					new ParameterField("B", false)));
+				new CompositeModelValue(
+					new ModelField("A", false),
+					new ModelField("B", false)));
 
 			var expected = @"
 				
@@ -392,9 +392,9 @@ namespace Quokka.Tests
 			");
 
 			var result = template.Apply(
-				new CompositeParameterValue(
-					new ParameterField("A", true),
-					new ParameterField("B", true)));
+				new CompositeModelValue(
+					new ModelField("A", true),
+					new ModelField("B", true)));
 
 			var expected = @"
 				
@@ -413,9 +413,9 @@ namespace Quokka.Tests
 			");
 
 			var result = template.Apply(
-				new CompositeParameterValue(
-					new ParameterField("A", false),
-					new ParameterField("B", true)));
+				new CompositeModelValue(
+					new ModelField("A", false),
+					new ModelField("B", true)));
 
 			var expected = @"
 				
@@ -436,10 +436,10 @@ namespace Quokka.Tests
 			");
 
 			var result = template.Apply(
-				new CompositeParameterValue(
-					new ParameterField("A", true),
-					new ParameterField("B", false),
-					new ParameterField("C", true)));
+				new CompositeModelValue(
+					new ModelField("A", true),
+					new ModelField("B", false),
+					new ModelField("C", true)));
 
 			var expected = @"
 				
@@ -460,9 +460,9 @@ namespace Quokka.Tests
 			");
 
 			var result = template.Apply(
-				new CompositeParameterValue(
-					new ParameterField("A", true),
-					new ParameterField("B", false)));
+				new CompositeModelValue(
+					new ModelField("A", true),
+					new ModelField("B", false)));
 
 			var expected = @"
 				
@@ -481,20 +481,20 @@ namespace Quokka.Tests
 			");
 
 			var result = template.Apply(
-				new CompositeParameterValue(
-					new ParameterField("Recipient",
-						new CompositeParameterValue(
-							new ParameterField("IsMale", false))),
-					new ParameterField("A", false),
-					new ParameterField("B", false),
-					new ParameterField("C", false),
-					new ParameterField("D", false),
-					new ParameterField("E", false),
-					new ParameterField("F", false),
-					new ParameterField("G", true),
-					new ParameterField("H", true),
-					new ParameterField("K", false),
-					new ParameterField("bingo", true)));
+				new CompositeModelValue(
+					new ModelField("Recipient",
+						new CompositeModelValue(
+							new ModelField("IsMale", false))),
+					new ModelField("A", false),
+					new ModelField("B", false),
+					new ModelField("C", false),
+					new ModelField("D", false),
+					new ModelField("E", false),
+					new ModelField("F", false),
+					new ModelField("G", true),
+					new ModelField("H", true),
+					new ModelField("K", false),
+					new ModelField("bingo", true)));
 
 			var expected = @"
 				
