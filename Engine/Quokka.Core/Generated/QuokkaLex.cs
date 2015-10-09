@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-// Generated from C:\Code\Quokka\Grammar\Quokka\QuokkaLex.g4 by ANTLR 4.5.1
+// Generated from C:\code\Quokka\Grammar\Quokka\QuokkaLex.g4 by ANTLR 4.5.1
 
 // Unreachable code detected
 #pragma warning disable 0162
@@ -26,7 +26,7 @@ using DFA = Antlr4.Runtime.Dfa.DFA;
 
 [System.CodeDom.Compiler.GeneratedCode("ANTLR", "4.5.1")]
 [System.CLSCompliant(false)]
-public partial class QuokkaLex : Lexer {
+internal partial class QuokkaLex : Lexer {
 	public const int
 		SingleInstructionComment=1, OutputInstructionStart=2, ControlInstructionStart=3, 
 		Fluff=4, InstructionEnd=5, If=6, EndIf=7, End=8, Else=9, ElseIf=10, For=11, 

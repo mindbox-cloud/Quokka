@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-// Generated from C:\Code\Quokka\Grammar\Quokka\Quokka.g4 by ANTLR 4.5.1
+// Generated from C:\code\Quokka\Grammar\Quokka\Quokka.g4 by ANTLR 4.5.1
 
 // Unreachable code detected
 #pragma warning disable 0162
@@ -29,7 +29,7 @@ using IToken = Antlr4.Runtime.IToken;
 /// <typeparam name="Result">The return type of the visit operation.</typeparam>
 [System.CodeDom.Compiler.GeneratedCode("ANTLR", "4.5.1")]
 [System.CLSCompliant(false)]
-public interface IQuokkaVisitor<Result> : IParseTreeVisitor<Result> {
+internal interface IQuokkaVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <summary>
 	/// Visit a parse tree produced by <see cref="QuokkaParser.template"/>.
 	/// </summary>

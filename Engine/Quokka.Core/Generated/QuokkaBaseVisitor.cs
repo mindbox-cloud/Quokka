@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-// Generated from C:\Code\Quokka\Grammar\Quokka\Quokka.g4 by ANTLR 4.5.1
+// Generated from C:\code\Quokka\Grammar\Quokka\Quokka.g4 by ANTLR 4.5.1
 
 // Unreachable code detected
 #pragma warning disable 0162
@@ -31,7 +31,7 @@ using ParserRuleContext = Antlr4.Runtime.ParserRuleContext;
 /// <typeparam name="Result">The return type of the visit operation.</typeparam>
 [System.CodeDom.Compiler.GeneratedCode("ANTLR", "4.5.1")]
 [System.CLSCompliant(false)]
-public partial class QuokkaBaseVisitor<Result> : AbstractParseTreeVisitor<Result>, IQuokkaVisitor<Result> {
+internal partial class QuokkaBaseVisitor<Result> : AbstractParseTreeVisitor<Result>, IQuokkaVisitor<Result> {
 	/// <summary>
 	/// Visit a parse tree produced by <see cref="QuokkaParser.template"/>.
 	/// <para>
