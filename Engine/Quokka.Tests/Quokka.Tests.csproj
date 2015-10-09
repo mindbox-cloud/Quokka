@@ -58,7 +58,7 @@
     <Compile Include="Applying\ApplyIfBlockBooleanLogicTests.cs" />
     <Compile Include="Applying\ApplyParameterOutputTests.cs" />
     <Compile Include="Helpers\TemplateAssert.cs" />
-    <Compile Include="ParameterDiscovery\ParameterDiscoveryTests.cs" />
+    <Compile Include="ParameterDiscovery\ModelDiscoveryTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

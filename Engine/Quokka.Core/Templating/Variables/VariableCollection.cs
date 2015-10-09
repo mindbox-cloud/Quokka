@@ -23,13 +23,15 @@ namespace Quokka
 			this.items = items;
 		}
 
-		public ReadOnlyCollection<IParameterDefinition> GetParameterDefinitions(ISemanticErrorListener errorListener)
+		public ICompositeModelDefinition ToParameterDefinition(ISemanticErrorListener errorListener)
 		{
-			return items
-				.Select(kvp => kvp.Value.ToParameterDefinition(errorListener))
-				.OrderBy(parameter => parameter.Name)
-				.ToList()
-				.AsReadOnly();
+			return new CompositeModelDefinition(
+				new ReadOnlyDictionary<string, IModelDefinition>(
+					items
+						.ToDictionary(
+							kvp => kvp.Key,
+							kvp => kvp.Value.ToParameterDefinition(errorListener),
+							StringComparer.InvariantCultureIgnoreCase)));
 		}
 
 		public bool CheckIfVariableExists(string variableName)

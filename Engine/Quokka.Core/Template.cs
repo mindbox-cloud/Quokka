@@ -12,7 +12,7 @@ namespace Quokka
 	public sealed class Template
 	{
 		private readonly TemplateBlock rootBlock;
-		private readonly IReadOnlyCollection<IParameterDefinition> parameterDefinitions;
+		private readonly ICompositeModelDefinition externalModelDefinition;
 
 		public Template(string templateText)
 		{
@@ -34,18 +34,19 @@ namespace Quokka
 			rootBlock.CompileVariableDefinitions(scope);
 
 			var errorListener = new SemanticErrorListener();
-			parameterDefinitions = scope.Variables.GetParameterDefinitions(errorListener);
+			externalModelDefinition = scope.Variables.ToParameterDefinition(errorListener);
 
 			var errors = errorListener.GetErrors();
 			if (errors.Any())
 				throw new InvalidOperationException(
-					string.Concat(
+					string.Join(
+						Environment.NewLine,
 						errors.Select(error => error.Message)));
 		}
 
-		public IList<IParameterDefinition> GetParameterDefinitions()
+		public ICompositeModelDefinition GetModelDefinition()
 		{
-			return parameterDefinitions.ToList();
+			return externalModelDefinition;
 		}
 
 		public string Apply(ICompositeParameterValue model)

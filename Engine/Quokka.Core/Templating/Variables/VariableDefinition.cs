@@ -108,16 +108,13 @@ namespace Quokka
 			return typeA == VariableType.Unknown;
 		}
 
-		public IParameterDefinition ToParameterDefinition(ISemanticErrorListener errorListener)
+		public IModelDefinition ToParameterDefinition(ISemanticErrorListener errorListener)
 		{
 			var type = DetermineType(errorListener);
 			switch (type)
 			{
 				case VariableType.Composite:
-
-					return new CompositeParameterDefinition(
-						Name,
-						Fields.GetParameterDefinitions(errorListener));
+					return Fields.ToParameterDefinition(errorListener);
 
 				case VariableType.Array:
 					if (!collectionElementVariables.Any())
@@ -129,15 +126,11 @@ namespace Quokka
 						$"{FullName}[]",
 						collectionElementVariables.ToList());
 					
-					return new ArrayParameterDefinition(
-						Name,
-						collectionElementDefinition.DetermineType(errorListener),
-						collectionElementDefinition.Fields.GetParameterDefinitions(errorListener));
+					return new ArrayModelDefinition(
+						collectionElementDefinition.ToParameterDefinition(errorListener));
 
 				default:
-					return new ParameterDefinition(
-						Name, 
-						type);
+					return new PrimitiveModelDefinition(type);
 			}
 		}
 
