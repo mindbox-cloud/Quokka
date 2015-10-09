@@ -15,7 +15,14 @@ namespace Quokka
 	/// </remarks>
 	internal class VariableDefinition
 	{
-		private readonly IList<VariableOccurence> occurences; 
+		private readonly IList<VariableOccurence> occurences;
+
+		/// <summary>
+		/// Variables that are used to iterate over this element if it's a collection
+		/// (it'll give us information about fields that we should expect every element of the collection to have).
+		/// </summary>
+		/// <remarks>Only relevant for collection variables.</remarks>
+		private readonly IList<VariableDefinition> collectionElementVariables;
 
 		public string Name { get; }
 		public string FullName { get; }
@@ -25,16 +32,9 @@ namespace Quokka
 		/// </summary>
 		/// <remarks>Only relevant for composite variables.</remarks>
 		public VariableCollection Fields { get; }
-
-		/// <summary>
-		/// Variables that are used to iterate over this element if it's a collection
-		/// (it'll give us information about fields that we should expect every element of the collection to have).
-		/// </summary>
-		/// <remarks>Only relevant for collection variables.</remarks>
-		public List<VariableDefinition> CollectionElementVariables { get; } = new List<VariableDefinition>();
-
+		
 		public VariableDefinition(string name, string fullName)
-			: this(name, fullName, new VariableCollection(), new List<VariableOccurence>())
+			: this(name, fullName, new VariableCollection(), new List<VariableOccurence>(), new List<VariableDefinition>())
 		{
 		}
 
@@ -42,12 +42,14 @@ namespace Quokka
 			string name,
 			string fullName,
 			VariableCollection fields,
-			IList<VariableOccurence> occurences)
+			IList<VariableOccurence> occurences,
+			IList<VariableDefinition> collectionElementVariables)
 		{
 			Name = name;
 			FullName = fullName;
 			Fields = fields;
 			this.occurences = occurences;
+			this.collectionElementVariables = collectionElementVariables;
 		}
 
 		public void AddOccurence(VariableOccurence occurence)
@@ -56,6 +58,11 @@ namespace Quokka
 				throw new InvalidOperationException("Variable occurence name doesn't match the definition");
 
 			occurences.Add(occurence);
+		}
+
+		public void AddCollectionElementVariable(VariableDefinition collectionElementVariable)
+		{
+			collectionElementVariables.Add(collectionElementVariable);
 		}
 
 		public VariableType DetermineType(ISemanticErrorListener errorListener)
@@ -113,14 +120,14 @@ namespace Quokka
 						Fields.GetParameterDefinitions(errorListener));
 
 				case VariableType.Array:
-					if (!CollectionElementVariables.Any())
+					if (!collectionElementVariables.Any())
 						throw new InvalidOperationException(
 							"The variable is of an array type but no collection variables found");
 
 					var collectionElementDefinition = Merge(
-						//$"{FullName}[...].Element",
-						"CollectionElement",
-						CollectionElementVariables.ToList());
+						"Element",
+						$"{FullName}[]",
+						collectionElementVariables.ToList());
 					
 					return new ArrayParameterDefinition(
 						Name,
@@ -134,17 +141,18 @@ namespace Quokka
 			}
 		}
 
-		public static VariableDefinition Merge(string resultName, IList<VariableDefinition> definitions)
+		public static VariableDefinition Merge(string resultName, string resultFullName, IList<VariableDefinition> definitions)
 		{
-			var fields = VariableCollection.Merge(definitions.Select(definition => definition.Fields).ToList());
+			var fields = VariableCollection.Merge(resultFullName, definitions.Select(definition => definition.Fields).ToList());
 			var occurences = definitions.SelectMany(definition => definition.occurences);
+			var collectionElementVariables = definitions.SelectMany(definition => definition.collectionElementVariables);
 
 			return new VariableDefinition(
 				resultName,
-				resultName,
+				resultFullName,
 				fields,
-				occurences.ToList());
+				occurences.ToList(),
+				collectionElementVariables.ToList());
 		}
-		
 	}
 }

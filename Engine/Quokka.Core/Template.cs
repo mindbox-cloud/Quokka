@@ -9,7 +9,7 @@ using Quokka.Generated;
 
 namespace Quokka
 {
-	public class Template
+	public sealed class Template
 	{
 		private readonly TemplateBlock rootBlock;
 		private readonly IReadOnlyCollection<IParameterDefinition> parameterDefinitions;

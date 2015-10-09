@@ -23,7 +23,7 @@ namespace Quokka
 				scope.CreateOrUpdateVariableDefinition(collection);
 			var innerScope = scope.CreateChildScope();
 			var iterationVariableDefinition = innerScope.CreateOrUpdateVariableDefinition(iterationVariable);
-			collectionVariableDefinition.CollectionElementVariables.Add(iterationVariableDefinition);
+			collectionVariableDefinition.AddCollectionElementVariable(iterationVariableDefinition);
 			block?.CompileVariableDefinitions(innerScope);
 		}
 

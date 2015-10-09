@@ -59,16 +59,20 @@ namespace Quokka
 			return definition;
 		}
 
-		public static VariableCollection Merge(IList<VariableCollection> collections)
+		public static VariableCollection Merge(string ownerFullName, IList<VariableCollection> collections)
 		{
+			/*
 			if (collections.Count == 1)
 				return collections.Single();
-
+				*/
 			var fields = collections
 				.SelectMany(fieldCollection => fieldCollection.items.Values)
 				.GroupBy(
 					field => field.Name,
-					(key, values) => VariableDefinition.Merge(key, values.ToList()),
+					(name, values) => VariableDefinition.Merge(
+						name,
+						$"{ownerFullName}.{name}",
+						values.ToList()),
 					StringComparer.InvariantCultureIgnoreCase)
 				.ToDictionary(definition => definition.Name, StringComparer.InvariantCultureIgnoreCase);
 

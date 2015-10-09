@@ -3,7 +3,7 @@
 	/// <summary>
 	/// Location in a template string
 	/// </summary>
-	public class Location
+	public sealed class Location
 	{
 		/// <summary>
 		/// Line index (1-based)
