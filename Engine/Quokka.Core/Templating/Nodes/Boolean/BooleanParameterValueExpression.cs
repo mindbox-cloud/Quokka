@@ -9,15 +9,15 @@
 			this.variableOccurence = variableOccurence;
 		}
 
-		public override bool Evaluate(RuntimeVariableScope variableScope)
+		public override bool Evaluate(RenderContext renderContext)
 		{
-			var value = (bool)variableScope.GetVariableValue(variableOccurence);
+			var value = (bool)renderContext.VariableScope.GetVariableValue(variableOccurence);
 			return value;
 		}
 
-		public override void CompileVariableDefinitions(CompilationVariableScope scope)
+		public override void CompileVariableDefinitions(SemanticAnalysisContext context)
 		{
-			scope.CreateOrUpdateVariableDefinition(variableOccurence);
+			context.VariableScope.CreateOrUpdateVariableDefinition(variableOccurence);
 		}
 	}
 }

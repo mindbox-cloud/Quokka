@@ -11,14 +11,14 @@ namespace Quokka
 			this.variableOccurence = variableOccurence;
 		}
 
-		public override void CompileVariableDefinitions(CompilationVariableScope scope)
+		public override void CompileVariableDefinitions(SemanticAnalysisContext context)
 		{
-			scope.CreateOrUpdateVariableDefinition(variableOccurence);
+			context.VariableScope.CreateOrUpdateVariableDefinition(variableOccurence);
 		}
 
-		public override void Render(StringBuilder resultBuilder, RuntimeVariableScope variableScope)
+		public override void Render(StringBuilder resultBuilder, RenderContext context)
 		{
-			resultBuilder.Append(variableScope.GetVariableValue(variableOccurence));
+			resultBuilder.Append(context.VariableScope.GetVariableValue(variableOccurence));
 		}
 	}
 }

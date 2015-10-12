@@ -4,11 +4,11 @@ using Quokka.Generated;
 
 namespace Quokka
 {
-	internal class TemplateCompilationVisitor : QuokkaBaseVisitor<ITemplateNode>
+	internal class TemplateVisitor : QuokkaBaseVisitor<ITemplateNode>
 	{
-		public static TemplateCompilationVisitor Instance { get; } = new TemplateCompilationVisitor();
+		public static TemplateVisitor Instance { get; } = new TemplateVisitor();
 
-		private TemplateCompilationVisitor()
+		private TemplateVisitor()
 		{
 		}
 

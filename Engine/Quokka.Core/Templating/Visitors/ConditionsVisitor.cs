@@ -14,21 +14,21 @@ namespace Quokka
 		{
 			return new ConditionBlock(
 				context.ifInstruction().booleanExpression().Accept(BooleanExpressionVisitor.Instance),
-				context.templateBlock()?.Accept(TemplateCompilationVisitor.Instance));
+				context.templateBlock()?.Accept(TemplateVisitor.Instance));
 		}
 
 		public override ConditionBlock VisitElseIfCondition(QuokkaParser.ElseIfConditionContext context)
 		{
 			return new ConditionBlock(
 				context.elseIfInstruction().booleanExpression().Accept(BooleanExpressionVisitor.Instance),
-				context.templateBlock()?.Accept(TemplateCompilationVisitor.Instance));
+				context.templateBlock()?.Accept(TemplateVisitor.Instance));
 		}
 
 		public override ConditionBlock VisitElseCondition(QuokkaParser.ElseConditionContext context)
 		{
 			return new ConditionBlock(
 				new TrueExpression(),
-				context.templateBlock()?.Accept(TemplateCompilationVisitor.Instance));
+				context.templateBlock()?.Accept(TemplateVisitor.Instance));
 		}
 	}
 }

@@ -11,7 +11,7 @@ namespace Quokka
 			this.text = text;
 		}
 
-		public override void Render(StringBuilder resultBuilder, RuntimeVariableScope variableScope)
+		public override void Render(StringBuilder resultBuilder, RenderContext context)
 		{
 			resultBuilder.Append(text);
 		}

@@ -12,15 +12,15 @@ namespace Quokka
 			this.subExpressions = subExpressions.ToList().AsReadOnly();
 		}
 
-		public override bool Evaluate(RuntimeVariableScope variableScope)
+		public override bool Evaluate(RenderContext renderContext)
 		{
-			return subExpressions.All(subExpression => subExpression.Evaluate(variableScope));
+			return subExpressions.All(subExpression => subExpression.Evaluate(renderContext));
 		}
 
-		public override void CompileVariableDefinitions(CompilationVariableScope scope)
+		public override void CompileVariableDefinitions(SemanticAnalysisContext context)
 		{
 			foreach (var subExpression in subExpressions)
-				subExpression.CompileVariableDefinitions(scope);
+				subExpression.CompileVariableDefinitions(context);
 		}
 	}
 }

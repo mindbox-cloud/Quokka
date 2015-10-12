@@ -9,6 +9,7 @@
 		Primitive,
 
 		Boolean,
+		Decimal,
 		Integer,
 		String,
 

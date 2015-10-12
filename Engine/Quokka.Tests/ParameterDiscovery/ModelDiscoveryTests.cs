@@ -761,5 +761,21 @@ namespace Quokka.Tests
 				}),
 				model);
 		}
+
+		[TestMethod]
+		public void ModelDiscovery_ParameterOutput_FunctionCallStringArgument()
+		{
+			var model = new Template("${ toUpper(Name) }")
+				.GetModelDefinition();
+
+			TemplateAssert.AreCompositeModelDefinitionsEqual(
+				new CompositeModelDefinition(new Dictionary<string, IModelDefinition>
+				{
+					{
+						"Name", new PrimitiveModelDefinition(VariableType.String)
+					}
+				}),
+				model);
+		}
 	}
 }

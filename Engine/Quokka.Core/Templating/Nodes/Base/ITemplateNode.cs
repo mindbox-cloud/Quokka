@@ -4,8 +4,8 @@ namespace Quokka
 {
 	internal interface ITemplateNode
 	{
-		void CompileVariableDefinitions(CompilationVariableScope scope);
+		void CompileVariableDefinitions(SemanticAnalysisContext context);
 
-		void Render(StringBuilder resultBuilder, RuntimeVariableScope variableScope);
+		void Render(StringBuilder resultBuilder, RenderContext context);
 	}
 }

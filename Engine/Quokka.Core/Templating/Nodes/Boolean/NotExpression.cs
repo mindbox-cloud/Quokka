@@ -9,14 +9,14 @@
 			this.inner = inner;
 		}
 
-		public override bool Evaluate(RuntimeVariableScope variableScope)
+		public override bool Evaluate(RenderContext renderContext)
 		{
-			return !inner.Evaluate(variableScope);
+			return !inner.Evaluate(renderContext);
 		}
 
-		public override void CompileVariableDefinitions(CompilationVariableScope scope)
+		public override void CompileVariableDefinitions(SemanticAnalysisContext context)
 		{
-			inner.CompileVariableDefinitions(scope);
+			inner.CompileVariableDefinitions(context);
 		}
 	}
 }

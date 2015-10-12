@@ -44,6 +44,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Functions\FunctionRegistry.cs" />
+    <Compile Include="Functions\Standard\ReplaceIfEmptyTemplateFunction.cs" />
+    <Compile Include="Functions\Standard\ToLowerTemplateFunction.cs" />
+    <Compile Include="Functions\Standard\ToUpperTemplateFunction.cs" />
+    <Compile Include="Functions\TemplateFunction.cs" />
+    <Compile Include="Functions\TemplateFunction`1.cs" />
+    <Compile Include="Functions\TemplateFunction`2.cs" />
     <Compile Include="Generated.Partials\QuokkaBaseVisitor.cs" />
     <Compile Include="Model\Definitions\ArrayModelDefinition.cs" />
     <Compile Include="Model\Definitions\CompositeModelDefinition.cs" />
@@ -67,14 +74,16 @@
     <Compile Include="Model\InputValues\ModelField.cs" />
     <Compile Include="Model\InputValues\PrimitiveModelValue.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Templating\Errors\ISemanticErrorListener.cs" />
-    <Compile Include="Templating\Errors\ITemplateError.cs" />
-    <Compile Include="Templating\Errors\Location.cs" />
-    <Compile Include="Templating\Errors\SemanticError.cs" />
-    <Compile Include="Templating\Errors\SemanticErrorListener.cs" />
-    <Compile Include="Templating\Errors\SyntaxError.cs" />
-    <Compile Include="Templating\Errors\TemplateErrorBase.cs" />
-    <Compile Include="Templating\Nodes\ArithmeticExpressionOutputBlock.cs" />
+    <Compile Include="Rendering\RenderContext.cs" />
+    <Compile Include="Semantics\SemanticAnalysisContext.cs" />
+    <Compile Include="Errors\ISemanticErrorListener.cs" />
+    <Compile Include="Errors\ITemplateError.cs" />
+    <Compile Include="Errors\Location.cs" />
+    <Compile Include="Errors\SemanticError.cs" />
+    <Compile Include="Errors\SemanticErrorListener.cs" />
+    <Compile Include="Errors\SyntaxError.cs" />
+    <Compile Include="Errors\TemplateErrorBase.cs" />
+    <Compile Include="Templating\Nodes\Output\ArithmeticExpressionOutputBlock.cs" />
     <Compile Include="Templating\Nodes\Arithmetic\AdditionExpression.cs" />
     <Compile Include="Templating\Nodes\Arithmetic\ArithmeticExpressionBase.cs" />
     <Compile Include="Templating\Nodes\Arithmetic\ArithmeticParameterValueExpression.cs" />
@@ -95,9 +104,18 @@
     <Compile Include="Templating\Nodes\Boolean\TrueExpression.cs" />
     <Compile Include="Templating\Nodes\ConditionBlock.cs" />
     <Compile Include="Templating\Nodes\ForBlock.cs" />
+    <Compile Include="Templating\Nodes\Output\FunctionCallOutputBlock.cs" />
+    <Compile Include="Templating\Nodes\Functions\ArithmeticArgument.cs" />
+    <Compile Include="Templating\Nodes\Functions\BooleanArgument.cs" />
+    <Compile Include="Templating\Nodes\Functions\FunctionArgumentBase.cs" />
+    <Compile Include="Templating\Nodes\Functions\FunctionCallArgument.cs" />
+    <Compile Include="Templating\Nodes\Functions\FunctionCall.cs" />
+    <Compile Include="Templating\Nodes\Functions\IFunctionArgument.cs" />
+    <Compile Include="Templating\Nodes\Functions\ParameterValueArgument.cs" />
+    <Compile Include="Templating\Nodes\Functions\StringArgument.cs" />
     <Compile Include="Templating\Nodes\IfBlock.cs" />
-    <Compile Include="Templating\Nodes\IOutputBlock.cs" />
-    <Compile Include="Templating\Nodes\VariableOutputBlock.cs" />
+    <Compile Include="Templating\Nodes\Output\IOutputBlock.cs" />
+    <Compile Include="Templating\Nodes\Output\VariableOutputBlock.cs" />
     <Compile Include="Templating\Values\RuntimeVariableScope.cs" />
     <Compile Include="Templating\Values\VariableValueStorage.cs" />
     <Compile Include="Templating\Variables\CompilationVariableScope.cs" />
@@ -112,15 +130,18 @@
     <Compile Include="Template.cs" />
     <Compile Include="Templating\Nodes\Base\ITemplateNode.cs" />
     <Compile Include="Templating\Nodes\Base\TemplateNodeBase.cs" />
+    <Compile Include="Templating\Variables\VariableTypeExtensions.cs" />
     <Compile Include="Templating\Visitors\AdditionalExpressionVisitor.cs" />
     <Compile Include="Templating\Visitors\ArithmeticExpressionVisitor.cs" />
     <Compile Include="Templating\Visitors\BooleanExpressionVisitor.cs" />
     <Compile Include="Templating\Visitors\ConditionsVisitor.cs" />
+    <Compile Include="Templating\Visitors\FunctionCallVisitor.cs" />
     <Compile Include="Templating\Visitors\MultiplicativeExpressionVisitor.cs" />
+    <Compile Include="Templating\Visitors\FunctionArgumentsVisitor.cs" />
     <Compile Include="Templating\Visitors\OutputVisitor.cs" />
     <Compile Include="Templating\Visitors\RootTemplateVisitor.cs" />
     <Compile Include="Templating\Visitors\VariableVisitor.cs" />
-    <Compile Include="Templating\Visitors\TemplateCompilationVisitor.cs" />
+    <Compile Include="Templating\Visitors\TemplateVisitor.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -9,7 +9,7 @@
 			this.Expression = expression;
 		}
 
-		public abstract double Calculate(double leftOperand, RuntimeVariableScope variableScope);
+		public abstract double Calculate(double leftOperand, RenderContext renderContext);
 
 		public static MultiplicationOperand Multiply(IArithmeticExpression expression)
 		{
@@ -28,9 +28,9 @@
 			{
 			}
 
-			public override double Calculate(double leftOperand, RuntimeVariableScope variableScope)
+			public override double Calculate(double leftOperand, RenderContext renderContext)
 			{
-				return leftOperand * Expression.GetValue(variableScope);
+				return leftOperand * Expression.GetValue(renderContext);
 			}
 		}
 
@@ -41,9 +41,9 @@
 			{
 			}
 
-			public override double Calculate(double leftOperand, RuntimeVariableScope variableScope)
+			public override double Calculate(double leftOperand, RenderContext renderContext)
 			{
-				return leftOperand / Expression.GetValue(variableScope);
+				return leftOperand / Expression.GetValue(renderContext);
 			}
 		}
 	}

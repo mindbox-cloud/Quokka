@@ -13,16 +13,16 @@ namespace Quokka
 			this.children = children.ToList().AsReadOnly();
 		}
 
-		public override void CompileVariableDefinitions(CompilationVariableScope scope)
+		public override void CompileVariableDefinitions(SemanticAnalysisContext context)
 		{
 			foreach (var child in children)
-				child.CompileVariableDefinitions(scope);
+				child.CompileVariableDefinitions(context);
 		}
 
-		public override void Render(StringBuilder resultBuilder, RuntimeVariableScope variableScope)
+		public override void Render(StringBuilder resultBuilder, RenderContext context)
 		{
 			foreach (var child in children)
-				child.Render(resultBuilder, variableScope);
+				child.Render(resultBuilder, context);
 		}
 	}
 }

@@ -78,13 +78,17 @@ functionArgumentList
 
 functionArgumentValue
 	:
-		DoubleQuotedString
+		stringConstant
 		| parameterValueExpression 
 		| functionCall
 		| booleanExpression 
 		| arithmeticExpression
 	;
 	
+stringConstant
+	:
+		DoubleQuotedString
+	;
 
 ifStatement
 	:

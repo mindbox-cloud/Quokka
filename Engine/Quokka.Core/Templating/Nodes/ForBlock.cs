@@ -17,29 +17,30 @@ namespace Quokka
 			this.iterationVariable = iterationVariable;
 		}
 
-		public override void CompileVariableDefinitions(CompilationVariableScope scope)
+		public override void CompileVariableDefinitions(SemanticAnalysisContext context)
 		{
 			var collectionVariableDefinition = 
-				scope.CreateOrUpdateVariableDefinition(collection);
-			var innerScope = scope.CreateChildScope();
+				context.VariableScope.CreateOrUpdateVariableDefinition(collection);
+			var innerScope = context.VariableScope.CreateChildScope();
 			var iterationVariableDefinition = innerScope.CreateOrUpdateVariableDefinition(iterationVariable);
 			collectionVariableDefinition.AddCollectionElementVariable(iterationVariableDefinition);
-			block?.CompileVariableDefinitions(innerScope);
+			block?.CompileVariableDefinitions(
+				new SemanticAnalysisContext(innerScope, context.Functions, context.ErrorListener));
 		}
 
-		public override void Render(StringBuilder resultBuilder, RuntimeVariableScope variableScope)
+		public override void Render(StringBuilder resultBuilder, RenderContext context)
 		{
 			if (block == null)
 				return;
 
-			var collectionValue = (IEnumerable<VariableValueStorage>)variableScope.GetVariableValue(collection);
+			var collectionValue = (IEnumerable<VariableValueStorage>)context.VariableScope.GetVariableValue(collection);
 			foreach (var collectionElement in collectionValue)
 			{
 				var innerScope = new RuntimeVariableScope(
 					VariableValueStorage.CreateCompositeStorage(iterationVariable.Name, collectionElement),
-					variableScope);
+					context.VariableScope);
 
-				block.Render(resultBuilder, innerScope);
+				block.Render(resultBuilder, new RenderContext(innerScope, context.Functions));
 			}
 		}
 	}

@@ -9,7 +9,7 @@
 			this.number = number;
 		}
 
-		public override double GetValue(RuntimeVariableScope variableScope)
+		public override double GetValue(RenderContext renderContext)
 		{
 			return number;
 		}

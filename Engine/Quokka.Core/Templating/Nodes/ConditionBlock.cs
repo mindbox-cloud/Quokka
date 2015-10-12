@@ -4,29 +4,29 @@ namespace Quokka
 {
 	internal class ConditionBlock : TemplateNodeBase
 	{
-		private readonly IBooleanExpression condition;
+		private readonly IBooleanExpression conditionExpression;
 		private readonly ITemplateNode block;
 		
-		public ConditionBlock(IBooleanExpression condition, ITemplateNode block)
+		public ConditionBlock(IBooleanExpression conditionExpression, ITemplateNode block)
 		{
 			this.block = block;
-			this.condition = condition;
+			this.conditionExpression = conditionExpression;
 		}
 
-		public override void CompileVariableDefinitions(CompilationVariableScope scope)
+		public override void CompileVariableDefinitions(SemanticAnalysisContext context)
 		{
-			condition.CompileVariableDefinitions(scope);
-			block?.CompileVariableDefinitions(scope);
+			conditionExpression.CompileVariableDefinitions(context);
+			block?.CompileVariableDefinitions(context);
 		}
 
-		public override void Render(StringBuilder resultBuilder, RuntimeVariableScope variableScope)
+		public override void Render(StringBuilder resultBuilder, RenderContext context)
 		{
-			block?.Render(resultBuilder, variableScope);
+			block?.Render(resultBuilder, context);
 		}
 
-		public bool ShouldRender(RuntimeVariableScope variableScope)
+		public bool ShouldRender(RenderContext renderContext)
 		{
-			return condition.Evaluate(variableScope);
+			return conditionExpression.Evaluate(renderContext);
 		}
 	}
 }

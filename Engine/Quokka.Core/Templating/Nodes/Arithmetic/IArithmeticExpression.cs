@@ -2,8 +2,8 @@
 {
 	internal interface IArithmeticExpression
 	{
-		double GetValue(RuntimeVariableScope variableScope);
+		double GetValue(RenderContext renderContext);
 
-		void CompileVariableDefinitions(CompilationVariableScope scope);
+		void CompileVariableDefinitions(SemanticAnalysisContext context);
 	}
 }

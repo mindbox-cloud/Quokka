@@ -2,8 +2,8 @@
 {
 	internal interface IBooleanExpression
 	{
-		bool Evaluate(RuntimeVariableScope variableScope);
+		bool Evaluate(RenderContext renderContext);
 
-		void CompileVariableDefinitions(CompilationVariableScope scope);
+		void CompileVariableDefinitions(SemanticAnalysisContext context);
 	}
 }

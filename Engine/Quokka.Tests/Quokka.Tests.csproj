@@ -53,10 +53,12 @@
     <Compile Include="Applying\ApplyArithmeticOutputTests.cs" />
     <Compile Include="Applying\ApplyBasicTests.cs" />
     <Compile Include="Applying\ApplyForBlockTests.cs" />
+    <Compile Include="Applying\ApplyFunctionOutputTests.cs" />
     <Compile Include="Applying\ApplyIfBlockArithmeticLogicTests.cs" />
     <Compile Include="Applying\ApplyIfBlockBasicTests.cs" />
     <Compile Include="Applying\ApplyIfBlockBooleanLogicTests.cs" />
     <Compile Include="Applying\ApplyParameterOutputTests.cs" />
+    <Compile Include="Applying\ApplyStandardFunctionTests.cs" />
     <Compile Include="Helpers\TemplateAssert.cs" />
     <Compile Include="ParameterDiscovery\ModelDiscoveryTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

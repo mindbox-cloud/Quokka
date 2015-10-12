@@ -9,14 +9,14 @@
 			this.innerExpression = innerExpression;
 		}
 
-		public override double GetValue(RuntimeVariableScope variableScope)
+		public override double GetValue(RenderContext renderContext)
 		{
-			return -1.0 * innerExpression.GetValue(variableScope);
+			return -1.0 * innerExpression.GetValue(renderContext);
 		}
 
-		public override void CompileVariableDefinitions(CompilationVariableScope scope)
+		public override void CompileVariableDefinitions(SemanticAnalysisContext context)
 		{
-			innerExpression.CompileVariableDefinitions(scope);
+			innerExpression.CompileVariableDefinitions(context);
 		}
 	}
 }

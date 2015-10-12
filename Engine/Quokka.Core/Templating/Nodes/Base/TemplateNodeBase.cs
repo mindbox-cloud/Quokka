@@ -4,10 +4,10 @@ namespace Quokka
 {
 	internal abstract class TemplateNodeBase : ITemplateNode
 	{
-		public virtual void CompileVariableDefinitions(CompilationVariableScope scope)
+		public virtual void CompileVariableDefinitions(SemanticAnalysisContext context)
 		{
 		}
 
-		public abstract void Render(StringBuilder resultBuilder, RuntimeVariableScope variableScope);
+		public abstract void Render(StringBuilder resultBuilder, RenderContext context);
 	}
 }

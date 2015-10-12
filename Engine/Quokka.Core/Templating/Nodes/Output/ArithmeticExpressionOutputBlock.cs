@@ -14,14 +14,14 @@ namespace Quokka
 			this.expression = expression;
 		}
 
-		public override void CompileVariableDefinitions(CompilationVariableScope scope)
+		public override void CompileVariableDefinitions(SemanticAnalysisContext context)
 		{
-			expression.CompileVariableDefinitions(scope);
+			expression.CompileVariableDefinitions(context);
 		}
 
-		public override void Render(StringBuilder resultBuilder, RuntimeVariableScope variableScope)
+		public override void Render(StringBuilder resultBuilder, RenderContext context)
 		{
-			double value = expression.GetValue(variableScope);
+			double value = expression.GetValue(context);
 
 			if (Math.Abs(value - (int)value) < Epsilon)
 				resultBuilder.Append((int)value);

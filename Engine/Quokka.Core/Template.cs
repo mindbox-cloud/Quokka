@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-
 using Antlr4.Runtime;
-
 using Quokka.Generated;
 
 namespace Quokka
@@ -13,6 +10,7 @@ namespace Quokka
 	{
 		private readonly TemplateBlock rootBlock;
 		private readonly ICompositeModelDefinition externalModelDefinition;
+		private readonly FunctionRegistry functionRegistry;
 
 		public Template(string templateText)
 		{
@@ -30,10 +28,17 @@ namespace Quokka
 			if (parser.NumberOfSyntaxErrors > 0)
 				throw new InvalidOperationException("Syntax errors in the template");
 
+			functionRegistry = new FunctionRegistry(new TemplateFunction[]
+			{
+				new ToUpperTemplateFunction(),
+				new ToLowerTemplateFunction(),
+				new ReplaceIfEmptyTemplateFunction()
+			});
+
 			var scope = new CompilationVariableScope();
-			rootBlock.CompileVariableDefinitions(scope);
 
 			var errorListener = new SemanticErrorListener();
+			rootBlock.CompileVariableDefinitions(new SemanticAnalysisContext(scope, functionRegistry, errorListener));
 			externalModelDefinition = scope.Variables.ToModelDefinition(errorListener);
 
 			var errors = errorListener.GetErrors();
@@ -56,7 +61,8 @@ namespace Quokka
 
 			var valueStorage = VariableValueStorage.CreateStorageForValue(model);
 			var builder = new StringBuilder();
-			rootBlock.Render(builder, new RuntimeVariableScope(valueStorage));
+			var context = new RenderContext(new RuntimeVariableScope(valueStorage), functionRegistry);
+            rootBlock.Render(builder, context);
 			return builder.ToString();
 		}
 	}

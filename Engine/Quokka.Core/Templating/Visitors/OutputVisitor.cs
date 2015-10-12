@@ -1,5 +1,4 @@
 ﻿using System;
-
 using Quokka.Generated;
 
 namespace Quokka
@@ -26,7 +25,7 @@ namespace Quokka
 
 		public override IOutputBlock VisitFunctionCall(QuokkaParser.FunctionCallContext context)
 		{
-			throw new NotImplementedException("Function calls are not supported");
+			return new FunctionCallOutputBlock(context.Accept(FunctionCallVisitor.Instance));
 		}
 
 		public override IOutputBlock VisitArithmeticExpression(QuokkaParser.ArithmeticExpressionContext context)

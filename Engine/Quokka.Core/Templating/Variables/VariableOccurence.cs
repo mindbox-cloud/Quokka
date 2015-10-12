@@ -1,4 +1,6 @@
-﻿namespace Quokka
+﻿using System;
+
+namespace Quokka
 {
 	internal class VariableOccurence
 	{
@@ -26,6 +28,19 @@
 		public VariableOccurence GetLeafMember()
 		{
 			return Member == null ? this : Member.GetLeafMember();
+		}
+
+		public virtual VariableOccurence CloneWithSpecificLeafType(VariableType leafMemberType)
+		{
+			if (Member == null)
+			{
+				if (RequiredType != VariableType.Primitive)
+					throw new InvalidOperationException("Trying to redefine a type of a variable with known concrete type");
+
+				return new VariableOccurence(Name, Location, leafMemberType, null);
+			}
+
+			return new VariableOccurence(Name, Location, RequiredType, Member.CloneWithSpecificLeafType(leafMemberType));
 		}
 	}
 }

@@ -12,16 +12,16 @@ namespace Quokka
 			this.operands = operands.ToList().AsReadOnly();
 		}
 
-		public override double GetValue(RuntimeVariableScope variableScope)
+		public override double GetValue(RenderContext renderContext)
 		{
 			return operands
-				.Aggregate(0.0, (current, operand) => operand.Calculate(current, variableScope));
+				.Aggregate(0.0, (current, operand) => operand.Calculate(current, renderContext));
 		}
 
-		public override void CompileVariableDefinitions(CompilationVariableScope scope)
+		public override void CompileVariableDefinitions(SemanticAnalysisContext context)
 		{
 			foreach (var operand in operands)
-				operand.Expression.CompileVariableDefinitions(scope);
+				operand.Expression.CompileVariableDefinitions(context);
 		}
 	}
 }

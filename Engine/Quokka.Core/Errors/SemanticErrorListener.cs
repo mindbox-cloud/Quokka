@@ -27,5 +27,11 @@ namespace Quokka
 				faultyOccurence.Location));
 		}
 
+		public void AddUndefinedFunctionError(string functionName, Location location)
+		{
+			AddError(new SemanticError(
+				$"Неизвестная функция {functionName}",
+				location));
+		}
 	}
 }

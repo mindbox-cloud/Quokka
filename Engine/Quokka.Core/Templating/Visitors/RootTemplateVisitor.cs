@@ -8,7 +8,7 @@ namespace Quokka
 	{
 		public override TemplateBlock VisitTemplateBlock(QuokkaParser.TemplateBlockContext context)
 		{
-			var templateCompilationVisitor = TemplateCompilationVisitor.Instance;
+			var templateCompilationVisitor = TemplateVisitor.Instance;
 			return new TemplateBlock(context.children
 				.Select(child => child.Accept(templateCompilationVisitor))
 				.Where(x => x != null));

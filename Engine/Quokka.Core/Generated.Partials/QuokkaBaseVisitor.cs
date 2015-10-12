@@ -1,9 +1,8 @@
 ﻿using Antlr4.Runtime;
-using Antlr4.Runtime.Tree;
 
 namespace Quokka.Generated
 {
-	internal partial class QuokkaBaseVisitor<Result> : AbstractParseTreeVisitor<Result>, IQuokkaVisitor<Result>
+	internal partial class QuokkaBaseVisitor<Result>
 	{
 		protected Location GetLocationFromToken(IToken token)
 		{

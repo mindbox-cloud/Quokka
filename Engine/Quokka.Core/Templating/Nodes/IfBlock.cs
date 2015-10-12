@@ -13,19 +13,19 @@ namespace Quokka
 			this.conditions = conditions.ToList().AsReadOnly();
 		}
 
-		public override void CompileVariableDefinitions(CompilationVariableScope scope)
+		public override void CompileVariableDefinitions(SemanticAnalysisContext context)
 		{
 			foreach (var condition in conditions)
-				condition.CompileVariableDefinitions(scope);
+				condition.CompileVariableDefinitions(context);
 		}
 
-		public override void Render(StringBuilder resultBuilder, RuntimeVariableScope variableScope)
+		public override void Render(StringBuilder resultBuilder, RenderContext context)
 		{
 			foreach (var condition in conditions)
 			{
-				if (condition.ShouldRender(variableScope))
+				if (condition.ShouldRender(context))
 				{
-					condition.Render(resultBuilder, variableScope);
+					condition.Render(resultBuilder, context);
 					break;
 				}
 			}

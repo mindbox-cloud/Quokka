@@ -2,9 +2,9 @@
 {
 	internal abstract class BooleanExpressionBase : IBooleanExpression
 	{
-		public abstract bool Evaluate(RuntimeVariableScope variableScope);
+		public abstract bool Evaluate(RenderContext renderContext);
 
-		public virtual void CompileVariableDefinitions(CompilationVariableScope scope)
+		public virtual void CompileVariableDefinitions(SemanticAnalysisContext context)
 		{
 		}
 	}

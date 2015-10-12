@@ -9,6 +9,10 @@ namespace Quokka
 			VariableOccurence faultyOccurence,
 			VariableType correctType);
 
+		void AddUndefinedFunctionError(
+			string functionName,
+			Location location);
+
 		IReadOnlyCollection<SemanticError> GetErrors();
 	}
 }
