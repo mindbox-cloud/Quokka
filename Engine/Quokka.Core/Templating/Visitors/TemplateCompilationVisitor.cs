@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-
-using Antlr4.Runtime.Tree;
-
 using Quokka.Generated;
 
 namespace Quokka
@@ -26,8 +22,7 @@ namespace Quokka
 
 		public override ITemplateNode VisitStaticBlock(QuokkaParser.StaticBlockContext context)
 		{
-			return new StaticBlock(
-				context.children.Select(child => child.Accept(this)));
+			return new StaticBlock(context.children.Select(child => child.Accept(this)));
 		}
 		
 		public override ITemplateNode VisitConstantBlock(QuokkaParser.ConstantBlockContext context)
@@ -37,27 +32,9 @@ namespace Quokka
 
 		public override ITemplateNode VisitOutputBlock(QuokkaParser.OutputBlockContext context)
 		{
-			var filteredParameterValue = context.filteredParameterValueExpression();
-			if (filteredParameterValue != null)
-				return Visit(filteredParameterValue);
-
-			var arithmeticExpression = context.arithmeticExpression();
-			if (arithmeticExpression != null)
-				return new ArithmeticExpressionOutputBlock(arithmeticExpression.Accept(ArithmeticExpressionVisitor.Instance));
-
-			throw new InvalidOperationException("Unknown alternative");
+			return context.Accept(OutputVisitor.Instance);
 		}
-
-		public override ITemplateNode VisitFilteredParameterValueExpression(QuokkaParser.FilteredParameterValueExpressionContext context)
-		{
-			var filters = context.filterChain();
-			if (filters != null)
-				throw new NotImplementedException("Parameters with filter chain are not supported");
-
-			var parameter = context.parameterValueExpression().Accept(new VariableVisitor(VariableType.Primitive));
-			return new VariableOutputBlock(parameter);
-		}
-
+		
 		public override ITemplateNode VisitIfStatement(QuokkaParser.IfStatementContext context)
 		{
 			var conditions = new List<ConditionBlock>
@@ -71,12 +48,7 @@ namespace Quokka
 
 			return new IfBlock(conditions);
 		}
-
-		public override ITemplateNode VisitCommentBlock(QuokkaParser.CommentBlockContext context)
-		{
-			return null;
-		}
-
+		
 		public override ITemplateNode VisitForStatement(QuokkaParser.ForStatementContext context)
 		{
 			var forInstruction = context.forInstruction();
@@ -92,6 +64,11 @@ namespace Quokka
 					GetLocationFromToken(iterationVariableIdentifier.Symbol),
                     VariableType.Unknown,
 					null));
+		}
+
+		public override ITemplateNode VisitCommentBlock(QuokkaParser.CommentBlockContext context)
+		{
+			return null;
 		}
 	}
 }

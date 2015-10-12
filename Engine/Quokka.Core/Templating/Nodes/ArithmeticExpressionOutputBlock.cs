@@ -4,9 +4,9 @@ using System.Text;
 
 namespace Quokka
 {
-	internal class ArithmeticExpressionOutputBlock : TemplateNodeBase
+	internal class ArithmeticExpressionOutputBlock : TemplateNodeBase, IOutputBlock
 	{
-		private const double epsilon = 1e-8;
+		private const double Epsilon = 1e-8;
 		private readonly IArithmeticExpression expression;
 
 		public ArithmeticExpressionOutputBlock(IArithmeticExpression expression)
@@ -23,7 +23,7 @@ namespace Quokka
 		{
 			double value = expression.GetValue(variableScope);
 
-			if (Math.Abs(value - (int)value) < epsilon)
+			if (Math.Abs(value - (int)value) < Epsilon)
 				resultBuilder.Append((int)value);
 			else
 				resultBuilder.Append(value.ToString("0.00", CultureInfo.CurrentCulture));

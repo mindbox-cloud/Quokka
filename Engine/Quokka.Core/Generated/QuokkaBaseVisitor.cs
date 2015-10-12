@@ -123,16 +123,6 @@ internal partial class QuokkaBaseVisitor<Result> : AbstractParseTreeVisitor<Resu
 	/// <return>The visitor result.</return>
 	public virtual Result VisitMemberAccessExpression([NotNull] QuokkaParser.MemberAccessExpressionContext context) { return VisitChildren(context); }
 	/// <summary>
-	/// Visit a parse tree produced by <see cref="QuokkaParser.filteredParameterValueExpression"/>.
-	/// <para>
-	/// The default implementation returns the result of calling <see cref="AbstractParseTreeVisitor{Result}.VisitChildren(IRuleNode)"/>
-	/// on <paramref name="context"/>.
-	/// </para>
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	/// <return>The visitor result.</return>
-	public virtual Result VisitFilteredParameterValueExpression([NotNull] QuokkaParser.FilteredParameterValueExpressionContext context) { return VisitChildren(context); }
-	/// <summary>
 	/// Visit a parse tree produced by <see cref="QuokkaParser.filterChain"/>.
 	/// <para>
 	/// The default implementation returns the result of calling <see cref="AbstractParseTreeVisitor{Result}.VisitChildren(IRuleNode)"/>
@@ -143,7 +133,7 @@ internal partial class QuokkaBaseVisitor<Result> : AbstractParseTreeVisitor<Resu
 	/// <return>The visitor result.</return>
 	public virtual Result VisitFilterChain([NotNull] QuokkaParser.FilterChainContext context) { return VisitChildren(context); }
 	/// <summary>
-	/// Visit a parse tree produced by <see cref="QuokkaParser.filter"/>.
+	/// Visit a parse tree produced by <see cref="QuokkaParser.functionCall"/>.
 	/// <para>
 	/// The default implementation returns the result of calling <see cref="AbstractParseTreeVisitor{Result}.VisitChildren(IRuleNode)"/>
 	/// on <paramref name="context"/>.
@@ -151,9 +141,9 @@ internal partial class QuokkaBaseVisitor<Result> : AbstractParseTreeVisitor<Resu
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
-	public virtual Result VisitFilter([NotNull] QuokkaParser.FilterContext context) { return VisitChildren(context); }
+	public virtual Result VisitFunctionCall([NotNull] QuokkaParser.FunctionCallContext context) { return VisitChildren(context); }
 	/// <summary>
-	/// Visit a parse tree produced by <see cref="QuokkaParser.filterArgumentList"/>.
+	/// Visit a parse tree produced by <see cref="QuokkaParser.functionArgumentList"/>.
 	/// <para>
 	/// The default implementation returns the result of calling <see cref="AbstractParseTreeVisitor{Result}.VisitChildren(IRuleNode)"/>
 	/// on <paramref name="context"/>.
@@ -161,9 +151,9 @@ internal partial class QuokkaBaseVisitor<Result> : AbstractParseTreeVisitor<Resu
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
-	public virtual Result VisitFilterArgumentList([NotNull] QuokkaParser.FilterArgumentListContext context) { return VisitChildren(context); }
+	public virtual Result VisitFunctionArgumentList([NotNull] QuokkaParser.FunctionArgumentListContext context) { return VisitChildren(context); }
 	/// <summary>
-	/// Visit a parse tree produced by <see cref="QuokkaParser.filterArgumentValue"/>.
+	/// Visit a parse tree produced by <see cref="QuokkaParser.functionArgumentValue"/>.
 	/// <para>
 	/// The default implementation returns the result of calling <see cref="AbstractParseTreeVisitor{Result}.VisitChildren(IRuleNode)"/>
 	/// on <paramref name="context"/>.
@@ -171,7 +161,7 @@ internal partial class QuokkaBaseVisitor<Result> : AbstractParseTreeVisitor<Resu
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
-	public virtual Result VisitFilterArgumentValue([NotNull] QuokkaParser.FilterArgumentValueContext context) { return VisitChildren(context); }
+	public virtual Result VisitFunctionArgumentValue([NotNull] QuokkaParser.FunctionArgumentValueContext context) { return VisitChildren(context); }
 	/// <summary>
 	/// Visit a parse tree produced by <see cref="QuokkaParser.ifStatement"/>.
 	/// <para>
@@ -302,26 +292,6 @@ internal partial class QuokkaBaseVisitor<Result> : AbstractParseTreeVisitor<Resu
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
 	public virtual Result VisitCommentBlock([NotNull] QuokkaParser.CommentBlockContext context) { return VisitChildren(context); }
-	/// <summary>
-	/// Visit a parse tree produced by <see cref="QuokkaParser.commentInstruction"/>.
-	/// <para>
-	/// The default implementation returns the result of calling <see cref="AbstractParseTreeVisitor{Result}.VisitChildren(IRuleNode)"/>
-	/// on <paramref name="context"/>.
-	/// </para>
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	/// <return>The visitor result.</return>
-	public virtual Result VisitCommentInstruction([NotNull] QuokkaParser.CommentInstructionContext context) { return VisitChildren(context); }
-	/// <summary>
-	/// Visit a parse tree produced by <see cref="QuokkaParser.endCommentInstruction"/>.
-	/// <para>
-	/// The default implementation returns the result of calling <see cref="AbstractParseTreeVisitor{Result}.VisitChildren(IRuleNode)"/>
-	/// on <paramref name="context"/>.
-	/// </para>
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	/// <return>The visitor result.</return>
-	public virtual Result VisitEndCommentInstruction([NotNull] QuokkaParser.EndCommentInstructionContext context) { return VisitChildren(context); }
 	/// <summary>
 	/// Visit a parse tree produced by <see cref="QuokkaParser.booleanExpression"/>.
 	/// <para>

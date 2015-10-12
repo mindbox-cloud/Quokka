@@ -96,6 +96,7 @@
     <Compile Include="Templating\Nodes\ConditionBlock.cs" />
     <Compile Include="Templating\Nodes\ForBlock.cs" />
     <Compile Include="Templating\Nodes\IfBlock.cs" />
+    <Compile Include="Templating\Nodes\IOutputBlock.cs" />
     <Compile Include="Templating\Nodes\VariableOutputBlock.cs" />
     <Compile Include="Templating\Values\RuntimeVariableScope.cs" />
     <Compile Include="Templating\Values\VariableValueStorage.cs" />
@@ -116,6 +117,7 @@
     <Compile Include="Templating\Visitors\BooleanExpressionVisitor.cs" />
     <Compile Include="Templating\Visitors\ConditionsVisitor.cs" />
     <Compile Include="Templating\Visitors\MultiplicativeExpressionVisitor.cs" />
+    <Compile Include="Templating\Visitors\OutputVisitor.cs" />
     <Compile Include="Templating\Visitors\RootTemplateVisitor.cs" />
     <Compile Include="Templating\Visitors\VariableVisitor.cs" />
     <Compile Include="Templating\Visitors\TemplateCompilationVisitor.cs" />

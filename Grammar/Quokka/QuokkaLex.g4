@@ -68,16 +68,6 @@ EndFor
 		End WhiteSpace+ For
 	;
 
-Comment
-	:
-		[Cc][Oo][Mm][Mm][Ee][Nn][Tt]
-	;
-	
-EndComment
-	:
-		End WhiteSpace+ Comment
-	;
-   
 MemberAccessOperator
 	:
 		'.'

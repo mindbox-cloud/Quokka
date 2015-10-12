@@ -2,7 +2,7 @@
 
 namespace Quokka
 {
-	internal class VariableOutputBlock : TemplateNodeBase
+	internal class VariableOutputBlock : TemplateNodeBase, IOutputBlock
 	{
 		private readonly VariableOccurence variableOccurence;
 

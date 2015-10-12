@@ -29,9 +29,8 @@ constantBlock
 outputBlock
 	:
 		OutputInstructionStart
-		(
-			filteredParameterValueExpression | arithmeticExpression
-		)
+		(parameterValueExpression | functionCall | arithmeticExpression)
+		filterChain?
 		InstructionEnd
 	;
 	
@@ -51,38 +50,39 @@ memberAccessExpression
 		MemberAccessOperator
 		Identifier
 		memberAccessExpression?
-	;	
-
-filteredParameterValueExpression
-	:
-		parameterValueExpression filterChain?
 	;
 	
 filterChain
 	:
 		(
 			Pipe
-			filter
+			functionCall
 		)+
 	;
 	
-filter
+functionCall
 	:
 		Identifier
-		filterArgumentList?
+		functionArgumentList
 	;
 
-filterArgumentList
+functionArgumentList
 	:	
 		LeftParen
-		filterArgumentValue
-		(CommaSeparator filterArgumentValue)*
+		(
+			functionArgumentValue
+			(CommaSeparator functionArgumentValue)*
+		)?		
 		RightParen
 	;
 
-filterArgumentValue
+functionArgumentValue
 	:
 		DoubleQuotedString
+		| parameterValueExpression 
+		| functionCall
+		| booleanExpression 
+		| arithmeticExpression
 	;
 	
 
@@ -171,26 +171,6 @@ endForInstruction
 commentBlock
 	:
 		SingleInstructionComment
-		/*
-		|		
-		commentInstruction
-		templateBlock
-		endCommentInstruction		
-		*/
-	;
-
-commentInstruction
-	:
-		ControlInstructionStart
-		Comment
-		InstructionEnd
-	;
-	
-endCommentInstruction
-	:
-		ControlInstructionStart
-		EndComment
-		InstructionEnd
 	;
 	
 booleanExpression
@@ -218,7 +198,8 @@ parenthesizedBooleanExpression
 booleanAtom
 	:
 		parameterValueExpression
-		| arithmeticComparisonExpression
+		| functionCall
+		| arithmeticComparisonExpression		
 		| notExpression
 		| parenthesizedBooleanExpression
 	;
@@ -272,6 +253,7 @@ arithmeticAtom
 	:
 		Number
 		| parameterValueExpression
+		| functionCall
 		| negationExpression
 		| LeftParen arithmeticExpression RightParen	
 	;
