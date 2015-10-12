@@ -2,17 +2,17 @@
 
 namespace Quokka
 {
-	internal class FormatDecimalTemplateFunction : TemplateFunction<decimal, string, string>
+	internal class FormatTimeTemplateFunction : TemplateFunction<TimeSpan, string, string>
 	{
-		public FormatDecimalTemplateFunction()
+		public FormatTimeTemplateFunction()
 			: base(
-				  "formatDecimal",
-				  new TemplateFunctionArgument<decimal>("number"),
+				  "formatTime",
+				  new TemplateFunctionArgument<TimeSpan>("time"),
 				  new TemplateFunctionArgument<string>("format", ValidateFormat))
 		{
 		}
 
-		public override string Invoke(decimal argument1, string argument2)
+		public override string Invoke(TimeSpan argument1, string argument2)
 		{
 			return argument1.ToString(argument2);
 		}
@@ -21,7 +21,7 @@ namespace Quokka
 		{
 			try
 			{
-				default(decimal).ToString(format);
+				default(TimeSpan).ToString(format);
 				return new ArgumentValueValidationResult(true);
 			}
 			catch (FormatException)

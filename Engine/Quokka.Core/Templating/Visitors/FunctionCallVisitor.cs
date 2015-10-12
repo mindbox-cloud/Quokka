@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using Quokka.Generated;
 
 namespace Quokka
@@ -13,9 +14,13 @@ namespace Quokka
 
 		public override FunctionCall VisitFunctionCall(QuokkaParser.FunctionCallContext context)
 		{
+			var functionNameToken = context.Identifier() ?? context.If();
+			if (functionNameToken == null)
+				throw new InvalidOperationException("No function name token found");
+
 			return new FunctionCall(
-				context.Identifier().GetText(),
-				GetLocationFromToken(context.Identifier().Symbol),
+				functionNameToken.GetText(),
+				GetLocationFromToken(functionNameToken.Symbol),
 				context.functionArgumentList().functionArgumentValue()
 					.Select(argument => argument.Accept(FunctionArgumentVisitor.Instance)));
 		}

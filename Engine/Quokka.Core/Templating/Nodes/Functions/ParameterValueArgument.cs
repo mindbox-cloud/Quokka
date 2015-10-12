@@ -4,7 +4,8 @@
 	{
 		private readonly VariableOccurence variableOccurence;
 
-		public ParameterValueArgument(VariableOccurence variableOccurence)
+		public ParameterValueArgument(VariableOccurence variableOccurence, Location location)
+			: base(location)
 		{
 			this.variableOccurence = variableOccurence;
 		}

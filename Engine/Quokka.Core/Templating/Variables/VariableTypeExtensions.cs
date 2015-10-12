@@ -15,6 +15,10 @@ namespace Quokka
 				return VariableType.Decimal;
 			if (runtimeType == typeof(bool))
 				return VariableType.Boolean;
+			if (runtimeType == typeof(DateTime))
+				return VariableType.DateTime;
+			if (runtimeType == typeof(TimeSpan))
+				return VariableType.TimeSpan;
 
 			throw new InvalidOperationException(
 				$"Runtime type {runtimeType.Name} doesn't have a corresponding template variable type");

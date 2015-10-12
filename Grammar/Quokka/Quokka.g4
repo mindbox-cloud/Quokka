@@ -62,7 +62,7 @@ filterChain
 	
 functionCall
 	:
-		Identifier
+		(Identifier | If)
 		functionArgumentList
 	;
 
@@ -202,7 +202,6 @@ parenthesizedBooleanExpression
 booleanAtom
 	:
 		parameterValueExpression
-		| functionCall
 		| arithmeticComparisonExpression		
 		| notExpression
 		| parenthesizedBooleanExpression
@@ -257,7 +256,6 @@ arithmeticAtom
 	:
 		Number
 		| parameterValueExpression
-		| functionCall
 		| negationExpression
 		| LeftParen arithmeticExpression RightParen	
 	;

@@ -12,6 +12,8 @@
 		Decimal,
 		Integer,
 		String,
+		DateTime,
+		TimeSpan,
 
 		Composite,
 

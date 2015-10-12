@@ -27,10 +27,26 @@ namespace Quokka
 			{
 				// Even if the function doesn't exist we want to try and analyze arguments further so we don't miss 
 				// semantic errors that could be present there
-				var requiredType = function != null 
-					? VariableTypeTools.GetVariableTypeByRuntimeType(function.Arguments[i].RuntimeType) 
-					: VariableType.Unknown;
-				
+				VariableType requiredType = VariableType.Unknown;
+				if (function != null)
+				{
+					requiredType = VariableTypeTools.GetVariableTypeByRuntimeType(function.Arguments[i].RuntimeType);
+
+					object staticValue;
+					if (arguments[i].TryGetStaticValue(out staticValue))
+					{
+						var validationResult = function.Arguments[i].ValidateValue(staticValue);
+						if (!validationResult.IsValid)
+						{
+							context.ErrorListener.AddInvalidFunctionArgumentValueError(
+								function.Name,
+								function.Arguments[i].Name,
+								validationResult.ErrorMessage,
+								Location);
+						}
+					}
+				}
+
 				arguments[i].CompileVariableDefinitions(context, requiredType);
 			}
 		}

@@ -90,5 +90,53 @@ namespace Quokka.Tests
 
 			Assert.AreEqual("2,53511", result);
 		}
+
+		[TestMethod]
+		public void Apply_Function_FormatDateTime_CorrectFormat()
+		{
+			var template = new Template("${ formatDateTime(Value, \"dd'.'MM'.'yy HH':'mm':'ss\") }");
+
+			var result = template.Apply(
+				new CompositeModelValue(
+					new ModelField("Value", new DateTime(2015, 10, 12, 22, 55, 55))));
+
+			Assert.AreEqual("12.10.15 22:55:55", result);
+		}
+
+		[TestMethod]
+		public void Apply_Function_FormatTime_CorrectFormat()
+		{
+			var template = new Template("${ formatTime(Value, \"hh\\-mm\\-ss\") }");
+
+			var result = template.Apply(
+				new CompositeModelValue(
+					new ModelField("Value", TimeSpan.FromMinutes(5))));
+
+			Assert.AreEqual("00-05-00", result);
+		}
+
+		[TestMethod]
+		public void Apply_Function_If_ConditionIsTrue()
+		{
+			var template = new Template("${ if(IsTest, \"test.example.com\", \"example.com\") }");
+
+			var result = template.Apply(
+				new CompositeModelValue(
+					new ModelField("IsTest", true)));
+
+			Assert.AreEqual("test.example.com", result);
+		}
+
+		[TestMethod]
+		public void Apply_Function_If_ConditionIsFalse()
+		{
+			var template = new Template("${ if(IsTest, \"test.example.com\", \"example.com\") }");
+
+			var result = template.Apply(
+				new CompositeModelValue(
+					new ModelField("IsTest", false)));
+
+			Assert.AreEqual("example.com", result);
+		}
 	}
 }

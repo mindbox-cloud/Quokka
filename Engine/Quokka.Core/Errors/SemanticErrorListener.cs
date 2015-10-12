@@ -22,7 +22,7 @@ namespace Quokka
 			VariableType correctType)
 		{
 			AddError(new SemanticError(
-				$"Параметр {definition.FullName} не может использоваться как {faultyOccurence.RequiredType}, " +
+				$"Параметр \"{definition.FullName}\" не может использоваться как {faultyOccurence.RequiredType}, " +
 				$"так как в других местах он используется как {correctType}",
 				faultyOccurence.Location));
 		}
@@ -30,8 +30,20 @@ namespace Quokka
 		public void AddUndefinedFunctionError(string functionName, Location location)
 		{
 			AddError(new SemanticError(
-				$"Неизвестная функция {functionName}",
+				$"Неизвестная функция \"{functionName}\"",
 				location));
 		}
+
+		public void AddInvalidFunctionArgumentValueError(
+			string functionName,
+			string argumentName, 
+			string message,
+			Location location)
+		{
+			AddError(new SemanticError(
+				$"Недопустимое значение аргумента \"{argumentName}\" функции \"{functionName}\": {message}",
+				location));
+		}
+
 	}
 }

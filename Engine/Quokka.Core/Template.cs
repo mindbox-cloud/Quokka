@@ -33,7 +33,10 @@ namespace Quokka
 				new ToUpperTemplateFunction(),
 				new ToLowerTemplateFunction(),
 				new ReplaceIfEmptyTemplateFunction(),
-				new FormatDecimalTemplateFunction()
+				new FormatDecimalTemplateFunction(),
+				new FormatDateTimeTemplateFunction(),
+				new FormatTimeTemplateFunction(),
+				new IfTemplateFunction()
 			});
 
 			var scope = new CompilationVariableScope();

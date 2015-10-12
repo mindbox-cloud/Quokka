@@ -45,13 +45,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Functions\FunctionRegistry.cs" />
+    <Compile Include="Functions\Standard\FormatDateTimeTemplateFunction.cs" />
+    <Compile Include="Functions\Standard\FormatTimeTemplateFunction.cs" />
     <Compile Include="Functions\Standard\FormatDecimalTemplateFunction.cs" />
+    <Compile Include="Functions\Standard\IfTemplateFunction.cs" />
     <Compile Include="Functions\Standard\ReplaceIfEmptyTemplateFunction.cs" />
     <Compile Include="Functions\Standard\ToLowerTemplateFunction.cs" />
     <Compile Include="Functions\Standard\ToUpperTemplateFunction.cs" />
     <Compile Include="Functions\TemplateFunction.cs" />
     <Compile Include="Functions\TemplateFunctionArgument.cs" />
     <Compile Include="Functions\TemplateFunction`1.cs" />
+    <Compile Include="Functions\TemplateFunction`3.cs" />
     <Compile Include="Functions\TemplateFunction`2.cs" />
     <Compile Include="Generated.Partials\QuokkaBaseVisitor.cs" />
     <Compile Include="Model\Definitions\ArrayModelDefinition.cs" />

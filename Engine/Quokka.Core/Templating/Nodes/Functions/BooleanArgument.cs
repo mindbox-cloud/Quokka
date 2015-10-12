@@ -4,7 +4,8 @@
 	{
 		private readonly IBooleanExpression expression;
 
-		public BooleanArgument(IBooleanExpression expression)
+		public BooleanArgument(IBooleanExpression expression, Location location)
+			: base(location)
 		{
 			this.expression = expression;
 		}

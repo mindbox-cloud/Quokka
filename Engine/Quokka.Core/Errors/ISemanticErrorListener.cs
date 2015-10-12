@@ -13,6 +13,12 @@ namespace Quokka
 			string functionName,
 			Location location);
 
+		void AddInvalidFunctionArgumentValueError(
+			string functionName,
+			string argumentName,
+			string message,
+			Location location);
+
 		IReadOnlyCollection<SemanticError> GetErrors();
 	}
 }

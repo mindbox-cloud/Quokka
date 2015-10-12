@@ -4,7 +4,8 @@
 	{
 		private readonly FunctionCall functionCall;
 
-		public FunctionCallArgument(FunctionCall functionCall)
+		public FunctionCallArgument(FunctionCall functionCall, Location location)
+			: base(location)
 		{
 			this.functionCall = functionCall;
 		}

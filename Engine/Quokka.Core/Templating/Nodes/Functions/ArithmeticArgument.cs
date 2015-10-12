@@ -4,7 +4,8 @@
 	{
 		private readonly IArithmeticExpression expression;
 
-		public ArithmeticArgument(IArithmeticExpression expression)
+		public ArithmeticArgument(IArithmeticExpression expression, Location location)
+			: base(location)
 		{
 			this.expression = expression;
 		}
