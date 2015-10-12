@@ -3,7 +3,10 @@
 	internal class ReplaceIfEmptyTemplateFunction : TemplateFunction<string, string, string>
 	{
 		public ReplaceIfEmptyTemplateFunction()
-			: base("replaceIfEmpty")
+			: base(
+				  "replaceIfEmpty",
+				  new TemplateFunctionArgument<string>("default value"),
+				  new TemplateFunctionArgument<string>("fallback value"))
 		{
 		}
 

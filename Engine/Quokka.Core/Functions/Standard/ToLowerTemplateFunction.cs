@@ -3,7 +3,9 @@
 	internal class ToLowerTemplateFunction : TemplateFunction<string, string>
 	{
 		public ToLowerTemplateFunction()
-			: base("toLower")
+			: base(
+				  "toLower",
+				  new TemplateFunctionArgument<string>("string"))
 		{
 		}
 

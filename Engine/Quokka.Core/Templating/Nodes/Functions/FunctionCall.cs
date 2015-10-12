@@ -28,7 +28,7 @@ namespace Quokka
 				// Even if the function doesn't exist we want to try and analyze arguments further so we don't miss 
 				// semantic errors that could be present there
 				var requiredType = function != null 
-					? VariableTypeTools.GetVariableTypeByRuntimeType(function.GetArgumentType(i)) 
+					? VariableTypeTools.GetVariableTypeByRuntimeType(function.Arguments[i].RuntimeType) 
 					: VariableType.Unknown;
 				
 				arguments[i].CompileVariableDefinitions(context, requiredType);

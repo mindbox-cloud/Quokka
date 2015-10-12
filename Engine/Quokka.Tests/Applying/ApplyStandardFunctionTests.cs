@@ -66,5 +66,29 @@ namespace Quokka.Tests
 
 			Assert.AreEqual("Plan B", result);
 		}
+
+		[TestMethod]
+		public void Apply_Function_FormatDecimal_CorrectFormat()
+		{
+			var template = new Template("${ formatDecimal(Value, \"N2\") }");
+
+			var result = template.Apply(
+				new CompositeModelValue(
+					new ModelField("Value", 2.53511m)));
+
+			Assert.AreEqual("2,54", result);
+		}
+
+		[TestMethod]
+		public void Apply_Function_FormatDecimal_EmptyFormat()
+		{
+			var template = new Template("${ formatDecimal(Value, \"\") }");
+
+			var result = template.Apply(
+				new CompositeModelValue(
+					new ModelField("Value", 2.53511m)));
+
+			Assert.AreEqual("2,53511", result);
+		}
 	}
 }

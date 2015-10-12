@@ -3,7 +3,9 @@
 	internal class ToUpperTemplateFunction : TemplateFunction<string, string>
 	{
 		public ToUpperTemplateFunction()
-			: base("toUpper")
+			: base(
+				  "toUpper",
+				  new TemplateFunctionArgument<string>("string"))
 		{
 		}
 

@@ -6,22 +6,16 @@ namespace Quokka
 {
 	public abstract class TemplateFunction
 	{
-		private readonly IReadOnlyList<Type> argumentTypes;
+		public IReadOnlyList<TemplateFunctionArgument> Arguments { get; }
+		public Type ReturnType { get; }
 		public string Name { get; }
 
-		protected TemplateFunction(string name, Type returnType, params Type[] argumentTypes)
+		protected TemplateFunction(string name, Type returnType, params TemplateFunctionArgument[] arguments)
 		{
 			Name = name;
-			this.argumentTypes = argumentTypes.ToList().AsReadOnly();
+			ReturnType = returnType;
+			Arguments = arguments.ToList().AsReadOnly();
 		}
-
-		internal Type GetArgumentType(int index)
-		{
-			if (index < 0 || index >= argumentTypes.Count)
-				throw new IndexOutOfRangeException("Index out of range");
-
-			return argumentTypes[index];
-		}
-
+		
 		internal abstract object Invoke(IList<object> arguments);
 	}}

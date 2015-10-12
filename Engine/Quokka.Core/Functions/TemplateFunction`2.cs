@@ -3,10 +3,13 @@ using System.Collections.Generic;
 
 namespace Quokka
 {
-	public abstract class TemplateFunction<TResult, TArgument1, TArgument2> : TemplateFunction
+	public abstract class TemplateFunction<TArgument1, TArgument2, TResult> : TemplateFunction
 	{
-		protected TemplateFunction(string name)
-			: base(name, typeof(TResult), typeof(TArgument1), typeof(TArgument2))
+		protected TemplateFunction(
+			string name,
+			TemplateFunctionArgument<TArgument1> argument1,
+			TemplateFunctionArgument<TArgument2> argument2)
+				: base(name, typeof(TResult), argument1, argument2)
 		{
 		}
 
