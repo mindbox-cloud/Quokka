@@ -1,71 +1,70 @@
-﻿
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Quokka.Tests
 {
 	[TestClass]
-	public class ApplyBasicTests
+	public class RenderBasicTests
 	{
 		[TestMethod]
-		public void Apply_SingleConstantBlock()
+		public void Render_SingleConstantBlock()
 		{
 			var template = new Template("Happy new year!");
 
 			Assert.AreEqual(
 				"Happy new year!",
-				template.Apply(new CompositeModelValue()));
+				template.Render(new CompositeModelValue()));
 		}
 
 		[TestMethod]
-		public void Apply_EmptyString()
+		public void Render_EmptyString()
 		{
 			var template = new Template("");
 
 			Assert.AreEqual(
 				"",
-				template.Apply(new CompositeModelValue()));
+				template.Render(new CompositeModelValue()));
 		}
 
 		[TestMethod]
-		public void Apply_Comment()
+		public void Render_Comment()
 		{
 			var template = new Template("Visible @{* Not Visible *} Visible");
 
 			Assert.AreEqual(
 				"Visible  Visible",
-				template.Apply(new CompositeModelValue()));
+				template.Render(new CompositeModelValue()));
 		}
 
 		[TestMethod]
-		public void Apply_StringConstantOutput()
+		public void Render_StringConstantOutput()
 		{
 			var template = new Template("${ \"Constant value  \" }");
 
 			Assert.AreEqual(
 				"Constant value  ",
-				template.Apply(new CompositeModelValue()));
+				template.Render(new CompositeModelValue()));
 		}
 
 		[TestMethod]
-		public void Apply_BooleanTrueOutput()
+		public void Render_BooleanTrueOutput()
 		{
 			var template = new Template("${ A or A }");
 
 			Assert.AreEqual(
 				"True",
-				template.Apply(
+				template.Render(
 					new CompositeModelValue(
 						new ModelField("A", true))));
 		}
 
 		[TestMethod]
-		public void Apply_BooleanFalseOutput()
+		public void Render_BooleanFalseOutput()
 		{
 			var template = new Template("${ not A }");
 
 			Assert.AreEqual(
 				"False",
-				template.Apply(
+				template.Render(
 					new CompositeModelValue(
 						new ModelField("A", true))));
 		}

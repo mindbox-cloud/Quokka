@@ -3,10 +3,10 @@
 namespace Quokka.Tests
 {
 	[TestClass]
-	public class ApplyIfBlockBooleanLogicTests
+	public class RenderIfBlockBooleanLogicTests
 	{
 		[TestMethod]
-		public void Apply_IfLogic_TrueAndTrue()
+		public void Render_IfLogic_TrueAndTrue()
 		{
 			var template = new Template(@"
 				@{ if A and B }
@@ -14,7 +14,7 @@ namespace Quokka.Tests
 				@{ end if }
 			");
 
-			var result = template.Apply(
+			var result = template.Render(
 				new CompositeModelValue(
 					new ModelField("A", true),
 					new ModelField("B", true)));
@@ -29,7 +29,7 @@ namespace Quokka.Tests
 		}
 
 		[TestMethod]
-		public void Apply_IfLogic_TrueAndFalse()
+		public void Render_IfLogic_TrueAndFalse()
 		{
 			var template = new Template(@"
 				@{ if A and B }
@@ -37,7 +37,7 @@ namespace Quokka.Tests
 				@{ end if }
 			");
 
-			var result = template.Apply(
+			var result = template.Render(
 				new CompositeModelValue(
 					new ModelField("A", true),
 					new ModelField("B", false)));
@@ -50,7 +50,7 @@ namespace Quokka.Tests
 		}
 
 		[TestMethod]
-		public void Apply_IfLogic_FalseAndTrue()
+		public void Render_IfLogic_FalseAndTrue()
 		{
 			var template = new Template(@"
 				@{ if A and B }
@@ -58,7 +58,7 @@ namespace Quokka.Tests
 				@{ end if }
 			");
 
-			var result = template.Apply(
+			var result = template.Render(
 				new CompositeModelValue(
 					new ModelField("A", false),
 					new ModelField("B", true)));
@@ -71,7 +71,7 @@ namespace Quokka.Tests
 		}
 
 		[TestMethod]
-		public void Apply_IfLogic_FalseAndFalse()
+		public void Render_IfLogic_FalseAndFalse()
 		{
 			var template = new Template(@"
 				@{ if A and B }
@@ -79,7 +79,7 @@ namespace Quokka.Tests
 				@{ end if }
 			");
 
-			var result = template.Apply(
+			var result = template.Render(
 				new CompositeModelValue(
 					new ModelField("A", false),
 					new ModelField("B", false)));
@@ -92,7 +92,7 @@ namespace Quokka.Tests
 		}
 
 		[TestMethod]
-		public void Apply_IfLogic_TrueAndTrueAndTrue()
+		public void Render_IfLogic_TrueAndTrueAndTrue()
 		{
 			var template = new Template(@"
 				@{ if A and B and C }
@@ -100,7 +100,7 @@ namespace Quokka.Tests
 				@{ end if }
 			");
 
-			var result = template.Apply(
+			var result = template.Render(
 				new CompositeModelValue(
 					new ModelField("A", true),
 					new ModelField("B", true),
@@ -116,7 +116,7 @@ namespace Quokka.Tests
 		}
 
 		[TestMethod]
-		public void Apply_IfLogic_TrueAndTrueAndTrueAndFalse()
+		public void Render_IfLogic_TrueAndTrueAndTrueAndFalse()
 		{
 			var template = new Template(@"
 				@{ if A and B and C and D }
@@ -124,7 +124,7 @@ namespace Quokka.Tests
 				@{ end if }
 			");
 
-			var result = template.Apply(
+			var result = template.Render(
 				new CompositeModelValue(
 					new ModelField("A", true),
 					new ModelField("B", true),
@@ -139,7 +139,7 @@ namespace Quokka.Tests
 		}
 
 		[TestMethod]
-		public void Apply_IfLogic_TrueOrTrue()
+		public void Render_IfLogic_TrueOrTrue()
 		{
 			var template = new Template(@"
 				@{ if A or B }
@@ -147,7 +147,7 @@ namespace Quokka.Tests
 				@{ end if }
 			");
 
-			var result = template.Apply(
+			var result = template.Render(
 				new CompositeModelValue(
 					new ModelField("A", true),
 					new ModelField("B", true)));
@@ -162,7 +162,7 @@ namespace Quokka.Tests
 		}
 
 		[TestMethod]
-		public void Apply_IfLogic_TrueOrFalse()
+		public void Render_IfLogic_TrueOrFalse()
 		{
 			var template = new Template(@"
 				@{ if A or B }
@@ -170,7 +170,7 @@ namespace Quokka.Tests
 				@{ end if }
 			");
 
-			var result = template.Apply(
+			var result = template.Render(
 				new CompositeModelValue(
 					new ModelField("A", true),
 					new ModelField("B", false)));
@@ -185,7 +185,7 @@ namespace Quokka.Tests
 		}
 
 		[TestMethod]
-		public void Apply_IfLogic_FalseOrTrue()
+		public void Render_IfLogic_FalseOrTrue()
 		{
 			var template = new Template(@"
 				@{ if A or B }
@@ -193,7 +193,7 @@ namespace Quokka.Tests
 				@{ end if }
 			");
 
-			var result = template.Apply(
+			var result = template.Render(
 				new CompositeModelValue(
 					new ModelField("A", false),
 					new ModelField("B", true)));
@@ -208,7 +208,7 @@ namespace Quokka.Tests
 		}
 
 		[TestMethod]
-		public void Apply_IfLogic_FalseOrFalse()
+		public void Render_IfLogic_FalseOrFalse()
 		{
 			var template = new Template(@"
 				@{ if A or B }
@@ -216,7 +216,7 @@ namespace Quokka.Tests
 				@{ end if }
 			");
 
-			var result = template.Apply(
+			var result = template.Render(
 				new CompositeModelValue(
 					new ModelField("A", false),
 					new ModelField("B", false)));
@@ -229,7 +229,7 @@ namespace Quokka.Tests
 		}
 
 		[TestMethod]
-		public void Apply_IfLogic_FalseOrFalseOrTrue()
+		public void Render_IfLogic_FalseOrFalseOrTrue()
 		{
 			var template = new Template(@"
 				@{ if A or B or C }
@@ -237,7 +237,7 @@ namespace Quokka.Tests
 				@{ end if }
 			");
 
-			var result = template.Apply(
+			var result = template.Render(
 				new CompositeModelValue(
 					new ModelField("A", false),
 					new ModelField("B", false),
@@ -253,7 +253,7 @@ namespace Quokka.Tests
 		}
 
 		[TestMethod]
-		public void Apply_IfLogic_NotTrue()
+		public void Render_IfLogic_NotTrue()
 		{
 			var template = new Template(@"
 				@{ if not A }
@@ -261,7 +261,7 @@ namespace Quokka.Tests
 				@{ end if }
 			");
 
-			var result = template.Apply(
+			var result = template.Render(
 				new CompositeModelValue(
 					new ModelField("A", true)));
 
@@ -273,7 +273,7 @@ namespace Quokka.Tests
 		}
 
 		[TestMethod]
-		public void Apply_IfLogic_NotFalse()
+		public void Render_IfLogic_NotFalse()
 		{
 			var template = new Template(@"
 				@{ if not A }
@@ -281,7 +281,7 @@ namespace Quokka.Tests
 				@{ end if }
 			");
 
-			var result = template.Apply(
+			var result = template.Render(
 				new CompositeModelValue(
 					new ModelField("A", false)));
 
@@ -295,7 +295,7 @@ namespace Quokka.Tests
 		}
 
 		[TestMethod]
-		public void Apply_IfLogic_FalseOrTrueAndFalse_Precedence()
+		public void Render_IfLogic_FalseOrTrueAndFalse_Precedence()
 		{
 			var template = new Template(@"
 				@{ if A or B and C }
@@ -303,7 +303,7 @@ namespace Quokka.Tests
 				@{ end if }
 			");
 
-			var result = template.Apply(
+			var result = template.Render(
 				new CompositeModelValue(
 					new ModelField("A", false),
 					new ModelField("B", true),
@@ -317,7 +317,7 @@ namespace Quokka.Tests
 		}
 
 		[TestMethod]
-		public void Apply_IfLogic_FalseAndTrueOrFalse_Precedence()
+		public void Render_IfLogic_FalseAndTrueOrFalse_Precedence()
 		{
 			var template = new Template(@"
 				@{ if A and B or C }
@@ -325,7 +325,7 @@ namespace Quokka.Tests
 				@{ end if }
 			");
 
-			var result = template.Apply(
+			var result = template.Render(
 				new CompositeModelValue(
 					new ModelField("A", false),
 					new ModelField("B", true),
@@ -339,7 +339,7 @@ namespace Quokka.Tests
 		}
 
 		[TestMethod]
-		public void Apply_IfLogic_FalseOrNotTrue_Precedence()
+		public void Render_IfLogic_FalseOrNotTrue_Precedence()
 		{
 			var template = new Template(@"
 				@{ if A or not B }
@@ -347,7 +347,7 @@ namespace Quokka.Tests
 				@{ end if }
 			");
 
-			var result = template.Apply(
+			var result = template.Render(
 				new CompositeModelValue(
 					new ModelField("A", false),
 					new ModelField("B", true)));
@@ -360,7 +360,7 @@ namespace Quokka.Tests
 		}
 
 		[TestMethod]
-		public void Apply_IfLogic_FalseOrNotFalse_Precedence()
+		public void Render_IfLogic_FalseOrNotFalse_Precedence()
 		{
 			var template = new Template(@"
 				@{ if A or not B }
@@ -368,7 +368,7 @@ namespace Quokka.Tests
 				@{ end if }
 			");
 
-			var result = template.Apply(
+			var result = template.Render(
 				new CompositeModelValue(
 					new ModelField("A", false),
 					new ModelField("B", false)));
@@ -383,7 +383,7 @@ namespace Quokka.Tests
 		}
 
 		[TestMethod]
-		public void Apply_IfLogic_TrueAndNotTrue_Precedence()
+		public void Render_IfLogic_TrueAndNotTrue_Precedence()
 		{
 			var template = new Template(@"
 				@{ if A and not B }
@@ -391,7 +391,7 @@ namespace Quokka.Tests
 				@{ end if }
 			");
 
-			var result = template.Apply(
+			var result = template.Render(
 				new CompositeModelValue(
 					new ModelField("A", true),
 					new ModelField("B", true)));
@@ -404,7 +404,7 @@ namespace Quokka.Tests
 		}
 
 		[TestMethod]
-		public void Apply_IfLogic_NotFalseAndTrue_Precedence()
+		public void Render_IfLogic_NotFalseAndTrue_Precedence()
 		{
 			var template = new Template(@"
 				@{ if not A and B }
@@ -412,7 +412,7 @@ namespace Quokka.Tests
 				@{ end if }
 			");
 
-			var result = template.Apply(
+			var result = template.Render(
 				new CompositeModelValue(
 					new ModelField("A", false),
 					new ModelField("B", true)));
@@ -427,7 +427,7 @@ namespace Quokka.Tests
 		}
 
 		[TestMethod]
-		public void Apply_IfLogic_TrueAnd_FalseOrTrue_Parentheses()
+		public void Render_IfLogic_TrueAnd_FalseOrTrue_Parentheses()
 		{
 			var template = new Template(@"
 				@{ if A and (B or C) }
@@ -435,7 +435,7 @@ namespace Quokka.Tests
 				@{ end if }
 			");
 
-			var result = template.Apply(
+			var result = template.Render(
 				new CompositeModelValue(
 					new ModelField("A", true),
 					new ModelField("B", false),
@@ -451,7 +451,7 @@ namespace Quokka.Tests
 		}
 
 		[TestMethod]
-		public void Apply_IfLogic_Not_TrueOrFalse_Parentheses()
+		public void Render_IfLogic_Not_TrueOrFalse_Parentheses()
 		{
 			var template = new Template(@"
 				@{ if not(A or B) }
@@ -459,7 +459,7 @@ namespace Quokka.Tests
 				@{ end if }
 			");
 
-			var result = template.Apply(
+			var result = template.Render(
 				new CompositeModelValue(
 					new ModelField("A", true),
 					new ModelField("B", false)));
@@ -472,7 +472,7 @@ namespace Quokka.Tests
 		}
 
 		[TestMethod]
-		public void Apply_IfLogic_ComplexExpression()
+		public void Render_IfLogic_ComplexExpression()
 		{
 			var template = new Template(@"
 				@{ if Recipient.IsMale or A or B and C or (D or E) or not(F) and (G or (H and K)) and (((bingo))) }
@@ -480,7 +480,7 @@ namespace Quokka.Tests
 				@{ end if }
 			");
 
-			var result = template.Apply(
+			var result = template.Render(
 				new CompositeModelValue(
 					new ModelField("Recipient",
 						new CompositeModelValue(

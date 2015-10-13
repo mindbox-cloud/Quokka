@@ -3,10 +3,10 @@
 namespace Quokka.Tests
 {
 	[TestClass]
-	public class ApplyIfBlockBasicTests
+	public class RenderIfBlockBasicTests
 	{
 		[TestMethod]
-		public void Apply_IfSimpleConditionIsTrue()
+		public void Render_IfSimpleConditionIsTrue()
 		{
 			var template = new Template(@"
 				@{ if IsTest }
@@ -14,7 +14,7 @@ namespace Quokka.Tests
 				@{ end if }
 			");
 
-			var result = template.Apply(
+			var result = template.Render(
 				new CompositeModelValue(
 					new ModelField("IsTest", true)));
 
@@ -28,7 +28,7 @@ namespace Quokka.Tests
 		}
 
 		[TestMethod]
-		public void Apply_IfSimpleConditionIsFalse()
+		public void Render_IfSimpleConditionIsFalse()
 		{
 			var template = new Template(@"
 				@{ if IsTest }
@@ -36,7 +36,7 @@ namespace Quokka.Tests
 				@{ end if }
 			");
 
-			var result = template.Apply(
+			var result = template.Render(
 				new CompositeModelValue(
 					new ModelField("IsTest", false)));
 
@@ -48,7 +48,7 @@ namespace Quokka.Tests
 		}
 
 		[TestMethod]
-		public void Apply_IfSimpleConditionWithElse()
+		public void Render_IfSimpleConditionWithElse()
 		{
 			var template = new Template(@"
 				@{ if IsTest }
@@ -58,7 +58,7 @@ namespace Quokka.Tests
 				@{ end if }
 			");
 
-			var result = template.Apply(
+			var result = template.Render(
 				new CompositeModelValue(
 					new ModelField("IsTest", true)));
 
@@ -72,7 +72,7 @@ namespace Quokka.Tests
 		}
 
 		[TestMethod]
-		public void Apply_IfSimpleConditionWithElseIsFalse()
+		public void Render_IfSimpleConditionWithElseIsFalse()
 		{
 			var template = new Template(@"
 				@{ if IsTest }
@@ -82,7 +82,7 @@ namespace Quokka.Tests
 				@{ end if }
 			");
 
-			var result = template.Apply(
+			var result = template.Render(
 				new CompositeModelValue(
 					new ModelField("IsTest", false)));
 
@@ -96,7 +96,7 @@ namespace Quokka.Tests
 		}
 
 		[TestMethod]
-		public void Apply_If_TwoBranches_BothTrue_Branch1()
+		public void Render_If_TwoBranches_BothTrue_Branch1()
 		{
 			var template = new Template(@"
 				@{ if IsTest }
@@ -106,7 +106,7 @@ namespace Quokka.Tests
 				@{ end if }
 			");
 
-			var result = template.Apply(
+			var result = template.Render(
 				new CompositeModelValue(
 					new ModelField("IsTest", true),
 					new ModelField("IsStaging", true)));
@@ -121,7 +121,7 @@ namespace Quokka.Tests
 		}
 
 		[TestMethod]
-		public void Apply_If_TwoBranches_OnlyFirstTrue_Branch1()
+		public void Render_If_TwoBranches_OnlyFirstTrue_Branch1()
 		{
 			var template = new Template(@"
 				@{ if IsTest }
@@ -131,7 +131,7 @@ namespace Quokka.Tests
 				@{ end if }
 			");
 
-			var result = template.Apply(
+			var result = template.Render(
 				new CompositeModelValue(
 					new ModelField("IsTest", true),
 					new ModelField("IsStaging", false)));
@@ -146,7 +146,7 @@ namespace Quokka.Tests
 		}
 
 		[TestMethod]
-		public void Apply_If_TwoBranches_OnlySecondTrue_Branch2()
+		public void Render_If_TwoBranches_OnlySecondTrue_Branch2()
 		{
 			var template = new Template(@"
 				@{ if IsTest }
@@ -156,7 +156,7 @@ namespace Quokka.Tests
 				@{ end if }
 			");
 
-			var result = template.Apply(
+			var result = template.Render(
 				new CompositeModelValue(
 					new ModelField("IsTest", false),
 					new ModelField("IsStaging", true)));
@@ -171,7 +171,7 @@ namespace Quokka.Tests
 		}
 
 		[TestMethod]
-		public void Apply_If_TwoBranches_BothFalse_Branch2()
+		public void Render_If_TwoBranches_BothFalse_Branch2()
 		{
 			var template = new Template(@"
 				@{ if IsTest }
@@ -181,7 +181,7 @@ namespace Quokka.Tests
 				@{ end if }
 			");
 
-			var result = template.Apply(
+			var result = template.Render(
 				new CompositeModelValue(
 					new ModelField("IsTest", false),
 					new ModelField("IsStaging", false)));
@@ -194,7 +194,7 @@ namespace Quokka.Tests
 		}
 
 		[TestMethod]
-		public void Apply_If_NBranchesWithoutElse()
+		public void Render_If_NBranchesWithoutElse()
 		{
 			var template = new Template(@"
 				@{ if IsRed }
@@ -208,7 +208,7 @@ namespace Quokka.Tests
 				@{ end if }
 			");
 
-			var result = template.Apply(
+			var result = template.Render(
 				new CompositeModelValue(
 					new ModelField("IsRed", false),
 					new ModelField("IsGreen", false),
@@ -225,7 +225,7 @@ namespace Quokka.Tests
 		}
 
 		[TestMethod]
-		public void Apply_If_NBranchesWithElse_BranchIsTrue()
+		public void Render_If_NBranchesWithElse_BranchIsTrue()
 		{
 			var template = new Template(@"
 				@{ if IsRed }
@@ -237,7 +237,7 @@ namespace Quokka.Tests
 				@{ end if }
 			");
 
-			var result = template.Apply(
+			var result = template.Render(
 				new CompositeModelValue(
 					new ModelField("IsRed", false),
 					new ModelField("IsGreen", true)));
@@ -252,7 +252,7 @@ namespace Quokka.Tests
 		}
 
 		[TestMethod]
-		public void Apply_If_NBranchesWithElse_NoBranchIsTrue()
+		public void Render_If_NBranchesWithElse_NoBranchIsTrue()
 		{
 			var template = new Template(@"
 				@{ if IsRed }
@@ -264,7 +264,7 @@ namespace Quokka.Tests
 				@{ end if }
 			");
 
-			var result = template.Apply(
+			var result = template.Render(
 				new CompositeModelValue(
 					new ModelField("IsRed", false),
 					new ModelField("IsGreen", false)));
@@ -279,7 +279,7 @@ namespace Quokka.Tests
 		}
 
 		[TestMethod]
-		public void Apply_IfSimpleCondition_Parentheses()
+		public void Render_IfSimpleCondition_Parentheses()
 		{
 			var template = new Template(@"
 				@{ if (((IsTest))) }
@@ -287,7 +287,7 @@ namespace Quokka.Tests
 				@{ end if }
 			");
 
-			var result = template.Apply(
+			var result = template.Render(
 				new CompositeModelValue(
 					new ModelField("IsTest", true)));
 
@@ -301,7 +301,7 @@ namespace Quokka.Tests
 		}
 
 		[TestMethod]
-		public void Apply_IfCondition_ThirLevelMember()
+		public void Render_IfCondition_ThirLevelMember()
 		{
 			var template = new Template(@"
 				@{ if Context.Values.IsTest }
@@ -311,7 +311,7 @@ namespace Quokka.Tests
 				@{ end if }
 			");
 
-			var result = template.Apply(
+			var result = template.Render(
 				new CompositeModelValue(
 					new ModelField("Context",
 						new CompositeModelValue(
@@ -330,7 +330,7 @@ namespace Quokka.Tests
 		}
 
 		[TestMethod]
-		public void Apply_If_InstructionsCaseInsensitivity()
+		public void Render_If_InstructionsCaseInsensitivity()
 		{
 			var template = new Template(@"
 				@{ If IsRed }
@@ -342,7 +342,7 @@ namespace Quokka.Tests
 				@{ ENd IF }
 			");
 
-			var result = template.Apply(
+			var result = template.Render(
 				new CompositeModelValue(
 					new ModelField("IsRed", false),
 					new ModelField("IsGreen", true)));
@@ -357,11 +357,11 @@ namespace Quokka.Tests
 		}
 
 		[TestMethod]
-		public void Apply_If_EmptyBlocks()
+		public void Render_If_EmptyBlocks()
 		{
 			var template = new Template(@"@{ if IsRed }@{ else if IsGreen }@{ else }@{ end if }");
 
-			var result = template.Apply(
+			var result = template.Render(
 				new CompositeModelValue(
 					new ModelField("IsRed", false),
 					new ModelField("IsGreen", true)));

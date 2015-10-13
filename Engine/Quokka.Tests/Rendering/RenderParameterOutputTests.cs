@@ -3,14 +3,14 @@
 namespace Quokka.Tests
 {
 	[TestClass]
-	public class ApplyParameterOutputTests
+	public class RenderParameterOutputTests
 	{
 		[TestMethod]
-		public void Apply_SingleStringParameter()
+		public void Render_SingleStringParameter()
 		{
 			var template = new Template("${ Name }");
 
-			var result = template.Apply(
+			var result = template.Render(
 				new CompositeModelValue(
 					new ModelField("Name", "Angelina")));
 
@@ -18,11 +18,11 @@ namespace Quokka.Tests
 		}
 
 		[TestMethod]
-		public void Apply_SingleIntegerParameter()
+		public void Render_SingleIntegerParameter()
 		{
 			var template = new Template("${ LetterId }");
 
-			var result = template.Apply(
+			var result = template.Render(
 				new CompositeModelValue(
 					new ModelField("LetterId", 43)));
 
@@ -30,11 +30,11 @@ namespace Quokka.Tests
 		}
 
 		[TestMethod]
-		public void Apply_MultipleStringParameters()
+		public void Render_MultipleStringParameters()
 		{
 			var template = new Template("${ FirstName } ${ LastName }");
 
-			var result = template.Apply(
+			var result = template.Render(
 				new CompositeModelValue(
 					new ModelField("FirstName", "Winona"),
 					new ModelField("LastName", "Ryder")));
@@ -43,11 +43,11 @@ namespace Quokka.Tests
 		}
 
 		[TestMethod]
-		public void Apply_StringParameterInPlainText()
+		public void Render_StringParameterInPlainText()
 		{
 			var template = new Template("Hello, ${ FirstName }!");
 
-			var result = template.Apply(
+			var result = template.Render(
 				new CompositeModelValue(
 					new ModelField("FirstName", "Kate")));
 
@@ -55,11 +55,11 @@ namespace Quokka.Tests
 		}
 
 		[TestMethod]
-		public void Apply_SecondLevelParameterMember()
+		public void Render_SecondLevelParameterMember()
 		{
 			var template = new Template("${ Customer.Email }");
 
-			var result = template.Apply(
+			var result = template.Render(
 				new CompositeModelValue(
 					new ModelField("Customer",
 						new CompositeModelValue(
@@ -69,11 +69,11 @@ namespace Quokka.Tests
 		}
 
 		[TestMethod]
-		public void Apply_NthLevelParameterMember()
+		public void Render_NthLevelParameterMember()
 		{
 			var template = new Template("${ Customer.Data.Contacts.Email }");
 
-			var result = template.Apply(
+			var result = template.Render(
 				new CompositeModelValue(
 					new ModelField("Customer",
 						new CompositeModelValue(
@@ -87,11 +87,11 @@ namespace Quokka.Tests
 		}
 
 		[TestMethod]
-		public void Apply_TwoSecondLevelParameterMembers()
+		public void Render_TwoSecondLevelParameterMembers()
 		{
 			var template = new Template("${ Customer.Email }, ${ Customer.MobilePhone }");
 
-			var result = template.Apply(
+			var result = template.Render(
 				new CompositeModelValue(
 					new ModelField("Customer",
 						new CompositeModelValue(
@@ -102,11 +102,11 @@ namespace Quokka.Tests
 		}
 
 		[TestMethod]
-		public void Apply_ParameterCaseInsensitivity()
+		public void Render_ParameterCaseInsensitivity()
 		{
 			var template = new Template("${ ProductModel }");
 
-			var result = template.Apply(
+			var result = template.Render(
 				new CompositeModelValue(
 					new ModelField("pRoDuCtmOdEl", "ES-335")));
 

@@ -3,10 +3,10 @@
 namespace Quokka.Tests
 {
 	[TestClass]
-	public class ApplyForBlockTests
+	public class RenderForBlockTests
 	{
 		[TestMethod]
-		public void Apply_ForBlock_SimpleFor_CollectionOfPrimitives_NoItemOutput()
+		public void Render_ForBlock_SimpleFor_CollectionOfPrimitives_NoItemOutput()
 		{
 			var template = new Template(@"
 				@{ for item in Collection }
@@ -14,7 +14,7 @@ namespace Quokka.Tests
 				@{ end for }
 			");
 
-			var result = template.Apply(
+			var result = template.Render(
 				new CompositeModelValue(
 					new ModelField("Collection",
 						new ArrayModelValue(
@@ -36,7 +36,7 @@ namespace Quokka.Tests
 		}
 
 		[TestMethod]
-		public void Apply_ForBlock_SimpleFor_CollectionOfPrimitives_ItemOutput()
+		public void Render_ForBlock_SimpleFor_CollectionOfPrimitives_ItemOutput()
 		{
 			var template = new Template(@"
 				@{ for item in Collection }
@@ -44,7 +44,7 @@ namespace Quokka.Tests
 				@{ end for }
 			");
 
-			var result = template.Apply(
+			var result = template.Render(
 				new CompositeModelValue(
 					new ModelField("Collection",
 						new ArrayModelValue(
@@ -66,7 +66,7 @@ namespace Quokka.Tests
 		}
 
 		[TestMethod]
-		public void Apply_ForBlock_SimpleFor_CollectionOfComposites_NoItemOutput()
+		public void Render_ForBlock_SimpleFor_CollectionOfComposites_NoItemOutput()
 		{
 			var template = new Template(@"
 				@{ for item in Collection }
@@ -74,7 +74,7 @@ namespace Quokka.Tests
 				@{ end for }
 			");
 
-			var result = template.Apply(
+			var result = template.Render(
 				new CompositeModelValue(
 					new ModelField("Collection",
 						new ArrayModelValue(
@@ -99,7 +99,7 @@ namespace Quokka.Tests
 		}
 
 		[TestMethod]
-		public void Apply_ForBlock_SimpleFor_CollectionOfComposites_FirstLevelMemberOutput()
+		public void Render_ForBlock_SimpleFor_CollectionOfComposites_FirstLevelMemberOutput()
 		{
 			var template = new Template(@"
 				@{ for item in Collection }
@@ -107,7 +107,7 @@ namespace Quokka.Tests
 				@{ end for }
 			");
 
-			var result = template.Apply(
+			var result = template.Render(
 				new CompositeModelValue(
 					new ModelField("Collection",
 						new ArrayModelValue(
@@ -132,7 +132,7 @@ namespace Quokka.Tests
 		}
 
 		[TestMethod]
-		public void Apply_ForBlock_SimpleFor_EmptyCollection()
+		public void Render_ForBlock_SimpleFor_EmptyCollection()
 		{
 			var template = new Template(@"
 				(start)@{ for item in Collection }
@@ -140,7 +140,7 @@ namespace Quokka.Tests
 				@{ end for }(end)
 			");
 
-			var result = template.Apply(
+			var result = template.Render(
 				new CompositeModelValue(
 					new ModelField("Collection",
 						new ArrayModelValue())));
@@ -153,7 +153,7 @@ namespace Quokka.Tests
 		}
 
 		[TestMethod]
-		public void Apply_ForBlock_SimpleFor_CollectionAsANthLevelMember()
+		public void Render_ForBlock_SimpleFor_CollectionAsANthLevelMember()
 		{
 			var template = new Template(@"
 				@{ for item in Context.Data.Elements }
@@ -161,7 +161,7 @@ namespace Quokka.Tests
 				@{ end for }
 			");
 
-			var result = template.Apply(
+			var result = template.Render(
 				new CompositeModelValue(
 					new ModelField("Context",
 						new CompositeModelValue(
@@ -187,7 +187,7 @@ namespace Quokka.Tests
 		}
 
 		[TestMethod]
-		public void Apply_ForBlock_SimpleFor_IfOnElement()
+		public void Render_ForBlock_SimpleFor_IfOnElement()
 		{
 			var template = new Template(@"
 				@{ for item in Elements }
@@ -197,7 +197,7 @@ namespace Quokka.Tests
 				@{ end for }
 			");
 
-			var result = template.Apply(
+			var result = template.Render(
 				new CompositeModelValue(
 					new ModelField("Elements",
 						new ArrayModelValue(
@@ -223,7 +223,7 @@ namespace Quokka.Tests
 		}
 
 		[TestMethod]
-		public void Apply_ForBlock_NestedForOnDifferentCollection()
+		public void Render_ForBlock_NestedForOnDifferentCollection()
 		{
 			var template = new Template(@"
 				@{ for coef in Coefficients }
@@ -233,7 +233,7 @@ namespace Quokka.Tests
 				@{ end for }
 			");
 
-			var result = template.Apply(
+			var result = template.Render(
 				new CompositeModelValue(
 					new ModelField("Coefficients",
 						new ArrayModelValue(
@@ -264,7 +264,7 @@ namespace Quokka.Tests
 		}
 
 		[TestMethod]
-		public void Apply_ForBlock_NestedForOnElementField()
+		public void Render_ForBlock_NestedForOnElementField()
 		{
 			var template = new Template(@"
 				@{ for value in Values }
@@ -274,7 +274,7 @@ namespace Quokka.Tests
 				@{ end for }
 			");
 
-			var result = template.Apply(
+			var result = template.Render(
 				new CompositeModelValue(
 					new ModelField("Values",
 						new ArrayModelValue(
@@ -311,7 +311,7 @@ namespace Quokka.Tests
 		}
 
 		[TestMethod]
-		public void Apply_ForBlock_NestedForOnElementItself()
+		public void Render_ForBlock_NestedForOnElementItself()
 		{
 			var template = new Template(@"
 				@{ for array in Arrays }
@@ -321,7 +321,7 @@ namespace Quokka.Tests
 				@{ end for }
 			");
 
-			var result = template.Apply(
+			var result = template.Render(
 				new CompositeModelValue(
 					new ModelField("Arrays",
 						new ArrayModelValue(
@@ -352,7 +352,7 @@ namespace Quokka.Tests
 		}
 
 		[TestMethod]
-		public void Apply_ForBlock_MultipleForsOnSameCollection()
+		public void Render_ForBlock_MultipleForsOnSameCollection()
 		{
 			var template = new Template(@"
 				@{ for item in Collection }
@@ -363,7 +363,7 @@ namespace Quokka.Tests
 				@{ end for }
 			");
 
-			var result = template.Apply(
+			var result = template.Render(
 				new CompositeModelValue(
 					new ModelField("Collection",
 						new ArrayModelValue(
@@ -392,7 +392,7 @@ namespace Quokka.Tests
 		}
 
 		[TestMethod]
-		public void Apply_ForBlock_CaseInsensitivity()
+		public void Render_ForBlock_CaseInsensitivity()
 		{
 			var template = new Template(@"
 				@{ FoR item In Collection }
@@ -400,7 +400,7 @@ namespace Quokka.Tests
 				@{ eNd fOr }
 			");
 
-			var result = template.Apply(
+			var result = template.Render(
 				new CompositeModelValue(
 					new ModelField("coLLectiON",
 						new ArrayModelValue(
@@ -422,11 +422,11 @@ namespace Quokka.Tests
 		}
 
 		[TestMethod]
-		public void Apply_ForBlock_EmptyBlock()
+		public void Render_ForBlock_EmptyBlock()
 		{
 			var template = new Template(@"@{ for item in Collection }@{ end for }");
 
-			var result = template.Apply(
+			var result = template.Render(
 				new CompositeModelValue(
 					new ModelField("Collection",
 						new ArrayModelValue(

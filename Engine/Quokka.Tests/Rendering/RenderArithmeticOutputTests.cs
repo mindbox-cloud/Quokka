@@ -1,111 +1,104 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Quokka.Tests
 {
 	[TestClass]
-	public class ApplyArithmeticOutputTests
+	public class RenderArithmeticOutputTests
 	{
 		[TestMethod]
-		public void Apply_ArithmeticOutput_SimplePlus()
+		public void Render_ArithmeticOutput_SimplePlus()
 		{
 			var template = new Template("${ 4 + 7 }");
 
-			var result = template.Apply(
+			var result = template.Render(
 				new CompositeModelValue());
-
 			Assert.AreEqual("11", result);
 		}
 
 		[TestMethod]
-		public void Apply_ArithmeticOutput_SimpleMinus()
+		public void Render_ArithmeticOutput_SimpleMinus()
 		{
 			var template = new Template("${ 65 - 24 }");
 
-			var result = template.Apply(
+			var result = template.Render(
 				new CompositeModelValue());
 
 			Assert.AreEqual("41", result);
 		}
 
 		[TestMethod]
-		public void Apply_ArithmeticOutput_ComplexPlusMinus()
+		public void Render_ArithmeticOutput_ComplexPlusMinus()
 		{
 			var template = new Template("${ 4 + 7 - 13 + 15 }");
 
-			var result = template.Apply(
+			var result = template.Render(
 				new CompositeModelValue());
 
 			Assert.AreEqual("13", result);
 		}
 
 		[TestMethod]
-		public void Apply_ArithmeticOutput_SimpleMultiplication()
+		public void Render_ArithmeticOutput_SimpleMultiplication()
 		{
 			var template = new Template("${ 6*9 }");
 
-			var result = template.Apply(
+			var result = template.Render(
 				new CompositeModelValue());
 
 			Assert.AreEqual("54", result);
 		}
 
 		[TestMethod]
-		public void Apply_ArithmeticOutput_SimpleDivision()
+		public void Render_ArithmeticOutput_SimpleDivision()
 		{
 			var template = new Template("${ 85 / 5 }");
 
-			var result = template.Apply(
+			var result = template.Render(
 				new CompositeModelValue());
 
 			Assert.AreEqual("17", result);
 		}
 
 		[TestMethod]
-		public void Apply_ArithmeticOutput_ComplexMultiplyDivide()
+		public void Render_ArithmeticOutput_ComplexMultiplyDivide()
 		{
 			var template = new Template("${ 5 * 8 / 2 * 3 }");
 
-			var result = template.Apply(
+			var result = template.Render(
 				new CompositeModelValue());
 
 			Assert.AreEqual("60", result);
 		}
 
 		[TestMethod]
-		public void Apply_ArithmeticOutput_DivisionWithDecimalPoints()
+		public void Render_ArithmeticOutput_DivisionWithDecimalPoints()
 		{
 			var template = new Template("${ 1/3 }");
 
-			var result = template.Apply(
+			var result = template.Render(
 				new CompositeModelValue());
 
 			Assert.AreEqual("0,33", result);
 		}
 
 		[TestMethod]
-		public void Apply_ArithmeticOutput_SimpleNegation()
+		public void Render_ArithmeticOutput_SimpleNegation()
 		{
 			var template = new Template("${ -(4 + 7) }");
 
-			var result = template.Apply(
+			var result = template.Render(
 				new CompositeModelValue());
 
 			Assert.AreEqual("-11", result);
 		}
 
 		[TestMethod]
-		public void Apply_ArithmeticOutput_ComplexExpression()
+		public void Render_ArithmeticOutput_ComplexExpression()
 		{
 			// A smoke test
 			var template = new Template("${ (24 + 3) + (5 * 25)/7 - (6 * 7 / 8*9) * (242) + A.Value * B.Value.Length }");
 
-			var result = template.Apply(
+			var result = template.Render(
 				new CompositeModelValue(
 					new ModelField("A",
 						new CompositeModelValue(

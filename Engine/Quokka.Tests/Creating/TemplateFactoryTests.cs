@@ -17,7 +17,7 @@ namespace Quokka.Tests
 
 			Assert.AreEqual(
 				"Simple template",
-				template.Apply(new CompositeModelValue()));
+				template.Render(new CompositeModelValue()));
 		}
 
 		[TestMethod]
@@ -37,7 +37,7 @@ namespace Quokka.Tests
 			Assert.IsFalse(errors.Any());
 			Assert.AreEqual(
 				"Simple template",
-				template.Apply(new CompositeModelValue()));
+				template.Render(new CompositeModelValue()));
 		}
 
 		[TestMethod]
@@ -61,7 +61,7 @@ namespace Quokka.Tests
 			Assert.IsFalse(errors.Any());
 			Assert.AreEqual(
 				"Test",
-				template.Apply(new CompositeModelValue()));
+				template.Render(new CompositeModelValue()));
 		}
 
 		private class TestCustomFunction : TemplateFunction<string, string>

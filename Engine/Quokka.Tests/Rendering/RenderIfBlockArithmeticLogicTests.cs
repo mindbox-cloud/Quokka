@@ -3,10 +3,10 @@
 namespace Quokka.Tests
 {
 	[TestClass]
-	public class ApplyIfBlockArithmeticLogicTests
+	public class RenderIfBlockArithmeticLogicTests
 	{
 		[TestMethod]
-		public void Apply_IfArithmeticLogic_MoreThan_True()
+		public void Render_IfArithmeticLogic_MoreThan_True()
 		{
 			var template = new Template(@"
 				@{ if A > 5 }
@@ -14,7 +14,7 @@ namespace Quokka.Tests
 				@{ end if }
 			");
 
-			var result = template.Apply(
+			var result = template.Render(
 				new CompositeModelValue(
 					new ModelField("A", 6)));
 
@@ -28,7 +28,7 @@ namespace Quokka.Tests
 		}
 
 		[TestMethod]
-		public void Apply_IfArithmeticLogic_MoreThan_FalseBeсauseLess()
+		public void Render_IfArithmeticLogic_MoreThan_FalseBeсauseLess()
 		{
 			var template = new Template(@"
 				@{ if A > 5 }
@@ -36,7 +36,7 @@ namespace Quokka.Tests
 				@{ end if }
 			");
 
-			var result = template.Apply(
+			var result = template.Render(
 				new CompositeModelValue(
 					new ModelField("A", 4)));
 
@@ -48,7 +48,7 @@ namespace Quokka.Tests
 		}
 
 		[TestMethod]
-		public void Apply_IfArithmeticLogic_MoreThan_FalseBeсauseEquals()
+		public void Render_IfArithmeticLogic_MoreThan_FalseBeсauseEquals()
 		{
 			var template = new Template(@"
 				@{ if A > 5 }
@@ -56,7 +56,7 @@ namespace Quokka.Tests
 				@{ end if }
 			");
 
-			var result = template.Apply(
+			var result = template.Render(
 				new CompositeModelValue(
 					new ModelField("A", 5)));
 
@@ -68,7 +68,7 @@ namespace Quokka.Tests
 		}
 		
 		[TestMethod]
-		public void Apply_IfArithmeticLogic_LessThan_True()
+		public void Render_IfArithmeticLogic_LessThan_True()
 		{
 			var template = new Template(@"
 				@{ if A < 23 }
@@ -76,7 +76,7 @@ namespace Quokka.Tests
 				@{ end if }
 			");
 
-			var result = template.Apply(
+			var result = template.Render(
 				new CompositeModelValue(
 					new ModelField("A", 22)));
 
@@ -90,7 +90,7 @@ namespace Quokka.Tests
 		}
 
 		[TestMethod]
-		public void Apply_IfArithmeticLogic_LessThan_FalseBeсauseMore()
+		public void Render_IfArithmeticLogic_LessThan_FalseBeсauseMore()
 		{
 			var template = new Template(@"
 				@{ if A < 23 }
@@ -98,7 +98,7 @@ namespace Quokka.Tests
 				@{ end if }
 			");
 
-			var result = template.Apply(
+			var result = template.Render(
 				new CompositeModelValue(
 					new ModelField("A", 24)));
 
@@ -110,7 +110,7 @@ namespace Quokka.Tests
 		}
 
 		[TestMethod]
-		public void Apply_IfArithmeticLogic_LessThan_FalseBeсauseEquals()
+		public void Render_IfArithmeticLogic_LessThan_FalseBeсauseEquals()
 		{
 			var template = new Template(@"
 				@{ if A < 23 }
@@ -118,7 +118,7 @@ namespace Quokka.Tests
 				@{ end if }
 			");
 
-			var result = template.Apply(
+			var result = template.Render(
 				new CompositeModelValue(
 					new ModelField("A", 23)));
 
@@ -130,7 +130,7 @@ namespace Quokka.Tests
 		}
 
 		[TestMethod]
-		public void Apply_IfArithmeticLogic_Equals_True()
+		public void Render_IfArithmeticLogic_Equals_True()
 		{
 			var template = new Template(@"
 				@{ if A = 2323 }
@@ -138,7 +138,7 @@ namespace Quokka.Tests
 				@{ end if }
 			");
 
-			var result = template.Apply(
+			var result = template.Render(
 				new CompositeModelValue(
 					new ModelField("A", 2323)));
 
@@ -152,7 +152,7 @@ namespace Quokka.Tests
 		}
 
 		[TestMethod]
-		public void Apply_IfArithmeticLogic_Equals_FalseBeсauseMore()
+		public void Render_IfArithmeticLogic_Equals_FalseBeсauseMore()
 		{
 			var template = new Template(@"
 				@{ if A = 2323 }
@@ -160,7 +160,7 @@ namespace Quokka.Tests
 				@{ end if }
 			");
 
-			var result = template.Apply(
+			var result = template.Render(
 				new CompositeModelValue(
 					new ModelField("A", 2324)));
 
@@ -172,7 +172,7 @@ namespace Quokka.Tests
 		}
 
 		[TestMethod]
-		public void Apply_IfArithmeticLogic_Equals_FalseBeсauseLess()
+		public void Render_IfArithmeticLogic_Equals_FalseBeсauseLess()
 		{
 			var template = new Template(@"
 				@{ if A = 2323 }
@@ -180,7 +180,7 @@ namespace Quokka.Tests
 				@{ end if }
 			");
 
-			var result = template.Apply(
+			var result = template.Render(
 				new CompositeModelValue(
 					new ModelField("A", 2322)));
 
@@ -192,7 +192,7 @@ namespace Quokka.Tests
 		}
 
 		[TestMethod]
-		public void Apply_IfArithmeticLogic_Equals_True_Precision()
+		public void Render_IfArithmeticLogic_Equals_True_Precision()
 		{
 			var template = new Template(@"
 				@{ if (3 / 7) = (9000000 / 21000001) }
@@ -200,7 +200,7 @@ namespace Quokka.Tests
 				@{ end if }
 			");
 
-			var result = template.Apply(
+			var result = template.Render(
 				new CompositeModelValue());
 
 			var expected = @"
@@ -213,7 +213,7 @@ namespace Quokka.Tests
 		}
 
 		[TestMethod]
-		public void Apply_IfArithmeticLogic_NotEquals_FalseBecauseEquals()
+		public void Render_IfArithmeticLogic_NotEquals_FalseBecauseEquals()
 		{
 			var template = new Template(@"
 				@{ if A != 90 }
@@ -221,7 +221,7 @@ namespace Quokka.Tests
 				@{ end if }
 			");
 
-			var result = template.Apply(
+			var result = template.Render(
 				new CompositeModelValue(
 					new ModelField("A", 90)));
 
@@ -233,7 +233,7 @@ namespace Quokka.Tests
 		}
 
 		[TestMethod]
-		public void Apply_IfArithmeticLogic_NotEquals_TrueBeсauseMore()
+		public void Render_IfArithmeticLogic_NotEquals_TrueBeсauseMore()
 		{
 			var template = new Template(@"
 				@{ if A != 90 }
@@ -241,7 +241,7 @@ namespace Quokka.Tests
 				@{ end if }
 			");
 
-			var result = template.Apply(
+			var result = template.Render(
 				new CompositeModelValue(
 					new ModelField("A", 2324)));
 
@@ -255,7 +255,7 @@ namespace Quokka.Tests
 		}
 
 		[TestMethod]
-		public void Apply_IfArithmeticLogic_NotEquals_TrueBeсauseLess()
+		public void Render_IfArithmeticLogic_NotEquals_TrueBeсauseLess()
 		{
 			var template = new Template(@"
 				@{ if A != 90 }
@@ -263,7 +263,7 @@ namespace Quokka.Tests
 				@{ end if }
 			");
 
-			var result = template.Apply(
+			var result = template.Render(
 				new CompositeModelValue(
 					new ModelField("A", 2322)));
 
@@ -277,7 +277,7 @@ namespace Quokka.Tests
 		}
 
 		[TestMethod]
-		public void Apply_IfArithmeticLogic_LessThanOrEquals_TrueBecauseLess()
+		public void Render_IfArithmeticLogic_LessThanOrEquals_TrueBecauseLess()
 		{
 			var template = new Template(@"
 				@{ if A <= 23 }
@@ -285,7 +285,7 @@ namespace Quokka.Tests
 				@{ end if }
 			");
 
-			var result = template.Apply(
+			var result = template.Render(
 				new CompositeModelValue(
 					new ModelField("A", 22)));
 
@@ -299,7 +299,7 @@ namespace Quokka.Tests
 		}
 
 		[TestMethod]
-		public void Apply_IfArithmeticLogic_LessThanOrEquals_TrueBecauseEquals()
+		public void Render_IfArithmeticLogic_LessThanOrEquals_TrueBecauseEquals()
 		{
             var template = new Template(@"
 				@{ if A <= 23 }
@@ -307,7 +307,7 @@ namespace Quokka.Tests
 				@{ end if }
 			");
 
-			var result = template.Apply(
+			var result = template.Render(
 				new CompositeModelValue(
 					new ModelField("A", 23)));
 
@@ -321,7 +321,7 @@ namespace Quokka.Tests
 		}
 
 		[TestMethod]
-		public void Apply_IfArithmeticLogic_LessThanOrEquals_False()
+		public void Render_IfArithmeticLogic_LessThanOrEquals_False()
 		{
 			var template = new Template(@"
 				@{ if A <= 23 }
@@ -329,7 +329,7 @@ namespace Quokka.Tests
 				@{ end if }
 			");
 
-			var result = template.Apply(
+			var result = template.Render(
 				new CompositeModelValue(
 					new ModelField("A", 24)));
 
@@ -341,7 +341,7 @@ namespace Quokka.Tests
 		}
 
 		[TestMethod]
-		public void Apply_IfArithmeticLogic_MoreThanOrEquals_TrueBecauseMore()
+		public void Render_IfArithmeticLogic_MoreThanOrEquals_TrueBecauseMore()
 		{
 			var template = new Template(@"
 				@{ if A >= 23 }
@@ -349,7 +349,7 @@ namespace Quokka.Tests
 				@{ end if }
 			");
 
-			var result = template.Apply(
+			var result = template.Render(
 				new CompositeModelValue(
 					new ModelField("A", 24)));
 
@@ -363,7 +363,7 @@ namespace Quokka.Tests
 		}
 
 		[TestMethod]
-		public void Apply_IfArithmeticLogic_MoreThanOrEquals_TrueBecauseEquals()
+		public void Render_IfArithmeticLogic_MoreThanOrEquals_TrueBecauseEquals()
 		{
 			var template = new Template(@"
 				@{ if A >= 23 }
@@ -371,7 +371,7 @@ namespace Quokka.Tests
 				@{ end if }
 			");
 
-			var result = template.Apply(
+			var result = template.Render(
 				new CompositeModelValue(
 					new ModelField("A", 23)));
 
@@ -385,7 +385,7 @@ namespace Quokka.Tests
 		}
 
 		[TestMethod]
-		public void Apply_IfArithmeticLogic_MoreThanOrEquals_False()
+		public void Render_IfArithmeticLogic_MoreThanOrEquals_False()
 		{
 			var template = new Template(@"
 				@{ if A >= 23 }
@@ -393,7 +393,7 @@ namespace Quokka.Tests
 				@{ end if }
 			");
 
-			var result = template.Apply(
+			var result = template.Render(
 				new CompositeModelValue(
 					new ModelField("A", 22)));
 
@@ -405,7 +405,7 @@ namespace Quokka.Tests
 		}
 
 		[TestMethod]
-		public void Apply_IfArithmeticLogic_ComplexExpression()
+		public void Render_IfArithmeticLogic_ComplexExpression()
 		{
 			// A smoke test
 			var template = new Template(@"
@@ -414,7 +414,7 @@ namespace Quokka.Tests
 				@{ end if }
 			");
 
-			var result = template.Apply(
+			var result = template.Render(
 				new CompositeModelValue(
 					new ModelField("A",
 						new CompositeModelValue(

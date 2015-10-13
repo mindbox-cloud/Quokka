@@ -63,7 +63,7 @@ namespace Quokka
 			return externalModelDefinition;
 		}
 
-		public string Apply(ICompositeModelValue model)
+		public string Render(ICompositeModelValue model)
 		{
 			if (model == null)
 				throw new ArgumentNullException(nameof(model));

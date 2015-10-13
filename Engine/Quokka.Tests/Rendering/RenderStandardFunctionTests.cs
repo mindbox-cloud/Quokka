@@ -1,52 +1,47 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Quokka.Tests
 {
 	[TestClass]
-	public class ApplyStandardFunctionTests
+	public class RenderStandardFunctionTests
 	{
 		[TestMethod]
-		public void Apply_Function_ReplaceIfEmpty_FirstOptionNotEmpty()
+		public void Render_Function_ReplaceIfEmpty_FirstOptionNotEmpty()
 		{
 			var template = new Template("${ replaceIfEmpty(\"Marilyn\", \"Keira\") }");
 
-			var result = template.Apply(new CompositeModelValue());
+			var result = template.Render(new CompositeModelValue());
 
 			Assert.AreEqual("Marilyn", result);
 		}
 
 		[TestMethod]
-		public void Apply_Function_ReplaceIfEmpty_FirstOptionEmpty()
+		public void Render_Function_ReplaceIfEmpty_FirstOptionEmpty()
 		{
 			var template = new Template("${ replaceIfEmpty(\"\", \"Keira\") }");
 
-			var result = template.Apply(new CompositeModelValue());
+			var result = template.Render(new CompositeModelValue());
 
 			Assert.AreEqual("Keira", result);
 		}
 		
 		[TestMethod]
-		public void Apply_Function_ReplaceIfEmpty_FirstOptionWhiteSpace()
+		public void Render_Function_ReplaceIfEmpty_FirstOptionWhiteSpace()
 		{
 			var template = new Template("${ replaceIfEmpty(\"  \", \"Keira\") }");
 
-			var result = template.Apply(new CompositeModelValue());
+			var result = template.Render(new CompositeModelValue());
 
 			Assert.AreEqual("Keira", result);
 		}
 
 		[TestMethod]
-		public void Apply_Function_ReplaceIfEmpty_FirstOptionNonEmptyParameter()
+		public void Render_Function_ReplaceIfEmpty_FirstOptionNonEmptyParameter()
 		{
 			var template = new Template("${ replaceIfEmpty($Value1, $Value2) }");
 
-			var result = template.Apply(
+			var result = template.Render(
 				new CompositeModelValue(
 					new ModelField("Value1", new PrimitiveModelValue("Plan A")),
 					new ModelField("Value2", new PrimitiveModelValue("Plan B"))));
@@ -55,11 +50,11 @@ namespace Quokka.Tests
 		}
 
 		[TestMethod]
-		public void Apply_Function_ReplaceIfEmpty_FirstOptionEmptyParameter()
+		public void Render_Function_ReplaceIfEmpty_FirstOptionEmptyParameter()
 		{
 			var template = new Template("${ replaceIfEmpty($Value1, $Value2) }");
 
-			var result = template.Apply(
+			var result = template.Render(
 				new CompositeModelValue(
 					new ModelField("Value1", new PrimitiveModelValue("")),
 					new ModelField("Value2", new PrimitiveModelValue("Plan B"))));
@@ -68,11 +63,11 @@ namespace Quokka.Tests
 		}
 
 		[TestMethod]
-		public void Apply_Function_FormatDecimal_CorrectFormat()
+		public void Render_Function_FormatDecimal_CorrectFormat()
 		{
 			var template = new Template("${ formatDecimal(Value, \"N2\") }");
 
-			var result = template.Apply(
+			var result = template.Render(
 				new CompositeModelValue(
 					new ModelField("Value", 2.53511m)));
 
@@ -80,11 +75,11 @@ namespace Quokka.Tests
 		}
 
 		[TestMethod]
-		public void Apply_Function_FormatDecimal_EmptyFormat()
+		public void Render_Function_FormatDecimal_EmptyFormat()
 		{
 			var template = new Template("${ formatDecimal(Value, \"\") }");
 
-			var result = template.Apply(
+			var result = template.Render(
 				new CompositeModelValue(
 					new ModelField("Value", 2.53511m)));
 
@@ -92,11 +87,11 @@ namespace Quokka.Tests
 		}
 
 		[TestMethod]
-		public void Apply_Function_FormatDateTime_CorrectFormat()
+		public void Render_Function_FormatDateTime_CorrectFormat()
 		{
 			var template = new Template("${ formatDateTime(Value, \"dd'.'MM'.'yy HH':'mm':'ss\") }");
 
-			var result = template.Apply(
+			var result = template.Render(
 				new CompositeModelValue(
 					new ModelField("Value", new DateTime(2015, 10, 12, 22, 55, 55))));
 
@@ -104,11 +99,11 @@ namespace Quokka.Tests
 		}
 
 		[TestMethod]
-		public void Apply_Function_FormatTime_CorrectFormat()
+		public void Render_Function_FormatTime_CorrectFormat()
 		{
 			var template = new Template("${ formatTime(Value, \"hh\\-mm\\-ss\") }");
 
-			var result = template.Apply(
+			var result = template.Render(
 				new CompositeModelValue(
 					new ModelField("Value", TimeSpan.FromMinutes(5))));
 
@@ -116,11 +111,11 @@ namespace Quokka.Tests
 		}
 
 		[TestMethod]
-		public void Apply_Function_If_ConditionIsTrue()
+		public void Render_Function_If_ConditionIsTrue()
 		{
 			var template = new Template("${ if(IsTest, \"test.example.com\", \"example.com\") }");
 
-			var result = template.Apply(
+			var result = template.Render(
 				new CompositeModelValue(
 					new ModelField("IsTest", true)));
 
@@ -128,11 +123,11 @@ namespace Quokka.Tests
 		}
 
 		[TestMethod]
-		public void Apply_Function_If_ConditionIsFalse()
+		public void Render_Function_If_ConditionIsFalse()
 		{
 			var template = new Template("${ if(IsTest, \"test.example.com\", \"example.com\") }");
 
-			var result = template.Apply(
+			var result = template.Render(
 				new CompositeModelValue(
 					new ModelField("IsTest", false)));
 
@@ -140,17 +135,17 @@ namespace Quokka.Tests
 		}
 
 		[TestMethod]
-		public void Apply_Function_CaseInsensitivity()
+		public void Render_Function_CaseInsensitivity()
 		{
 			var template = new Template("${ RePlAcEIFEMPTY(\"Marilyn\", \"Keira\") }");
 
-			var result = template.Apply(new CompositeModelValue());
+			var result = template.Render(new CompositeModelValue());
 
 			Assert.AreEqual("Marilyn", result);
 		}
 
 		[TestMethod]
-		public void Apply_Function_NestedIfs()
+		public void Render_Function_NestedIfs()
 		{
 			var template = new Template(@"
 				${ if (IsTest, 
@@ -160,7 +155,7 @@ namespace Quokka.Tests
 						""example.com"")) }
 				");
 
-			var result = template.Apply(
+			var result = template.Render(
 				new CompositeModelValue(
 					new ModelField("IsTest", false),
 					new ModelField("IsStaging", false)));
