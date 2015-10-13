@@ -12,9 +12,8 @@ namespace Quokka
 
 		public override IFunctionArgument VisitStringConstant(QuokkaParser.StringConstantContext context)
 		{
-			var quotedString = context.DoubleQuotedString().GetText();
 			return new StringArgument(
-				quotedString.Substring(1, quotedString.Length - 2),
+				context.Accept(StringConstantVisitor.Instance),
 				GetLocationFromToken(context.Start));
 		}
 
@@ -28,7 +27,7 @@ namespace Quokka
 		public override IFunctionArgument VisitFunctionCall(QuokkaParser.FunctionCallContext context)
 		{
 			return new FunctionCallArgument(
-				context.Accept(FunctionCallVisitor.Instance),
+				context.Accept(new FunctionCallVisitor()),
 				GetLocationFromToken(context.Start));
 		}
 

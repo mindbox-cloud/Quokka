@@ -110,6 +110,7 @@
     <Compile Include="Templating\Nodes\Boolean\TrueExpression.cs" />
     <Compile Include="Templating\Nodes\ConditionBlock.cs" />
     <Compile Include="Templating\Nodes\ForBlock.cs" />
+    <Compile Include="Templating\Nodes\Output\BooleanExpressionOutputBlock.cs" />
     <Compile Include="Templating\Nodes\Output\FunctionCallOutputBlock.cs" />
     <Compile Include="Templating\Nodes\Functions\ArithmeticArgument.cs" />
     <Compile Include="Templating\Nodes\Functions\BooleanArgument.cs" />
@@ -121,7 +122,9 @@
     <Compile Include="Templating\Nodes\Functions\StringArgument.cs" />
     <Compile Include="Templating\Nodes\IfBlock.cs" />
     <Compile Include="Templating\Nodes\Output\IOutputBlock.cs" />
+    <Compile Include="Templating\Nodes\Output\StringConstantOutputBlock.cs" />
     <Compile Include="Templating\Nodes\Output\VariableOutputBlock.cs" />
+    <Compile Include="Templating\Nodes\OutputBlock.cs" />
     <Compile Include="Templating\Values\RuntimeVariableScope.cs" />
     <Compile Include="Templating\Values\VariableValueStorage.cs" />
     <Compile Include="Templating\Variables\CompilationVariableScope.cs" />
@@ -141,11 +144,13 @@
     <Compile Include="Templating\Visitors\ArithmeticExpressionVisitor.cs" />
     <Compile Include="Templating\Visitors\BooleanExpressionVisitor.cs" />
     <Compile Include="Templating\Visitors\ConditionsVisitor.cs" />
+    <Compile Include="Templating\Visitors\FilterChainVisitor.cs" />
     <Compile Include="Templating\Visitors\FunctionCallVisitor.cs" />
     <Compile Include="Templating\Visitors\MultiplicativeExpressionVisitor.cs" />
     <Compile Include="Templating\Visitors\FunctionArgumentsVisitor.cs" />
     <Compile Include="Templating\Visitors\OutputVisitor.cs" />
     <Compile Include="Templating\Visitors\RootTemplateVisitor.cs" />
+    <Compile Include="Templating\Visitors\StringConstantVisitor.cs" />
     <Compile Include="Templating\Visitors\VariableVisitor.cs" />
     <Compile Include="Templating\Visitors\TemplateVisitor.cs" />
   </ItemGroup>

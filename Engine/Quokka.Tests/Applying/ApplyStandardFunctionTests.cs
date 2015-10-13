@@ -138,5 +138,38 @@ namespace Quokka.Tests
 
 			Assert.AreEqual("example.com", result);
 		}
+
+		[TestMethod]
+		public void Apply_Function_CaseInsensitivity()
+		{
+			var template = new Template("${ RePlAcEIFEMPTY(\"Marilyn\", \"Keira\") }");
+
+			var result = template.Apply(new CompositeModelValue());
+
+			Assert.AreEqual("Marilyn", result);
+		}
+
+		[TestMethod]
+		public void Apply_Function_NestedIfs()
+		{
+			var template = new Template(@"
+				${ if (IsTest, 
+					""test.example.com"", 
+					if (IsStaging, 
+						""staging.example.com"", 
+						""example.com"")) }
+				");
+
+			var result = template.Apply(
+				new CompositeModelValue(
+					new ModelField("IsTest", false),
+					new ModelField("IsStaging", false)));
+
+			var expected = @"
+				example.com
+				";
+
+			Assert.AreEqual(expected, result);
+		}
 	}
 }

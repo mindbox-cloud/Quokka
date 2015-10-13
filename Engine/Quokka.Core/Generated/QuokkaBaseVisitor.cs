@@ -153,7 +153,7 @@ internal partial class QuokkaBaseVisitor<Result> : AbstractParseTreeVisitor<Resu
 	/// <return>The visitor result.</return>
 	public virtual Result VisitFunctionArgumentList([NotNull] QuokkaParser.FunctionArgumentListContext context) { return VisitChildren(context); }
 	/// <summary>
-	/// Visit a parse tree produced by <see cref="QuokkaParser.functionArgumentValue"/>.
+	/// Visit a parse tree produced by <see cref="QuokkaParser.expression"/>.
 	/// <para>
 	/// The default implementation returns the result of calling <see cref="AbstractParseTreeVisitor{Result}.VisitChildren(IRuleNode)"/>
 	/// on <paramref name="context"/>.
@@ -161,7 +161,7 @@ internal partial class QuokkaBaseVisitor<Result> : AbstractParseTreeVisitor<Resu
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
-	public virtual Result VisitFunctionArgumentValue([NotNull] QuokkaParser.FunctionArgumentValueContext context) { return VisitChildren(context); }
+	public virtual Result VisitExpression([NotNull] QuokkaParser.ExpressionContext context) { return VisitChildren(context); }
 	/// <summary>
 	/// Visit a parse tree produced by <see cref="QuokkaParser.stringConstant"/>.
 	/// <para>

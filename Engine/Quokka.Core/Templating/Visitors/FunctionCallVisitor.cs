@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Quokka.Generated;
 
@@ -6,10 +7,15 @@ namespace Quokka
 {
 	internal class FunctionCallVisitor : QuokkaBaseVisitor<FunctionCall>
 	{
-		public static FunctionCallVisitor Instance { get; } = new FunctionCallVisitor();
+		/// <summary>
+		/// First function argument that is passed to the function implicitly (used when functions are invoked
+		/// via filter chain).
+		/// </summary>
+		private readonly IFunctionArgument implicitlyPassedArgument;
 
-		private FunctionCallVisitor()
+		public FunctionCallVisitor(IFunctionArgument implicitlyPassedArgument = null)
 		{
+			this.implicitlyPassedArgument = implicitlyPassedArgument;
 		}
 
 		public override FunctionCall VisitFunctionCall(QuokkaParser.FunctionCallContext context)
@@ -18,11 +24,20 @@ namespace Quokka
 			if (functionNameToken == null)
 				throw new InvalidOperationException("No function name token found");
 
+			var arguments = new List<IFunctionArgument>();
+			if (implicitlyPassedArgument != null)
+				arguments.Add(implicitlyPassedArgument);
+
+			arguments.AddRange(
+				context
+					.functionArgumentList()
+					.expression()
+					.Select(argument => argument.Accept(FunctionArgumentVisitor.Instance)));
+
 			return new FunctionCall(
 				functionNameToken.GetText(),
 				GetLocationFromToken(functionNameToken.Symbol),
-				context.functionArgumentList().functionArgumentValue()
-					.Select(argument => argument.Accept(FunctionArgumentVisitor.Instance)));
+				arguments);
 		}
 	}
 }

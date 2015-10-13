@@ -29,7 +29,7 @@ constantBlock
 outputBlock
 	:
 		OutputInstructionStart
-		(parameterValueExpression | functionCall | arithmeticExpression)
+		expression
 		filterChain?
 		InstructionEnd
 	;
@@ -70,13 +70,13 @@ functionArgumentList
 	:	
 		LeftParen
 		(
-			functionArgumentValue
-			(CommaSeparator functionArgumentValue)*
+			expression
+			(CommaSeparator expression)*
 		)?		
 		RightParen
 	;
 
-functionArgumentValue
+expression
 	:
 		stringConstant
 		| parameterValueExpression 

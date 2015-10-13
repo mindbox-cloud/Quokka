@@ -103,11 +103,11 @@ internal interface IQuokkaVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <return>The visitor result.</return>
 	Result VisitFunctionArgumentList([NotNull] QuokkaParser.FunctionArgumentListContext context);
 	/// <summary>
-	/// Visit a parse tree produced by <see cref="QuokkaParser.functionArgumentValue"/>.
+	/// Visit a parse tree produced by <see cref="QuokkaParser.expression"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
-	Result VisitFunctionArgumentValue([NotNull] QuokkaParser.FunctionArgumentValueContext context);
+	Result VisitExpression([NotNull] QuokkaParser.ExpressionContext context);
 	/// <summary>
 	/// Visit a parse tree produced by <see cref="QuokkaParser.stringConstant"/>.
 	/// </summary>
