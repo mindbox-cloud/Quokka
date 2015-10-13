@@ -36,9 +36,9 @@ namespace Quokka
 			var collectionValue = (IEnumerable<VariableValueStorage>)context.VariableScope.GetVariableValue(collection);
 			foreach (var collectionElement in collectionValue)
 			{
-				var innerScope = new RuntimeVariableScope(
-					VariableValueStorage.CreateCompositeStorage(iterationVariable.Name, collectionElement),
-					context.VariableScope);
+				var innerScope =
+					context.VariableScope.CreateChildScope(
+						VariableValueStorage.CreateCompositeStorage(iterationVariable.Name, collectionElement));
 
 				block.Render(resultBuilder, new RenderContext(innerScope, context.Functions));
 			}

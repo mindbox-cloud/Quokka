@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Antlr4.Runtime;
@@ -8,49 +9,53 @@ namespace Quokka
 {
 	public sealed class Template
 	{
-		private readonly TemplateBlock rootBlock;
+		private readonly TemplateBlock compiledTemplateTree;
 		private readonly ICompositeModelDefinition externalModelDefinition;
 		private readonly FunctionRegistry functionRegistry;
+		
+		public IList<ITemplateError> Errors { get; }
 
-		public Template(string templateText)
+		internal Template(string templateText, FunctionRegistry functionRegistry, bool throwIfErrorsEncountered)
 		{
 			if (templateText == null)
 				throw new ArgumentNullException(nameof(templateText));
+			if (functionRegistry == null)
+				throw new ArgumentNullException(nameof(functionRegistry));
 
-			var inputStream = new AntlrInputStream(templateText);
-			var lexer = new QuokkaLex(inputStream);
-			var commonTokenStream = new CommonTokenStream(lexer);
-			var parser = new QuokkaParser(commonTokenStream);
+			this.functionRegistry = functionRegistry;
 
-			var compilationVisitor = new RootTemplateVisitor();
-			rootBlock = compilationVisitor.Visit(parser.template()) ?? TemplateBlock.Empty();
+			var syntaxErrorListener = new SyntaxErrorListener();
+			var semanticErrorListener = new SemanticErrorListener();
 
-			if (parser.NumberOfSyntaxErrors > 0)
-				throw new InvalidOperationException("Syntax errors in the template");
+			var templateParseTree = ParseTemplateText(templateText, syntaxErrorListener);
 
-			functionRegistry = new FunctionRegistry(new TemplateFunction[]
+			if (!syntaxErrorListener.GetErrors().Any())
 			{
-				new ToUpperTemplateFunction(),
-				new ToLowerTemplateFunction(),
-				new ReplaceIfEmptyTemplateFunction(),
-				new FormatDecimalTemplateFunction(),
-				new FormatDateTimeTemplateFunction(),
-				new FormatTimeTemplateFunction(),
-				new IfTemplateFunction()
-			});
+				compiledTemplateTree = new RootTemplateVisitor().Visit(templateParseTree) ?? TemplateBlock.Empty();
 
-			var scope = new CompilationVariableScope();
+				var analysisContext = new SemanticAnalysisContext
+					(new CompilationVariableScope(),
+					functionRegistry,
+					semanticErrorListener);
+				compiledTemplateTree.CompileVariableDefinitions(analysisContext);
+				externalModelDefinition = analysisContext.VariableScope.Variables.ToModelDefinition(semanticErrorListener);
+			}
 
-			var errorListener = new SemanticErrorListener();
-			rootBlock.CompileVariableDefinitions(new SemanticAnalysisContext(scope, functionRegistry, errorListener));
-			externalModelDefinition = scope.Variables.ToModelDefinition(errorListener);
+			Errors =
+				syntaxErrorListener.GetErrors()
+					.Concat(semanticErrorListener.GetErrors())
+					.ToList();
 
-			var errors = errorListener.GetErrors();
-			if (errors.Any())
+			if (throwIfErrorsEncountered && Errors.Any())
 				throw new InvalidOperationException(
 					string.Join(
 						Environment.NewLine,
-						errors.Select(error => error.Message)));
+						Errors.Select(error => error.Message)));
+		}
+		
+		public Template(string templateText)
+			: this(templateText, new FunctionRegistry(GetStandardFunctions()), true)
+		{
 		}
 
 		public ICompositeModelDefinition GetModelDefinition()
@@ -62,12 +67,37 @@ namespace Quokka
 		{
 			if (model == null)
 				throw new ArgumentNullException(nameof(model));
+			if (Errors.Any())
+				throw new InvalidOperationException("Can't render template because it contains errors");
 
 			var valueStorage = VariableValueStorage.CreateStorageForValue(model);
 			var builder = new StringBuilder();
 			var context = new RenderContext(new RuntimeVariableScope(valueStorage), functionRegistry);
-            rootBlock.Render(builder, context);
+            compiledTemplateTree.Render(builder, context);
 			return builder.ToString();
+		}
+
+		private QuokkaParser.TemplateContext ParseTemplateText(string templateText, SyntaxErrorListener syntaxErrorListener)
+		{
+			var inputStream = new AntlrInputStream(templateText);
+			var commonTokenStream = new CommonTokenStream(new QuokkaLex(inputStream));
+
+			var parser = new QuokkaParser(commonTokenStream);
+			parser.RemoveErrorListeners();
+			parser.AddErrorListener(syntaxErrorListener);
+
+			return parser.template();
+		}
+
+		internal static IEnumerable<TemplateFunction> GetStandardFunctions()
+		{
+			yield return new ToUpperTemplateFunction();
+			yield return new ToLowerTemplateFunction();
+			yield return new ReplaceIfEmptyTemplateFunction();
+			yield return new FormatDecimalTemplateFunction();
+			yield return new FormatDateTimeTemplateFunction();
+			yield return new FormatTimeTemplateFunction();
+			yield return new IfTemplateFunction();
 		}
 	}
 }

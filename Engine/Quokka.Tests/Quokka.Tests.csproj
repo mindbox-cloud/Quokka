@@ -59,6 +59,7 @@
     <Compile Include="Applying\ApplyIfBlockBooleanLogicTests.cs" />
     <Compile Include="Applying\ApplyParameterOutputTests.cs" />
     <Compile Include="Applying\ApplyStandardFunctionTests.cs" />
+    <Compile Include="Creating\TemplateFactoryTests.cs" />
     <Compile Include="Helpers\TemplateAssert.cs" />
     <Compile Include="ParameterDiscovery\ModelDiscoveryFunctionsTests.cs" />
     <Compile Include="ParameterDiscovery\ModelDiscoveryTests.cs" />

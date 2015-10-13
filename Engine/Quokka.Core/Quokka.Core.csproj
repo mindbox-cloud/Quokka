@@ -44,6 +44,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Errors\IErrorListener.cs" />
+    <Compile Include="Errors\SyntaxErrorListener.cs" />
     <Compile Include="Functions\FunctionRegistry.cs" />
     <Compile Include="Functions\Standard\FormatDateTimeTemplateFunction.cs" />
     <Compile Include="Functions\Standard\FormatTimeTemplateFunction.cs" />
@@ -58,6 +60,7 @@
     <Compile Include="Functions\TemplateFunction`3.cs" />
     <Compile Include="Functions\TemplateFunction`2.cs" />
     <Compile Include="Generated.Partials\QuokkaBaseVisitor.cs" />
+    <Compile Include="ITemplateFactory.cs" />
     <Compile Include="Model\Definitions\ArrayModelDefinition.cs" />
     <Compile Include="Model\Definitions\CompositeModelDefinition.cs" />
     <Compile Include="Generated\QuokkaBaseVisitor.cs" />
@@ -89,6 +92,7 @@
     <Compile Include="Errors\SemanticErrorListener.cs" />
     <Compile Include="Errors\SyntaxError.cs" />
     <Compile Include="Errors\TemplateErrorBase.cs" />
+    <Compile Include="TemplateFactory.cs" />
     <Compile Include="Templating\Nodes\Output\ArithmeticExpressionOutputBlock.cs" />
     <Compile Include="Templating\Nodes\Arithmetic\AdditionExpression.cs" />
     <Compile Include="Templating\Nodes\Arithmetic\ArithmeticExpressionBase.cs" />

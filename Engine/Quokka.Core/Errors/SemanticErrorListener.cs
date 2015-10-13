@@ -11,7 +11,7 @@ namespace Quokka
 			errors.Add(error);
 		}
 
-		public IReadOnlyCollection<SemanticError> GetErrors()
+		public IReadOnlyCollection<ITemplateError> GetErrors()
 		{
 			return errors.AsReadOnly();
 		} 

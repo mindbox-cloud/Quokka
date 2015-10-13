@@ -1,8 +1,6 @@
-using System.Collections.Generic;
-
 namespace Quokka
 {
-	internal interface ISemanticErrorListener
+	internal interface ISemanticErrorListener : IErrorListener
 	{
 		void AddInconsistentVariableTypingError(
 			VariableDefinition definition,
@@ -18,7 +16,5 @@ namespace Quokka
 			string argumentName,
 			string message,
 			Location location);
-
-		IReadOnlyCollection<SemanticError> GetErrors();
 	}
 }

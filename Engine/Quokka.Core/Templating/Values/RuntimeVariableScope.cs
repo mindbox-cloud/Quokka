@@ -7,13 +7,23 @@ namespace Quokka
 		private readonly RuntimeVariableScope parentScope;
 		private readonly VariableValueStorage valueStorage;
 
-		public RuntimeVariableScope(VariableValueStorage valueStorage, RuntimeVariableScope parentScope = null)
+		public RuntimeVariableScope(VariableValueStorage valueStorage)
+			:this(valueStorage, null)
+		{
+		}
+
+		private RuntimeVariableScope(VariableValueStorage valueStorage, RuntimeVariableScope parentScope)
 		{
 			if (valueStorage == null)
 				throw new ArgumentNullException(nameof(valueStorage));
 
 			this.valueStorage = valueStorage;
 			this.parentScope = parentScope;
+		}
+
+		public RuntimeVariableScope CreateChildScope(VariableValueStorage valueStorage)
+		{
+			return new RuntimeVariableScope(valueStorage, this);
 		}
 
 		public object GetVariableValue(VariableOccurence variableOccurence)
