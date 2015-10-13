@@ -24,33 +24,40 @@ namespace Quokka
 
 			this.functionRegistry = functionRegistry;
 
-			var syntaxErrorListener = new SyntaxErrorListener();
-			var semanticErrorListener = new SemanticErrorListener();
-
-			var templateParseTree = ParseTemplateText(templateText, syntaxErrorListener);
-
-			if (!syntaxErrorListener.GetErrors().Any())
+			try
 			{
-				compiledTemplateTree = new RootTemplateVisitor().Visit(templateParseTree) ?? TemplateBlock.Empty();
+				var syntaxErrorListener = new SyntaxErrorListener();
+				var semanticErrorListener = new SemanticErrorListener();
 
-				var analysisContext = new SemanticAnalysisContext
-					(new CompilationVariableScope(),
-					functionRegistry,
-					semanticErrorListener);
-				compiledTemplateTree.CompileVariableDefinitions(analysisContext);
-				externalModelDefinition = analysisContext.VariableScope.Variables.ToModelDefinition(semanticErrorListener);
+				var templateParseTree = ParseTemplateText(templateText, syntaxErrorListener);
+
+				if (!syntaxErrorListener.GetErrors().Any())
+				{
+					compiledTemplateTree = new RootTemplateVisitor().Visit(templateParseTree) ?? TemplateBlock.Empty();
+
+					var analysisContext = new SemanticAnalysisContext
+						(new CompilationVariableScope(),
+						functionRegistry,
+						semanticErrorListener);
+					compiledTemplateTree.CompileVariableDefinitions(analysisContext);
+					externalModelDefinition = analysisContext.VariableScope.Variables.ToModelDefinition(semanticErrorListener);
+				}
+
+				Errors =
+					syntaxErrorListener.GetErrors()
+						.Concat(semanticErrorListener.GetErrors())
+						.ToList();
+
+				if (throwIfErrorsEncountered && Errors.Any())
+					throw new TemplateContainsErrorsException(Errors);
 			}
+			catch (Exception ex)
+			{
+				if (ex is TemplateException)
+					throw;
 
-			Errors =
-				syntaxErrorListener.GetErrors()
-					.Concat(semanticErrorListener.GetErrors())
-					.ToList();
-
-			if (throwIfErrorsEncountered && Errors.Any())
-				throw new InvalidOperationException(
-					string.Join(
-						Environment.NewLine,
-						Errors.Select(error => error.Message)));
+				throw new TemplateException("Unexpected errors occured during template creation", ex);
+			}
 		}
 		
 		public Template(string templateText)
@@ -68,13 +75,20 @@ namespace Quokka
 			if (model == null)
 				throw new ArgumentNullException(nameof(model));
 			if (Errors.Any())
-				throw new InvalidOperationException("Can't render template because it contains errors");
+				throw new TemplateContainsErrorsException(Errors);
 
-			var valueStorage = VariableValueStorage.CreateStorageForValue(model);
-			var builder = new StringBuilder();
-			var context = new RenderContext(new RuntimeVariableScope(valueStorage), functionRegistry);
-            compiledTemplateTree.Render(builder, context);
-			return builder.ToString();
+			try
+			{
+				var valueStorage = VariableValueStorage.CreateStorageForValue(model);
+				var builder = new StringBuilder();
+				var context = new RenderContext(new RuntimeVariableScope(valueStorage), functionRegistry);
+				compiledTemplateTree.Render(builder, context);
+				return builder.ToString();
+			}
+			catch (Exception ex)
+			{
+				throw new TemplateException("Unexpected errors occured during template rendering", ex);
+			}
 		}
 
 		private QuokkaParser.TemplateContext ParseTemplateText(string templateText, SyntaxErrorListener syntaxErrorListener)

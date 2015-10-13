@@ -46,6 +46,8 @@
   <ItemGroup>
     <Compile Include="Errors\IErrorListener.cs" />
     <Compile Include="Errors\SyntaxErrorListener.cs" />
+    <Compile Include="Exceptions\TemplateContainsErrorsException.cs" />
+    <Compile Include="Exceptions\TemplateException.cs" />
     <Compile Include="Functions\FunctionRegistry.cs" />
     <Compile Include="Functions\Standard\FormatDateTimeTemplateFunction.cs" />
     <Compile Include="Functions\Standard\FormatTimeTemplateFunction.cs" />

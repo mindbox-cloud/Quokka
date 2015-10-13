@@ -21,7 +21,7 @@ namespace Quokka.Tests
 		}
 
 		[TestMethod]
-		[ExpectedException(typeof(InvalidOperationException))]
+		[ExpectedException(typeof(TemplateContainsErrorsException))]
 		public void TemplateFactory_Create_Error()
 		{
 			new TemplateFactory().CreateTemplate("${");
