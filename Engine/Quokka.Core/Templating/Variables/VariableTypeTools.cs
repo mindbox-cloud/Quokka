@@ -23,5 +23,24 @@ namespace Quokka
 			throw new InvalidOperationException(
 				$"Runtime type {runtimeType.Name} doesn't have a corresponding template variable type");
 		}
+
+		// TODO: This needs to be rewritten to be an object hierarchy
+		public static bool IsTypeCompatibleWithRequired(VariableType actualType, VariableType requiredType)
+		{
+			if (requiredType == VariableType.Unknown)
+				return true;
+
+			if (requiredType == VariableType.Primitive)
+			{
+				return actualType == VariableType.Boolean ||
+						actualType == VariableType.DateTime ||
+						actualType == VariableType.Decimal ||
+						actualType == VariableType.Integer ||
+						actualType == VariableType.String ||
+						actualType == VariableType.TimeSpan;
+			}
+
+			return actualType == requiredType;
+		}
 	}
 }

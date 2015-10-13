@@ -10,7 +10,7 @@ namespace Quokka
 	public sealed class Template
 	{
 		private readonly TemplateBlock compiledTemplateTree;
-		private readonly ICompositeModelDefinition externalModelDefinition;
+		private readonly ICompositeModelDefinition requiredModelDefinition;
 		private readonly FunctionRegistry functionRegistry;
 		
 		public IList<ITemplateError> Errors { get; }
@@ -40,7 +40,7 @@ namespace Quokka
 						functionRegistry,
 						semanticErrorListener);
 					compiledTemplateTree.CompileVariableDefinitions(analysisContext);
-					externalModelDefinition = analysisContext.VariableScope.Variables.ToModelDefinition(semanticErrorListener);
+					requiredModelDefinition = analysisContext.VariableScope.Variables.ToModelDefinition(semanticErrorListener);
 				}
 
 				Errors =
@@ -67,7 +67,7 @@ namespace Quokka
 
 		public ICompositeModelDefinition GetModelDefinition()
 		{
-			return externalModelDefinition;
+			return requiredModelDefinition;
 		}
 
 		public string Render(ICompositeModelValue model)
@@ -79,6 +79,8 @@ namespace Quokka
 
 			try
 			{
+				new ModelValidator().ValidateModel(model, requiredModelDefinition);
+
 				var valueStorage = VariableValueStorage.CreateStorageForValue(model);
 				var builder = new StringBuilder();
 				var context = new RenderContext(new RuntimeVariableScope(valueStorage), functionRegistry);
@@ -87,6 +89,9 @@ namespace Quokka
 			}
 			catch (Exception ex)
 			{
+				if (ex is TemplateException)
+					throw;
+
 				throw new TemplateException("Unexpected errors occured during template rendering", ex);
 			}
 		}
