@@ -6,9 +6,9 @@ namespace Quokka
 {
 	internal class VariableVisitor : QuokkaBaseVisitor<VariableOccurence>
 	{
-		private readonly VariableType requiredVariableExpressionType;
+		private readonly TypeDefinition requiredVariableExpressionType;
 
-		public VariableVisitor(VariableType requiredVariableExpressionType)
+		public VariableVisitor(TypeDefinition requiredVariableExpressionType)
 		{
 			this.requiredVariableExpressionType = requiredVariableExpressionType;
 		}
@@ -23,7 +23,7 @@ namespace Quokka
 				GetLocationFromToken(identifier.Symbol),
 				member == null
 					? requiredVariableExpressionType
-					: VariableType.Composite,
+					: TypeDefinition.Composite,
 				member);
 		}
 
@@ -37,7 +37,7 @@ namespace Quokka
 				GetLocationFromToken(identifier.Symbol),
                 subMember == null 
 					? requiredVariableExpressionType
-					: VariableType.Composite,
+					: TypeDefinition.Composite,
 				subMember);
 		}
 	}

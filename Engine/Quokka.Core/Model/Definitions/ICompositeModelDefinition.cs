@@ -4,6 +4,6 @@ namespace Quokka
 {
 	public interface ICompositeModelDefinition : IModelDefinition
 	{
-		IDictionary<string, IModelDefinition> Fields { get; }
+		IReadOnlyDictionary<string, IModelDefinition> Fields { get; }
 	}
 }

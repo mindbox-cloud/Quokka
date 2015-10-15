@@ -10,10 +10,10 @@
 			Name = name;
 			Value = value;
 		}
-
-		public ModelField(string name, object primitiveValue)
-			: this(name, new PrimitiveModelValue(primitiveValue))
+		
+		public ModelField Primitive<TValue>(string name, TValue value)
 		{
+			return new ModelField(name, new PrimitiveModelValue<TValue>(value));
 		}
 	}
 }

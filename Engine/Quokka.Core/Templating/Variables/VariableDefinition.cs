@@ -65,7 +65,7 @@ namespace Quokka
 			collectionElementVariables.Add(collectionElementVariable);
 		}
 
-		public VariableType DetermineType(ISemanticErrorListener errorListener)
+		public TypeDefinition DetermineType(ISemanticErrorListener errorListener)
 		{
 			if (!occurences.Any())
 				throw new InvalidOperationException("Variable has no occurences");
@@ -74,9 +74,9 @@ namespace Quokka
 				return occurences.Single().RequiredType;
 
 			var occurencesByTypePriority = occurences
-				.OrderByDescending(oc => (int)oc.RequiredType);
+				.OrderByDescending(oc => oc.RequiredType.Priority);
 
-			VariableType? resultingType = null;
+			TypeDefinition resultingType = null;
 
 			foreach (var occurence in occurencesByTypePriority)
 			{
@@ -88,50 +88,46 @@ namespace Quokka
 				{
 					if (occurence.RequiredType != resultingType)
 					{
-						if (!IsTypeCompatibleWithAnotherType(occurence.RequiredType, resultingType.Value))
+						if (!resultingType.IsCompatibleWithRequired(occurence.RequiredType))
 						{
 							errorListener.AddInconsistentVariableTypingError(
 								this,
 								occurence,
-								resultingType.Value);
+								resultingType);
 						}
 					}
 				}
 			}
 
-			return resultingType.Value;
+			return resultingType;
 		}
 
-		private bool IsTypeCompatibleWithAnotherType(VariableType typeA, VariableType typeB)
-		{
-			// todo: implement the correct logic
-			return typeA == VariableType.Unknown;
-		}
-
-		public IModelDefinition ToModelDefinition(ISemanticErrorListener errorListener)
+		public IModelDefinition ToModelDefinition(IModelDefinitionFactory modelDefinitionFactory, ISemanticErrorListener errorListener)
 		{
 			var type = DetermineType(errorListener);
-			switch (type)
+
+			if (type == TypeDefinition.Composite)
 			{
-				case VariableType.Composite:
-					return Fields.ToModelDefinition(errorListener);
-
-				case VariableType.Array:
-					if (!collectionElementVariables.Any())
-						throw new InvalidOperationException(
-							"The variable is of an array type but no collection variables found");
-
-					var collectionElementDefinition = Merge(
-						"Element",
-						$"{FullName}[]",
-						collectionElementVariables.ToList());
-					
-					return new ArrayModelDefinition(
-						collectionElementDefinition.ToModelDefinition(errorListener));
-
-				default:
-					return new PrimitiveModelDefinition(type);
+				return Fields.ToModelDefinition(modelDefinitionFactory, errorListener);
 			}
+			else if (type == TypeDefinition.Array)
+			{
+				if (!collectionElementVariables.Any())
+				{
+					throw new InvalidOperationException(
+						"The variable is of an array type but no collection variables found");
+				}
+
+				var collectionElementDefinition = Merge(
+					"Element",
+					$"{FullName}[]",
+					collectionElementVariables.ToList());
+
+				return modelDefinitionFactory.CreateArray(
+					collectionElementDefinition.ToModelDefinition(modelDefinitionFactory, errorListener));
+			}
+			else
+				return modelDefinitionFactory.CreatePrimitive(type);
 		}
 
 		public static VariableDefinition Merge(string resultName, string resultFullName, IList<VariableDefinition> definitions)

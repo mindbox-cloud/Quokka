@@ -19,7 +19,7 @@ namespace Quokka
 		public void AddInconsistentVariableTypingError(
 			VariableDefinition definition,
 			VariableOccurence faultyOccurence,
-			VariableType correctType)
+			TypeDefinition correctType)
 		{
 			AddError(new SemanticError(
 				$"Параметр \"{definition.FullName}\" не может использоваться как {faultyOccurence.RequiredType}, " +

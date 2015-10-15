@@ -2,6 +2,6 @@
 {
 	public interface IPrimitiveModelValue : IModelValue
 	{
-		object Value { get; }
+		bool TryGetValue<TValue>(out TValue value);
 	}
 }

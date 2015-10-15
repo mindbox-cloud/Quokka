@@ -12,10 +12,15 @@ namespace Quokka
 		private readonly TemplateBlock compiledTemplateTree;
 		private readonly ICompositeModelDefinition requiredModelDefinition;
 		private readonly FunctionRegistry functionRegistry;
+		private readonly IModelDefinitionFactory modelDefinitionFactory;
 		
 		public IList<ITemplateError> Errors { get; }
 
-		internal Template(string templateText, FunctionRegistry functionRegistry, bool throwIfErrorsEncountered)
+		internal Template(
+			string templateText,
+			FunctionRegistry functionRegistry,
+			IModelDefinitionFactory modelDefinitionFactory = null,
+            bool throwIfErrorsEncountered = true)
 		{
 			if (templateText == null)
 				throw new ArgumentNullException(nameof(templateText));
@@ -23,6 +28,7 @@ namespace Quokka
 				throw new ArgumentNullException(nameof(functionRegistry));
 
 			this.functionRegistry = functionRegistry;
+			this.modelDefinitionFactory = modelDefinitionFactory;
 
 			try
 			{
@@ -40,7 +46,9 @@ namespace Quokka
 						functionRegistry,
 						semanticErrorListener);
 					compiledTemplateTree.CompileVariableDefinitions(analysisContext);
-					requiredModelDefinition = analysisContext.VariableScope.Variables.ToModelDefinition(semanticErrorListener);
+					requiredModelDefinition = analysisContext.VariableScope.Variables.ToModelDefinition(
+						modelDefinitionFactory,
+                        semanticErrorListener);
 				}
 
 				Errors =
@@ -61,7 +69,7 @@ namespace Quokka
 		}
 		
 		public Template(string templateText)
-			: this(templateText, new FunctionRegistry(GetStandardFunctions()), true)
+			: this(templateText, new FunctionRegistry(GetStandardFunctions()), new ModelDefinitionFactory(), true)
 		{
 		}
 

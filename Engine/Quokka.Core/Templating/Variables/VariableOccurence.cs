@@ -6,7 +6,7 @@ namespace Quokka
 	{
 		public string Name { get; }
 		public Location Location { get; }
-		public VariableType RequiredType { get; }
+		public TypeDefinition RequiredType { get; }
 		public VariableOccurence Member { get; }
 
 		/// <summary>
@@ -15,7 +15,7 @@ namespace Quokka
 		/// </summary>
 		public virtual bool IsExternal => true;
 
-		public VariableOccurence(string name, Location location, VariableType requiredType, VariableOccurence member)
+		public VariableOccurence(string name, Location location, TypeDefinition requiredType, VariableOccurence member)
 		{ 
 			Name = name;
 			Location = location;
@@ -30,11 +30,11 @@ namespace Quokka
 			return Member == null ? this : Member.GetLeafMember();
 		}
 
-		public virtual VariableOccurence CloneWithSpecificLeafType(VariableType leafMemberType)
+		public virtual VariableOccurence CloneWithSpecificLeafType(TypeDefinition leafMemberType)
 		{
 			if (Member == null)
 			{
-				if (RequiredType != VariableType.Primitive)
+				if (RequiredType != TypeDefinition.Primitive)
 					throw new InvalidOperationException("Trying to redefine a type of a variable with known concrete type");
 
 				return new VariableOccurence(Name, Location, leafMemberType, null);

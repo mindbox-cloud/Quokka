@@ -2,9 +2,9 @@
 {
 	internal class PrimitiveModelDefinition : IPrimitiveModelDefinition
 	{
-		public VariableType Type { get; }
+		public TypeDefinition Type { get; }
 
-		public PrimitiveModelDefinition(VariableType type)
+		public PrimitiveModelDefinition(TypeDefinition type)
 		{
 			Type = type;
 		}

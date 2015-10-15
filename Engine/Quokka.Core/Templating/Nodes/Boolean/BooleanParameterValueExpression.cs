@@ -11,7 +11,7 @@
 
 		public override bool Evaluate(RenderContext renderContext)
 		{
-			var value = (bool)renderContext.VariableScope.GetVariableValue(variableOccurence);
+			var value = renderContext.VariableScope.GetVariableValue<bool>(variableOccurence);
 			return value;
 		}
 

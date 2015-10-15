@@ -27,10 +27,10 @@ namespace Quokka
 			{
 				// Even if the function doesn't exist we want to try and analyze arguments further so we don't miss 
 				// semantic errors that could be present there
-				VariableType requiredType = VariableType.Unknown;
+				TypeDefinition requiredType = TypeDefinition.Unknown;
 				if (function != null)
 				{
-					requiredType = VariableTypeTools.GetVariableTypeByRuntimeType(function.Arguments[i].RuntimeType);
+					requiredType = TypeDefinition.GetTypeDefinitionByRuntimeType(function.Arguments[i].RuntimeType);
 
 					object staticValue;
 					if (arguments[i].TryGetStaticValue(out staticValue))

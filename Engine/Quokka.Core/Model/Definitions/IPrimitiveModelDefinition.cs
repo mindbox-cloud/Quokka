@@ -2,6 +2,6 @@
 {
 	public interface IPrimitiveModelDefinition : IModelDefinition
 	{
-		 VariableType Type { get; }
+		 TypeDefinition Type { get; }
 	}
 }

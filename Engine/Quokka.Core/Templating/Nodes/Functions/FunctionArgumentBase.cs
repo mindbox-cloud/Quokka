@@ -9,7 +9,7 @@
 			Location = location;
 		}
 
-		public virtual void CompileVariableDefinitions(SemanticAnalysisContext context, VariableType requiredArgumentType)
+		public virtual void CompileVariableDefinitions(SemanticAnalysisContext context, TypeDefinition requiredArgumentType)
 		{
 		}
 

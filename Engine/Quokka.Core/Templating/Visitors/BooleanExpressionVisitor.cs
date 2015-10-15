@@ -32,7 +32,7 @@ namespace Quokka
 		public override IBooleanExpression VisitParameterValueExpression(QuokkaParser.ParameterValueExpressionContext context)
 		{
 			return new BooleanParameterValueExpression(
-				context.Accept(new VariableVisitor(VariableType.Boolean)));
+				context.Accept(new VariableVisitor(TypeDefinition.Boolean)));
 		}
 
 		public override IBooleanExpression VisitArithmeticComparisonExpression(QuokkaParser.ArithmeticComparisonExpressionContext context)

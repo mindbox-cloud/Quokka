@@ -2,7 +2,7 @@
 {
 	internal interface IFunctionArgument
 	{
-		void CompileVariableDefinitions(SemanticAnalysisContext context, VariableType requiredArgumentType);
+		void CompileVariableDefinitions(SemanticAnalysisContext context, TypeDefinition requiredArgumentType);
 
 		/// <summary>
 		/// Try to get argument value if it's static (independent of parameter values and other factors).

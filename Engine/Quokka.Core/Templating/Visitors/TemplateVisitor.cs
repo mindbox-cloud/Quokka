@@ -52,7 +52,7 @@ namespace Quokka
 		public override ITemplateNode VisitForStatement(QuokkaParser.ForStatementContext context)
 		{
 			var forInstruction = context.forInstruction();
-			var collectionVariable = forInstruction.parameterValueExpression().Accept(new VariableVisitor(VariableType.Array));
+			var collectionVariable = forInstruction.parameterValueExpression().Accept(new VariableVisitor(TypeDefinition.Array));
 
 			var iterationVariableIdentifier = forInstruction.iterationVariable().Identifier();
 
@@ -62,7 +62,7 @@ namespace Quokka
 				new VariableDeclaration(
 					iterationVariableIdentifier.GetText(),
 					GetLocationFromToken(iterationVariableIdentifier.Symbol),
-                    VariableType.Unknown,
+                    TypeDefinition.Unknown,
 					null));
 		}
 

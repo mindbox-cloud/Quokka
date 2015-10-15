@@ -5,7 +5,7 @@ namespace Quokka
 		void AddInconsistentVariableTypingError(
 			VariableDefinition definition,
 			VariableOccurence faultyOccurence,
-			VariableType correctType);
+			TypeDefinition correctType);
 
 		void AddUndefinedFunctionError(
 			string functionName,

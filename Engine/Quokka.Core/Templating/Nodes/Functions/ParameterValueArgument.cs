@@ -10,7 +10,7 @@
 			this.variableOccurence = variableOccurence;
 		}
 
-		public override void CompileVariableDefinitions(SemanticAnalysisContext context, VariableType requiredArgumentType)
+		public override void CompileVariableDefinitions(SemanticAnalysisContext context, TypeDefinition requiredArgumentType)
 		{
 			context.VariableScope.CreateOrUpdateVariableDefinition(
 				variableOccurence.CloneWithSpecificLeafType(requiredArgumentType));

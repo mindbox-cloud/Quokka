@@ -20,7 +20,7 @@ namespace Quokka
 		public override IFunctionArgument VisitParameterValueExpression(QuokkaParser.ParameterValueExpressionContext context)
 		{
 			return new ParameterValueArgument(
-				context.Accept(new VariableVisitor(VariableType.Primitive)),
+				context.Accept(new VariableVisitor(TypeDefinition.Primitive)),
 				GetLocationFromToken(context.Start));
 		}
 

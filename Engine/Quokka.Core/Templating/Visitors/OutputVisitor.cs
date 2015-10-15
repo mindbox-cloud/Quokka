@@ -20,7 +20,7 @@ namespace Quokka
 
 		public override IOutputBlock VisitParameterValueExpression(QuokkaParser.ParameterValueExpressionContext context)
 		{
-			return new VariableOutputBlock(context.Accept(new VariableVisitor(VariableType.Primitive)));
+			return new VariableOutputBlock(context.Accept(new VariableVisitor(TypeDefinition.Primitive)));
 		}
 
 		public override IOutputBlock VisitFunctionCall(QuokkaParser.FunctionCallContext context)

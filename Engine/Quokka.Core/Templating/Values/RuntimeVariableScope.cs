@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Quokka
 {
@@ -26,19 +27,33 @@ namespace Quokka
 			return new RuntimeVariableScope(valueStorage, this);
 		}
 
-		public object GetVariableValue(VariableOccurence variableOccurence)
+		public TValue GetVariableValue<TValue>(VariableOccurence variableOccurence)
 		{
-			var value = valueStorage.TryGetValue(variableOccurence);
-			if (value != null)
+			if (valueStorage.ContainsValueForVariable(variableOccurence))
 			{
-				return value;
+				return valueStorage.GetPrimitiveValue<TValue>(variableOccurence);
 			}
 			else
 			{
 				if (parentScope == null)
 					throw new InvalidOperationException($"Value for variable {variableOccurence.Name} not found");
 				else
-					return parentScope.GetVariableValue(variableOccurence);
+					return parentScope.GetVariableValue<TValue>(variableOccurence);
+			}
+		}
+
+		public IEnumerable<VariableValueStorage> GetVariableValueCollection(VariableOccurence variableOccurence)
+		{
+			if (valueStorage.ContainsValueForVariable(variableOccurence))
+			{
+				return valueStorage.GetElements(variableOccurence);
+			}
+			else
+			{
+				if (parentScope == null)
+					throw new InvalidOperationException($"Value for variable {variableOccurence.Name} not found");
+				else
+					return parentScope.GetVariableValueCollection(variableOccurence);
 			}
 		}
 	}

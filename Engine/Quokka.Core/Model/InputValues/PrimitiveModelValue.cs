@@ -1,12 +1,27 @@
 ﻿namespace Quokka
 {
-	internal class PrimitiveModelValue : IPrimitiveModelValue
+	internal class PrimitiveModelValue<TValue> : IPrimitiveModelValue
 	{
-		public object Value { get; }
+		public TValue Value { get; }
 
-		public PrimitiveModelValue(object value)
+		public PrimitiveModelValue(TValue value)
 		{
 			Value = value;
+		}
+
+		public bool TryGetValue<TExpectedValue>(out TExpectedValue value)
+		{
+
+			if (typeof(TExpectedValue) != typeof(TValue))
+			{
+				value = default(TExpectedValue);
+				return false;
+			}
+			else
+			{
+				value = (TExpectedValue)(object)Value;
+				return true;
+			}
 		}
 	}
 }

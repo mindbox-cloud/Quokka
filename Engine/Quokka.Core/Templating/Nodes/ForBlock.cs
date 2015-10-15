@@ -33,7 +33,7 @@ namespace Quokka
 			if (block == null)
 				return;
 
-			var collectionValue = (IEnumerable<VariableValueStorage>)context.VariableScope.GetVariableValue(collection);
+			var collectionValue = context.VariableScope.GetVariableValueCollection(collection);
 			foreach (var collectionElement in collectionValue)
 			{
 				var innerScope =

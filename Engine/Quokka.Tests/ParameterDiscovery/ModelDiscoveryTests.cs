@@ -28,7 +28,7 @@ namespace Quokka.Tests
 			TemplateAssert.AreCompositeModelDefinitionsEqual(
 				new CompositeModelDefinition(new Dictionary<string, IModelDefinition>
 				{
-					{ "Name", new PrimitiveModelDefinition(VariableType.Primitive) }
+					{ "Name", new PrimitiveModelDefinition(TypeDefinition.Primitive) }
 				}),
 				model);
 		}
@@ -43,9 +43,9 @@ namespace Quokka.Tests
 			TemplateAssert.AreCompositeModelDefinitionsEqual(
 				new CompositeModelDefinition(new Dictionary<string, IModelDefinition>
 				{
-					{ "Age", new PrimitiveModelDefinition(VariableType.Primitive) },
-					{ "FirstName", new PrimitiveModelDefinition(VariableType.Primitive) },
-					{ "LastName", new PrimitiveModelDefinition(VariableType.Primitive) }
+					{ "Age", new PrimitiveModelDefinition(TypeDefinition.Primitive) },
+					{ "FirstName", new PrimitiveModelDefinition(TypeDefinition.Primitive) },
+					{ "LastName", new PrimitiveModelDefinition(TypeDefinition.Primitive) }
 				}),
 				model);
 		}
@@ -63,7 +63,7 @@ namespace Quokka.Tests
 					{
 						"Customer", new CompositeModelDefinition(new Dictionary<string, IModelDefinition>
 						{
-							{ "Email", new PrimitiveModelDefinition(VariableType.Primitive) }
+							{ "Email", new PrimitiveModelDefinition(TypeDefinition.Primitive) }
 						})
 					}
 				}),
@@ -86,11 +86,11 @@ namespace Quokka.Tests
 						{
 							{
 								"Email",
-								new PrimitiveModelDefinition(VariableType.Primitive)
+								new PrimitiveModelDefinition(TypeDefinition.Primitive)
 							},
 							{
 								"MobilePhone",
-								new PrimitiveModelDefinition(VariableType.Primitive)
+								new PrimitiveModelDefinition(TypeDefinition.Primitive)
 							}
 						})
 					}
@@ -114,15 +114,15 @@ namespace Quokka.Tests
 						{
 							{
 								"Email",
-								new PrimitiveModelDefinition(VariableType.Primitive)
+								new PrimitiveModelDefinition(TypeDefinition.Primitive)
 							},
 							{
 								"Id",
-								new PrimitiveModelDefinition(VariableType.Primitive)
+								new PrimitiveModelDefinition(TypeDefinition.Primitive)
 							},
 							{
 								"MobilePhone",
-								new PrimitiveModelDefinition(VariableType.Primitive)
+								new PrimitiveModelDefinition(TypeDefinition.Primitive)
 							}
 						})
 					}
@@ -146,8 +146,8 @@ namespace Quokka.Tests
 							{
 								"Contacts", new CompositeModelDefinition(new Dictionary<string, IModelDefinition>
 								{
-									{ "Email", new PrimitiveModelDefinition(VariableType.Primitive) },
-									{ "MobilePhone", new PrimitiveModelDefinition(VariableType.Primitive) }
+									{ "Email", new PrimitiveModelDefinition(TypeDefinition.Primitive) },
+									{ "MobilePhone", new PrimitiveModelDefinition(TypeDefinition.Primitive) }
 								})
 							}
 						})
@@ -169,7 +169,7 @@ namespace Quokka.Tests
 			TemplateAssert.AreCompositeModelDefinitionsEqual(
 				new CompositeModelDefinition(new Dictionary<string, IModelDefinition>
 				{
-					{ "IsDebug", new PrimitiveModelDefinition(VariableType.Boolean) }
+					{ "IsDebug", new PrimitiveModelDefinition(TypeDefinition.Boolean) }
 				}),
 				model);
 		}
@@ -190,8 +190,8 @@ namespace Quokka.Tests
 					{
 						"Context", new CompositeModelDefinition(new Dictionary<string, IModelDefinition>
 						{
-							{ "IsDebug", new PrimitiveModelDefinition(VariableType.Boolean) },
-							{ "IsStaging", new PrimitiveModelDefinition(VariableType.Boolean) }
+							{ "IsDebug", new PrimitiveModelDefinition(TypeDefinition.Boolean) },
+							{ "IsStaging", new PrimitiveModelDefinition(TypeDefinition.Boolean) }
 						})
 					}
 				}),
@@ -217,8 +217,8 @@ namespace Quokka.Tests
 					{
 						"Context", new CompositeModelDefinition(new Dictionary<string, IModelDefinition>
 						{
-							{ "IsDebug", new PrimitiveModelDefinition(VariableType.Boolean) },
-							{ "Time", new PrimitiveModelDefinition(VariableType.Primitive) }
+							{ "IsDebug", new PrimitiveModelDefinition(TypeDefinition.Boolean) },
+							{ "Time", new PrimitiveModelDefinition(TypeDefinition.Primitive) }
 						})
 					}
 				}),
@@ -237,7 +237,7 @@ namespace Quokka.Tests
 			TemplateAssert.AreCompositeModelDefinitionsEqual(
 				new CompositeModelDefinition(new Dictionary<string, IModelDefinition>
 				{
-					{ "ClickCount", new PrimitiveModelDefinition(VariableType.Integer) }
+					{ "ClickCount", new PrimitiveModelDefinition(TypeDefinition.Integer) }
 				}),
 				model);
 		}
@@ -256,8 +256,8 @@ namespace Quokka.Tests
 					{
 						"Statistics", new CompositeModelDefinition(new Dictionary<string, IModelDefinition>
 						{
-							{ "ClickCount", new PrimitiveModelDefinition(VariableType.Integer) },
-							{ "SentCount", new PrimitiveModelDefinition(VariableType.Integer) }
+							{ "ClickCount", new PrimitiveModelDefinition(TypeDefinition.Integer) },
+							{ "SentCount", new PrimitiveModelDefinition(TypeDefinition.Integer) }
 						})
 					}
 				}),
@@ -284,7 +284,7 @@ namespace Quokka.Tests
 							{
 								"Orders", new ArrayModelDefinition(new CompositeModelDefinition(new Dictionary<string, IModelDefinition>
 								{
-									{ "Id", new PrimitiveModelDefinition(VariableType.Primitive) }
+									{ "Id", new PrimitiveModelDefinition(TypeDefinition.Primitive) }
 								}))
 							}
 						})
@@ -314,7 +314,7 @@ namespace Quokka.Tests
 							}
 						})
 					},
-					{ "SomethingGlobal", new PrimitiveModelDefinition(VariableType.Primitive) }
+					{ "SomethingGlobal", new PrimitiveModelDefinition(TypeDefinition.Primitive) }
 				}),
 				model);
 		}
@@ -335,7 +335,7 @@ namespace Quokka.Tests
 					{
 						"Offers", new ArrayModelDefinition(new CompositeModelDefinition(new Dictionary<string, IModelDefinition>
 						{
-							{ "Date", new PrimitiveModelDefinition(VariableType.Primitive) }
+							{ "Date", new PrimitiveModelDefinition(TypeDefinition.Primitive) }
 						}))
 					}
 				}),
@@ -359,8 +359,8 @@ namespace Quokka.Tests
 					{
 						"Offers", new ArrayModelDefinition(new CompositeModelDefinition(new Dictionary<string, IModelDefinition>
 						{
-							{ "Date", new PrimitiveModelDefinition(VariableType.Primitive) },
-							{ "Url", new PrimitiveModelDefinition(VariableType.Primitive) }
+							{ "Date", new PrimitiveModelDefinition(TypeDefinition.Primitive) },
+							{ "Url", new PrimitiveModelDefinition(TypeDefinition.Primitive) }
 						}))
 					}
 				}),
@@ -387,8 +387,8 @@ namespace Quokka.Tests
 							{
 								"Product", new CompositeModelDefinition(new Dictionary<string, IModelDefinition>
 								{
-									{ "Name", new PrimitiveModelDefinition(VariableType.Primitive) },
-									{ "Price", new PrimitiveModelDefinition(VariableType.Primitive) }
+									{ "Name", new PrimitiveModelDefinition(TypeDefinition.Primitive) },
+									{ "Price", new PrimitiveModelDefinition(TypeDefinition.Primitive) }
 								})
 							}
 						}))
@@ -415,7 +415,7 @@ namespace Quokka.Tests
 					{
 						"Offers", new ArrayModelDefinition(new CompositeModelDefinition(new Dictionary<string, IModelDefinition>
 						{
-							{ "IsOpen", new PrimitiveModelDefinition(VariableType.Boolean) }
+							{ "IsOpen", new PrimitiveModelDefinition(TypeDefinition.Boolean) }
 						}))
 					}
 				}),
@@ -442,8 +442,8 @@ namespace Quokka.Tests
 					{
 						"Offers", new ArrayModelDefinition(new CompositeModelDefinition(new Dictionary<string, IModelDefinition>
 						{
-							{ "Date", new PrimitiveModelDefinition(VariableType.Primitive) },
-							{ "Price", new PrimitiveModelDefinition(VariableType.Primitive) }
+							{ "Date", new PrimitiveModelDefinition(TypeDefinition.Primitive) },
+							{ "Price", new PrimitiveModelDefinition(TypeDefinition.Primitive) }
 						}))
 					},
 					{
@@ -473,13 +473,13 @@ namespace Quokka.Tests
 					{
 						"Offers", new ArrayModelDefinition(new CompositeModelDefinition(new Dictionary<string, IModelDefinition>
 						{
-							{ "Text", new PrimitiveModelDefinition(VariableType.Primitive) }
+							{ "Text", new PrimitiveModelDefinition(TypeDefinition.Primitive) }
 						}))
 					},
 					{
 						"OtherOffers", new ArrayModelDefinition(new CompositeModelDefinition(new Dictionary<string, IModelDefinition>
 						{
-							{ "Url", new PrimitiveModelDefinition(VariableType.Primitive) }
+							{ "Url", new PrimitiveModelDefinition(TypeDefinition.Primitive) }
 						}))
 					}
 				}),
@@ -506,8 +506,8 @@ namespace Quokka.Tests
 					{
 						"Offers", new ArrayModelDefinition(new CompositeModelDefinition(new Dictionary<string, IModelDefinition>
 						{
-							{ "Text", new PrimitiveModelDefinition(VariableType.Primitive) },
-							{ "Url", new PrimitiveModelDefinition(VariableType.Primitive) }
+							{ "Text", new PrimitiveModelDefinition(TypeDefinition.Primitive) },
+							{ "Url", new PrimitiveModelDefinition(TypeDefinition.Primitive) }
 						}))
 					}
 				}),
@@ -534,8 +534,8 @@ namespace Quokka.Tests
 					{
 						"Offers", new ArrayModelDefinition(new CompositeModelDefinition(new Dictionary<string, IModelDefinition>
 						{
-							{ "Text", new PrimitiveModelDefinition(VariableType.Primitive) },
-							{ "Url", new PrimitiveModelDefinition(VariableType.Primitive) }
+							{ "Text", new PrimitiveModelDefinition(TypeDefinition.Primitive) },
+							{ "Url", new PrimitiveModelDefinition(TypeDefinition.Primitive) }
 						}))
 					}
 				}),
@@ -565,8 +565,8 @@ namespace Quokka.Tests
 							{
 								"Details", new CompositeModelDefinition(new Dictionary<string, IModelDefinition>
 								{
-									{ "Price", new PrimitiveModelDefinition(VariableType.Primitive) },
-									{ "Url", new PrimitiveModelDefinition(VariableType.Primitive) }
+									{ "Price", new PrimitiveModelDefinition(TypeDefinition.Primitive) },
+									{ "Url", new PrimitiveModelDefinition(TypeDefinition.Primitive) }
 								})
 							}
 						}))
@@ -596,7 +596,7 @@ namespace Quokka.Tests
 							{
 								"Products", new ArrayModelDefinition(new CompositeModelDefinition(new Dictionary<string, IModelDefinition>
 								{
-									{ "Name", new PrimitiveModelDefinition(VariableType.Primitive) }
+									{ "Name", new PrimitiveModelDefinition(TypeDefinition.Primitive) }
 								}))
 							}
 						}))
@@ -626,7 +626,7 @@ namespace Quokka.Tests
 							{
 								"Products", new ArrayModelDefinition(new CompositeModelDefinition(new Dictionary<string, IModelDefinition>
 								{
-									{ "Name", new PrimitiveModelDefinition(VariableType.Primitive) }
+									{ "Name", new PrimitiveModelDefinition(TypeDefinition.Primitive) }
 								}))
 							}
 						}))
@@ -663,7 +663,7 @@ namespace Quokka.Tests
 							{
 								"Products", new ArrayModelDefinition(new CompositeModelDefinition(new Dictionary<string, IModelDefinition>
 								{
-									{ "Name", new PrimitiveModelDefinition(VariableType.Primitive) }
+									{ "Name", new PrimitiveModelDefinition(TypeDefinition.Primitive) }
 								}))
 							}
 						}))
@@ -697,8 +697,8 @@ namespace Quokka.Tests
 							{
 								"Products", new ArrayModelDefinition(new CompositeModelDefinition(new Dictionary<string, IModelDefinition>
 								{
-									{ "Name", new PrimitiveModelDefinition(VariableType.Primitive) },
-									{ "Price", new PrimitiveModelDefinition(VariableType.Primitive) }
+									{ "Name", new PrimitiveModelDefinition(TypeDefinition.Primitive) },
+									{ "Price", new PrimitiveModelDefinition(TypeDefinition.Primitive) }
 								}))
 							}
 						}))
@@ -732,8 +732,8 @@ namespace Quokka.Tests
 							{
 								"Products", new ArrayModelDefinition(new CompositeModelDefinition(new Dictionary<string, IModelDefinition>
 								{
-									{ "Name", new PrimitiveModelDefinition(VariableType.Primitive) },
-									{ "Price", new PrimitiveModelDefinition(VariableType.Primitive) }
+									{ "Name", new PrimitiveModelDefinition(TypeDefinition.Primitive) },
+									{ "Price", new PrimitiveModelDefinition(TypeDefinition.Primitive) }
 								}))
 							}
 						}))

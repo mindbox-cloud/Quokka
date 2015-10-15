@@ -69,7 +69,7 @@ namespace Quokka
 			if (requiredValue is IPrimitiveModelDefinition)
 			{
 				var primitiveModelDefinition = (IPrimitiveModelDefinition)requiredValue;
-				if (primitiveModelDefinition.Type != VariableType.Unknown)
+				if (primitiveModelDefinition.Type != TypeDefinition.Unknown)
 				{
 					if (actualValue is IPrimitiveModelValue)
 					{
@@ -135,21 +135,13 @@ namespace Quokka
 			StringBuilder errorMessageBuilder)
 		{
 			bool hasErrors = false;
-			if (model.Value == null)
+			
+			if (!requiredModelDefinition.Type.CheckModelValue(model))
 			{
 				hasErrors = true;
-				errorMessageBuilder.AppendLine($"{modelPrefix} value is null");
-			}
-			else
-			{
-				var actualType = VariableTypeTools.GetVariableTypeByRuntimeType(model.Value.GetType());
-				if (!VariableTypeTools.IsTypeCompatibleWithRequired(actualType, requiredModelDefinition.Type))
-				{
-					hasErrors = true;
-					errorMessageBuilder.AppendLine(
-						$"{modelPrefix} value \"{model.Value}\" is not compatible " +
-						$"with a required type {requiredModelDefinition.Type}");
-				}
+				errorMessageBuilder.AppendLine(
+					$"{modelPrefix} value is not compatible " +
+					$"with a required type {requiredModelDefinition.Type}");
 			}
 
 			return !hasErrors;
