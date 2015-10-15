@@ -6,7 +6,7 @@ namespace Quokka
 {
 	internal abstract class VariableValueStorage
 	{
-		public virtual TValue GetPrimitiveValue<TValue>(VariableOccurence variableOccurence)
+		public virtual object GetPrimitiveValue(VariableOccurence variableOccurence)
 		{
 			throw new InvalidOperationException("This storage can't provide values of this type");
 		}
@@ -55,7 +55,7 @@ namespace Quokka
 				this.primitiveModel = primitiveModel;
 			}
 
-			public override TValue GetPrimitiveValue<TValue>(VariableOccurence variableOccurence)
+			public override object GetPrimitiveValue(VariableOccurence variableOccurence)
 			{
 				if (variableOccurence.Member != null)
 					throw new InvalidOperationException(
@@ -63,10 +63,7 @@ namespace Quokka
 
 				if (variableOccurence.RequiredType.IsCompatibleWithRequired(TypeDefinition.Primitive))
 				{
-					TValue result;
-					if (!primitiveModel.TryGetValue<TValue>(out result))
-						throw new InvalidOperationException("Could not obtain primtive value from the model");
-					return result;
+					return primitiveModel.Value;
 				}
 				else
 				{
@@ -110,11 +107,11 @@ namespace Quokka
 				return fields.ContainsKey(variableOccurence.Name);
 			}
 
-			public override TValue GetPrimitiveValue<TValue>(VariableOccurence variableOccurence)
+			public override object GetPrimitiveValue(VariableOccurence variableOccurence)
 			{
 				VariableValueStorage field;
 				if (fields.TryGetValue(variableOccurence.Name, out field))
-					return field.GetPrimitiveValue<TValue>(variableOccurence.Member ?? variableOccurence);
+					return field.GetPrimitiveValue(variableOccurence.Member ?? variableOccurence);
 				else
 					throw new InvalidOperationException($"Field {variableOccurence.Name} not found");
 			}

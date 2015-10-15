@@ -27,18 +27,18 @@ namespace Quokka
 			return new RuntimeVariableScope(valueStorage, this);
 		}
 
-		public TValue GetVariableValue<TValue>(VariableOccurence variableOccurence)
+		public object GetVariableValue(VariableOccurence variableOccurence)
 		{
 			if (valueStorage.ContainsValueForVariable(variableOccurence))
 			{
-				return valueStorage.GetPrimitiveValue<TValue>(variableOccurence);
+				return valueStorage.GetPrimitiveValue(variableOccurence);
 			}
 			else
 			{
 				if (parentScope == null)
 					throw new InvalidOperationException($"Value for variable {variableOccurence.Name} not found");
 				else
-					return parentScope.GetVariableValue<TValue>(variableOccurence);
+					return parentScope.GetVariableValue(variableOccurence);
 			}
 		}
 

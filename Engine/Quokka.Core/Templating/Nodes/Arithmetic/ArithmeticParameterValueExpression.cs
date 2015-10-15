@@ -11,7 +11,7 @@
 
 		public override double GetValue(RenderContext renderContext)
 		{
-			return renderContext.VariableScope.GetVariableValue<int>(variableOccurence);
+			return (int)renderContext.VariableScope.GetVariableValue(variableOccurence);
 		}
 
 		public override void CompileVariableDefinitions(SemanticAnalysisContext context)

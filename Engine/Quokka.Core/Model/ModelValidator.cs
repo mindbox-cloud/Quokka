@@ -129,24 +129,31 @@ namespace Quokka
 		}
 
 		private bool ValidatePrimitiveModel(
-			IPrimitiveModelValue model,
-			IPrimitiveModelDefinition requiredModelDefinition,
-			string modelPrefix,
-			StringBuilder errorMessageBuilder)
+					IPrimitiveModelValue model,
+					IPrimitiveModelDefinition requiredModelDefinition,
+					string modelPrefix,
+					StringBuilder errorMessageBuilder)
 		{
 			bool hasErrors = false;
-			
-			if (!requiredModelDefinition.Type.CheckModelValue(model))
+			if (model.Value == null)
 			{
 				hasErrors = true;
-				errorMessageBuilder.AppendLine(
-					$"{modelPrefix} value is not compatible " +
-					$"with a required type {requiredModelDefinition.Type}");
+				errorMessageBuilder.AppendLine($"{modelPrefix} value is null");
+			}
+			else
+			{
+				var actualType = TypeDefinition.GetTypeDefinitionByRuntimeType(model.Value.GetType());
+				if (!actualType.IsCompatibleWithRequired(requiredModelDefinition.Type))
+				{
+					hasErrors = true;
+					errorMessageBuilder.AppendLine(
+						$"{modelPrefix} value \"{model.Value}\" is not compatible " +
+						$"with a required type {requiredModelDefinition.Type}");
+				}
 			}
 
 			return !hasErrors;
 		}
-
 		private bool ValidateArrayModel(
 			IArrayModelValue model,
 			IArrayModelDefinition requiredModelDefinition,

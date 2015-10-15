@@ -9,12 +9,6 @@ namespace Quokka
 		{
 			
 		}
-
-		internal override bool CheckModelValue(IPrimitiveModelValue primitiveModelValue)
-		{
-			TRuntimeType value;
-			return primitiveModelValue.TryGetValue(out value);
-		}
 	}
 
 	public class TypeDefinition
@@ -39,11 +33,6 @@ namespace Quokka
 				return true;
 
 			return false;
-		}
-
-		internal virtual bool CheckModelValue(IPrimitiveModelValue primitiveModelValue)
-		{
-			throw new InvalidOperationException($"Trying to check primitive value for non-primitive type {Name}");
 		}
 
 		public override string ToString()
