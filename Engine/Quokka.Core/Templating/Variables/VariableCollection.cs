@@ -24,7 +24,7 @@ namespace Quokka
 		}
 
 		public ICompositeModelDefinition ToModelDefinition(
-			IModelDefinitionFactory modelDefinitionFactory,
+			ModelDefinitionFactory modelDefinitionFactory,
 			ISemanticErrorListener errorListener)
 		{
 			return modelDefinitionFactory.CreateComposite(

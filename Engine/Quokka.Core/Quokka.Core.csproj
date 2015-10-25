@@ -73,7 +73,6 @@
     <Compile Include="Model\Definitions\IArrayModelDefinition.cs" />
     <Compile Include="Model\Definitions\ICompositeModelDefinition.cs" />
     <Compile Include="Model\Definitions\IModelDefinition.cs" />
-    <Compile Include="Model\Definitions\IModelDefinitionFactory.cs" />
     <Compile Include="Model\Definitions\ModelDefinition.cs" />
     <Compile Include="Model\Definitions\IPrimitiveModelDefinition.cs" />
     <Compile Include="Model\Definitions\ModelDefinitionFactory.cs" />

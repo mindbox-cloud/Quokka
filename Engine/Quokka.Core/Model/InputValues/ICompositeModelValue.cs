@@ -4,6 +4,6 @@ namespace Quokka
 {
 	public interface ICompositeModelValue : IModelValue
 	{
-		IList<IModelField> Fields { get; }
+		IReadOnlyList<IModelField> Fields { get; }
 	}
 }

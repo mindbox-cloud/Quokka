@@ -2,7 +2,7 @@
 
 namespace Quokka
 {
-	internal class ModelDefinitionFactory : IModelDefinitionFactory
+	internal class ModelDefinitionFactory
 	{
 		public IPrimitiveModelDefinition CreatePrimitive(TypeDefinition type)
 		{

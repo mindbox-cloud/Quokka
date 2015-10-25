@@ -1,8 +1,3 @@
-<html>
-<head>
-	<title>Subj</title>
-</head>
-<body>
 	<strong>Hello, ${ RecipientFirstName }!</strong> 
 	<div>
     	@{if Recipient.Age > 90 }
@@ -10,36 +5,12 @@
         	${RecipientDeathDateTime}
 		@{ if Recipient.IsMale }сделал@{else}сделала@{end if}     	</div>
     	@{end if}
-    	<br>
-    	@{if Recipient.Age > 90 }
-    	<div class="condition">
-        	${RecipientDeathDateTime}
-    	</div>
-    	@{else if Recipient.Age > 200 }
-    	<div></div>
-@{else if (Recipient.Age = 200) and (Recipient.IsMale) }
-    	<div></div>
-@{else if ((Recipient.Age = 200) and (not Recipient.IsMale)) }
-    	<div></div>
-    	@{else}
-    	<div></div>
-    	@{end if}
-	</div>
 
-	<div>
     	@{ for productThatHeLiked in BoughtProducts }
     	<div>{productThatHeLiked.Name}</div>
     	<div>{productThatHeLiked.Price}</div>
     	@{ end for }
 	</div>
-
-	<div>
-${ Recipient.BirthDate | datetime("dd.MM.yyyy HH:mm")}
-	</div>
-
-	@{comment}
-	<div>Секрет секрет</div>
-	@{end comment}
 
 @{* <div>Еще один секрет секрет</div> *}
 </body>

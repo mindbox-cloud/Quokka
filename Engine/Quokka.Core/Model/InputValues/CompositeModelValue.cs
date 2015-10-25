@@ -5,7 +5,7 @@ namespace Quokka
 {
 	internal class CompositeModelValue : ICompositeModelValue
 	{
-		public IList<IModelField> Fields { get; }
+		public IReadOnlyList<IModelField> Fields { get; }
 
 		public CompositeModelValue(params IModelField[] fields)
 		{

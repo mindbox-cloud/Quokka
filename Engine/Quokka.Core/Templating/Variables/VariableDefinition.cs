@@ -102,7 +102,7 @@ namespace Quokka
 			return resultingType;
 		}
 
-		public IModelDefinition ToModelDefinition(IModelDefinitionFactory modelDefinitionFactory, ISemanticErrorListener errorListener)
+		public IModelDefinition ToModelDefinition(ModelDefinitionFactory modelDefinitionFactory, ISemanticErrorListener errorListener)
 		{
 			var type = DetermineType(errorListener);
 
