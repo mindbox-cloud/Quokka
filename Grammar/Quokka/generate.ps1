@@ -19,6 +19,8 @@ $generatedDirectory = "..\..\Engine\Quokka.Core\Generated"
 
 GenerateGrammarFiles (Join-Path $scriptPath "QuokkaLex.g4") $generatedDirectory
 GenerateGrammarFiles (Join-Path $scriptPath "Quokka.g4") $generatedDirectory
+GenerateGrammarFiles (Join-Path $scriptPath "QuokkaHtmlLex.g4") $generatedDirectory
+GenerateGrammarFiles (Join-Path $scriptPath "QuokkaHtml.g4") $generatedDirectory
 
 Get-ChildItem $generatedDirectory -Filter *.cs | `
 		Foreach-Object{
