@@ -2,18 +2,24 @@
 
 namespace Quokka
 {
-	internal class ConstantBlock : TemplateNodeBase
+	internal class ConstantBlock : TemplateNodeBase, IStaticBlockPart
 	{
-		private readonly string text;
+		public string Text { get; }
+		public int Offset { get; }
+		public int Length { get; }
 
-		public ConstantBlock(string text)
+		public ConstantBlock(string text, int offset, int length)
 		{
-			this.text = text;
+			Text = text;
+			Offset = offset;
+			Length = length;
 		}
 
 		public override void Render(StringBuilder resultBuilder, RenderContext context)
 		{
-			resultBuilder.Append(text);
+			resultBuilder.Append(Text);
 		}
+
+		
 	}
 }

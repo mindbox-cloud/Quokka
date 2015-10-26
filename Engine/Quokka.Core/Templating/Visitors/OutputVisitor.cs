@@ -11,8 +11,6 @@ namespace Quokka
 
 		public override IOutputBlock VisitOutputBlock(QuokkaParser.OutputBlockContext context)
 		{
-			
-
 			return Visit(context.expression());
 		}
 

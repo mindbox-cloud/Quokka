@@ -30,5 +30,11 @@ namespace Quokka
 				}
 			}
 		}
+
+		public override void CompileGrammarSpecificData(GrammarSpecificDataAnalysisContext context)
+		{
+			foreach (var condition in conditions)
+				condition.CompileGrammarSpecificData(context);
+		}
 	}
 }

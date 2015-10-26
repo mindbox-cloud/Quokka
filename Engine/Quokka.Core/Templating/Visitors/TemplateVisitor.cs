@@ -24,22 +24,6 @@ namespace Quokka
 			return context.Accept(visitingContext.CreateStaticBlockVisitor());
 		}
 		
-		public override ITemplateNode VisitConstantBlock(QuokkaParser.ConstantBlockContext context)
-		{
-			return new ConstantBlock(context.GetText());
-		}
-
-		public override ITemplateNode VisitOutputBlock(QuokkaParser.OutputBlockContext context)
-		{
-			var outputBlock = context.filterChain() != null 
-				? new FunctionCallOutputBlock(context.Accept(new FilterChainVisitor(visitingContext))) 
-				: context.Accept(new OutputVisitor(visitingContext));
-
-			return new OutputInstructionBlock(
-				outputBlock,
-				context.OutputInstructionStart().Symbol.StartIndex);
-		}
-
 		public override ITemplateNode VisitIfStatement(QuokkaParser.IfStatementContext context)
 		{
 			var conditionsVisitor = new ConditionsVisitor(visitingContext);

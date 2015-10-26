@@ -107,6 +107,11 @@ namespace Quokka
 			}
 		}
 
+		protected void CompileGrammarSpecificData(GrammarSpecificDataAnalysisContext context)
+		{
+			compiledTemplateTree.CompileGrammarSpecificData(context);
+		}
+
 		private QuokkaParser.TemplateContext ParseTemplateText(string templateText, SyntaxErrorListener syntaxErrorListener)
 		{
 			var inputStream = new AntlrInputStream(templateText);

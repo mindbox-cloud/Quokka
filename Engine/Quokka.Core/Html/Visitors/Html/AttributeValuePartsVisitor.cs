@@ -11,7 +11,8 @@ namespace Quokka.Html
 
 		public override ITemplateNode VisitInsideAttributeConstant(QuokkaHtml.InsideAttributeConstantContext context)
 		{
-			return new ConstantBlock(context.GetText());
+			var text = context.GetText();
+			return new ConstantBlock(text, context.Start.StartIndex, text.Length);
 		}
 
 		public override ITemplateNode VisitInsideAttributeOutputBlock(QuokkaHtml.InsideAttributeOutputBlockContext context)

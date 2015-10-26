@@ -9,5 +9,9 @@ namespace Quokka
 		}
 
 		public abstract void Render(StringBuilder resultBuilder, RenderContext context);
+
+		public virtual void CompileGrammarSpecificData(GrammarSpecificDataAnalysisContext context)
+		{
+		}
 	}
 }

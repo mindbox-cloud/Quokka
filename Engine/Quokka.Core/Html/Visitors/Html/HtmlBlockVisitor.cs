@@ -5,14 +5,14 @@ using Quokka.Generated;
 
 namespace Quokka.Html
 {
-	internal class HtmlBlockVisitor : QuokkaHtmlBaseVisitor<IStaticSubBlock>
+	internal class HtmlBlockVisitor : QuokkaHtmlBaseVisitor<IStaticBlockPart>
 	{
 		public HtmlBlockVisitor(HtmlBlockParsingContext parsingContext)
 			: base(parsingContext)
 		{
 		}
 
-		public override IStaticSubBlock VisitOpeningTag(QuokkaHtml.OpeningTagContext context)
+		public override IStaticBlockPart VisitOpeningTag(QuokkaHtml.OpeningTagContext context)
 		{
 			string tagName = context.TAG_NAME().GetText();
 			var attributes = context.attribute();
@@ -25,7 +25,7 @@ namespace Quokka.Html
 			return null;
 		}
 
-		public override IStaticSubBlock VisitSelfClosingTag(QuokkaHtml.SelfClosingTagContext context)
+		public override IStaticBlockPart VisitSelfClosingTag(QuokkaHtml.SelfClosingTagContext context)
 		{
 			string tagName = context.TAG_NAME().GetText();
 			var attributes = context.attribute();
@@ -35,7 +35,7 @@ namespace Quokka.Html
 			return null;
 		}
 
-		private IStaticSubBlock TryGetLinkNodeFromTagAttributes(IEnumerable<QuokkaHtml.AttributeContext> attributes)
+		private IStaticBlockPart TryGetLinkNodeFromTagAttributes(IEnumerable<QuokkaHtml.AttributeContext> attributes)
 		{
 			var hrefAttributeValueVisitor = new HrefAttributeValueVisitor(parsingContext);
 			foreach (var attribute in attributes)

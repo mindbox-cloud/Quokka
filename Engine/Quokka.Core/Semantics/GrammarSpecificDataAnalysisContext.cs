@@ -6,9 +6,7 @@ using System.Threading.Tasks;
 
 namespace Quokka
 {
-	public enum TemplateDialect
+	public class GrammarSpecificDataAnalysisContext
 	{
-		Text,
-		Html
 	}
 }

@@ -6,9 +6,9 @@ namespace Quokka
 {
 	internal class StaticBlock : TemplateNodeBase
 	{
-		private readonly IReadOnlyCollection<ITemplateNode> children; 
+		private readonly IReadOnlyCollection<IStaticBlockPart> children; 
 
-		public StaticBlock(IEnumerable<ITemplateNode> children)
+		public StaticBlock(IEnumerable<IStaticBlockPart> children)
 		{
 			this.children = children.ToList().AsReadOnly();
 		}
@@ -23,6 +23,12 @@ namespace Quokka
 		{
 			foreach (var child in children)
 				child.Render(resultBuilder, context);
+		}
+
+		public override void CompileGrammarSpecificData(GrammarSpecificDataAnalysisContext context)
+		{
+			foreach (var child in children)
+				child.CompileGrammarSpecificData(context);
 		}
 	}
 }

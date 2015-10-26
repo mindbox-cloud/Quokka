@@ -31,5 +31,11 @@ namespace Quokka
 			foreach (var child in children)
 				child.Render(resultBuilder, context);
 		}
+
+		public override void CompileGrammarSpecificData(GrammarSpecificDataAnalysisContext context)
+		{
+			foreach (var child in children)
+				child.CompileGrammarSpecificData(context);
+		}
 	}
 }

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿using System.Linq;
 using Quokka.Generated;
 
 namespace Quokka.Html
@@ -18,12 +13,18 @@ namespace Quokka.Html
 		public override LinkBlock VisitDoubleQuotedValue(QuokkaHtml.DoubleQuotedValueContext context)
 		{
 			var partsVisitor = new AttributeValuePartsVisitor(parsingContext);
-			var blockChildren = context.children.Select(child => child.Accept(partsVisitor)).ToList();
+			var blockChildren = context.children
+				.Select(child => child.Accept(partsVisitor))
+				.Where(block => block != null)
+				.ToList();
+
 			if (blockChildren.Any())
 			{
 				var offset = context.OpeningDoubleQuotes().Symbol.StartIndex + 1;
 				var length = context.ClosingDoubleQuotes().Symbol.StartIndex - offset;
-				return new LinkBlock(blockChildren, offset, length);
+				var quotedText = context.GetText();
+				var stringValue = quotedText.Substring(1, quotedText.Length - 2);
+				return new LinkBlock(blockChildren, stringValue, offset, length);
 			}
 			else
 			{
@@ -34,12 +35,17 @@ namespace Quokka.Html
 		public override LinkBlock VisitSingleQuotedValue(QuokkaHtml.SingleQuotedValueContext context)
 		{
 			var partsVisitor = new AttributeValuePartsVisitor(parsingContext);
-			var blockChildren = context.children.Select(child => child.Accept(partsVisitor)).ToList();
+			var blockChildren = context.children
+				.Select(child => child.Accept(partsVisitor))
+				.Where(block => block != null)
+				.ToList();
 			if (blockChildren.Any())
 			{
 				var offset = context.OpeningSingleQuotes().Symbol.StartIndex + 1;
 				var length = context.ClosingSingleQuotes().Symbol.StartIndex - offset;
-				return new LinkBlock(blockChildren, offset, length);
+				var quotedText = context.GetText();
+				var stringValue = quotedText.Substring(1, quotedText.Length - 2);
+				return new LinkBlock(blockChildren, stringValue, offset, length);
 			}
 			else
 			{

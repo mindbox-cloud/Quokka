@@ -24,6 +24,11 @@ namespace Quokka
 			block?.Render(resultBuilder, context);
 		}
 
+		public override void CompileGrammarSpecificData(GrammarSpecificDataAnalysisContext context)
+		{
+			block?.CompileGrammarSpecificData(context);
+		}
+
 		public bool ShouldRender(RenderContext renderContext)
 		{
 			return conditionExpression.Evaluate(renderContext);

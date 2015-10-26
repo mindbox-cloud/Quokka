@@ -2,24 +2,26 @@
 
 namespace Quokka
 {
-	internal class OutputInstructionBlock : ITemplateNode
+	internal class OutputInstructionBlock : TemplateNodeBase, IStaticBlockPart
 	{
 		private readonly IOutputBlock outputBlock;
 		
 		public int Offset { get; }
+		public int Length { get; }
 
-		public OutputInstructionBlock(IOutputBlock outputBlock, int offset)
+		public OutputInstructionBlock(IOutputBlock outputBlock, int offset, int length)
 		{
 			this.outputBlock = outputBlock;
 			Offset = offset;
+			Length = length;
 		}
 
-		public void CompileVariableDefinitions(SemanticAnalysisContext context)
+		public override void CompileVariableDefinitions(SemanticAnalysisContext context)
 		{
 			outputBlock.CompileVariableDefinitions(context);
 		}
 
-		public void Render(StringBuilder resultBuilder, RenderContext context)
+		public override void Render(StringBuilder resultBuilder, RenderContext context)
 		{
 			outputBlock.Render(resultBuilder, context);
 		}

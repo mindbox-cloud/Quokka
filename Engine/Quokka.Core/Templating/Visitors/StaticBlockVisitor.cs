@@ -12,7 +12,8 @@ namespace Quokka
 
 		public override StaticBlock VisitStaticBlock(QuokkaParser.StaticBlockContext context)
 		{
-			return new StaticBlock(context.children.Select(child => child.Accept(new TemplateVisitor(visitingContext))));
+			return new StaticBlock(context.children
+				.Select(child => child.Accept(new StaticPartVisitor(visitingContext, context.Start.StartIndex))));
 		}
 	}
 }

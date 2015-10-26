@@ -1,4 +1,7 @@
-﻿using Quokka.Html;
+﻿using System.Collections.Generic;
+using System.Linq;
+
+using Quokka.Html;
 
 namespace Quokka
 {
@@ -22,5 +25,19 @@ namespace Quokka
 				  new FunctionRegistry(GetStandardFunctions()))
 		{
 		}
+
+		/// <summary>
+		/// Get a collection of external references (links) ordered from top to bottom.
+		/// </summary>
+		public IReadOnlyList<Reference> GetReferences()
+		{
+			if (Errors.Any())
+				throw new TemplateContainsErrorsException(Errors);
+
+			var htmlContext = new HtmlDataAnalysisContext();
+			CompileGrammarSpecificData(htmlContext);
+
+			return htmlContext.GetReferences();
+		} 
 	}
 }

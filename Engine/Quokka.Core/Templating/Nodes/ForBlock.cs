@@ -43,5 +43,10 @@ namespace Quokka
 				block.Render(resultBuilder, new RenderContext(innerScope, context.Functions));
 			}
 		}
+
+		public override void CompileGrammarSpecificData(GrammarSpecificDataAnalysisContext context)
+		{
+			block?.CompileGrammarSpecificData(context);
+		}
 	}
 }
