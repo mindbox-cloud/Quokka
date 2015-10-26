@@ -13,7 +13,7 @@ nonImportantHtml
 
 plainText
 	:
-		Fluff+
+		(Fluff | OutputBlock)+
 	;
 
 attribute
@@ -33,22 +33,32 @@ attributeValue
 
 unquotedValue
 	:
-		UNQUOTED_ATTRIBUTE
+		insideAttributeConstant
 	;
 
 singleQuotedValue
 	:
 		OpeningSingleQuotes
-		(SQS_OUTPUTBLOCK | SQS_FLUFF)*
+		(insideAttributeOutputBlock | insideAttributeConstant)*
 		ClosingSingleQuotes
 	;
 
 doubleQuotedValue
 	:
 		OpeningDoubleQuotes
-		(DQS_OUTPUTBLOCK | DQS_FLUFF)*
+		(insideAttributeOutputBlock | insideAttributeConstant)*
 		ClosingDoubleQuotes
 	;
+
+insideAttributeOutputBlock
+	:
+		SQS_OUTPUTBLOCK | DQS_OUTPUTBLOCK
+	;
+	
+insideAttributeConstant
+	:
+		SQS_FLUFF | DQS_FLUFF | UNQUOTED_ATTRIBUTE
+	;	
 
 openingTag
 	:

@@ -1,0 +1,8 @@
+Hello, 
+	
+	
+		${ Name }!
+		
+It's really nice to see you here in ${ Location }.
+@{* comment *}
+Another static block, hello ${ Name }

@@ -7,9 +7,8 @@ namespace Quokka
 {
 	internal class BooleanExpressionVisitor : QuokkaBaseVisitor<IBooleanExpression>
 	{
-		public static BooleanExpressionVisitor Instance { get; } = new BooleanExpressionVisitor();
-
-		private BooleanExpressionVisitor()
+		public BooleanExpressionVisitor(VisitingContext visitingContext)
+			: base(visitingContext)
 		{
 		}
 
@@ -32,7 +31,7 @@ namespace Quokka
 		public override IBooleanExpression VisitParameterValueExpression(QuokkaParser.ParameterValueExpressionContext context)
 		{
 			return new BooleanParameterValueExpression(
-				context.Accept(new VariableVisitor(TypeDefinition.Boolean)));
+				context.Accept(new VariableVisitor(visitingContext, TypeDefinition.Boolean)));
 		}
 
 		public override IBooleanExpression VisitArithmeticComparisonExpression(QuokkaParser.ArithmeticComparisonExpressionContext context)
@@ -57,10 +56,11 @@ namespace Quokka
 				throw new InvalidOperationException(
 					"None of possible comparison operators encountered, the grammar is most likely faulty");
 
+			var arithmeticVisitor = new ArithmeticExpressionVisitor(visitingContext);
 			return new ArithmeticComparisonExpression(
 				operation,
-				context.arithmeticExpression(0).Accept(ArithmeticExpressionVisitor.Instance),
-				context.arithmeticExpression(1).Accept(ArithmeticExpressionVisitor.Instance));
+				context.arithmeticExpression(0).Accept(arithmeticVisitor),
+				context.arithmeticExpression(1).Accept(arithmeticVisitor));
 		}
 		
 		public override IBooleanExpression VisitNotExpression(QuokkaParser.NotExpressionContext context)

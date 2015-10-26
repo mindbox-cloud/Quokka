@@ -23,7 +23,7 @@ namespace Quokka.Sandbox
 
 		static void Main(string[] args)
 		{
-			var template = ParseFileContents(@"c:\Code\Quokka\Grammar\Quokka\sample inputs\29. Composite parameters consistent multiple usages.txt");
+			var template = ParseFileContents(@"c:\Code\Quokka\Grammar\Quokka\sample inputs\32. Output blocks in different places.txt");
 			
 			Console.WriteLine("Press Enter to exit:");
 			Console.ReadLine();

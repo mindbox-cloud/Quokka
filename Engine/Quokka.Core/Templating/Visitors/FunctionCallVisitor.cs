@@ -13,7 +13,10 @@ namespace Quokka
 		/// </summary>
 		private readonly IFunctionArgument implicitlyPassedArgument;
 
-		public FunctionCallVisitor(IFunctionArgument implicitlyPassedArgument = null)
+		public FunctionCallVisitor(
+			VisitingContext visitingContext,
+			IFunctionArgument implicitlyPassedArgument = null)
+			: base(visitingContext)
 		{
 			this.implicitlyPassedArgument = implicitlyPassedArgument;
 		}
@@ -32,7 +35,7 @@ namespace Quokka
 				context
 					.functionArgumentList()
 					.expression()
-					.Select(argument => argument.Accept(FunctionArgumentVisitor.Instance)));
+					.Select(argument => argument.Accept(new FunctionArgumentVisitor(visitingContext))));
 
 			return new FunctionCall(
 				functionNameToken.GetText(),

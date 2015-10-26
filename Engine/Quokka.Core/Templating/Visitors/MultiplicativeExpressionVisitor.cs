@@ -4,20 +4,21 @@ namespace Quokka
 {
 	internal class MultiplicativeExpressionVisitor : QuokkaBaseVisitor<MultiplicationOperand>
 	{
-		public static MultiplicativeExpressionVisitor Instance { get; } = new MultiplicativeExpressionVisitor();
-
-		private MultiplicativeExpressionVisitor()
+		public MultiplicativeExpressionVisitor(VisitingContext visitingContext)
+			: base(visitingContext)
 		{
 		}
 
 		public override MultiplicationOperand VisitMultiplicationOperand(QuokkaParser.MultiplicationOperandContext context)
 		{
-			return MultiplicationOperand.Multiply(context.arithmeticAtom().Accept(ArithmeticExpressionVisitor.Instance));
+			return MultiplicationOperand.Multiply(context.arithmeticAtom()
+				.Accept(new ArithmeticExpressionVisitor(visitingContext)));
 		}
 
 		public override MultiplicationOperand VisitDivisionOperand(QuokkaParser.DivisionOperandContext context)
 		{
-			return MultiplicationOperand.Divide(context.arithmeticAtom().Accept(ArithmeticExpressionVisitor.Instance));
+			return MultiplicationOperand.Divide(context.arithmeticAtom()
+				.Accept(new ArithmeticExpressionVisitor(visitingContext)));
 		}
 	}
 }

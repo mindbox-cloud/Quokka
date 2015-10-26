@@ -50,6 +50,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="Html\HtmlTemplateBasicTests.cs" />
     <Compile Include="ModelValidation\ModelvalidationTests.cs" />
     <Compile Include="Rendering\RenderArithmeticOutputTests.cs" />
     <Compile Include="Rendering\RenderBasicTests.cs" />

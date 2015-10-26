@@ -4,9 +4,8 @@ namespace Quokka
 {
 	internal class StringConstantVisitor : QuokkaBaseVisitor<string>
 	{
-		public static StringConstantVisitor Instance { get; } = new StringConstantVisitor();
-
-		private StringConstantVisitor()
+		public StringConstantVisitor(VisitingContext visitingContext)
+			: base(visitingContext)
 		{
 		}
 

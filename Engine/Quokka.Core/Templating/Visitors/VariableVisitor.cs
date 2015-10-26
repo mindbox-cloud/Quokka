@@ -1,6 +1,4 @@
-﻿using Antlr4.Runtime;
-
-using Quokka.Generated;
+﻿using Quokka.Generated;
 
 namespace Quokka
 {
@@ -8,7 +6,10 @@ namespace Quokka
 	{
 		private readonly TypeDefinition requiredVariableExpressionType;
 
-		public VariableVisitor(TypeDefinition requiredVariableExpressionType)
+		public VariableVisitor(
+			VisitingContext visitingContext,
+			TypeDefinition requiredVariableExpressionType)
+			: base(visitingContext)
 		{
 			this.requiredVariableExpressionType = requiredVariableExpressionType;
 		}

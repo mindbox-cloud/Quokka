@@ -4,43 +4,41 @@ namespace Quokka
 {
 	internal class OutputVisitor : QuokkaBaseVisitor<IOutputBlock>
 	{
-		public static OutputVisitor Instance { get; } = new OutputVisitor();
-
-		private OutputVisitor()
+		public OutputVisitor(VisitingContext visitingContext)
+			: base(visitingContext)
 		{
 		}
 
 		public override IOutputBlock VisitOutputBlock(QuokkaParser.OutputBlockContext context)
 		{
-			if (context.filterChain() != null)
-				return new FunctionCallOutputBlock(context.Accept(FilterChainVisitor.Instance));
+			
 
 			return Visit(context.expression());
 		}
 
 		public override IOutputBlock VisitParameterValueExpression(QuokkaParser.ParameterValueExpressionContext context)
 		{
-			return new VariableOutputBlock(context.Accept(new VariableVisitor(TypeDefinition.Primitive)));
+			return new VariableOutputBlock(context.Accept(new VariableVisitor(visitingContext, TypeDefinition.Primitive)));
 		}
 
 		public override IOutputBlock VisitFunctionCall(QuokkaParser.FunctionCallContext context)
 		{
-			return new FunctionCallOutputBlock(context.Accept(new FunctionCallVisitor()));
+			return new FunctionCallOutputBlock(context.Accept(new FunctionCallVisitor(visitingContext)));
 		}
 
 		public override IOutputBlock VisitArithmeticExpression(QuokkaParser.ArithmeticExpressionContext context)
 		{
-			return new ArithmeticExpressionOutputBlock(context.Accept(ArithmeticExpressionVisitor.Instance));
+			return new ArithmeticExpressionOutputBlock(context.Accept(new ArithmeticExpressionVisitor(visitingContext)));
 		}
 
 		public override IOutputBlock VisitBooleanExpression(QuokkaParser.BooleanExpressionContext context)
 		{
-			return new BooleanExpressionOutputBlock(context.Accept(BooleanExpressionVisitor.Instance));
+			return new BooleanExpressionOutputBlock(context.Accept(new BooleanExpressionVisitor(visitingContext)));
 		}
 
 		public override IOutputBlock VisitStringConstant(QuokkaParser.StringConstantContext context)
 		{
-			return new StringConstantOutputBlock(context.Accept(StringConstantVisitor.Instance));
+			return new StringConstantOutputBlock(context.Accept(new StringConstantVisitor(visitingContext)));
 		}
 	}
 }

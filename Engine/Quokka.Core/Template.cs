@@ -7,7 +7,7 @@ using Quokka.Generated;
 
 namespace Quokka
 {
-	public sealed class Template
+	public class Template
 	{
 		private readonly TemplateBlock compiledTemplateTree;
 		private readonly ICompositeModelDefinition requiredModelDefinition;
@@ -18,13 +18,14 @@ namespace Quokka
 		internal Template(
 			string templateText,
 			FunctionRegistry functionRegistry,
-            bool throwIfErrorsEncountered = true)
+            bool throwIfErrorsEncountered = true,
+			Func<VisitingContext, IQuokkaVisitor<StaticBlock>> staticBlockVisitorCreator = null)
 		{
 			if (templateText == null)
 				throw new ArgumentNullException(nameof(templateText));
 			if (functionRegistry == null)
 				throw new ArgumentNullException(nameof(functionRegistry));
-
+			
 			this.functionRegistry = functionRegistry;
 
 			try
@@ -36,7 +37,12 @@ namespace Quokka
 
 				if (!syntaxErrorListener.GetErrors().Any())
 				{
-					compiledTemplateTree = new RootTemplateVisitor().Visit(templateParseTree) ?? TemplateBlock.Empty();
+					VisitingContext visitingContext = new VisitingContext(
+						syntaxErrorListener,
+						staticBlockVisitorCreator ?? (context => new StaticBlockVisitor(context)));
+
+					compiledTemplateTree = new RootTemplateVisitor(visitingContext).Visit(templateParseTree) 
+						?? TemplateBlock.Empty();
 
 					var analysisContext = new SemanticAnalysisContext
 						(new CompilationVariableScope(),

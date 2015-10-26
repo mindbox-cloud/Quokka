@@ -32,29 +32,29 @@ using DFA = Antlr4.Runtime.Dfa.DFA;
 [System.CLSCompliant(false)]
 internal partial class QuokkaHtml : Parser {
 	public const int
-		HtmlComment=1, HtmlDtd=2, CDATA=3, LeftAngularBracket=4, Fluff=5, RightAngularBracket=6, 
-		Slash=7, TAG_EQUALS=8, TAG_NAME=9, TAG_WHITESPACE=10, SCRIPT_BODY=11, 
-		SCRIPT_SHORT_BODY=12, STYLE_BODY=13, STYLE_SHORT_BODY=14, UNQUOTED_ATTRIBUTE=15, 
-		OpeningDoubleQuotes=16, OpeningSingleQuotes=17, ClosingDoubleQuotes=18, 
-		DQS_OUTPUTBLOCK=19, DQS_FLUFF=20, ClosingSingleQuotes=21, SQS_OUTPUTBLOCK=22, 
-		SQS_FLUFF=23;
+		HtmlComment=1, HtmlDtd=2, CDATA=3, LeftAngularBracket=4, OutputBlock=5, 
+		Fluff=6, RightAngularBracket=7, Slash=8, TAG_EQUALS=9, TAG_NAME=10, TAG_WHITESPACE=11, 
+		SCRIPT_BODY=12, SCRIPT_SHORT_BODY=13, STYLE_BODY=14, STYLE_SHORT_BODY=15, 
+		UNQUOTED_ATTRIBUTE=16, OpeningDoubleQuotes=17, OpeningSingleQuotes=18, 
+		ClosingDoubleQuotes=19, DQS_OUTPUTBLOCK=20, DQS_FLUFF=21, ClosingSingleQuotes=22, 
+		SQS_OUTPUTBLOCK=23, SQS_FLUFF=24;
 	public const int
 		RULE_htmlBlock = 0, RULE_nonImportantHtml = 1, RULE_plainText = 2, RULE_attribute = 3, 
 		RULE_attributeValue = 4, RULE_unquotedValue = 5, RULE_singleQuotedValue = 6, 
-		RULE_doubleQuotedValue = 7, RULE_openingTag = 8, RULE_closingTag = 9, 
-		RULE_selfClosingTag = 10;
+		RULE_doubleQuotedValue = 7, RULE_insideAttributeOutputBlock = 8, RULE_insideAttributeConstant = 9, 
+		RULE_openingTag = 10, RULE_closingTag = 11, RULE_selfClosingTag = 12;
 	public static readonly string[] ruleNames = {
 		"htmlBlock", "nonImportantHtml", "plainText", "attribute", "attributeValue", 
-		"unquotedValue", "singleQuotedValue", "doubleQuotedValue", "openingTag", 
-		"closingTag", "selfClosingTag"
+		"unquotedValue", "singleQuotedValue", "doubleQuotedValue", "insideAttributeOutputBlock", 
+		"insideAttributeConstant", "openingTag", "closingTag", "selfClosingTag"
 	};
 
 	private static readonly string[] _LiteralNames = {
-		null, null, null, null, "'<'", null, "'>'", "'/'", "'='"
+		null, null, null, null, "'<'", null, null, "'>'", "'/'", "'='"
 	};
 	private static readonly string[] _SymbolicNames = {
-		null, "HtmlComment", "HtmlDtd", "CDATA", "LeftAngularBracket", "Fluff", 
-		"RightAngularBracket", "Slash", "TAG_EQUALS", "TAG_NAME", "TAG_WHITESPACE", 
+		null, "HtmlComment", "HtmlDtd", "CDATA", "LeftAngularBracket", "OutputBlock", 
+		"Fluff", "RightAngularBracket", "Slash", "TAG_EQUALS", "TAG_NAME", "TAG_WHITESPACE", 
 		"SCRIPT_BODY", "SCRIPT_SHORT_BODY", "STYLE_BODY", "STYLE_SHORT_BODY", 
 		"UNQUOTED_ATTRIBUTE", "OpeningDoubleQuotes", "OpeningSingleQuotes", "ClosingDoubleQuotes", 
 		"DQS_OUTPUTBLOCK", "DQS_FLUFF", "ClosingSingleQuotes", "SQS_OUTPUTBLOCK", 
@@ -133,44 +133,44 @@ internal partial class QuokkaHtml : Parser {
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 27;
+			State = 31;
 			ErrorHandler.Sync(this);
 			_la = TokenStream.La(1);
 			do {
 				{
-				State = 27;
+				State = 31;
 				switch ( Interpreter.AdaptivePredict(TokenStream,0,Context) ) {
 				case 1:
 					{
-					State = 22; openingTag();
+					State = 26; openingTag();
 					}
 					break;
 				case 2:
 					{
-					State = 23; closingTag();
+					State = 27; closingTag();
 					}
 					break;
 				case 3:
 					{
-					State = 24; selfClosingTag();
+					State = 28; selfClosingTag();
 					}
 					break;
 				case 4:
 					{
-					State = 25; plainText();
+					State = 29; plainText();
 					}
 					break;
 				case 5:
 					{
-					State = 26; nonImportantHtml();
+					State = 30; nonImportantHtml();
 					}
 					break;
 				}
 				}
-				State = 29;
+				State = 33;
 				ErrorHandler.Sync(this);
 				_la = TokenStream.La(1);
-			} while ( (((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << HtmlComment) | (1L << HtmlDtd) | (1L << CDATA) | (1L << LeftAngularBracket) | (1L << Fluff))) != 0) );
+			} while ( (((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << HtmlComment) | (1L << HtmlDtd) | (1L << CDATA) | (1L << LeftAngularBracket) | (1L << OutputBlock) | (1L << Fluff))) != 0) );
 			}
 		}
 		catch (RecognitionException re) {
@@ -208,7 +208,7 @@ internal partial class QuokkaHtml : Parser {
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 31;
+			State = 35;
 			_la = TokenStream.La(1);
 			if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << HtmlComment) | (1L << HtmlDtd) | (1L << CDATA))) != 0)) ) {
 			ErrorHandler.RecoverInline(this);
@@ -234,6 +234,10 @@ internal partial class QuokkaHtml : Parser {
 		public ITerminalNode Fluff(int i) {
 			return GetToken(QuokkaHtml.Fluff, i);
 		}
+		public ITerminalNode[] OutputBlock() { return GetTokens(QuokkaHtml.OutputBlock); }
+		public ITerminalNode OutputBlock(int i) {
+			return GetToken(QuokkaHtml.OutputBlock, i);
+		}
 		public PlainTextContext(ParserRuleContext parent, int invokingState)
 			: base(parent, invokingState)
 		{
@@ -250,11 +254,12 @@ internal partial class QuokkaHtml : Parser {
 	public PlainTextContext plainText() {
 		PlainTextContext _localctx = new PlainTextContext(Context, State);
 		EnterRule(_localctx, 4, RULE_plainText);
+		int _la;
 		try {
 			int _alt;
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 34;
+			State = 38;
 			ErrorHandler.Sync(this);
 			_alt = 1;
 			do {
@@ -262,14 +267,21 @@ internal partial class QuokkaHtml : Parser {
 				case 1:
 					{
 					{
-					State = 33; Match(Fluff);
+					State = 37;
+					_la = TokenStream.La(1);
+					if ( !(_la==OutputBlock || _la==Fluff) ) {
+					ErrorHandler.RecoverInline(this);
+					}
+					else {
+					    Consume();
+					}
 					}
 					}
 					break;
 				default:
 					throw new NoViableAltException(this);
 				}
-				State = 36;
+				State = 40;
 				ErrorHandler.Sync(this);
 				_alt = Interpreter.AdaptivePredict(TokenStream,2,Context);
 			} while ( _alt!=2 && _alt!=global::Antlr4.Runtime.Atn.ATN.InvalidAltNumber );
@@ -312,13 +324,13 @@ internal partial class QuokkaHtml : Parser {
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 38; Match(TAG_NAME);
-			State = 41;
+			State = 42; Match(TAG_NAME);
+			State = 45;
 			_la = TokenStream.La(1);
 			if (_la==TAG_EQUALS) {
 				{
-				State = 39; Match(TAG_EQUALS);
-				State = 40; attributeValue();
+				State = 43; Match(TAG_EQUALS);
+				State = 44; attributeValue();
 				}
 			}
 
@@ -362,24 +374,26 @@ internal partial class QuokkaHtml : Parser {
 		AttributeValueContext _localctx = new AttributeValueContext(Context, State);
 		EnterRule(_localctx, 8, RULE_attributeValue);
 		try {
-			State = 46;
+			State = 50;
 			switch (TokenStream.La(1)) {
 			case OpeningDoubleQuotes:
 				EnterOuterAlt(_localctx, 1);
 				{
-				State = 43; doubleQuotedValue();
+				State = 47; doubleQuotedValue();
 				}
 				break;
 			case OpeningSingleQuotes:
 				EnterOuterAlt(_localctx, 2);
 				{
-				State = 44; singleQuotedValue();
+				State = 48; singleQuotedValue();
 				}
 				break;
 			case UNQUOTED_ATTRIBUTE:
+			case DQS_FLUFF:
+			case SQS_FLUFF:
 				EnterOuterAlt(_localctx, 3);
 				{
-				State = 45; unquotedValue();
+				State = 49; unquotedValue();
 				}
 				break;
 			default:
@@ -398,7 +412,9 @@ internal partial class QuokkaHtml : Parser {
 	}
 
 	public partial class UnquotedValueContext : ParserRuleContext {
-		public ITerminalNode UNQUOTED_ATTRIBUTE() { return GetToken(QuokkaHtml.UNQUOTED_ATTRIBUTE, 0); }
+		public InsideAttributeConstantContext insideAttributeConstant() {
+			return GetRuleContext<InsideAttributeConstantContext>(0);
+		}
 		public UnquotedValueContext(ParserRuleContext parent, int invokingState)
 			: base(parent, invokingState)
 		{
@@ -418,7 +434,7 @@ internal partial class QuokkaHtml : Parser {
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 48; Match(UNQUOTED_ATTRIBUTE);
+			State = 52; insideAttributeConstant();
 			}
 		}
 		catch (RecognitionException re) {
@@ -435,13 +451,17 @@ internal partial class QuokkaHtml : Parser {
 	public partial class SingleQuotedValueContext : ParserRuleContext {
 		public ITerminalNode OpeningSingleQuotes() { return GetToken(QuokkaHtml.OpeningSingleQuotes, 0); }
 		public ITerminalNode ClosingSingleQuotes() { return GetToken(QuokkaHtml.ClosingSingleQuotes, 0); }
-		public ITerminalNode[] SQS_OUTPUTBLOCK() { return GetTokens(QuokkaHtml.SQS_OUTPUTBLOCK); }
-		public ITerminalNode SQS_OUTPUTBLOCK(int i) {
-			return GetToken(QuokkaHtml.SQS_OUTPUTBLOCK, i);
+		public InsideAttributeOutputBlockContext[] insideAttributeOutputBlock() {
+			return GetRuleContexts<InsideAttributeOutputBlockContext>();
 		}
-		public ITerminalNode[] SQS_FLUFF() { return GetTokens(QuokkaHtml.SQS_FLUFF); }
-		public ITerminalNode SQS_FLUFF(int i) {
-			return GetToken(QuokkaHtml.SQS_FLUFF, i);
+		public InsideAttributeOutputBlockContext insideAttributeOutputBlock(int i) {
+			return GetRuleContext<InsideAttributeOutputBlockContext>(i);
+		}
+		public InsideAttributeConstantContext[] insideAttributeConstant() {
+			return GetRuleContexts<InsideAttributeConstantContext>();
+		}
+		public InsideAttributeConstantContext insideAttributeConstant(int i) {
+			return GetRuleContext<InsideAttributeConstantContext>(i);
 		}
 		public SingleQuotedValueContext(ParserRuleContext parent, int invokingState)
 			: base(parent, invokingState)
@@ -463,28 +483,36 @@ internal partial class QuokkaHtml : Parser {
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 50; Match(OpeningSingleQuotes);
-			State = 54;
+			State = 54; Match(OpeningSingleQuotes);
+			State = 59;
 			ErrorHandler.Sync(this);
 			_la = TokenStream.La(1);
-			while (_la==SQS_OUTPUTBLOCK || _la==SQS_FLUFF) {
+			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << UNQUOTED_ATTRIBUTE) | (1L << DQS_OUTPUTBLOCK) | (1L << DQS_FLUFF) | (1L << SQS_OUTPUTBLOCK) | (1L << SQS_FLUFF))) != 0)) {
 				{
-				{
-				State = 51;
-				_la = TokenStream.La(1);
-				if ( !(_la==SQS_OUTPUTBLOCK || _la==SQS_FLUFF) ) {
-				ErrorHandler.RecoverInline(this);
+				State = 57;
+				switch (TokenStream.La(1)) {
+				case DQS_OUTPUTBLOCK:
+				case SQS_OUTPUTBLOCK:
+					{
+					State = 55; insideAttributeOutputBlock();
+					}
+					break;
+				case UNQUOTED_ATTRIBUTE:
+				case DQS_FLUFF:
+				case SQS_FLUFF:
+					{
+					State = 56; insideAttributeConstant();
+					}
+					break;
+				default:
+					throw new NoViableAltException(this);
 				}
-				else {
-				    Consume();
 				}
-				}
-				}
-				State = 56;
+				State = 61;
 				ErrorHandler.Sync(this);
 				_la = TokenStream.La(1);
 			}
-			State = 57; Match(ClosingSingleQuotes);
+			State = 62; Match(ClosingSingleQuotes);
 			}
 		}
 		catch (RecognitionException re) {
@@ -501,13 +529,17 @@ internal partial class QuokkaHtml : Parser {
 	public partial class DoubleQuotedValueContext : ParserRuleContext {
 		public ITerminalNode OpeningDoubleQuotes() { return GetToken(QuokkaHtml.OpeningDoubleQuotes, 0); }
 		public ITerminalNode ClosingDoubleQuotes() { return GetToken(QuokkaHtml.ClosingDoubleQuotes, 0); }
-		public ITerminalNode[] DQS_OUTPUTBLOCK() { return GetTokens(QuokkaHtml.DQS_OUTPUTBLOCK); }
-		public ITerminalNode DQS_OUTPUTBLOCK(int i) {
-			return GetToken(QuokkaHtml.DQS_OUTPUTBLOCK, i);
+		public InsideAttributeOutputBlockContext[] insideAttributeOutputBlock() {
+			return GetRuleContexts<InsideAttributeOutputBlockContext>();
 		}
-		public ITerminalNode[] DQS_FLUFF() { return GetTokens(QuokkaHtml.DQS_FLUFF); }
-		public ITerminalNode DQS_FLUFF(int i) {
-			return GetToken(QuokkaHtml.DQS_FLUFF, i);
+		public InsideAttributeOutputBlockContext insideAttributeOutputBlock(int i) {
+			return GetRuleContext<InsideAttributeOutputBlockContext>(i);
+		}
+		public InsideAttributeConstantContext[] insideAttributeConstant() {
+			return GetRuleContexts<InsideAttributeConstantContext>();
+		}
+		public InsideAttributeConstantContext insideAttributeConstant(int i) {
+			return GetRuleContext<InsideAttributeConstantContext>(i);
 		}
 		public DoubleQuotedValueContext(ParserRuleContext parent, int invokingState)
 			: base(parent, invokingState)
@@ -529,28 +561,125 @@ internal partial class QuokkaHtml : Parser {
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 59; Match(OpeningDoubleQuotes);
-			State = 63;
+			State = 64; Match(OpeningDoubleQuotes);
+			State = 69;
 			ErrorHandler.Sync(this);
 			_la = TokenStream.La(1);
-			while (_la==DQS_OUTPUTBLOCK || _la==DQS_FLUFF) {
+			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << UNQUOTED_ATTRIBUTE) | (1L << DQS_OUTPUTBLOCK) | (1L << DQS_FLUFF) | (1L << SQS_OUTPUTBLOCK) | (1L << SQS_FLUFF))) != 0)) {
 				{
-				{
-				State = 60;
-				_la = TokenStream.La(1);
-				if ( !(_la==DQS_OUTPUTBLOCK || _la==DQS_FLUFF) ) {
-				ErrorHandler.RecoverInline(this);
+				State = 67;
+				switch (TokenStream.La(1)) {
+				case DQS_OUTPUTBLOCK:
+				case SQS_OUTPUTBLOCK:
+					{
+					State = 65; insideAttributeOutputBlock();
+					}
+					break;
+				case UNQUOTED_ATTRIBUTE:
+				case DQS_FLUFF:
+				case SQS_FLUFF:
+					{
+					State = 66; insideAttributeConstant();
+					}
+					break;
+				default:
+					throw new NoViableAltException(this);
 				}
-				else {
-				    Consume();
 				}
-				}
-				}
-				State = 65;
+				State = 71;
 				ErrorHandler.Sync(this);
 				_la = TokenStream.La(1);
 			}
-			State = 66; Match(ClosingDoubleQuotes);
+			State = 72; Match(ClosingDoubleQuotes);
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			ErrorHandler.ReportError(this, re);
+			ErrorHandler.Recover(this, re);
+		}
+		finally {
+			ExitRule();
+		}
+		return _localctx;
+	}
+
+	public partial class InsideAttributeOutputBlockContext : ParserRuleContext {
+		public ITerminalNode SQS_OUTPUTBLOCK() { return GetToken(QuokkaHtml.SQS_OUTPUTBLOCK, 0); }
+		public ITerminalNode DQS_OUTPUTBLOCK() { return GetToken(QuokkaHtml.DQS_OUTPUTBLOCK, 0); }
+		public InsideAttributeOutputBlockContext(ParserRuleContext parent, int invokingState)
+			: base(parent, invokingState)
+		{
+		}
+		public override int RuleIndex { get { return RULE_insideAttributeOutputBlock; } }
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			IQuokkaHtmlVisitor<TResult> typedVisitor = visitor as IQuokkaHtmlVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitInsideAttributeOutputBlock(this);
+			else return visitor.VisitChildren(this);
+		}
+	}
+
+	[RuleVersion(0)]
+	public InsideAttributeOutputBlockContext insideAttributeOutputBlock() {
+		InsideAttributeOutputBlockContext _localctx = new InsideAttributeOutputBlockContext(Context, State);
+		EnterRule(_localctx, 16, RULE_insideAttributeOutputBlock);
+		int _la;
+		try {
+			EnterOuterAlt(_localctx, 1);
+			{
+			State = 74;
+			_la = TokenStream.La(1);
+			if ( !(_la==DQS_OUTPUTBLOCK || _la==SQS_OUTPUTBLOCK) ) {
+			ErrorHandler.RecoverInline(this);
+			}
+			else {
+			    Consume();
+			}
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			ErrorHandler.ReportError(this, re);
+			ErrorHandler.Recover(this, re);
+		}
+		finally {
+			ExitRule();
+		}
+		return _localctx;
+	}
+
+	public partial class InsideAttributeConstantContext : ParserRuleContext {
+		public ITerminalNode SQS_FLUFF() { return GetToken(QuokkaHtml.SQS_FLUFF, 0); }
+		public ITerminalNode DQS_FLUFF() { return GetToken(QuokkaHtml.DQS_FLUFF, 0); }
+		public ITerminalNode UNQUOTED_ATTRIBUTE() { return GetToken(QuokkaHtml.UNQUOTED_ATTRIBUTE, 0); }
+		public InsideAttributeConstantContext(ParserRuleContext parent, int invokingState)
+			: base(parent, invokingState)
+		{
+		}
+		public override int RuleIndex { get { return RULE_insideAttributeConstant; } }
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			IQuokkaHtmlVisitor<TResult> typedVisitor = visitor as IQuokkaHtmlVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitInsideAttributeConstant(this);
+			else return visitor.VisitChildren(this);
+		}
+	}
+
+	[RuleVersion(0)]
+	public InsideAttributeConstantContext insideAttributeConstant() {
+		InsideAttributeConstantContext _localctx = new InsideAttributeConstantContext(Context, State);
+		EnterRule(_localctx, 18, RULE_insideAttributeConstant);
+		int _la;
+		try {
+			EnterOuterAlt(_localctx, 1);
+			{
+			State = 76;
+			_la = TokenStream.La(1);
+			if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << UNQUOTED_ATTRIBUTE) | (1L << DQS_FLUFF) | (1L << SQS_FLUFF))) != 0)) ) {
+			ErrorHandler.RecoverInline(this);
+			}
+			else {
+			    Consume();
+			}
 			}
 		}
 		catch (RecognitionException re) {
@@ -589,27 +718,27 @@ internal partial class QuokkaHtml : Parser {
 	[RuleVersion(0)]
 	public OpeningTagContext openingTag() {
 		OpeningTagContext _localctx = new OpeningTagContext(Context, State);
-		EnterRule(_localctx, 16, RULE_openingTag);
+		EnterRule(_localctx, 20, RULE_openingTag);
 		int _la;
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 68; Match(LeftAngularBracket);
-			State = 69; Match(TAG_NAME);
-			State = 73;
+			State = 78; Match(LeftAngularBracket);
+			State = 79; Match(TAG_NAME);
+			State = 83;
 			ErrorHandler.Sync(this);
 			_la = TokenStream.La(1);
 			while (_la==TAG_NAME) {
 				{
 				{
-				State = 70; attribute();
+				State = 80; attribute();
 				}
 				}
-				State = 75;
+				State = 85;
 				ErrorHandler.Sync(this);
 				_la = TokenStream.La(1);
 			}
-			State = 76; Match(RightAngularBracket);
+			State = 86; Match(RightAngularBracket);
 			}
 		}
 		catch (RecognitionException re) {
@@ -649,28 +778,28 @@ internal partial class QuokkaHtml : Parser {
 	[RuleVersion(0)]
 	public ClosingTagContext closingTag() {
 		ClosingTagContext _localctx = new ClosingTagContext(Context, State);
-		EnterRule(_localctx, 18, RULE_closingTag);
+		EnterRule(_localctx, 22, RULE_closingTag);
 		int _la;
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 78; Match(LeftAngularBracket);
-			State = 79; Match(Slash);
-			State = 80; Match(TAG_NAME);
-			State = 84;
+			State = 88; Match(LeftAngularBracket);
+			State = 89; Match(Slash);
+			State = 90; Match(TAG_NAME);
+			State = 94;
 			ErrorHandler.Sync(this);
 			_la = TokenStream.La(1);
 			while (_la==TAG_NAME) {
 				{
 				{
-				State = 81; attribute();
+				State = 91; attribute();
 				}
 				}
-				State = 86;
+				State = 96;
 				ErrorHandler.Sync(this);
 				_la = TokenStream.La(1);
 			}
-			State = 87; Match(RightAngularBracket);
+			State = 97; Match(RightAngularBracket);
 			}
 		}
 		catch (RecognitionException re) {
@@ -710,28 +839,28 @@ internal partial class QuokkaHtml : Parser {
 	[RuleVersion(0)]
 	public SelfClosingTagContext selfClosingTag() {
 		SelfClosingTagContext _localctx = new SelfClosingTagContext(Context, State);
-		EnterRule(_localctx, 20, RULE_selfClosingTag);
+		EnterRule(_localctx, 24, RULE_selfClosingTag);
 		int _la;
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 89; Match(LeftAngularBracket);
-			State = 90; Match(TAG_NAME);
-			State = 94;
+			State = 99; Match(LeftAngularBracket);
+			State = 100; Match(TAG_NAME);
+			State = 104;
 			ErrorHandler.Sync(this);
 			_la = TokenStream.La(1);
 			while (_la==TAG_NAME) {
 				{
 				{
-				State = 91; attribute();
+				State = 101; attribute();
 				}
 				}
-				State = 96;
+				State = 106;
 				ErrorHandler.Sync(this);
 				_la = TokenStream.La(1);
 			}
-			State = 97; Match(Slash);
-			State = 98; Match(RightAngularBracket);
+			State = 107; Match(Slash);
+			State = 108; Match(RightAngularBracket);
 			}
 		}
 		catch (RecognitionException re) {
@@ -746,41 +875,44 @@ internal partial class QuokkaHtml : Parser {
 	}
 
 	public static readonly string _serializedATN =
-		"\x3\x430\xD6D1\x8206\xAD2D\x4417\xAEF1\x8D80\xAADD\x3\x19g\x4\x2\t\x2"+
+		"\x3\x430\xD6D1\x8206\xAD2D\x4417\xAEF1\x8D80\xAADD\x3\x1Aq\x4\x2\t\x2"+
 		"\x4\x3\t\x3\x4\x4\t\x4\x4\x5\t\x5\x4\x6\t\x6\x4\a\t\a\x4\b\t\b\x4\t\t"+
-		"\t\x4\n\t\n\x4\v\t\v\x4\f\t\f\x3\x2\x3\x2\x3\x2\x3\x2\x3\x2\x6\x2\x1E"+
-		"\n\x2\r\x2\xE\x2\x1F\x3\x3\x3\x3\x3\x4\x6\x4%\n\x4\r\x4\xE\x4&\x3\x5\x3"+
-		"\x5\x3\x5\x5\x5,\n\x5\x3\x6\x3\x6\x3\x6\x5\x6\x31\n\x6\x3\a\x3\a\x3\b"+
-		"\x3\b\a\b\x37\n\b\f\b\xE\b:\v\b\x3\b\x3\b\x3\t\x3\t\a\t@\n\t\f\t\xE\t"+
-		"\x43\v\t\x3\t\x3\t\x3\n\x3\n\x3\n\a\nJ\n\n\f\n\xE\nM\v\n\x3\n\x3\n\x3"+
-		"\v\x3\v\x3\v\x3\v\a\vU\n\v\f\v\xE\vX\v\v\x3\v\x3\v\x3\f\x3\f\x3\f\a\f"+
-		"_\n\f\f\f\xE\f\x62\v\f\x3\f\x3\f\x3\f\x3\f\x2\x2\r\x2\x4\x6\b\n\f\xE\x10"+
-		"\x12\x14\x16\x2\x5\x3\x2\x3\x5\x3\x2\x18\x19\x3\x2\x15\x16i\x2\x1D\x3"+
-		"\x2\x2\x2\x4!\x3\x2\x2\x2\x6$\x3\x2\x2\x2\b(\x3\x2\x2\x2\n\x30\x3\x2\x2"+
-		"\x2\f\x32\x3\x2\x2\x2\xE\x34\x3\x2\x2\x2\x10=\x3\x2\x2\x2\x12\x46\x3\x2"+
-		"\x2\x2\x14P\x3\x2\x2\x2\x16[\x3\x2\x2\x2\x18\x1E\x5\x12\n\x2\x19\x1E\x5"+
-		"\x14\v\x2\x1A\x1E\x5\x16\f\x2\x1B\x1E\x5\x6\x4\x2\x1C\x1E\x5\x4\x3\x2"+
-		"\x1D\x18\x3\x2\x2\x2\x1D\x19\x3\x2\x2\x2\x1D\x1A\x3\x2\x2\x2\x1D\x1B\x3"+
-		"\x2\x2\x2\x1D\x1C\x3\x2\x2\x2\x1E\x1F\x3\x2\x2\x2\x1F\x1D\x3\x2\x2\x2"+
-		"\x1F \x3\x2\x2\x2 \x3\x3\x2\x2\x2!\"\t\x2\x2\x2\"\x5\x3\x2\x2\x2#%\a\a"+
-		"\x2\x2$#\x3\x2\x2\x2%&\x3\x2\x2\x2&$\x3\x2\x2\x2&\'\x3\x2\x2\x2\'\a\x3"+
-		"\x2\x2\x2(+\a\v\x2\x2)*\a\n\x2\x2*,\x5\n\x6\x2+)\x3\x2\x2\x2+,\x3\x2\x2"+
-		"\x2,\t\x3\x2\x2\x2-\x31\x5\x10\t\x2.\x31\x5\xE\b\x2/\x31\x5\f\a\x2\x30"+
-		"-\x3\x2\x2\x2\x30.\x3\x2\x2\x2\x30/\x3\x2\x2\x2\x31\v\x3\x2\x2\x2\x32"+
-		"\x33\a\x11\x2\x2\x33\r\x3\x2\x2\x2\x34\x38\a\x13\x2\x2\x35\x37\t\x3\x2"+
-		"\x2\x36\x35\x3\x2\x2\x2\x37:\x3\x2\x2\x2\x38\x36\x3\x2\x2\x2\x38\x39\x3"+
-		"\x2\x2\x2\x39;\x3\x2\x2\x2:\x38\x3\x2\x2\x2;<\a\x17\x2\x2<\xF\x3\x2\x2"+
-		"\x2=\x41\a\x12\x2\x2>@\t\x4\x2\x2?>\x3\x2\x2\x2@\x43\x3\x2\x2\x2\x41?"+
-		"\x3\x2\x2\x2\x41\x42\x3\x2\x2\x2\x42\x44\x3\x2\x2\x2\x43\x41\x3\x2\x2"+
-		"\x2\x44\x45\a\x14\x2\x2\x45\x11\x3\x2\x2\x2\x46G\a\x6\x2\x2GK\a\v\x2\x2"+
-		"HJ\x5\b\x5\x2IH\x3\x2\x2\x2JM\x3\x2\x2\x2KI\x3\x2\x2\x2KL\x3\x2\x2\x2"+
-		"LN\x3\x2\x2\x2MK\x3\x2\x2\x2NO\a\b\x2\x2O\x13\x3\x2\x2\x2PQ\a\x6\x2\x2"+
-		"QR\a\t\x2\x2RV\a\v\x2\x2SU\x5\b\x5\x2TS\x3\x2\x2\x2UX\x3\x2\x2\x2VT\x3"+
-		"\x2\x2\x2VW\x3\x2\x2\x2WY\x3\x2\x2\x2XV\x3\x2\x2\x2YZ\a\b\x2\x2Z\x15\x3"+
-		"\x2\x2\x2[\\\a\x6\x2\x2\\`\a\v\x2\x2]_\x5\b\x5\x2^]\x3\x2\x2\x2_\x62\x3"+
-		"\x2\x2\x2`^\x3\x2\x2\x2`\x61\x3\x2\x2\x2\x61\x63\x3\x2\x2\x2\x62`\x3\x2"+
-		"\x2\x2\x63\x64\a\t\x2\x2\x64\x65\a\b\x2\x2\x65\x17\x3\x2\x2\x2\f\x1D\x1F"+
-		"&+\x30\x38\x41KV`";
+		"\t\x4\n\t\n\x4\v\t\v\x4\f\t\f\x4\r\t\r\x4\xE\t\xE\x3\x2\x3\x2\x3\x2\x3"+
+		"\x2\x3\x2\x6\x2\"\n\x2\r\x2\xE\x2#\x3\x3\x3\x3\x3\x4\x6\x4)\n\x4\r\x4"+
+		"\xE\x4*\x3\x5\x3\x5\x3\x5\x5\x5\x30\n\x5\x3\x6\x3\x6\x3\x6\x5\x6\x35\n"+
+		"\x6\x3\a\x3\a\x3\b\x3\b\x3\b\a\b<\n\b\f\b\xE\b?\v\b\x3\b\x3\b\x3\t\x3"+
+		"\t\x3\t\a\t\x46\n\t\f\t\xE\tI\v\t\x3\t\x3\t\x3\n\x3\n\x3\v\x3\v\x3\f\x3"+
+		"\f\x3\f\a\fT\n\f\f\f\xE\fW\v\f\x3\f\x3\f\x3\r\x3\r\x3\r\x3\r\a\r_\n\r"+
+		"\f\r\xE\r\x62\v\r\x3\r\x3\r\x3\xE\x3\xE\x3\xE\a\xEi\n\xE\f\xE\xE\xEl\v"+
+		"\xE\x3\xE\x3\xE\x3\xE\x3\xE\x2\x2\xF\x2\x4\x6\b\n\f\xE\x10\x12\x14\x16"+
+		"\x18\x1A\x2\x6\x3\x2\x3\x5\x3\x2\a\b\x4\x2\x16\x16\x19\x19\x5\x2\x12\x12"+
+		"\x17\x17\x1A\x1As\x2!\x3\x2\x2\x2\x4%\x3\x2\x2\x2\x6(\x3\x2\x2\x2\b,\x3"+
+		"\x2\x2\x2\n\x34\x3\x2\x2\x2\f\x36\x3\x2\x2\x2\xE\x38\x3\x2\x2\x2\x10\x42"+
+		"\x3\x2\x2\x2\x12L\x3\x2\x2\x2\x14N\x3\x2\x2\x2\x16P\x3\x2\x2\x2\x18Z\x3"+
+		"\x2\x2\x2\x1A\x65\x3\x2\x2\x2\x1C\"\x5\x16\f\x2\x1D\"\x5\x18\r\x2\x1E"+
+		"\"\x5\x1A\xE\x2\x1F\"\x5\x6\x4\x2 \"\x5\x4\x3\x2!\x1C\x3\x2\x2\x2!\x1D"+
+		"\x3\x2\x2\x2!\x1E\x3\x2\x2\x2!\x1F\x3\x2\x2\x2! \x3\x2\x2\x2\"#\x3\x2"+
+		"\x2\x2#!\x3\x2\x2\x2#$\x3\x2\x2\x2$\x3\x3\x2\x2\x2%&\t\x2\x2\x2&\x5\x3"+
+		"\x2\x2\x2\')\t\x3\x2\x2(\'\x3\x2\x2\x2)*\x3\x2\x2\x2*(\x3\x2\x2\x2*+\x3"+
+		"\x2\x2\x2+\a\x3\x2\x2\x2,/\a\f\x2\x2-.\a\v\x2\x2.\x30\x5\n\x6\x2/-\x3"+
+		"\x2\x2\x2/\x30\x3\x2\x2\x2\x30\t\x3\x2\x2\x2\x31\x35\x5\x10\t\x2\x32\x35"+
+		"\x5\xE\b\x2\x33\x35\x5\f\a\x2\x34\x31\x3\x2\x2\x2\x34\x32\x3\x2\x2\x2"+
+		"\x34\x33\x3\x2\x2\x2\x35\v\x3\x2\x2\x2\x36\x37\x5\x14\v\x2\x37\r\x3\x2"+
+		"\x2\x2\x38=\a\x14\x2\x2\x39<\x5\x12\n\x2:<\x5\x14\v\x2;\x39\x3\x2\x2\x2"+
+		";:\x3\x2\x2\x2<?\x3\x2\x2\x2=;\x3\x2\x2\x2=>\x3\x2\x2\x2>@\x3\x2\x2\x2"+
+		"?=\x3\x2\x2\x2@\x41\a\x18\x2\x2\x41\xF\x3\x2\x2\x2\x42G\a\x13\x2\x2\x43"+
+		"\x46\x5\x12\n\x2\x44\x46\x5\x14\v\x2\x45\x43\x3\x2\x2\x2\x45\x44\x3\x2"+
+		"\x2\x2\x46I\x3\x2\x2\x2G\x45\x3\x2\x2\x2GH\x3\x2\x2\x2HJ\x3\x2\x2\x2I"+
+		"G\x3\x2\x2\x2JK\a\x15\x2\x2K\x11\x3\x2\x2\x2LM\t\x4\x2\x2M\x13\x3\x2\x2"+
+		"\x2NO\t\x5\x2\x2O\x15\x3\x2\x2\x2PQ\a\x6\x2\x2QU\a\f\x2\x2RT\x5\b\x5\x2"+
+		"SR\x3\x2\x2\x2TW\x3\x2\x2\x2US\x3\x2\x2\x2UV\x3\x2\x2\x2VX\x3\x2\x2\x2"+
+		"WU\x3\x2\x2\x2XY\a\t\x2\x2Y\x17\x3\x2\x2\x2Z[\a\x6\x2\x2[\\\a\n\x2\x2"+
+		"\\`\a\f\x2\x2]_\x5\b\x5\x2^]\x3\x2\x2\x2_\x62\x3\x2\x2\x2`^\x3\x2\x2\x2"+
+		"`\x61\x3\x2\x2\x2\x61\x63\x3\x2\x2\x2\x62`\x3\x2\x2\x2\x63\x64\a\t\x2"+
+		"\x2\x64\x19\x3\x2\x2\x2\x65\x66\a\x6\x2\x2\x66j\a\f\x2\x2gi\x5\b\x5\x2"+
+		"hg\x3\x2\x2\x2il\x3\x2\x2\x2jh\x3\x2\x2\x2jk\x3\x2\x2\x2km\x3\x2\x2\x2"+
+		"lj\x3\x2\x2\x2mn\a\n\x2\x2no\a\t\x2\x2o\x1B\x3\x2\x2\x2\xE!#*/\x34;=\x45"+
+		"GU`j";
 	public static readonly ATN _ATN =
 		new ATNDeserializer().Deserialize(_serializedATN.ToCharArray());
 }

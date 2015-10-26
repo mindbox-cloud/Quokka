@@ -18,11 +18,23 @@ LeftAngularBracket
 	:
 		'<' -> pushMode(InsideTag)
 	;
-
+/* 
 Fluff
 	:
 		~'<'+
 	;
+*/	
+
+OutputBlock
+	:
+		'${' .*? '}'
+	;	
+
+Fluff : [$] ~'{' ~[$]*? '}'
+      | [$] '{' '{' ~[$]*? '}'
+      | [$]
+      | ~[<$]+
+      ;
 	
 mode InsideTag;
 

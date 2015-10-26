@@ -7,9 +7,8 @@ namespace Quokka
 {
 	internal class ArithmeticExpressionVisitor : QuokkaBaseVisitor<IArithmeticExpression>
 	{
-		public static ArithmeticExpressionVisitor Instance { get; } = new ArithmeticExpressionVisitor();
-
-		private ArithmeticExpressionVisitor()
+		public ArithmeticExpressionVisitor(VisitingContext visitingContext)
+			: base(visitingContext)
 		{
 		}
 
@@ -22,7 +21,7 @@ namespace Quokka
 			operands.AddRange(context
 				.children
 				.Skip(1)
-				.Select(child => child.Accept(AdditionalExpressionVisitor.Instance)));
+				.Select(child => child.Accept(new AdditionalExpressionVisitor(visitingContext))));
 			return new AdditionExpression(operands);
 		}
 
@@ -35,7 +34,7 @@ namespace Quokka
 			operands.AddRange(context
 				.children
 				.Skip(1)
-				.Select(child => child.Accept(MultiplicativeExpressionVisitor.Instance)));
+				.Select(child => child.Accept(new MultiplicativeExpressionVisitor(visitingContext))));
 			return new MultiplicationExpression(operands);
 		}
 
@@ -55,7 +54,8 @@ namespace Quokka
 
 		public override IArithmeticExpression VisitParameterValueExpression(QuokkaParser.ParameterValueExpressionContext context)
 		{
-			return new ArithmeticParameterValueExpression(context.Accept(new VariableVisitor(TypeDefinition.Integer)));
+			return new ArithmeticParameterValueExpression(
+				context.Accept(new VariableVisitor(visitingContext, TypeDefinition.Integer)));
 		}
 
 		protected override IArithmeticExpression AggregateResult(IArithmeticExpression aggregate, IArithmeticExpression nextResult)

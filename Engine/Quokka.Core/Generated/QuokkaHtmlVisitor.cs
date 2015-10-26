@@ -79,6 +79,18 @@ internal interface IQuokkaHtmlVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <return>The visitor result.</return>
 	Result VisitDoubleQuotedValue([NotNull] QuokkaHtml.DoubleQuotedValueContext context);
 	/// <summary>
+	/// Visit a parse tree produced by <see cref="QuokkaHtml.insideAttributeOutputBlock"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitInsideAttributeOutputBlock([NotNull] QuokkaHtml.InsideAttributeOutputBlockContext context);
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="QuokkaHtml.insideAttributeConstant"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitInsideAttributeConstant([NotNull] QuokkaHtml.InsideAttributeConstantContext context);
+	/// <summary>
 	/// Visit a parse tree produced by <see cref="QuokkaHtml.openingTag"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>

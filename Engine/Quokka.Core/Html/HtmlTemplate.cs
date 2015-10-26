@@ -4,11 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Quokka
+namespace Quokka.Html
 {
-	/*
-	internal class OutputBlock : TemplateNodeBase
-	{
-	}
-	*/
+	
 }
