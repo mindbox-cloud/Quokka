@@ -70,6 +70,7 @@
     <Compile Include="Semantics\GrammarSpecificDataAnalysisContext.cs" />
     <Compile Include="Templating\Nodes\Base\IStaticBlockPart.cs" />
     <Compile Include="Templating\Nodes\Output\OutputInstructionBlock.cs" />
+    <Compile Include="Templating\Visitors\GrammarMergeTools.cs" />
     <Compile Include="Templating\Visitors\StaticBlockVisitor.cs" />
     <Compile Include="Templating\Visitors\StaticPartVisitor.cs" />
     <Compile Include="Templating\Visitors\VisitingContext.cs" />

@@ -51,6 +51,7 @@
   </Choose>
   <ItemGroup>
     <Compile Include="Helpers\ReferencesAssert.cs" />
+    <Compile Include="Html\GrammarMergingTests.cs" />
     <Compile Include="Html\HtmlReferenceDiscoveryTests.cs" />
     <Compile Include="Html\HtmlTemplateBasicTests.cs" />
     <Compile Include="ModelValidation\ModelvalidationTests.cs" />
