@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Quokka
 {
@@ -80,5 +82,39 @@ namespace Quokka
 			throw new InvalidOperationException(
 				$"Runtime type {runtimeType.Name} doesn't have a corresponding template variable type");
 		}
-    }
+
+		internal static TypeDefinition GetResultingTypeForMultupleOccurences<TTypedObject>(
+			IList<TTypedObject> occurences,
+			Func<TTypedObject, TypeDefinition> typeSelector,
+			Action<TTypedObject, TypeDefinition> inconsistentTypeErrorHandler)
+		{
+			if (!occurences.Any())
+				throw new InvalidOperationException("Variable has no occurences");
+
+			if (occurences.Count == 1)
+				return typeSelector(occurences.Single());
+
+			var occurencesByTypePriority = occurences
+				.OrderByDescending(oc => typeSelector(oc).Priority);
+
+			TypeDefinition resultingType = null;
+
+			foreach (var occurence in occurencesByTypePriority)
+			{
+				var occurenceType = typeSelector(occurence);
+
+				if (resultingType == null)
+				{
+					resultingType = occurenceType;
+				}
+				else
+				{
+					if (occurenceType != resultingType && !resultingType.IsCompatibleWithRequired(occurenceType))
+						inconsistentTypeErrorHandler(occurence, resultingType);
+				}
+			}
+
+			return resultingType;
+		}
+	}
 }

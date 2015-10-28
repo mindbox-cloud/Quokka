@@ -45,6 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Errors\IErrorListener.cs" />
+    <Compile Include="Errors\ModelDefinitionErrorListener.cs" />
     <Compile Include="Errors\SyntaxErrorListener.cs" />
     <Compile Include="Exceptions\InvalidTemplateModelException.cs" />
     <Compile Include="Exceptions\TemplateContainsErrorsException.cs" />
@@ -67,6 +68,7 @@
     <Compile Include="HtmlTemplate.cs" />
     <Compile Include="Html\HtmlDataAnalysisContext.cs" />
     <Compile Include="Html\Reference.cs" />
+    <Compile Include="Model\Definitions\ModelDefinitionTools.cs" />
     <Compile Include="Semantics\GrammarSpecificDataAnalysisContext.cs" />
     <Compile Include="Templating\Nodes\Base\IStaticBlockPart.cs" />
     <Compile Include="Templating\Nodes\Output\OutputInstructionBlock.cs" />

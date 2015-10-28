@@ -54,6 +54,7 @@
     <Compile Include="Html\GrammarMergingTests.cs" />
     <Compile Include="Html\HtmlReferenceDiscoveryTests.cs" />
     <Compile Include="Html\HtmlTemplateBasicTests.cs" />
+    <Compile Include="ModelValidation\ModelDefinitionCombiningTests.cs" />
     <Compile Include="ModelValidation\ModelvalidationTests.cs" />
     <Compile Include="Rendering\RenderArithmeticOutputTests.cs" />
     <Compile Include="Rendering\RenderBasicTests.cs" />

@@ -8,3 +8,4 @@ Engine/packages/*
 */obj/*
 Engine/.vs/*
 Engine/*DotSettings.user
+Engine/Quokka.Core/*.DotSettings

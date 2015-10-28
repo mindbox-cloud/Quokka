@@ -7,5 +7,9 @@ namespace Quokka
 		Template CreateTemplate(string templateText);
 
 		Template TryCreateTemplate(string templateText, out IList<ITemplateError> errors);
+
+		HtmlTemplate CreateHtmlTemplate(string templateText);
+
+		HtmlTemplate TryCreateHtmlTemplate(string templateText, out IList<ITemplateError> errors);
 	}
 }

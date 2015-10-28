@@ -65,46 +65,15 @@ namespace Quokka
 			collectionElementVariables.Add(collectionElementVariable);
 		}
 
-		public TypeDefinition DetermineType(ISemanticErrorListener errorListener)
-		{
-			if (!occurences.Any())
-				throw new InvalidOperationException("Variable has no occurences");
-
-			if (occurences.Count == 1)
-				return occurences.Single().RequiredType;
-
-			var occurencesByTypePriority = occurences
-				.OrderByDescending(oc => oc.RequiredType.Priority);
-
-			TypeDefinition resultingType = null;
-
-			foreach (var occurence in occurencesByTypePriority)
-			{
-				if (resultingType == null)
-				{
-					resultingType = occurence.RequiredType;
-				}
-				else
-				{
-					if (occurence.RequiredType != resultingType)
-					{
-						if (!resultingType.IsCompatibleWithRequired(occurence.RequiredType))
-						{
-							errorListener.AddInconsistentVariableTypingError(
-								this,
-								occurence,
-								resultingType);
-						}
-					}
-				}
-			}
-
-			return resultingType;
-		}
-
 		public IModelDefinition ToModelDefinition(ModelDefinitionFactory modelDefinitionFactory, ISemanticErrorListener errorListener)
 		{
-			var type = DetermineType(errorListener);
+			var type = TypeDefinition.GetResultingTypeForMultupleOccurences(
+				occurences,
+				occurence => occurence.RequiredType,
+				(occurence, correctType) => errorListener.AddInconsistentVariableTypingError(
+					this,
+					occurence,
+					correctType));
 
 			if (type == TypeDefinition.Composite)
 			{
