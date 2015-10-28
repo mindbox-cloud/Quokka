@@ -11,7 +11,7 @@ namespace Quokka.Tests
 		[TestMethod]
 		public void TemplateFactory_Create_NoErrors()
 		{
-			var template = new TemplateFactory()
+			var template = new DefaultTemplateFactory()
 				.CreateTemplate("Simple template");
 
 			Assert.AreEqual(
@@ -23,14 +23,14 @@ namespace Quokka.Tests
 		[ExpectedException(typeof(TemplateContainsErrorsException))]
 		public void TemplateFactory_Create_Error()
 		{
-			new TemplateFactory().CreateTemplate("${");
+			new DefaultTemplateFactory().CreateTemplate("${");
 		}
 
 		[TestMethod]
 		public void TemplateFactory_TryCreate_NoErrors()
 		{
 			IList<ITemplateError> errors;
-			var template = new TemplateFactory()
+			var template = new DefaultTemplateFactory()
 				.TryCreateTemplate("Simple template", out errors);
 
 			Assert.IsFalse(errors.Any());
@@ -43,7 +43,7 @@ namespace Quokka.Tests
 		public void TemplateFactory_TryCreate_Error()
 		{
 			IList<ITemplateError> errors;
-			var template = new TemplateFactory()
+			var template = new DefaultTemplateFactory()
 				.TryCreateTemplate("${", out errors);
 
 			Assert.AreEqual(1, errors.Count);
@@ -54,7 +54,7 @@ namespace Quokka.Tests
 		public void TemplateFactory_Create_AddedCustomFunction()
 		{
 			IList<ITemplateError> errors;
-			var template = new TemplateFactory(new TemplateFunction[] { new TestCustomFunction() })
+			var template = new DefaultTemplateFactory(new TemplateFunction[] { new TestCustomFunction() })
 				.TryCreateTemplate("${ TestSubstitution(\"line\") }", out errors);
 
 			Assert.IsFalse(errors.Any());

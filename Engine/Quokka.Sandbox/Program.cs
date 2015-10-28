@@ -21,9 +21,17 @@ namespace Quokka.Sandbox
 			return new Template(File.ReadAllText(filePath));
 		}
 
+		private static Template ParseHtmlFileContents(string filePath)
+		{
+			if (string.IsNullOrEmpty(filePath))
+				throw new ArgumentException("string.IsNullOrEmpty(filePath)", nameof(filePath));
+
+			return new HtmlTemplate(File.ReadAllText(filePath));
+		}
+
 		static void Main(string[] args)
 		{
-			var template = ParseFileContents(@"c:\Code\Quokka\Grammar\Quokka\sample inputs\32. Output blocks in different places.txt");
+			var template = ParseHtmlFileContents(@"c:\Code\Quokka\Grammar\Quokka\sample inputs\33. Loop with links.txt");
 			
 			Console.WriteLine("Press Enter to exit:");
 			Console.ReadLine();

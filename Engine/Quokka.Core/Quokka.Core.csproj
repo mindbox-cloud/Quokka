@@ -121,7 +121,7 @@
     <Compile Include="Errors\SemanticErrorListener.cs" />
     <Compile Include="Errors\SyntaxError.cs" />
     <Compile Include="Errors\TemplateErrorBase.cs" />
-    <Compile Include="TemplateFactory.cs" />
+    <Compile Include="DefaultTemplateFactory.cs" />
     <Compile Include="Templating\Nodes\Output\ArithmeticExpressionOutputBlock.cs" />
     <Compile Include="Templating\Nodes\Arithmetic\AdditionExpression.cs" />
     <Compile Include="Templating\Nodes\Arithmetic\ArithmeticExpressionBase.cs" />

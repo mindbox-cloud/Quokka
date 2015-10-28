@@ -1,6 +1,6 @@
 ﻿namespace Quokka
 {
-	internal class PrimitiveModelValue : IPrimitiveModelValue
+	public class PrimitiveModelValue : IPrimitiveModelValue
 	{
 		public object Value { get; }
 

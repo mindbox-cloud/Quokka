@@ -5,11 +5,11 @@ using System.Linq;
 
 namespace Quokka
 {
-	public class TemplateFactory : ITemplateFactory
+	public class DefaultTemplateFactory : ITemplateFactory
 	{
 		private readonly FunctionRegistry functionRegistry;
 
-		public TemplateFactory(IEnumerable<TemplateFunction> additionalFunctions = null)
+		public DefaultTemplateFactory(IEnumerable<TemplateFunction> additionalFunctions = null)
 		{
 			var functions = new List<TemplateFunction>(Template.GetStandardFunctions());
 			if (additionalFunctions != null)

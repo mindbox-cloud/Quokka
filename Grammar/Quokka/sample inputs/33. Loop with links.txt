@@ -1,0 +1,6 @@
+@{ for element in Recipient.Purchases }
+	<div>
+		${ element.Name }<br>
+		<a href ="${ element.Url }"> Купить </a>
+	</div>
+@{ end for }

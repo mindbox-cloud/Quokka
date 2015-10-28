@@ -1,6 +1,6 @@
 ﻿namespace Quokka
 {
-	internal class ModelField : IModelField
+	public class ModelField : IModelField
 	{
 		public string Name { get; }
 		public IModelValue Value { get; }

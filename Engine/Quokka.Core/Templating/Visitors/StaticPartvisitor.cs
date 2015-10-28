@@ -30,7 +30,7 @@ namespace Quokka
 			var startIndex = context.OutputInstructionStart().Symbol.StartIndex;
 			var length = context.InstructionEnd().Symbol.StopIndex - startIndex + 1;
 
-			return new OutputInstructionBlock(outputBlock, startIndex, length);
+			return new OutputInstructionBlock(outputBlock, GetRelativePartOffset(startIndex), length);
 		}
 
 		private int GetRelativePartOffset(int absoluteOffset)

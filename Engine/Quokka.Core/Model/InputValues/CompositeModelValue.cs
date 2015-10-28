@@ -3,11 +3,18 @@ using System.Linq;
 
 namespace Quokka
 {
-	internal class CompositeModelValue : ICompositeModelValue
+	public class CompositeModelValue : ICompositeModelValue
 	{
 		public IReadOnlyList<IModelField> Fields { get; }
 
 		public CompositeModelValue(params IModelField[] fields)
+		{
+			Fields = fields
+				.ToList()
+				.AsReadOnly();
+		}
+
+		public CompositeModelValue(IEnumerable<ModelField> fields)
 		{
 			Fields = fields
 				.ToList()

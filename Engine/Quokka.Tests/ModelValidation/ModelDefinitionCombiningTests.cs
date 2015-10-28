@@ -33,7 +33,7 @@ namespace Quokka.Tests
 				}
 			});
 
-			var combinedDefinition = new TemplateFactory().CombineModelDefinition(new[] { definition });
+			var combinedDefinition = new DefaultTemplateFactory().CombineModelDefinition(new[] { definition });
 
 			TemplateAssert.AreCompositeModelDefinitionsEqual(
 				definition,
@@ -55,7 +55,7 @@ namespace Quokka.Tests
 				{ "Primitive4", new PrimitiveModelDefinition(TypeDefinition.Decimal) }
 			});
 
-			var combinedDefinition = new TemplateFactory().CombineModelDefinition(new[] { definition1, definition2 });
+			var combinedDefinition = new DefaultTemplateFactory().CombineModelDefinition(new[] { definition1, definition2 });
 
 			TemplateAssert.AreCompositeModelDefinitionsEqual(
 				new CompositeModelDefinition(new Dictionary<string, IModelDefinition>
@@ -94,7 +94,7 @@ namespace Quokka.Tests
 			});
 
 
-			var combinedDefinition = new TemplateFactory().CombineModelDefinition(new[] { definition1, definition2 });
+			var combinedDefinition = new DefaultTemplateFactory().CombineModelDefinition(new[] { definition1, definition2 });
 
 			TemplateAssert.AreCompositeModelDefinitionsEqual(
 				new CompositeModelDefinition(new Dictionary<string, IModelDefinition>
@@ -142,7 +142,7 @@ namespace Quokka.Tests
 			});
 
 
-			var combinedDefinition = new TemplateFactory().CombineModelDefinition(new[] { definition1, definition2 });
+			var combinedDefinition = new DefaultTemplateFactory().CombineModelDefinition(new[] { definition1, definition2 });
 
 			TemplateAssert.AreCompositeModelDefinitionsEqual(
 				new CompositeModelDefinition(new Dictionary<string, IModelDefinition>
@@ -188,7 +188,7 @@ namespace Quokka.Tests
 			});
 
 
-			var combinedDefinition = new TemplateFactory().CombineModelDefinition(new[] { definition1, definition2 });
+			var combinedDefinition = new DefaultTemplateFactory().CombineModelDefinition(new[] { definition1, definition2 });
 
 			TemplateAssert.AreCompositeModelDefinitionsEqual(
 				new CompositeModelDefinition(new Dictionary<string, IModelDefinition>
@@ -220,7 +220,7 @@ namespace Quokka.Tests
 
 			IList<ITemplateError> errors;
 			var combinedDefinition =
-				new TemplateFactory().TryCombineModelDefinition(new[] { definition1, definition2 },
+				new DefaultTemplateFactory().TryCombineModelDefinition(new[] { definition1, definition2 },
 					out errors);
 
 			Assert.IsNull(combinedDefinition);
@@ -240,7 +240,7 @@ namespace Quokka.Tests
 				{ "Primitive1", new PrimitiveModelDefinition(TypeDefinition.Integer) }
 			});
 			
-			var combinedDefinition = new TemplateFactory().CombineModelDefinition(new[] { definition1, definition2 });
+			var combinedDefinition = new DefaultTemplateFactory().CombineModelDefinition(new[] { definition1, definition2 });
 
 			TemplateAssert.AreCompositeModelDefinitionsEqual(
 				new CompositeModelDefinition(new Dictionary<string, IModelDefinition>
