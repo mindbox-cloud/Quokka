@@ -19,7 +19,7 @@ namespace Quokka.Tests.Html
 			var template = new HtmlTemplate("No links here");
 			var references = template.GetReferences();
 
-			ReferencesAssert.AreCollectionsEqual(
+			ReferencesAssert.AreCollectionsEquivalent(
 				new List<Reference>(),
 				references);
 		}
@@ -30,10 +30,10 @@ namespace Quokka.Tests.Html
 			var template = new HtmlTemplate("<a href=\"http://example.com\">Test</a>");
 			var references = template.GetReferences();
 
-			ReferencesAssert.AreCollectionsEqual(
+			ReferencesAssert.AreCollectionsEquivalent(
 				new[]
 				{
-					new Reference("http://example.com", null, true),
+					new Reference("http://example.com", null, Guid.NewGuid(), true),
 				},
 				references);
 		}
@@ -44,10 +44,10 @@ namespace Quokka.Tests.Html
 			var template = new HtmlTemplate("<a href='http://example.com'>Test</a>");
 			var references = template.GetReferences();
 
-			ReferencesAssert.AreCollectionsEqual(
+			ReferencesAssert.AreCollectionsEquivalent(
 				new[]
 				{
-					new Reference("http://example.com", null, true),
+					new Reference("http://example.com", null, Guid.NewGuid(), true),
 				},
 				references);
 		}
@@ -58,10 +58,10 @@ namespace Quokka.Tests.Html
 			var template = new HtmlTemplate("<area href=\"http://example.com\">");
 			var references = template.GetReferences();
 
-			ReferencesAssert.AreCollectionsEqual(
+			ReferencesAssert.AreCollectionsEquivalent(
 				new[]
 				{
-					new Reference("http://example.com", null, true),
+					new Reference("http://example.com", null, Guid.NewGuid(), true),
 				},
 				references);
 		}
@@ -72,10 +72,10 @@ namespace Quokka.Tests.Html
 			var template = new HtmlTemplate("<area href='http://example.com'>");
 			var references = template.GetReferences();
 
-			ReferencesAssert.AreCollectionsEqual(
+			ReferencesAssert.AreCollectionsEquivalent(
 				new[]
 				{
-					new Reference("http://example.com", null, true),
+					new Reference("http://example.com", null, Guid.NewGuid(), true),
 				},
 				references);
 		}
@@ -86,10 +86,10 @@ namespace Quokka.Tests.Html
 			var template = new HtmlTemplate("<area href=\"http://example.com\" />");
 			var references = template.GetReferences();
 
-			ReferencesAssert.AreCollectionsEqual(
+			ReferencesAssert.AreCollectionsEquivalent(
 				new[]
 				{
-					new Reference("http://example.com", null, true),
+					new Reference("http://example.com", null, Guid.NewGuid(), true),
 				},
 				references);
 		}
@@ -100,10 +100,10 @@ namespace Quokka.Tests.Html
 			var template = new HtmlTemplate("<area href='http://example.com' />");
 			var references = template.GetReferences();
 
-			ReferencesAssert.AreCollectionsEqual(
+			ReferencesAssert.AreCollectionsEquivalent(
 				new[]
 				{
-					new Reference("http://example.com", null, true),
+					new Reference("http://example.com", null, Guid.NewGuid(), true),
 				},
 				references);
 		}
@@ -117,11 +117,11 @@ namespace Quokka.Tests.Html
 			");
 			var references = template.GetReferences();
 
-			ReferencesAssert.AreCollectionsEqual(
+			ReferencesAssert.AreCollectionsEquivalent(
 				new[]
 				{
-					new Reference("http://example.com", null, true),
-					new Reference("http://google.com", null, true)
+					new Reference("http://example.com", null, Guid.NewGuid(), true),
+					new Reference("http://google.com", null, Guid.NewGuid(), true)
 				},
 				references);
 		}

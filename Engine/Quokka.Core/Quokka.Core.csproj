@@ -67,7 +67,10 @@
     <Compile Include="Generated.Partials\QuokkaHtmlBaseVisitor.cs" />
     <Compile Include="HtmlTemplate.cs" />
     <Compile Include="Html\HtmlDataAnalysisContext.cs" />
+    <Compile Include="Html\HtmlRenderContext.cs" />
     <Compile Include="Html\Reference.cs" />
+    <Compile Include="IHtmlTemplate.cs" />
+    <Compile Include="ITemplate.cs" />
     <Compile Include="Model\Definitions\ModelDefinitionTools.cs" />
     <Compile Include="Semantics\GrammarSpecificDataAnalysisContext.cs" />
     <Compile Include="Templating\Nodes\Base\IStaticBlockPart.cs" />

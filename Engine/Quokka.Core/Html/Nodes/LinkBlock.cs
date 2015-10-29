@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
@@ -14,6 +15,8 @@ namespace Quokka.Html
 
 		private readonly string redirectUrlText;
 
+		private readonly Guid uniqueKey;
+
 		public int Offset { get; }
 		public int Length { get; }
 
@@ -23,6 +26,8 @@ namespace Quokka.Html
 			this.redirectUrlText = redirectUrlText;
 			Offset = offset;
 			Length = length;
+
+			uniqueKey = Guid.NewGuid();
 		}
 
 		public override void CompileVariableDefinitions(SemanticAnalysisContext context)
@@ -35,9 +40,24 @@ namespace Quokka.Html
 
 		public override void Render(StringBuilder resultBuilder, RenderContext context)
 		{
+			var htmlRenderContext = (HtmlRenderContext)context;
+
+			var linkBuilder = new StringBuilder();
+
 			foreach (var component in urlComponents)
 			{
-				component.Render(resultBuilder, context);
+				component.Render(linkBuilder, context);
+			}
+
+			string redirectUrl = linkBuilder.ToString();
+			if (htmlRenderContext.RedirectLinkProcessor != null)
+			{
+				string processedRedirectUrl = htmlRenderContext.RedirectLinkProcessor(uniqueKey, redirectUrl);
+				resultBuilder.Append(processedRedirectUrl);
+			}
+			else
+			{
+				resultBuilder.Append(redirectUrl);
 			}
 		}
 
@@ -48,6 +68,7 @@ namespace Quokka.Html
 				new Reference(
 					redirectUrlText,
 					null,
+					uniqueKey,
 					isConstant: !urlComponents.OfType<OutputInstructionBlock>().Any()));
 		}
 	}

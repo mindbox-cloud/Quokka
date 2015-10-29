@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Text;
 
 namespace Quokka
 {
@@ -40,7 +38,7 @@ namespace Quokka
 					context.VariableScope.CreateChildScope(
 						VariableValueStorage.CreateCompositeStorage(iterationVariable.Name, collectionElement));
 
-				block.Render(resultBuilder, new RenderContext(innerScope, context.Functions));
+				block.Render(resultBuilder, context.CreateInnerContext(innerScope));
 			}
 		}
 

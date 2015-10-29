@@ -1,16 +1,17 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 using Quokka.Html;
 
 namespace Quokka
 {
-	public class HtmlTemplate : Template
+	internal class HtmlTemplate : Template, IHtmlTemplate
 	{
 		internal HtmlTemplate(
 			string templateText,
 			FunctionRegistry functionRegistry,
-			bool throwIfErrorsEncountered = true)
+            bool throwIfErrorsEncountered = true)
 			: base(
 				  templateText,
 				  functionRegistry,
@@ -25,7 +26,7 @@ namespace Quokka
 				  new FunctionRegistry(GetStandardFunctions()))
 		{
 		}
-
+		
 		/// <summary>
 		/// Get a collection of external references (links) ordered from top to bottom.
 		/// </summary>
@@ -38,6 +39,27 @@ namespace Quokka
 			CompileGrammarSpecificData(htmlContext);
 
 			return htmlContext.GetReferences();
-		} 
+		}
+
+		public override string Render(ICompositeModelValue model)
+		{
+			return DoRender(model,
+				(scope, functionRegistry) => new HtmlRenderContext(
+					scope,
+					functionRegistry,
+					null));
+		}
+
+		public string Render(ICompositeModelValue model, Func<Guid, string, string> redirectLinkProcessor)
+		{
+			if (model == null)
+				throw new ArgumentNullException(nameof(model));
+
+			return DoRender(model,
+				(scope, functionRegistry) => new HtmlRenderContext(
+					scope,
+					functionRegistry,
+					redirectLinkProcessor));
+		}
 	}
 }

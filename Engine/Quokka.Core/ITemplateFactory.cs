@@ -4,12 +4,12 @@ namespace Quokka
 {
 	public interface ITemplateFactory
 	{
-		Template CreateTemplate(string templateText);
+		ITemplate CreateTemplate(string templateText);
 
-		Template TryCreateTemplate(string templateText, out IList<ITemplateError> errors);
+		ITemplate TryCreateTemplate(string templateText, out IList<ITemplateError> errors);
 
-		HtmlTemplate CreateHtmlTemplate(string templateText);
+		IHtmlTemplate CreateHtmlTemplate(string templateText);
 
-		HtmlTemplate TryCreateHtmlTemplate(string templateText, out IList<ITemplateError> errors);
+		IHtmlTemplate TryCreateHtmlTemplate(string templateText, out IList<ITemplateError> errors);
 	}
 }

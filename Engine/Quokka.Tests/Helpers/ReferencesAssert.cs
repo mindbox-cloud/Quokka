@@ -9,7 +9,7 @@ namespace Quokka.Tests
 {
 	internal static class ReferencesAssert
 	{
-		public static void AreCollectionsEqual(IEnumerable<Reference> expected, IReadOnlyList<Reference> actual)
+		public static void AreCollectionsEquivalent(IEnumerable<Reference> expected, IReadOnlyList<Reference> actual)
 		{
 			var expectedList = expected.ToList();
 

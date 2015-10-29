@@ -7,7 +7,7 @@ using Quokka.Generated;
 
 namespace Quokka
 {
-	public class Template
+	internal class Template : ITemplate
 	{
 		private readonly TemplateBlock compiledTemplateTree;
 		private readonly ICompositeModelDefinition requiredModelDefinition;
@@ -81,20 +81,26 @@ namespace Quokka
 			return requiredModelDefinition;
 		}
 
-		public string Render(ICompositeModelValue model)
+		public virtual string Render(ICompositeModelValue model)
 		{
 			if (model == null)
 				throw new ArgumentNullException(nameof(model));
 			if (Errors.Any())
 				throw new TemplateContainsErrorsException(Errors);
 
+			return DoRender(model, (scope, contextFunctionRegistry) => new RenderContext(scope, contextFunctionRegistry));
+		}
+
+		protected string DoRender(
+			ICompositeModelValue model, Func<RuntimeVariableScope, FunctionRegistry, RenderContext> renderContextCreator)
+		{
 			try
 			{
 				new ModelValidator().ValidateModel(model, requiredModelDefinition);
 
 				var valueStorage = VariableValueStorage.CreateStorageForValue(model);
 				var builder = new StringBuilder();
-				var context = new RenderContext(new RuntimeVariableScope(valueStorage), functionRegistry);
+				var context = renderContextCreator(new RuntimeVariableScope(valueStorage), functionRegistry);
 				compiledTemplateTree.Render(builder, context);
 				return builder.ToString();
 			}
@@ -110,6 +116,11 @@ namespace Quokka
 		protected void CompileGrammarSpecificData(GrammarSpecificDataAnalysisContext context)
 		{
 			compiledTemplateTree.CompileGrammarSpecificData(context);
+		}
+
+		protected virtual RenderContext CreateRenderContext(RuntimeVariableScope scope, FunctionRegistry contextFunctionRegistry)
+		{
+			return new RenderContext(scope, contextFunctionRegistry);
 		}
 
 		private QuokkaParser.TemplateContext ParseTemplateText(string templateText, SyntaxErrorListener syntaxErrorListener)

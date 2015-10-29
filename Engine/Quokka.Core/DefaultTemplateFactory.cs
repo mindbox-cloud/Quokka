@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.Generic;
 using System.Linq;
 
 namespace Quokka
@@ -18,12 +16,12 @@ namespace Quokka
 			functionRegistry = new FunctionRegistry(functions);
 		}
 
-		public Template CreateTemplate(string templateText)
+		public ITemplate CreateTemplate(string templateText)
 		{
 			return new Template(templateText, functionRegistry,  true);
 		}
 
-		public Template TryCreateTemplate(string templateText, out IList<ITemplateError> errors)
+		public ITemplate TryCreateTemplate(string templateText, out IList<ITemplateError> errors)
 		{
 			var template = new Template(templateText, functionRegistry, false);
 			errors = template.Errors;
@@ -31,12 +29,12 @@ namespace Quokka
 			return errors.Any() ? null : template;
 		}
 
-		public HtmlTemplate CreateHtmlTemplate(string templateText)
+		public IHtmlTemplate CreateHtmlTemplate(string templateText)
 		{
 			return new HtmlTemplate(templateText, functionRegistry, true);
 		}
 
-		public HtmlTemplate TryCreateHtmlTemplate(string templateText, out IList<ITemplateError> errors)
+		public IHtmlTemplate TryCreateHtmlTemplate(string templateText, out IList<ITemplateError> errors)
 		{
 			var template = new HtmlTemplate(templateText, functionRegistry, false);
 			errors = template.Errors;
