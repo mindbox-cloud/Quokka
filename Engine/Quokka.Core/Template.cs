@@ -102,6 +102,7 @@ namespace Quokka
 				var builder = new StringBuilder();
 				var context = renderContextCreator(new RuntimeVariableScope(valueStorage), functionRegistry);
 				compiledTemplateTree.Render(builder, context);
+				context.OnRenderingEnd(builder);
 				return builder.ToString();
 			}
 			catch (Exception ex)

@@ -1,4 +1,6 @@
-﻿namespace Quokka
+﻿using System.Text;
+
+namespace Quokka
 {
 	internal class RenderContext
 	{
@@ -14,6 +16,10 @@
 		public virtual RenderContext CreateInnerContext(RuntimeVariableScope variableScope)
 		{
 			return new RenderContext(variableScope, Functions);
+		}
+
+		public virtual void OnRenderingEnd(StringBuilder resultBuilder)
+		{
 		}
 	}
 }

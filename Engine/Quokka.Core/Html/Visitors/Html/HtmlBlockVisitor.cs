@@ -35,6 +35,15 @@ namespace Quokka.Html
 			return null;
 		}
 
+		public override IStaticBlockPart VisitClosingTag(QuokkaHtml.ClosingTagContext context)
+		{
+			string tagName = context.TAG_NAME().GetText();
+
+			if (StringComparer.InvariantCultureIgnoreCase.Equals(tagName, "body"))
+				return new IdentificationCodePlaceHolderBlock(context.LeftAngularBracket().Symbol.StartIndex);
+			return null;
+		}
+
 		private IStaticBlockPart TryGetLinkNodeFromTagAttributes(IEnumerable<QuokkaHtml.AttributeContext> attributes)
 		{
 			var hrefAttributeValueVisitor = new HrefAttributeValueVisitor(parsingContext);

@@ -68,6 +68,7 @@
     <Compile Include="HtmlTemplate.cs" />
     <Compile Include="Html\HtmlDataAnalysisContext.cs" />
     <Compile Include="Html\HtmlRenderContext.cs" />
+    <Compile Include="Html\Nodes\IdentificationCodePlaceHolderBlock.cs" />
     <Compile Include="Html\Reference.cs" />
     <Compile Include="IHtmlTemplate.cs" />
     <Compile Include="ITemplate.cs" />

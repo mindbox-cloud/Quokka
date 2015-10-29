@@ -47,10 +47,14 @@ namespace Quokka
 				(scope, functionRegistry) => new HtmlRenderContext(
 					scope,
 					functionRegistry,
+					null,
 					null));
 		}
 
-		public string Render(ICompositeModelValue model, Func<Guid, string, string> redirectLinkProcessor)
+		public string Render(
+			ICompositeModelValue model,
+			Func<Guid, string, string> redirectLinkProcessor,
+			string identificationCode = null)
 		{
 			if (model == null)
 				throw new ArgumentNullException(nameof(model));
@@ -59,7 +63,8 @@ namespace Quokka
 				(scope, functionRegistry) => new HtmlRenderContext(
 					scope,
 					functionRegistry,
-					redirectLinkProcessor));
+					redirectLinkProcessor,
+					identificationCode));
 		}
 	}
 }
