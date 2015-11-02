@@ -8,6 +8,8 @@ namespace Quokka
 {
 	public interface ITemplate
 	{
+		bool IsConstant { get; }
+
 		IList<ITemplateError> Errors { get; }
 
 		ICompositeModelDefinition GetModelDefinition();

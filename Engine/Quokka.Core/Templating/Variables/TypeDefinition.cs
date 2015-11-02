@@ -6,8 +6,8 @@ namespace Quokka
 {
 	internal class TypeDefinition<TRuntimeType> : TypeDefinition
 	{
-		public TypeDefinition(string name, TypeDefinition baseType, int priority)
-			: base(name, baseType, priority)
+		public TypeDefinition(string name, TypeDefinition baseType, int priority, bool allowsNull = false)
+			: base(name, baseType, priority, allowsNull)
 		{
 			
 		}
@@ -18,12 +18,14 @@ namespace Quokka
 		public string Name { get; }
 		internal TypeDefinition BaseType { get; }
 		internal int Priority { get; }
+		internal bool AllowsNull { get; }
 
-		internal TypeDefinition(string name, TypeDefinition baseType, int priority)
+		internal TypeDefinition(string name, TypeDefinition baseType, int priority, bool allowsNull = false)
 		{
 			Name = name;
 			BaseType = baseType;
 			Priority = priority;
+			AllowsNull = allowsNull;
 		}
 
 		internal bool IsCompatibleWithRequired(TypeDefinition requiredType)
@@ -46,13 +48,13 @@ namespace Quokka
 		public static TypeDefinition Primitive { get; } = new TypeDefinition("Primitive", Unknown, 5);
 
 		public static TypeDefinition Boolean { get; } = new TypeDefinition<bool>("Boolean", Primitive, 10);
-		public static TypeDefinition NullableDecimal { get; } = new TypeDefinition<decimal?>("NullableDecimal", Primitive, 10);
+		public static TypeDefinition NullableDecimal { get; } = new TypeDefinition<decimal?>("NullableDecimal", Primitive, 10, true);
 		public static TypeDefinition Decimal { get; } = new TypeDefinition<decimal>("Decimal", NullableDecimal, 10);
 		public static TypeDefinition Integer { get; } = new TypeDefinition<int>("Integer", Primitive, 10);
 		public static TypeDefinition String { get; } = new TypeDefinition<string>("String", Primitive, 10);
-		public static TypeDefinition NullableDateTime { get; } = new TypeDefinition<DateTime?>("NullableDateTime", Primitive, 10);
+		public static TypeDefinition NullableDateTime { get; } = new TypeDefinition<DateTime?>("NullableDateTime", Primitive, 10, true);
 		public static TypeDefinition DateTime { get; } = new TypeDefinition<DateTime>("DateTime", NullableDateTime, 10);
-		public static TypeDefinition NullableTimeSpan { get; } = new TypeDefinition<TimeSpan?>("NullableTimeSpan", Primitive, 10);
+		public static TypeDefinition NullableTimeSpan { get; } = new TypeDefinition<TimeSpan?>("NullableTimeSpan", Primitive, 10, true);
 		public static TypeDefinition TimeSpan { get; } = new TypeDefinition<TimeSpan>("TimeSpan", NullableTimeSpan, 10);
 
 		public static TypeDefinition Composite { get; } = new TypeDefinition("Composite", Unknown, 20);

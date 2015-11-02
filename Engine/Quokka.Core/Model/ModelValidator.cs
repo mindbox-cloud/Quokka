@@ -129,16 +129,19 @@ namespace Quokka
 		}
 
 		private bool ValidatePrimitiveModel(
-					IPrimitiveModelValue model,
-					IPrimitiveModelDefinition requiredModelDefinition,
-					string modelPrefix,
-					StringBuilder errorMessageBuilder)
+			IPrimitiveModelValue model,
+			IPrimitiveModelDefinition requiredModelDefinition,
+			string modelPrefix,
+			StringBuilder errorMessageBuilder)
 		{
 			bool hasErrors = false;
 			if (model.Value == null)
 			{
-				hasErrors = true;
-				errorMessageBuilder.AppendLine($"{modelPrefix} value is null");
+				if (!requiredModelDefinition.Type.AllowsNull)
+				{
+					hasErrors = true;
+					errorMessageBuilder.AppendLine($"{modelPrefix} value is null");
+				}
 			}
 			else
 			{
@@ -154,6 +157,8 @@ namespace Quokka
 
 			return !hasErrors;
 		}
+
+
 		private bool ValidateArrayModel(
 			IArrayModelValue model,
 			IArrayModelDefinition requiredModelDefinition,

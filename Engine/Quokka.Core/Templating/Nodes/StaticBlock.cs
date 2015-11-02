@@ -6,7 +6,12 @@ namespace Quokka
 {
 	internal class StaticBlock : TemplateNodeBase
 	{
-		private readonly IReadOnlyCollection<IStaticBlockPart> children; 
+		private readonly IReadOnlyCollection<IStaticBlockPart> children;
+
+		public override bool IsConstant
+		{
+			get { return children.All(child => child.IsConstant); }
+		}
 
 		public StaticBlock(IEnumerable<IStaticBlockPart> children)
 		{

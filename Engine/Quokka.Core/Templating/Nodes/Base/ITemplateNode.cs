@@ -4,6 +4,8 @@ namespace Quokka
 {
 	internal interface ITemplateNode
 	{
+		bool IsConstant { get; }
+
 		void CompileVariableDefinitions(SemanticAnalysisContext context);
 
 		void Render(StringBuilder resultBuilder, RenderContext context);

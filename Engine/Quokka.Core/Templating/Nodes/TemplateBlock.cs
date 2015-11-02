@@ -8,6 +8,11 @@ namespace Quokka
 	{
 		private readonly IReadOnlyCollection<ITemplateNode> children;
 
+		public override bool IsConstant
+		{
+			get { return children.All(child => child.IsConstant); }
+		}
+
 		public TemplateBlock(IEnumerable<ITemplateNode> children)
 		{
 			this.children = children

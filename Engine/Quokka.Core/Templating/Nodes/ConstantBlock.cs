@@ -8,6 +8,8 @@ namespace Quokka
 		public int Offset { get; }
 		public int Length { get; }
 
+		public override bool IsConstant { get; } = true;
+
 		public ConstantBlock(string text, int offset, int length)
 		{
 			Text = text;

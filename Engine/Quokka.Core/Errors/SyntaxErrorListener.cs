@@ -6,11 +6,11 @@ namespace Quokka
 {
 	internal class SyntaxErrorListener : BaseErrorListener
 	{
-		private readonly List<SyntaxError> errors = new List<SyntaxError>();
+		protected List<SyntaxError> Errors { get; } = new List<SyntaxError>();
 
 		public IReadOnlyCollection<SyntaxError> GetErrors()
 		{
-			return errors.AsReadOnly();
+			return Errors.AsReadOnly();
 		}
 
 		public override void SyntaxError(
@@ -21,7 +21,7 @@ namespace Quokka
 			string msg,
 			RecognitionException e)
 		{
-			errors.Add(new SyntaxError("Недопустимый символ", new Location(line, charPositionInLine)));
+			Errors.Add(new SyntaxError("Недопустимый символ", new Location(line, charPositionInLine)));
 		}
 
 		/// <summary>
@@ -43,7 +43,7 @@ namespace Quokka
 					? error.Location.Column + firstLineColumnOffset
 					: error.Location.Column;
 
-				errors.Add(new SyntaxError(error.Message, new Location(absoluteLine, absoluteColumn)));
+				Errors.Add(new SyntaxError(error.Message, new Location(absoluteLine, absoluteColumn)));
 			}
 		}
 	}

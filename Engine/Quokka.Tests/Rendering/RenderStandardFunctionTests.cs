@@ -74,6 +74,19 @@ namespace Quokka.Tests
 			Assert.AreEqual("2,54", result);
 		}
 
+
+		[TestMethod]
+		public void Render_Function_FormatDecimal_Null()
+		{
+			var template = new Template("${ formatDecimal(Value, \"N2\") }");
+
+			var result = template.Render(
+				new CompositeModelValue(
+					new ModelField("Value", new PrimitiveModelValue(null))));
+
+			Assert.AreEqual("", result);
+		}
+
 		[TestMethod]
 		public void Render_Function_FormatDecimal_EmptyFormat()
 		{

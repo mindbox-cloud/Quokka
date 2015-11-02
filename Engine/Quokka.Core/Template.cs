@@ -15,6 +15,12 @@ namespace Quokka
 		
 		public IList<ITemplateError> Errors { get; }
 
+		/// <summary>
+		/// <c>True</c> if the template is a constant string that is independent from parameters
+		/// and will always be rendered the same way, otherwise <c>False</c>.
+		/// </summary>
+		public bool IsConstant { get; }
+
 		internal Template(
 			string templateText,
 			FunctionRegistry functionRegistry,
@@ -43,6 +49,8 @@ namespace Quokka
 
 					compiledTemplateTree = new RootTemplateVisitor(visitingContext).Visit(templateParseTree) 
 						?? TemplateBlock.Empty();
+
+					IsConstant = compiledTemplateTree.IsConstant;
 
 					var analysisContext = new SemanticAnalysisContext
 						(new CompilationVariableScope(),
