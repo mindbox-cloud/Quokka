@@ -23,7 +23,7 @@ namespace Quokka.Html
 		public LinkBlock(IReadOnlyList<ITemplateNode> urlComponents, string redirectUrlText, int offset, int length)
 		{
 			this.urlComponents = urlComponents;
-			this.redirectUrlText = redirectUrlText;
+			this.redirectUrlText = redirectUrlText.Trim();
 			Offset = offset;
 			Length = length;
 

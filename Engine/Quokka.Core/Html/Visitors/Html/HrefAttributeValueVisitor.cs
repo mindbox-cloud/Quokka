@@ -52,5 +52,17 @@ namespace Quokka.Html
 				return null;
 			}
 		}
+
+		public override LinkBlock VisitUnquotedValue(QuokkaHtml.UnquotedValueContext context)
+		{
+			var offset = context.Start.StartIndex;
+			var length = context.Stop.StopIndex - offset + 1;
+			var stringValue = context.GetText();
+			return new LinkBlock(
+				new [] { new ConstantBlock(stringValue, offset, length) },
+				stringValue,
+				offset,
+				length);
+		}
 	}
 }

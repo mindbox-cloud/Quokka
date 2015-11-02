@@ -66,10 +66,12 @@
     <Compile Include="Generated.Partials\QuokkaBaseVisitor.cs" />
     <Compile Include="Generated.Partials\QuokkaHtmlBaseVisitor.cs" />
     <Compile Include="HtmlTemplate.cs" />
+    <Compile Include="Html\Errors\HtmlSyntaxErrorListener.cs" />
     <Compile Include="Html\HtmlDataAnalysisContext.cs" />
     <Compile Include="Html\HtmlRenderContext.cs" />
     <Compile Include="Html\Nodes\IdentificationCodePlaceHolderBlock.cs" />
     <Compile Include="Html\Reference.cs" />
+    <Compile Include="Html\Visitors\Html\LinkNameAttributeValueVisitor.cs" />
     <Compile Include="IHtmlTemplate.cs" />
     <Compile Include="ITemplate.cs" />
     <Compile Include="Model\Definitions\ModelDefinitionTools.cs" />

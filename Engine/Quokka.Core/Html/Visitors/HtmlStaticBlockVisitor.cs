@@ -29,9 +29,15 @@ namespace Quokka.Html
 
 			var parser = new QuokkaHtml(commonTokenStream);
 			parser.RemoveErrorListeners();
-			parser.AddErrorListener(visitingContext.ErrorListener);
+			var htmlSyntaxErrorListener = new HtmlSyntaxErrorListener();
+			parser.AddErrorListener(htmlSyntaxErrorListener);
 
 			var htmlBlock = parser.htmlBlock();
+
+			visitingContext.ErrorListener.MoveErrorsFromSubGrammar(
+				htmlSyntaxErrorListener.GetErrors(),
+				context.Start.Line - 1,
+				context.Start.Column);
 
 			var outputBlocks = outerGrammarStaticChildren
 				.OfType<OutputInstructionBlock>()
