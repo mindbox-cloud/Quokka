@@ -51,7 +51,7 @@ namespace Quokka
 		public static TypeDefinition NullableDecimal { get; } = new TypeDefinition<decimal?>("NullableDecimal", Primitive, 10, true);
 		public static TypeDefinition Decimal { get; } = new TypeDefinition<decimal>("Decimal", NullableDecimal, 10);
 		public static TypeDefinition Integer { get; } = new TypeDefinition<int>("Integer", Primitive, 10);
-		public static TypeDefinition String { get; } = new TypeDefinition<string>("String", Primitive, 10);
+		public static TypeDefinition String { get; } = new TypeDefinition<string>("String", Primitive, 10, true);
 		public static TypeDefinition NullableDateTime { get; } = new TypeDefinition<DateTime?>("NullableDateTime", Primitive, 10, true);
 		public static TypeDefinition DateTime { get; } = new TypeDefinition<DateTime>("DateTime", NullableDateTime, 10);
 		public static TypeDefinition NullableTimeSpan { get; } = new TypeDefinition<TimeSpan?>("NullableTimeSpan", Primitive, 10, true);

@@ -63,6 +63,19 @@ namespace Quokka.Tests
 		}
 
 		[TestMethod]
+		public void Render_Function_ReplaceIfEmpty_FirstOptionNullParameter()
+		{
+			var template = new Template("${ replaceIfEmpty($Value1, $Value2) }");
+
+			var result = template.Render(
+				new CompositeModelValue(
+					new ModelField("Value1", new PrimitiveModelValue(null)),
+					new ModelField("Value2", new PrimitiveModelValue("Plan B"))));
+
+			Assert.AreEqual("Plan B", result);
+		}
+
+		[TestMethod]
 		public void Render_Function_FormatDecimal_CorrectFormat()
 		{
 			var template = new Template("${ formatDecimal(Value, \"N2\") }");
