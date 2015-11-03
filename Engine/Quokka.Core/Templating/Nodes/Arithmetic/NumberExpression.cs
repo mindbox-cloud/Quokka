@@ -13,5 +13,9 @@
 		{
 			return number;
 		}
+
+		public override void CompileVariableDefinitions(SemanticAnalysisContext context)
+		{
+		}
 	}
 }

@@ -58,7 +58,7 @@ namespace Quokka
 
 								var triviaLength = currentInnerBlock.Offset - outerBlockPosition;
 								var leadingTriviaBlock = new ConstantBlock(
-									constantOuterBlock.Text.Substring(outerBlockPosition, triviaLength),
+									constantOuterBlock.Text.Substring(outerBlockPosition - outerBlock.Offset, triviaLength),
 									outerBlockPosition,
 									triviaLength);
 								result.Add(leadingTriviaBlock);

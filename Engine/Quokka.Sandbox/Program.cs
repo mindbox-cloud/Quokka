@@ -31,7 +31,7 @@ namespace Quokka.Sandbox
 
 		static void Main(string[] args)
 		{
-			var template = ParseHtmlFileContents(@"c:\Code\Quokka\Grammar\Quokka\sample inputs\33. Loop with links.txt");
+			var template = ParseHtmlFileContents(@"c:\Code\Quokka\Grammar\Quokka\sample inputs\34. withparams_advanced.html");
 			
 			Console.WriteLine("Press Enter to exit:");
 			Console.ReadLine();

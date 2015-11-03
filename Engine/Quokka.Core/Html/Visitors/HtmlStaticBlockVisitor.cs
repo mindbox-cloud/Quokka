@@ -50,7 +50,8 @@ namespace Quokka.Html
 				.Where(x => x != null)
 				.ToList();
 
-			return new StaticBlock(GrammarMergeTools.MergeInnerAndOuterBlocks(outerGrammarStaticChildren, staticSubBlocks));
+			var mergedBlocks = GrammarMergeTools.MergeInnerAndOuterBlocks(outerGrammarStaticChildren, staticSubBlocks);
+			return new StaticBlock(mergedBlocks);
 		}
 	}
 }

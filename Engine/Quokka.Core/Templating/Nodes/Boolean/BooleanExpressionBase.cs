@@ -4,8 +4,6 @@
 	{
 		public abstract bool Evaluate(RenderContext renderContext);
 
-		public virtual void CompileVariableDefinitions(SemanticAnalysisContext context)
-		{
-		}
+		public abstract void CompileVariableDefinitions(SemanticAnalysisContext context);
 	}
 }

@@ -6,5 +6,9 @@
 		{
 			return true;
 		}
+
+		public override void CompileVariableDefinitions(SemanticAnalysisContext context)
+		{
+		}
 	}
 }

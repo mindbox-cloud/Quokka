@@ -45,5 +45,11 @@ namespace Quokka
 					throw new NotImplementedException("Unsupported comparison operation");
 			}
 		}
+
+		public override void CompileVariableDefinitions(SemanticAnalysisContext context)
+		{
+			left.CompileVariableDefinitions(context);
+			right.CompileVariableDefinitions(context);
+		}
 	}
 }
