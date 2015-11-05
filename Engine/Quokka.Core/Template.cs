@@ -153,6 +153,7 @@ namespace Quokka
 			yield return new FormatDateTimeTemplateFunction();
 			yield return new FormatTimeTemplateFunction();
 			yield return new IfTemplateFunction();
+			yield return new IsEmptyTemplateFunction();
 		}
 	}
 }

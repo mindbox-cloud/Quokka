@@ -192,5 +192,53 @@ namespace Quokka.Tests
 
 			Assert.AreEqual(expected, result);
 		}
+
+		[TestMethod]
+		public void Render_IsEmpty_NotEmptyString()
+		{
+			var template = new Template("${ isEmpty(Value) }");
+
+			var result = template.Render(
+				new CompositeModelValue(
+					new ModelField("Value", "matrix")));
+
+			Assert.AreEqual(false.ToString(), result);
+		}
+
+		[TestMethod]
+		public void Render_IsEmpty_EmptyString()
+		{
+			var template = new Template("${ isEmpty(Value) }");
+
+			var result = template.Render(
+				new CompositeModelValue(
+					new ModelField("Value", "")));
+
+			Assert.AreEqual(true.ToString(), result);
+		}
+
+		[TestMethod]
+		public void Render_IsEmpty_Whitespace()
+		{
+			var template = new Template("${ isEmpty(Value) }");
+
+			var result = template.Render(
+				new CompositeModelValue(
+					new ModelField("Value", " ")));
+
+			Assert.AreEqual(true.ToString(), result);
+		}
+
+		[TestMethod]
+		public void Render_IsEmptyAndIfCombination_Works()
+		{
+			var template = new Template("${ if( isEmpty(productionFlag), \"test.example.com\", \"example.com\") }");
+
+			var result = template.Render(
+				new CompositeModelValue(
+					new ModelField("productionFlag", "")));
+
+			Assert.AreEqual("test.example.com", result);
+		}
 	}
 }
