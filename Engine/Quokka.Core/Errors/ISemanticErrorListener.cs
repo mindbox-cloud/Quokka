@@ -1,3 +1,5 @@
+using System;
+
 namespace Quokka
 {
 	internal interface ISemanticErrorListener : IErrorListener
@@ -15,6 +17,12 @@ namespace Quokka
 			string functionName,
 			string argumentName,
 			string message,
+			Location location);
+
+		void AddInvalidFunctionResultTypeError(
+			string functionName,
+			Type expectedType,
+			Type realType,
 			Location location);
 	}
 }

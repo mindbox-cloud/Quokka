@@ -68,6 +68,11 @@ namespace Quokka
 			return new NotExpression(Visit(context.booleanAtom()));
 		}
 
+		public override IBooleanExpression VisitFunctionCall(QuokkaParser.FunctionCallContext context)
+		{
+			return new FunctionCallBooleanExpression(context.Accept(new FunctionCallVisitor(visitingContext)));
+		}
+
 		protected override IBooleanExpression AggregateResult(IBooleanExpression aggregate, IBooleanExpression nextResult)
 		{
 			// Works for Atom alternatives: we'll take the first alternative that is present.

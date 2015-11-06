@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Quokka
 {
@@ -45,5 +46,14 @@ namespace Quokka
 				location));
 		}
 
+		public void AddInvalidFunctionResultTypeError(string functionName, 
+			Type expectedType, 
+			Type realType, 
+			Location location)
+		{
+			AddError(new SemanticError(
+				$"Недопустимый тип результата функции {functionName}. Ожидался {expectedType}, а она возвращает {realType}",
+				location));
+		}
 	}
 }

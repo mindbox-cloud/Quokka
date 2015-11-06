@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-// Generated from C:\Code\Quokka\Grammar\Quokka\Quokka.g4 by ANTLR 4.5.1
+// Generated from C:\Work\Quokka\Grammar\Quokka\Quokka.g4 by ANTLR 4.5.1
 
 // Unreachable code detected
 #pragma warning disable 0162

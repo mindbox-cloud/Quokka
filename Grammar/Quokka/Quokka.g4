@@ -205,6 +205,7 @@ booleanAtom
 		| arithmeticComparisonExpression		
 		| notExpression
 		| parenthesizedBooleanExpression
+		| functionCall
 	;
 
 arithmeticComparisonExpression
