@@ -552,18 +552,17 @@ namespace Quokka.Tests
 		}
 
 		[TestMethod]
-		[ExpectedException(typeof(TemplateContainsErrorsException))]
 		public void Render_If_NonBooleanFunction()
 		{
 			var template = new Template(@"
 				@{ if toUpper(value) }
 					Empty.
 				@{ end if }
-			");
+			", new FunctionRegistry(Template.GetStandardFunctions()), false);
 
-			template.Render(
-				new CompositeModelValue(
-					new ModelField("value", "hey")));
+			Assert.AreEqual(1, template.Errors.Count);
+			Assert.AreEqual("Недопустимый тип результата функции toUpper. Ожидался System.Boolean, а она возвращает System.String", 
+				((SemanticError)template.Errors[0]).Message);
 		}
 	}
 }
