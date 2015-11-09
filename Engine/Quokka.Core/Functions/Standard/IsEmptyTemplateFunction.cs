@@ -5,7 +5,7 @@
 		public IsEmptyTemplateFunction()
 			: base(
 				  "isEmpty",
-				  new TemplateFunctionArgument<string>("string"))
+				  new StringFunctionArgument("string"))
 		{
 		}
 

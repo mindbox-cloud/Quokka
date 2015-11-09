@@ -7,8 +7,8 @@ namespace Quokka
 		public FormatTimeTemplateFunction()
 			: base(
 				  "formatTime",
-				  new TemplateFunctionArgument<TimeSpan>("time"),
-				  new TemplateFunctionArgument<string>("format", ValidateFormat))
+				  new TimeSpanFunctionArgument("time"),
+				  new StringFunctionArgument("format", ValidateFormat))
 		{
 		}
 

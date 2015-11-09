@@ -66,7 +66,7 @@ namespace Quokka.Tests
 		private class TestCustomFunction : TemplateFunction<string, string>
 		{
 			public TestCustomFunction()
-				: base("TestSubstitution", new TemplateFunctionArgument<string>("str"))
+				: base("TestSubstitution", new StringFunctionArgument("str"))
 			{
 			}
 

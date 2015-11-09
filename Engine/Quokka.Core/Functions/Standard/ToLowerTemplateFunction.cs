@@ -5,7 +5,7 @@
 		public ToLowerTemplateFunction()
 			: base(
 				  "toLower",
-				  new TemplateFunctionArgument<string>("string"))
+				  new StringFunctionArgument("string"))
 		{
 		}
 

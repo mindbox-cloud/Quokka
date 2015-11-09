@@ -2,7 +2,7 @@
 
 namespace Quokka
 {
-	public sealed class TemplateFunctionArgument<TType> : TemplateFunctionArgument
+	public abstract class TemplateFunctionArgument<TType> : TemplateFunctionArgument
 	{
 		internal override Type RuntimeType => typeof(TType);
 		private readonly Func<TType, ArgumentValueValidationResult> valueValidator;
@@ -20,6 +20,11 @@ namespace Quokka
 
 			return new ArgumentValueValidationResult(true, null);
 		}
+
+		internal virtual TType ConvertValue(object value)
+		{
+			return (TType)value;
+		}
 	}
 
 	public abstract class TemplateFunctionArgument
@@ -36,6 +41,54 @@ namespace Quokka
 		}
 
 		internal abstract ArgumentValueValidationResult ValidateValue(object value);
+	}
+
+	public sealed class NullableDecimalFunctionArgument : TemplateFunctionArgument<decimal?>
+	{
+		public NullableDecimalFunctionArgument(string name, Func<decimal?, ArgumentValueValidationResult> valueValidator = null)
+			: base(name, valueValidator)
+		{
+		}
+
+		internal override decimal? ConvertValue(object value)
+		{
+			if( value == null)
+				return null;
+
+			return Convert.ToDecimal(value);
+		}
+	}
+
+	public sealed class StringFunctionArgument : TemplateFunctionArgument<string>
+	{
+		public StringFunctionArgument(string name, Func<string, ArgumentValueValidationResult> valueValidator = null)
+			: base(name, valueValidator)
+		{
+		}
+	}
+
+	public sealed class DateTimeFunctionArgument : TemplateFunctionArgument<DateTime>
+	{
+		public DateTimeFunctionArgument(string name, Func<DateTime, ArgumentValueValidationResult> valueValidator = null)
+			: base(name, valueValidator)
+		{
+		}
+	}
+
+	public sealed class BoolFunctionArgument : TemplateFunctionArgument<bool>
+	{
+		public BoolFunctionArgument(string name, Func<bool, ArgumentValueValidationResult> valueValidator = null)
+			: base(name, valueValidator)
+		{
+		}
+	}
+
+	public sealed class TimeSpanFunctionArgument : TemplateFunctionArgument<TimeSpan>
+	{
+		public TimeSpanFunctionArgument(string name, Func<TimeSpan, ArgumentValueValidationResult> valueValidator = null)
+			: base(name, valueValidator)
+		{
+		}
 	}
 
 	public sealed class ArgumentValueValidationResult
