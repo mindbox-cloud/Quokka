@@ -28,22 +28,23 @@ namespace Quokka
 			AllowsNull = allowsNull;
 		}
 
+		/// <summary>
+		/// Checks if the less concrete type compatible with the more concrete type for model validation purposes
+		/// </summary>
 		internal bool IsCompatibleWithRequired(TypeDefinition requiredType)
 		{
 			if (this == requiredType)
 				return true;
 
-			if (this == Integer && 
-				( requiredType ==Decimal || requiredType == NullableDecimal)
-			)
+			if (requiredType == Integer && (this == Decimal || this == NullableDecimal))
 				return true;
 
 			if (BaseType != null && BaseType.IsCompatibleWithRequired(requiredType))
 				return true;
-
+			
 			return false;
 		}
-
+		
 		public override string ToString()
 		{
 			return Name;
@@ -54,13 +55,13 @@ namespace Quokka
 
 		public static TypeDefinition Boolean { get; } = new TypeDefinition<bool>("Boolean", Primitive, 10);
 		public static TypeDefinition NullableDecimal { get; } = new TypeDefinition<decimal?>("NullableDecimal", Primitive, 10, true);
-		public static TypeDefinition Decimal { get; } = new TypeDefinition<decimal>("Decimal", NullableDecimal, 10);
-		public static TypeDefinition Integer { get; } = new TypeDefinition<int>("Integer", Primitive, 10);
+		public static TypeDefinition Decimal { get; } = new TypeDefinition<decimal>("Decimal", NullableDecimal, 15);
+		public static TypeDefinition Integer { get; } = new TypeDefinition<int>("Integer", Decimal, 20);
 		public static TypeDefinition String { get; } = new TypeDefinition<string>("String", Primitive, 10, true);
 		public static TypeDefinition NullableDateTime { get; } = new TypeDefinition<DateTime?>("NullableDateTime", Primitive, 10, true);
-		public static TypeDefinition DateTime { get; } = new TypeDefinition<DateTime>("DateTime", NullableDateTime, 10);
+		public static TypeDefinition DateTime { get; } = new TypeDefinition<DateTime>("DateTime", NullableDateTime, 15);
 		public static TypeDefinition NullableTimeSpan { get; } = new TypeDefinition<TimeSpan?>("NullableTimeSpan", Primitive, 10, true);
-		public static TypeDefinition TimeSpan { get; } = new TypeDefinition<TimeSpan>("TimeSpan", NullableTimeSpan, 10);
+		public static TypeDefinition TimeSpan { get; } = new TypeDefinition<TimeSpan>("TimeSpan", NullableTimeSpan, 15);
 
 		public static TypeDefinition Composite { get; } = new TypeDefinition("Composite", Unknown, 20);
 		public static TypeDefinition Array { get; } = new TypeDefinition("Array", Unknown, 50);

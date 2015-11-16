@@ -310,7 +310,8 @@ namespace Quokka.Tests
 						"Customer", new CompositeModelDefinition(new Dictionary<string, IModelDefinition>
 						{
 							{
-								"Orders", new ArrayModelDefinition(CompositeModelDefinition.Empty)
+								"Orders", new ArrayModelDefinition(
+									new PrimitiveModelDefinition(TypeDefinition.Unknown))
 							}
 						})
 					},
@@ -447,7 +448,7 @@ namespace Quokka.Tests
 						}))
 					},
 					{
-						"Seasons", new ArrayModelDefinition(CompositeModelDefinition.Empty)
+						"Seasons", new ArrayModelDefinition(new PrimitiveModelDefinition(TypeDefinition.Unknown))
 					}
 				}),
 				model);
@@ -621,15 +622,11 @@ namespace Quokka.Tests
 				new CompositeModelDefinition(new Dictionary<string, IModelDefinition>
 				{
 					{
-						"Orders", new ArrayModelDefinition(new CompositeModelDefinition(new Dictionary<string, IModelDefinition>
-						{
+						"Orders", new ArrayModelDefinition(
+							new ArrayModelDefinition(new CompositeModelDefinition(new Dictionary<string, IModelDefinition>
 							{
-								"Products", new ArrayModelDefinition(new CompositeModelDefinition(new Dictionary<string, IModelDefinition>
-								{
-									{ "Name", new PrimitiveModelDefinition(TypeDefinition.Primitive) }
-								}))
-							}
-						}))
+								{ "Name", new PrimitiveModelDefinition(TypeDefinition.Primitive) }
+							})))
 					}
 				}),
 				model);
@@ -658,7 +655,7 @@ namespace Quokka.Tests
 						"Orders", new ArrayModelDefinition(new CompositeModelDefinition(new Dictionary<string, IModelDefinition>
 						{
 							{
-								"Dates", new ArrayModelDefinition(CompositeModelDefinition.Empty)
+								"Dates", new ArrayModelDefinition(new PrimitiveModelDefinition(TypeDefinition.Primitive))
 							},
 							{
 								"Products", new ArrayModelDefinition(new CompositeModelDefinition(new Dictionary<string, IModelDefinition>
@@ -756,7 +753,8 @@ namespace Quokka.Tests
 				new CompositeModelDefinition(new Dictionary<string, IModelDefinition>
 				{
 					{
-						"Offers", new ArrayModelDefinition(CompositeModelDefinition.Empty)
+						"Offers", new ArrayModelDefinition(
+							new PrimitiveModelDefinition(TypeDefinition.Unknown))
 					}
 				}),
 				model);

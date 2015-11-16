@@ -5,7 +5,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace Quokka.Tests
 {
 	[TestClass]
-	public class ModelvalidationTests
+	public class ModelValidationTests
 	{
 		[TestMethod]
 		[ExpectedException(typeof(InvalidTemplateModelException))]

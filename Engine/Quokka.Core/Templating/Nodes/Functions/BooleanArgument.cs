@@ -10,6 +10,11 @@
 			this.expression = expression;
 		}
 
+		public override void CompileVariableDefinitions(SemanticAnalysisContext context, TypeDefinition requiredArgumentType)
+		{
+			expression.CompileVariableDefinitions(context);
+		}
+
 		public override object GetValue(RenderContext renderContext)
 		{
 			return expression.Evaluate(renderContext);

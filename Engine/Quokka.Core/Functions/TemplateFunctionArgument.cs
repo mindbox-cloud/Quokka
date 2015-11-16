@@ -52,7 +52,7 @@ namespace Quokka
 
 		internal override decimal? ConvertValue(object value)
 		{
-			if( value == null)
+			if (value == null)
 				return null;
 
 			return Convert.ToDecimal(value);

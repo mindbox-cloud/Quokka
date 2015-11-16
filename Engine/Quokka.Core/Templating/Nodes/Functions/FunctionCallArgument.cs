@@ -10,6 +10,11 @@
 			this.functionCall = functionCall;
 		}
 
+		public override void CompileVariableDefinitions(SemanticAnalysisContext context, TypeDefinition requiredArgumentType)
+		{
+			functionCall.CompileVariableDefinitions(context);
+		}
+
 		public override object GetValue(RenderContext renderContext)
 		{
 			return functionCall.GetInvocationValue(renderContext);

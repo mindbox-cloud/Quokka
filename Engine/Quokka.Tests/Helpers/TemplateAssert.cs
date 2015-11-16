@@ -23,7 +23,7 @@ namespace Quokka.Tests
 			Assert.IsNotNull(actual);
 
 			var expectedFieldList = expected.Fields.OrderBy(kvp => kvp.Key).ToList();
-			var actualFieldList = expected.Fields.OrderBy(kvp => kvp.Key).ToList();
+			var actualFieldList = actual.Fields.OrderBy(kvp => kvp.Key).ToList();
 
 			Assert.AreEqual(expectedFieldList.Count, actualFieldList.Count);
 

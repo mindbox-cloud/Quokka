@@ -113,6 +113,18 @@ namespace Quokka.Tests
 		}
 
 		[TestMethod]
+		public void Render_Function_FormatDecimal_Intvalue()
+		{
+			var template = new Template("${ formatDecimal(Value, \"\") }");
+
+			var result = template.Render(
+				new CompositeModelValue(
+					new ModelField("Value", 2)));
+
+			Assert.AreEqual("2", result);
+		}
+
+		[TestMethod]
 		public void Render_Function_FormatDateTime_CorrectFormat()
 		{
 			var template = new Template("${ formatDateTime(Value, \"dd'.'MM'.'yy HH':'mm':'ss\") }");

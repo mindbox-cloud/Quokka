@@ -81,26 +81,23 @@ namespace Quokka.Tests
 				new CompositeModelDefinition(new Dictionary<string, IModelDefinition>
 				{
 					{
-						"Price", new PrimitiveModelDefinition(TypeDefinition.Decimal)
+						"Price", new PrimitiveModelDefinition(TypeDefinition.NullableDecimal)
 					}
 				}),
 				model);
 		}
-
+		
 		[TestMethod]
-		public void ModelDiscovery_FunctionCallBooleanExpressionArgument()
+		public void ModelDiscovery_FunctionCallArithmeticExpressionArgument()
 		{
-			var model = new Template("${ if(A or B, \"N1\", \"N2\") }")
+			var model = new Template("${ formatDecimal(A + 5, \"N2\") }")
 				.GetModelDefinition();
 
 			TemplateAssert.AreCompositeModelDefinitionsEqual(
 				new CompositeModelDefinition(new Dictionary<string, IModelDefinition>
 				{
 					{
-						"A", new PrimitiveModelDefinition(TypeDefinition.Boolean)
-					},
-					{
-						"B", new PrimitiveModelDefinition(TypeDefinition.Boolean)
+						"A", new PrimitiveModelDefinition(TypeDefinition.Integer)
 					}
 				}),
 				model);
@@ -196,6 +193,25 @@ namespace Quokka.Tests
 					},
                     {
 						"IsTest", new PrimitiveModelDefinition(TypeDefinition.Boolean)
+					}
+				}),
+				model);
+		}
+
+		[TestMethod]
+		public void ModelDiscovery_FunctionDecimal_ArithmeticExpression_Compatible()
+		{
+			var model = new Template(@"
+				${ formatDecimal(A, ""N2"") }
+				${ A + 5 }
+			")
+				.GetModelDefinition();
+
+			TemplateAssert.AreCompositeModelDefinitionsEqual(
+				new CompositeModelDefinition(new Dictionary<string, IModelDefinition>
+				{
+					{
+						"A", new PrimitiveModelDefinition(TypeDefinition.Integer)
 					}
 				}),
 				model);

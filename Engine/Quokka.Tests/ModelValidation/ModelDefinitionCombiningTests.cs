@@ -154,7 +154,7 @@ namespace Quokka.Tests
 
 								{ "A", new PrimitiveModelDefinition(TypeDefinition.Integer) },
 								{ "B", new PrimitiveModelDefinition(TypeDefinition.Decimal) },
-								{ "C", new PrimitiveModelDefinition(TypeDefinition.Decimal) },
+								{ "C", new PrimitiveModelDefinition(TypeDefinition.Integer) },
 								{ "D", new PrimitiveModelDefinition(TypeDefinition.Decimal) }
 							}))
 					}

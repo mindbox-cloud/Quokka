@@ -15,6 +15,10 @@
 			return value;
 		}
 
+		public override void CompileVariableDefinitions(SemanticAnalysisContext context, TypeDefinition requiredArgumentType)
+		{
+		}
+
 		public override bool TryGetStaticValue(out object staticValue)
 		{
 			staticValue = value;

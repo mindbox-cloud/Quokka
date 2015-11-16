@@ -9,9 +9,7 @@
 			Location = location;
 		}
 
-		public virtual void CompileVariableDefinitions(SemanticAnalysisContext context, TypeDefinition requiredArgumentType)
-		{
-		}
+		public abstract void CompileVariableDefinitions(SemanticAnalysisContext context, TypeDefinition requiredArgumentType);
 
 		public virtual bool TryGetStaticValue(out object staticValue)
 		{
