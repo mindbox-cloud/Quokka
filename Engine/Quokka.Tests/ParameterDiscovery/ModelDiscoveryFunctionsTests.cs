@@ -88,6 +88,25 @@ namespace Quokka.Tests
 		}
 
 		[TestMethod]
+		public void ModelDiscovery_FunctionCallBooleanExpressionArgument()
+		{
+			var model = new Template("${ if(A or B, \"N1\", \"N2\") }")
+				.GetModelDefinition();
+
+			TemplateAssert.AreCompositeModelDefinitionsEqual(
+				new CompositeModelDefinition(new Dictionary<string, IModelDefinition>
+				{
+					{
+						"A", new PrimitiveModelDefinition(TypeDefinition.Boolean)
+					},
+					{
+						"B", new PrimitiveModelDefinition(TypeDefinition.Boolean)
+					}
+				}),
+				model);
+		}
+
+		[TestMethod]
 		public void ModelDiscovery_FunctionCallBooleanArgument_ComplexExpression()
 		{
 			var model = new Template("${ if ((IsTest) or (IsStaging) or (Version > 1), \"test\", \"no test\") }")

@@ -1,3 +1,0 @@
-@{ comment }
-	Not meant to be seen.
-@{ end comment }
