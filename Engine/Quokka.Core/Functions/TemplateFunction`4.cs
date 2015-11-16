@@ -5,6 +5,11 @@ namespace Quokka
 {
 	public abstract class TemplateFunction<TArgument1, TArgument2, TArgument3, TArgument4, TResult> : TemplateFunction
 	{
+		private readonly TemplateFunctionArgument<TArgument1> argument1;
+		private readonly TemplateFunctionArgument<TArgument2> argument2;
+		private readonly TemplateFunctionArgument<TArgument3> argument3;
+		private readonly TemplateFunctionArgument<TArgument4> argument4;
+
 		protected TemplateFunction(
 			string name,
 			TemplateFunctionArgument<TArgument1> argument1,
@@ -13,16 +18,24 @@ namespace Quokka
 			TemplateFunctionArgument<TArgument4> argument4)
 				: base(name, typeof(TResult), argument1, argument2, argument3, argument4)
 		{
+			this.argument1 = argument1;
+			this.argument2 = argument2;
+			this.argument3 = argument3;
+			this.argument4 = argument4;
 		}
 
 		public abstract TResult Invoke(TArgument1 argument1, TArgument2 argument2, TArgument3 argument3, TArgument4 argument4);
 
-		internal override object Invoke(IList<object> arguments)
+		internal override object Invoke(IList<object> argumentsValues)
 		{
-			if (arguments.Count != 4)
-				throw new InvalidOperationException($"Function that expects 4 arguments was passed {arguments.Count}");
+			if (argumentsValues.Count != 4)
+				throw new InvalidOperationException($"Function that expects 4 arguments was passed {argumentsValues.Count}");
 
-			return Invoke((TArgument1)arguments[0], (TArgument2)arguments[1], (TArgument3)arguments[2], (TArgument4)arguments[3]);
+			return Invoke(
+				argument1.ConvertValue(argumentsValues[0]), 
+				argument2.ConvertValue(argumentsValues[1]), 
+				argument3.ConvertValue(argumentsValues[2]), 
+				argument4.ConvertValue(argumentsValues[3]));
 		}
 	}
 }

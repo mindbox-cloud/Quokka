@@ -33,6 +33,11 @@ namespace Quokka
 			if (this == requiredType)
 				return true;
 
+			if (this == Integer && 
+				( requiredType ==Decimal || requiredType == NullableDecimal)
+			)
+				return true;
+
 			if (BaseType != null && BaseType.IsCompatibleWithRequired(requiredType))
 				return true;
 

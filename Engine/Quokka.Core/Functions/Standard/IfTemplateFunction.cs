@@ -5,9 +5,9 @@
 		public IfTemplateFunction()
 			: base(
 				  "if",
-				  new TemplateFunctionArgument<bool>("condition"),
-				  new TemplateFunctionArgument<string>("trueValue"),
-				  new TemplateFunctionArgument<string>("falseValue"))
+				  new BoolFunctionArgument("condition"), 
+				  new StringFunctionArgument("trueValue"),
+				  new StringFunctionArgument("falseValue"))
 		{
 		}
 

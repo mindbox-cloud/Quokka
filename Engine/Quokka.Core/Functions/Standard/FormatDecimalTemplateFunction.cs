@@ -7,8 +7,8 @@ namespace Quokka
 		public FormatDecimalTemplateFunction()
 			: base(
 				  "formatDecimal",
-				  new TemplateFunctionArgument<decimal?>("number"),
-				  new TemplateFunctionArgument<string>("format", ValidateFormat))
+				  new NullableDecimalFunctionArgument("number"), 
+				  new StringFunctionArgument("format", ValidateFormat))
 		{
 		}
 

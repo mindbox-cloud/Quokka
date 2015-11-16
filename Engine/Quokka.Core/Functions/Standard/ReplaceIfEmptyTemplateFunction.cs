@@ -5,8 +5,8 @@
 		public ReplaceIfEmptyTemplateFunction()
 			: base(
 				  "replaceIfEmpty",
-				  new TemplateFunctionArgument<string>("default value"),
-				  new TemplateFunctionArgument<string>("fallback value"))
+				  new StringFunctionArgument("default value"),
+				  new StringFunctionArgument("fallback value"))
 		{
 		}
 

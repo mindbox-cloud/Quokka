@@ -504,5 +504,65 @@ namespace Quokka.Tests
 
 			Assert.AreEqual(expected, result);
 		}
+
+		[TestMethod]
+		public void Render_If_BooleanFunction_IfCondition_Tests()
+		{
+			var template = new Template(@"
+				@{ if isEmpty(value) }
+					Empty.
+				@{ end if }
+			");
+
+			var result = template.Render(
+				new CompositeModelValue(
+					new ModelField("value", "")));
+
+			var expected = @"
+				
+					Empty.
+				
+			";
+
+			Assert.AreEqual(expected, result);
+		}
+
+		[TestMethod]
+		public void Render_If_BooleanFunction_ElseCondition_Tests()
+		{
+			var template = new Template(@"
+				@{ if isEmpty(value) }
+					Empty.
+				@{ else }
+					Not empty.
+				@{ end if }
+			");
+
+			var result = template.Render(
+				new CompositeModelValue(
+					new ModelField("value", "miu")));
+
+			var expected = @"
+				
+					Not empty.
+				
+			";
+
+			Assert.AreEqual(expected, result);
+		}
+
+		[TestMethod]
+		public void Render_If_NonBooleanFunction()
+		{
+			var template = new Template(@"
+				@{ if toUpper(value) }
+					Empty.
+				@{ end if }
+			", new FunctionRegistry(Template.GetStandardFunctions()), false);
+
+			Assert.AreEqual(1, template.Errors.Count);
+			Assert.AreEqual("Недопустимый тип результата функции toUpper. Ожидался System.Boolean, а она возвращает System.String", 
+				((SemanticError)template.Errors[0]).Message);
+		}
 	}
 }

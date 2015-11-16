@@ -5,7 +5,7 @@
 		public ToUpperTemplateFunction()
 			: base(
 				  "toUpper",
-				  new TemplateFunctionArgument<string>("string"))
+				  new StringFunctionArgument("string"))
 		{
 		}
 

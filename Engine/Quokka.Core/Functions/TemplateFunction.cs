@@ -17,5 +17,5 @@ namespace Quokka
 			Arguments = arguments.ToList().AsReadOnly();
 		}
 		
-		internal abstract object Invoke(IList<object> arguments);
+		internal abstract object Invoke(IList<object> argumentsValues);
 	}}
