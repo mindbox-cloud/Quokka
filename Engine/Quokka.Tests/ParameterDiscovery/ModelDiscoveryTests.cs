@@ -237,7 +237,7 @@ namespace Quokka.Tests
 			TemplateAssert.AreCompositeModelDefinitionsEqual(
 				new CompositeModelDefinition(new Dictionary<string, IModelDefinition>
 				{
-					{ "ClickCount", new PrimitiveModelDefinition(TypeDefinition.Integer) }
+					{ "ClickCount", new PrimitiveModelDefinition(TypeDefinition.Decimal) }
 				}),
 				model);
 		}
@@ -256,8 +256,8 @@ namespace Quokka.Tests
 					{
 						"Statistics", new CompositeModelDefinition(new Dictionary<string, IModelDefinition>
 						{
-							{ "ClickCount", new PrimitiveModelDefinition(TypeDefinition.Integer) },
-							{ "SentCount", new PrimitiveModelDefinition(TypeDefinition.Integer) }
+							{ "ClickCount", new PrimitiveModelDefinition(TypeDefinition.Decimal) },
+							{ "SentCount", new PrimitiveModelDefinition(TypeDefinition.Decimal) }
 						})
 					}
 				}),

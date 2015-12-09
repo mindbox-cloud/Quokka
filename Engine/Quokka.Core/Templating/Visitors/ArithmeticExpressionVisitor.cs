@@ -55,7 +55,7 @@ namespace Quokka
 		public override IArithmeticExpression VisitParameterValueExpression(QuokkaParser.ParameterValueExpressionContext context)
 		{
 			return new ArithmeticParameterValueExpression(
-				context.Accept(new VariableVisitor(visitingContext, TypeDefinition.Integer)));
+				context.Accept(new VariableVisitor(visitingContext, TypeDefinition.Decimal)));
 		}
 
 		protected override IArithmeticExpression AggregateResult(IArithmeticExpression aggregate, IArithmeticExpression nextResult)

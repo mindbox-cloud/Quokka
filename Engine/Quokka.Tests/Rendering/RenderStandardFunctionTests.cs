@@ -125,6 +125,18 @@ namespace Quokka.Tests
 		}
 
 		[TestMethod]
+		public void Render_Function_FormatDecimal_ArithmeticExpressionWithDecimal_WithFormat()
+		{
+			var template = new Template("${ formatDecimal(10000 - Value, \"0\") }");
+
+			var result = template.Render(
+				new CompositeModelValue(
+					new ModelField("Value", 5555.55m)));
+
+			Assert.AreEqual("4444", result);
+		}
+
+		[TestMethod]
 		public void Render_Function_FormatDateTime_CorrectFormat()
 		{
 			var template = new Template("${ formatDateTime(Value, \"dd'.'MM'.'yy HH':'mm':'ss\") }");

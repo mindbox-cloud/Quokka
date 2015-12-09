@@ -97,7 +97,7 @@ namespace Quokka.Tests
 				new CompositeModelDefinition(new Dictionary<string, IModelDefinition>
 				{
 					{
-						"A", new PrimitiveModelDefinition(TypeDefinition.Integer)
+						"A", new PrimitiveModelDefinition(TypeDefinition.Decimal)
 					}
 				}),
 				model);
@@ -119,7 +119,7 @@ namespace Quokka.Tests
 						"IsStaging", new PrimitiveModelDefinition(TypeDefinition.Boolean)
 					},
 					{
-						"Version", new PrimitiveModelDefinition(TypeDefinition.Integer)
+						"Version", new PrimitiveModelDefinition(TypeDefinition.Decimal)
 					}
 				}),
 				model);
@@ -211,7 +211,7 @@ namespace Quokka.Tests
 				new CompositeModelDefinition(new Dictionary<string, IModelDefinition>
 				{
 					{
-						"A", new PrimitiveModelDefinition(TypeDefinition.Integer)
+						"A", new PrimitiveModelDefinition(TypeDefinition.Decimal)
 					}
 				}),
 				model);

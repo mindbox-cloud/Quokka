@@ -1,4 +1,6 @@
-﻿namespace Quokka
+﻿using System;
+
+namespace Quokka
 {
 	internal class ArithmeticParameterValueExpression : ArithmeticExpressionBase
 	{
@@ -11,7 +13,7 @@
 
 		public override double GetValue(RenderContext renderContext)
 		{
-			return (int)renderContext.VariableScope.GetVariableValue(variableOccurence);
+			return Convert.ToDouble(renderContext.VariableScope.GetVariableValue(variableOccurence));
 		}
 
 		public override void CompileVariableDefinitions(SemanticAnalysisContext context)
