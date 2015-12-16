@@ -59,7 +59,7 @@
     <Compile Include="Html\IdentificationCodeRenderingTests.cs" />
     <Compile Include="Html\RedirectLinkProcessingTests.cs" />
     <Compile Include="ModelValidation\ModelDefinitionCombiningTests.cs" />
-    <Compile Include="ModelValidation\ModelvalidationTests.cs" />
+    <Compile Include="ModelValidation\ModelValidationTests.cs" />
     <Compile Include="Rendering\RenderArithmeticOutputTests.cs" />
     <Compile Include="Rendering\RenderBasicTests.cs" />
     <Compile Include="Rendering\RenderFilterChainTests.cs" />
@@ -67,6 +67,8 @@
     <Compile Include="Rendering\RenderIfBlockArithmeticLogicTests.cs" />
     <Compile Include="Rendering\RenderIfBlockBasicTests.cs" />
     <Compile Include="Rendering\RenderIfBlockBooleanLogicTests.cs" />
+    <Compile Include="Rendering\RenderIfBlockStringComparisonTests.cs" />
+    <Compile Include="Rendering\RenderIfBlockNullComparisonTests.cs" />
     <Compile Include="Rendering\RenderParameterOutputTests.cs" />
     <Compile Include="Rendering\RenderStandardFunctionTests.cs" />
     <Compile Include="Creating\TemplateFactoryTests.cs" />
@@ -74,6 +76,7 @@
     <Compile Include="ParameterDiscovery\ModelDiscoveryFunctionsTests.cs" />
     <Compile Include="ParameterDiscovery\ModelDiscoveryTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Rendering\RenderWithNullVariablesTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Quokka.Core\Quokka.Core.csproj">

@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-// Generated from C:\Work\Quokka\Grammar\Quokka\Quokka.g4 by ANTLR 4.5.1
+// Generated from C:\Code\Quokka\Grammar\Quokka\Quokka.g4 by ANTLR 4.5.1
 
 // Unreachable code detected
 #pragma warning disable 0162
@@ -222,6 +222,18 @@ internal interface IQuokkaVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
 	Result VisitBooleanAtom([NotNull] QuokkaParser.BooleanAtomContext context);
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="QuokkaParser.stringComparisonExpression"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitStringComparisonExpression([NotNull] QuokkaParser.StringComparisonExpressionContext context);
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="QuokkaParser.nullComparisonExpression"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitNullComparisonExpression([NotNull] QuokkaParser.NullComparisonExpressionContext context);
 	/// <summary>
 	/// Visit a parse tree produced by <see cref="QuokkaParser.arithmeticComparisonExpression"/>.
 	/// </summary>

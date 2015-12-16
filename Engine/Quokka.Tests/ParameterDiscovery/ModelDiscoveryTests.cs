@@ -225,7 +225,41 @@ namespace Quokka.Tests
 				model);
 		}
 
+		[TestMethod]
+		public void ModelDiscovery_IfCondition_StringComparison()
+		{
+			var model = new Template(@"
+				@{ if City = ""Toledo"" } 
+					Text
+				@{ end if }
+				")
+				.GetModelDefinition();
 
+			TemplateAssert.AreCompositeModelDefinitionsEqual(
+				new CompositeModelDefinition(new Dictionary<string, IModelDefinition>
+				{
+					{ "City", new PrimitiveModelDefinition(TypeDefinition.String) }
+				}),
+				model);
+		}
+
+		[TestMethod]
+		public void ModelDiscovery_IfCondition_NullCheck()
+		{
+			var model = new Template(@"
+				@{ if City != null } 
+					Text
+				@{ end if }
+				")
+				.GetModelDefinition();
+
+			TemplateAssert.AreCompositeModelDefinitionsEqual(
+				new CompositeModelDefinition(new Dictionary<string, IModelDefinition>
+				{
+					{ "City", new PrimitiveModelDefinition(TypeDefinition.Primitive) }
+				}),
+				model);
+		}
 
 		[TestMethod]
 		public void ModelDiscovery_ArithmeticExpression_FirstLevelParameter()

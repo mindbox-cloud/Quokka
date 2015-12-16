@@ -1,13 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 
 namespace Quokka
 {
-	internal class TypeDefinition<TRuntimeType> : TypeDefinition
+	interface IPrimitiveTypeDefinition
 	{
-		public TypeDefinition(string name, TypeDefinition baseType, int priority, bool allowsNull = false)
-			: base(name, baseType, priority, allowsNull)
+		 Type RuntimeType { get; }
+	}
+
+	internal class PrimitiveTypeDefinition<TRuntimeType> : TypeDefinition, IPrimitiveTypeDefinition
+	{
+		public Type RuntimeType => typeof(TRuntimeType);
+
+		public PrimitiveTypeDefinition(string name, TypeDefinition baseType, int priority)
+			: base(name, baseType, priority)
 		{
 			
 		}
@@ -15,17 +23,60 @@ namespace Quokka
 
 	public class TypeDefinition
 	{
+		private static readonly IReadOnlyDictionary<Type, TypeDefinition> primitiveTypeMap;
+
 		public string Name { get; }
 		internal TypeDefinition BaseType { get; }
 		internal int Priority { get; }
-		internal bool AllowsNull { get; }
 
-		internal TypeDefinition(string name, TypeDefinition baseType, int priority, bool allowsNull = false)
+		public static TypeDefinition Unknown { get; }
+		public static TypeDefinition Primitive { get; }
+
+		public static TypeDefinition Boolean { get; }
+		public static TypeDefinition Decimal { get; }
+		public static TypeDefinition Integer { get; }
+		public static TypeDefinition String { get; }
+		public static TypeDefinition DateTime { get; }
+		public static TypeDefinition TimeSpan { get; }
+
+		public static TypeDefinition Composite { get; }
+		public static TypeDefinition Array { get; }
+
+		static TypeDefinition()
+		{
+			Unknown = new TypeDefinition("Unknown", null, 0);
+			Primitive = new TypeDefinition("Primitive", Unknown, 5);
+
+			Composite = new TypeDefinition("Composite", Unknown, 20);
+			Array = new TypeDefinition("Array", Unknown, 50);
+
+			Boolean = new PrimitiveTypeDefinition<bool>("Boolean", Primitive, 10);
+			Decimal = new PrimitiveTypeDefinition<decimal>("Decimal", Primitive, 15);
+			Integer = new PrimitiveTypeDefinition<int>("Integer", Decimal, 20);
+			String = new PrimitiveTypeDefinition<string>("String", Primitive, 10);
+			DateTime = new PrimitiveTypeDefinition<DateTime>("DateTime", Primitive, 15);
+			TimeSpan = new PrimitiveTypeDefinition<TimeSpan>("TimeSpan", Primitive, 15);
+
+			primitiveTypeMap = new ReadOnlyDictionary<Type, TypeDefinition>(
+				new[]
+				{
+					Boolean,
+					Decimal,
+					Integer,
+					String,
+					DateTime,
+					TimeSpan
+				}
+				.Cast<IPrimitiveTypeDefinition>()
+				.ToDictionary(type => type.RuntimeType, type => (TypeDefinition)type));
+
+		}
+
+		internal TypeDefinition(string name, TypeDefinition baseType, int priority)
 		{
 			Name = name;
 			BaseType = baseType;
 			Priority = priority;
-			AllowsNull = allowsNull;
 		}
 
 		/// <summary>
@@ -35,10 +86,7 @@ namespace Quokka
 		{
 			if (this == requiredType)
 				return true;
-
-			if (requiredType == Integer && (this == Decimal || this == NullableDecimal))
-				return true;
-
+			
 			if (BaseType != null && BaseType.IsCompatibleWithRequired(requiredType))
 				return true;
 			
@@ -49,46 +97,16 @@ namespace Quokka
 		{
 			return Name;
 		}
-
-		public static TypeDefinition Unknown { get; } = new TypeDefinition("Unknown", null, 0);
-		public static TypeDefinition Primitive { get; } = new TypeDefinition("Primitive", Unknown, 5);
-
-		public static TypeDefinition Boolean { get; } = new TypeDefinition<bool>("Boolean", Primitive, 10);
-		public static TypeDefinition NullableDecimal { get; } = new TypeDefinition<decimal?>("NullableDecimal", Primitive, 10, true);
-		public static TypeDefinition Decimal { get; } = new TypeDefinition<decimal>("Decimal", NullableDecimal, 15);
-		public static TypeDefinition Integer { get; } = new TypeDefinition<int>("Integer", Decimal, 20);
-		public static TypeDefinition String { get; } = new TypeDefinition<string>("String", Primitive, 10, true);
-		public static TypeDefinition NullableDateTime { get; } = new TypeDefinition<DateTime?>("NullableDateTime", Primitive, 10, true);
-		public static TypeDefinition DateTime { get; } = new TypeDefinition<DateTime>("DateTime", NullableDateTime, 15);
-		public static TypeDefinition NullableTimeSpan { get; } = new TypeDefinition<TimeSpan?>("NullableTimeSpan", Primitive, 10, true);
-		public static TypeDefinition TimeSpan { get; } = new TypeDefinition<TimeSpan>("TimeSpan", NullableTimeSpan, 15);
-
-		public static TypeDefinition Composite { get; } = new TypeDefinition("Composite", Unknown, 20);
-		public static TypeDefinition Array { get; } = new TypeDefinition("Array", Unknown, 50);
-
+		
 		public static TypeDefinition GetTypeDefinitionByRuntimeType(Type runtimeType)
 		{
-			if (runtimeType == typeof(string))
-				return String;
-			if (runtimeType == typeof(int))
-				return Integer;
-			if (runtimeType == typeof(decimal))
-				return Decimal;
-			if (runtimeType == typeof(decimal?))
-				return NullableDecimal;
-			if (runtimeType == typeof(bool))
-				return Boolean;
-			if (runtimeType == typeof(DateTime))
-				return DateTime;
-			if (runtimeType == typeof(TimeSpan))
-				return TimeSpan;
-			if (runtimeType == typeof(DateTime?))
-				return NullableDateTime;
-			if (runtimeType == typeof(TimeSpan?))
-				return NullableTimeSpan;
+			TypeDefinition result;
 
-			throw new InvalidOperationException(
-				$"Runtime type {runtimeType.Name} doesn't have a corresponding template variable type");
+			if (!primitiveTypeMap.TryGetValue(runtimeType, out result))
+				throw new InvalidOperationException(
+					$"Runtime type {runtimeType.Name} doesn't have a corresponding template variable type");
+
+			return result;
 		}
 
 		internal static TypeDefinition GetResultingTypeForMultupleOccurences<TTypedObject>(

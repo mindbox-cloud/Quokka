@@ -22,9 +22,11 @@ GenerateGrammarFiles (Join-Path $scriptPath "Quokka.g4") $generatedDirectory
 GenerateGrammarFiles (Join-Path $scriptPath "QuokkaHtmlLex.g4") $generatedDirectory
 GenerateGrammarFiles (Join-Path $scriptPath "QuokkaHtml.g4") $generatedDirectory
 
+#Start-Sleep -s 20
+
 Get-ChildItem $generatedDirectory -Filter *.cs | `
-		Foreach-Object{
-			$fileName = $_.FullName
-			(Get-Content $fileName) | Foreach-Object {	$_ -replace 'public partial class Quokka', 'internal partial class Quokka' `
-														   -replace 'public interface IQuokka', 'internal interface IQuokka' } | Set-Content $fileName
-		}
+	Foreach-Object{
+		$fileName = $_.FullName
+		(Get-Content $fileName) | Foreach-Object {	$_ -replace 'public partial class Quokka', 'internal partial class Quokka' `
+													   -replace 'public interface IQuokka', 'internal interface IQuokka' } | Set-Content $fileName
+	}

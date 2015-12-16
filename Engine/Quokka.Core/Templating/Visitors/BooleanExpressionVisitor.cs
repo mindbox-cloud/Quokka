@@ -62,7 +62,42 @@ namespace Quokka
 				context.arithmeticExpression(0).Accept(arithmeticVisitor),
 				context.arithmeticExpression(1).Accept(arithmeticVisitor));
 		}
-		
+
+		public override IBooleanExpression VisitStringComparisonExpression(QuokkaParser.StringComparisonExpressionContext context)
+		{
+			ComparisonOperation operation;
+			
+			if (context.Equals() != null)
+				operation = ComparisonOperation.Equals;
+			else if (context.NotEquals() != null)
+				operation = ComparisonOperation.NotEquals;
+			else
+				throw new InvalidOperationException(
+					"None of possible comparison operators encountered, the grammar is most likely faulty");
+
+			return new StringComparisonExpression(
+				context.parameterValueExpression().Accept(new VariableVisitor(visitingContext, TypeDefinition.String)),
+				context.stringConstant().Accept(new StringConstantVisitor(visitingContext)),
+				operation);
+		}
+
+		public override IBooleanExpression VisitNullComparisonExpression(QuokkaParser.NullComparisonExpressionContext context)
+		{
+			ComparisonOperation operation;
+
+			if (context.Equals() != null)
+				operation = ComparisonOperation.Equals;
+			else if (context.NotEquals() != null)
+				operation = ComparisonOperation.NotEquals;
+			else
+				throw new InvalidOperationException(
+					"None of possible comparison operators encountered, the grammar is most likely faulty");
+
+			return new NullComparisonExpression(
+				context.parameterValueExpression().Accept(new VariableVisitor(visitingContext, TypeDefinition.Primitive)),
+				operation);
+		}
+
 		public override IBooleanExpression VisitNotExpression(QuokkaParser.NotExpressionContext context)
 		{
 			return new NotExpression(Visit(context.booleanAtom()));

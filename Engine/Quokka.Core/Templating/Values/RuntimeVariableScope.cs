@@ -31,7 +31,12 @@ namespace Quokka
 		{
 			if (valueStorage.ContainsValueForVariable(variableOccurence))
 			{
-				return valueStorage.GetPrimitiveValue(variableOccurence);
+				var variableValue = valueStorage.GetPrimitiveValue(variableOccurence);
+				if (variableValue == null)
+					throw new UnrenderableTemplateModelException(
+						"An attempt to use the value for variable {variableOccurence.Name} which happens to be null");
+
+				return variableValue;
 			}
 			else
 			{
@@ -40,6 +45,11 @@ namespace Quokka
 				else
 					return parentScope.GetVariableValue(variableOccurence);
 			}
+		}
+
+		public bool CheckIfVariableIsNull(VariableOccurence variableOccurence)
+		{
+			return valueStorage.CheckIfValueIsNull(variableOccurence);
 		}
 
 		public IEnumerable<VariableValueStorage> GetVariableValueCollection(VariableOccurence variableOccurence)

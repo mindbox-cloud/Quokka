@@ -43,17 +43,17 @@ namespace Quokka
 		internal abstract ArgumentValueValidationResult ValidateValue(object value);
 	}
 
-	public sealed class NullableDecimalFunctionArgument : TemplateFunctionArgument<decimal?>
+	public sealed class DecimalFunctionArgument : TemplateFunctionArgument<decimal>
 	{
-		public NullableDecimalFunctionArgument(string name, Func<decimal?, ArgumentValueValidationResult> valueValidator = null)
+		public DecimalFunctionArgument(string name, Func<decimal, ArgumentValueValidationResult> valueValidator = null)
 			: base(name, valueValidator)
 		{
 		}
 
-		internal override decimal? ConvertValue(object value)
+		internal override decimal ConvertValue(object value)
 		{
 			if (value == null)
-				return null;
+				throw new ArgumentNullException(nameof(value));
 
 			return Convert.ToDecimal(value);
 		}

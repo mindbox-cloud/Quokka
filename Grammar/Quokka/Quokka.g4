@@ -202,10 +202,26 @@ parenthesizedBooleanExpression
 booleanAtom
 	:
 		parameterValueExpression
-		| arithmeticComparisonExpression		
+		| arithmeticComparisonExpression
+		| nullComparisonExpression
+		| stringComparisonExpression	
 		| notExpression
 		| parenthesizedBooleanExpression
 		| functionCall
+	;
+
+stringComparisonExpression
+	:
+		parameterValueExpression
+		(Equals | NotEquals)
+		stringConstant
+	;
+	
+nullComparisonExpression
+	:
+		parameterValueExpression
+		(Equals | NotEquals)
+		Null
 	;
 
 arithmeticComparisonExpression

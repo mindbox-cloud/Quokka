@@ -67,6 +67,11 @@ EndFor
 	:
 		End WhiteSpace+ For
 	;
+	
+Null
+	:
+		[Nn][Uu][Ll][Ll]
+	;
 
 MemberAccessOperator
 	:

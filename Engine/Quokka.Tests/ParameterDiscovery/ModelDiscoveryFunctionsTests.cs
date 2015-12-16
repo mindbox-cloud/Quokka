@@ -81,7 +81,7 @@ namespace Quokka.Tests
 				new CompositeModelDefinition(new Dictionary<string, IModelDefinition>
 				{
 					{
-						"Price", new PrimitiveModelDefinition(TypeDefinition.NullableDecimal)
+						"Price", new PrimitiveModelDefinition(TypeDefinition.Decimal)
 					}
 				}),
 				model);

@@ -29,8 +29,8 @@ namespace Quokka
 			bool hasErrors = false;
 			foreach (var requiredField in requiredFields)
 			{
-				var fieldFullName = modelPrefix == null 
-					? requiredField.Key 
+				var fieldFullName = modelPrefix == null
+					? requiredField.Key
 					: $"{modelPrefix}.{requiredField.Key}";
 
 				IModelField actualField;
@@ -135,15 +135,8 @@ namespace Quokka
 			StringBuilder errorMessageBuilder)
 		{
 			bool hasErrors = false;
-			if (model.Value == null)
-			{
-				if (!requiredModelDefinition.Type.AllowsNull)
-				{
-					hasErrors = true;
-					errorMessageBuilder.AppendLine($"{modelPrefix} value is null");
-				}
-			}
-			else
+
+			if (model.Value != null)
 			{
 				var actualType = TypeDefinition.GetTypeDefinitionByRuntimeType(model.Value.GetType());
 				if (!actualType.IsCompatibleWithRequired(requiredModelDefinition.Type))

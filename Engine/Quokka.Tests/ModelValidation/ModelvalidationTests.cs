@@ -177,5 +177,18 @@ namespace Quokka.Tests
 							new PrimitiveModelValue(5),
 							new CompositeModelValue(new ModelField("Name", "Carl"))))));
 		}
+
+		[TestMethod]
+		[ExpectedException(typeof(InvalidTemplateModelException))]
+		public void ModelValidation_RootFieldPrimitiveType_Null_Error()
+		{
+			var template = new Template(@"
+				${ A }
+			");
+
+			template.Render(
+				new CompositeModelValue(
+					new ModelField("A", null)));
+		}
 	}
 }
