@@ -34,7 +34,7 @@ namespace Quokka
 				var variableValue = valueStorage.GetPrimitiveValue(variableOccurence);
 				if (variableValue == null)
 					throw new UnrenderableTemplateModelException(
-						"An attempt to use the value for variable {variableOccurence.Name} which happens to be null");
+						$"An attempt to use the value for variable {variableOccurence.Name} which happens to be null");
 
 				return variableValue;
 			}
