@@ -582,7 +582,7 @@ namespace Quokka.Tests
 		{
 			var model = new Template(@"
 				@{ for offer in Offers } 
-					${$ offer.Details.Price }
+					${ offer.Details.Price }
 				@{ end for }
 
 				@{ for myOffer in Offers } 

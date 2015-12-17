@@ -39,7 +39,7 @@ namespace Quokka.Tests
 		[TestMethod]
 		public void Render_Function_ReplaceIfEmpty_FirstOptionNonEmptyParameter()
 		{
-			var template = new Template("${ replaceIfEmpty($Value1, $Value2) }");
+			var template = new Template("${ replaceIfEmpty(Value1, Value2) }");
 
 			var result = template.Render(
 				new CompositeModelValue(
@@ -52,7 +52,7 @@ namespace Quokka.Tests
 		[TestMethod]
 		public void Render_Function_ReplaceIfEmpty_FirstOptionEmptyParameter()
 		{
-			var template = new Template("${ replaceIfEmpty($Value1, $Value2) }");
+			var template = new Template("${ replaceIfEmpty(Value1, Value2) }");
 
 			var result = template.Render(
 				new CompositeModelValue(
