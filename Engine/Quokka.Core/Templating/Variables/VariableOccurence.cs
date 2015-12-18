@@ -30,6 +30,13 @@ namespace Quokka
 			return Member == null ? this : Member.GetLeafMember();
 		}
 
+		public string GetLeafMemberFullName()
+		{
+			return Member == null 
+				? Name 
+				: $"{Name}.{Member.GetLeafMemberFullName()}";
+		}
+
 		public virtual VariableOccurence CloneWithSpecificLeafType(TypeDefinition leafMemberType)
 		{
 			if (Member == null)

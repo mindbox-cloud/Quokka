@@ -34,14 +34,14 @@ namespace Quokka
 				var variableValue = valueStorage.GetPrimitiveValue(variableOccurence);
 				if (variableValue == null)
 					throw new UnrenderableTemplateModelException(
-						$"An attempt to use the value for variable {variableOccurence.Name} which happens to be null");
+						$"An attempt to use the value for variable {variableOccurence.GetLeafMemberFullName()} which happens to be null");
 
 				return variableValue;
 			}
 			else
 			{
 				if (parentScope == null)
-					throw new InvalidOperationException($"Value for variable {variableOccurence.Name} not found");
+					throw new InvalidOperationException($"Value for variable {variableOccurence.GetLeafMemberFullName()} not found");
 				else
 					return parentScope.GetVariableValue(variableOccurence);
 			}
@@ -61,7 +61,7 @@ namespace Quokka
 			else
 			{
 				if (parentScope == null)
-					throw new InvalidOperationException($"Value for variable {variableOccurence.Name} not found");
+					throw new InvalidOperationException($"Value for variable {variableOccurence.GetLeafMemberFullName()} not found");
 				else
 					return parentScope.GetVariableValueCollection(variableOccurence);
 			}
