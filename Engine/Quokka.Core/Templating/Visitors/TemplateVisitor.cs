@@ -42,19 +42,17 @@ namespace Quokka
 		public override ITemplateNode VisitForStatement(QuokkaParser.ForStatementContext context)
 		{
 			var forInstruction = context.forInstruction();
-			var collectionVariable = forInstruction.parameterValueExpression()
-				.Accept(new VariableVisitor(visitingContext, TypeDefinition.Array));
 
 			var iterationVariableIdentifier = forInstruction.iterationVariable().Identifier();
 
 			return new ForBlock(
 				context.templateBlock()?.Accept(this),
-				collectionVariable,
 				new VariableDeclaration(
 					iterationVariableIdentifier.GetText(),
 					GetLocationFromToken(iterationVariableIdentifier.Symbol),
-                    TypeDefinition.Unknown,
-					null));
+					TypeDefinition.Unknown,
+					null),
+				forInstruction.Accept(new EnumerableElementVisitor(visitingContext)));
 		}
 
 		public override ITemplateNode VisitCommentBlock(QuokkaParser.CommentBlockContext context)

@@ -83,7 +83,11 @@
     <Compile Include="Templating\Nodes\Boolean\FunctionCallBooleanExpression.cs" />
     <Compile Include="Templating\Nodes\Boolean\NullComparisonExpression.cs" />
     <Compile Include="Templating\Nodes\Boolean\StringComparisonExpression.cs" />
+    <Compile Include="Templating\Nodes\Loops\EnumerableElementBase.cs" />
+    <Compile Include="Templating\Nodes\Loops\IEnumerableElement.cs" />
+    <Compile Include="Templating\Nodes\Loops\ParameterValueEnumerableElement.cs" />
     <Compile Include="Templating\Nodes\Output\OutputInstructionBlock.cs" />
+    <Compile Include="Templating\Visitors\EnumerableElementVisitor.cs" />
     <Compile Include="Templating\Visitors\GrammarMergeTools.cs" />
     <Compile Include="Templating\Visitors\StaticBlockVisitor.cs" />
     <Compile Include="Templating\Visitors\StaticPartVisitor.cs" />
@@ -153,8 +157,8 @@
     <Compile Include="Templating\Nodes\Boolean\NotExpression.cs" />
     <Compile Include="Templating\Nodes\Boolean\OrExpression.cs" />
     <Compile Include="Templating\Nodes\Boolean\TrueExpression.cs" />
-    <Compile Include="Templating\Nodes\ConditionBlock.cs" />
-    <Compile Include="Templating\Nodes\ForBlock.cs" />
+    <Compile Include="Templating\Nodes\Conditions\ConditionBlock.cs" />
+    <Compile Include="Templating\Nodes\Loops\ForBlock.cs" />
     <Compile Include="Templating\Nodes\Output\BooleanExpressionOutputBlock.cs" />
     <Compile Include="Templating\Nodes\Output\FunctionCallOutputBlock.cs" />
     <Compile Include="Templating\Nodes\Functions\ArithmeticArgument.cs" />
@@ -165,7 +169,7 @@
     <Compile Include="Templating\Nodes\Functions\IFunctionArgument.cs" />
     <Compile Include="Templating\Nodes\Functions\ParameterValueArgument.cs" />
     <Compile Include="Templating\Nodes\Functions\StringArgument.cs" />
-    <Compile Include="Templating\Nodes\IfBlock.cs" />
+    <Compile Include="Templating\Nodes\Conditions\IfBlock.cs" />
     <Compile Include="Templating\Nodes\Output\IOutputBlock.cs" />
     <Compile Include="Templating\Nodes\Output\StringConstantOutputBlock.cs" />
     <Compile Include="Templating\Nodes\Output\VariableOutputBlock.cs" />

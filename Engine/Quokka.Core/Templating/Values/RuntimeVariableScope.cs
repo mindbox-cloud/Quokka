@@ -29,6 +29,9 @@ namespace Quokka
 
 		public object GetVariableValue(VariableOccurence variableOccurence)
 		{
+			if (variableOccurence == null)
+				throw new ArgumentNullException(nameof(variableOccurence));
+
 			if (valueStorage.ContainsValueForVariable(variableOccurence))
 			{
 				var variableValue = valueStorage.GetPrimitiveValue(variableOccurence);
@@ -47,13 +50,11 @@ namespace Quokka
 			}
 		}
 
-		public bool CheckIfVariableIsNull(VariableOccurence variableOccurence)
-		{
-			return valueStorage.CheckIfValueIsNull(variableOccurence);
-		}
-
 		public IEnumerable<VariableValueStorage> GetVariableValueCollection(VariableOccurence variableOccurence)
 		{
+			if (variableOccurence == null)
+				throw new ArgumentNullException(nameof(variableOccurence));
+
 			if (valueStorage.ContainsValueForVariable(variableOccurence))
 			{
 				return valueStorage.GetElements(variableOccurence);
@@ -65,6 +66,15 @@ namespace Quokka
 				else
 					return parentScope.GetVariableValueCollection(variableOccurence);
 			}
+		}
+
+
+		public bool CheckIfVariableIsNull(VariableOccurence variableOccurence)
+		{
+			if (variableOccurence == null)
+				throw new ArgumentNullException(nameof(variableOccurence));
+
+			return valueStorage.CheckIfValueIsNull(variableOccurence);
 		}
 	}
 }

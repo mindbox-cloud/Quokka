@@ -90,7 +90,7 @@ namespace Quokka
 				var collectionElementDefinition = Merge(
 					"Element",
 					$"{FullName}[]",
-					collectionElementVariables.ToList());
+					collectionElementVariables);
 
 				return modelDefinitionFactory.CreateArray(
 					collectionElementDefinition.ToModelDefinition(modelDefinitionFactory, errorListener));

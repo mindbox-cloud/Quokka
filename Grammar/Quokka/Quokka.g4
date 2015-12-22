@@ -156,7 +156,10 @@ forStatement
 forInstruction
 	:
 		ControlInstructionStart
-		For	iterationVariable In parameterValueExpression
+		For	
+		iterationVariable 
+		In 
+		(parameterValueExpression | functionCall)
 		InstructionEnd
 	;
 	

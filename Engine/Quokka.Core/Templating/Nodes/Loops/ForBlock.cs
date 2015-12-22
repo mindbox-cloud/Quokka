@@ -5,23 +5,22 @@ namespace Quokka
 	internal class ForBlock : TemplateNodeBase
 	{
 		private readonly ITemplateNode block;
-		private readonly VariableOccurence collection;
+		private readonly IEnumerableElement enumerableElement;
 		private readonly VariableDeclaration iterationVariable;
 
-		public ForBlock(ITemplateNode block, VariableOccurence collection, VariableDeclaration iterationVariable)
+		public ForBlock(ITemplateNode block, VariableDeclaration iterationVariable, IEnumerableElement enumerableElement)
 		{
 			this.block = block;
-			this.collection = collection;
 			this.iterationVariable = iterationVariable;
+			this.enumerableElement = enumerableElement;
 		}
 
 		public override void CompileVariableDefinitions(SemanticAnalysisContext context)
 		{
-			var collectionVariableDefinition = 
-				context.VariableScope.CreateOrUpdateVariableDefinition(collection);
 			var innerScope = context.VariableScope.CreateChildScope();
 			var iterationVariableDefinition = innerScope.CreateOrUpdateVariableDefinition(iterationVariable);
-			collectionVariableDefinition.AddCollectionElementVariable(iterationVariableDefinition);
+
+			enumerableElement.CompileVariableDefinitions(context, iterationVariableDefinition);
 			block?.CompileVariableDefinitions(
 				new SemanticAnalysisContext(innerScope, context.Functions, context.ErrorListener));
 		}
@@ -31,7 +30,7 @@ namespace Quokka
 			if (block == null)
 				return;
 
-			var collectionValue = context.VariableScope.GetVariableValueCollection(collection);
+			var collectionValue = enumerableElement.Enumerate(context);
 			foreach (var collectionElement in collectionValue)
 			{
 				var innerScope =
