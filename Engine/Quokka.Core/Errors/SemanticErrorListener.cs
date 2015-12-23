@@ -47,12 +47,12 @@ namespace Quokka
 		}
 
 		public void AddInvalidFunctionResultTypeError(string functionName, 
-			Type expectedType, 
-			Type realType, 
+			TypeDefinition expectedType, 
+			TypeDefinition realType, 
 			Location location)
 		{
 			AddError(new SemanticError(
-				$"Недопустимый тип результата функции {functionName}. Ожидался {expectedType}, а она возвращает {realType}",
+				$"Недопустимый тип результата функции {functionName}. Ожидался {expectedType.Name}, а она возвращает {realType.Name}",
 				location));
 		}
 	}

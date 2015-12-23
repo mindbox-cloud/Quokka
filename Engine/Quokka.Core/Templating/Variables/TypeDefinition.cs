@@ -98,7 +98,7 @@ namespace Quokka
 			return Name;
 		}
 		
-		public static TypeDefinition GetTypeDefinitionByRuntimeType(Type runtimeType)
+		internal static TypeDefinition GetTypeDefinitionByRuntimeType(Type runtimeType)
 		{
 			TypeDefinition result;
 
@@ -107,6 +107,21 @@ namespace Quokka
 					$"Runtime type {runtimeType.Name} doesn't have a corresponding template variable type");
 
 			return result;
+		}
+
+		internal static TypeDefinition GetTypeDefinitionFromModelDefinition(IModelDefinition modelDefinition)
+		{
+			if (modelDefinition == null)
+				throw new ArgumentNullException(nameof(modelDefinition));
+
+			if (modelDefinition is IArrayModelDefinition)
+				return Array;
+			else if (modelDefinition is ICompositeModelDefinition)
+				return Composite;
+			else if (modelDefinition is IPrimitiveModelDefinition)
+				return ((IPrimitiveModelDefinition)modelDefinition).Type;
+			else
+				throw new InvalidOperationException("Unsupported model definition");
 		}
 
 		internal static TypeDefinition GetResultingTypeForMultupleOccurences<TTypedObject>(

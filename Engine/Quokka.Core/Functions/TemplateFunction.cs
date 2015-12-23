@@ -7,13 +7,16 @@ namespace Quokka
 	public abstract class TemplateFunction
 	{
 		public IReadOnlyList<TemplateFunctionArgument> Arguments { get; }
-		public Type ReturnType { get; }
+		public IModelDefinition ReturnValueDefinition { get; }
 		public string Name { get; }
 
-		protected TemplateFunction(string name, Type returnType, params TemplateFunctionArgument[] arguments)
+		protected TemplateFunction(
+			string name,
+			IModelDefinition returnValueDefinition,
+			params TemplateFunctionArgument[] arguments)
 		{
 			Name = name;
-			ReturnType = returnType;
+			ReturnValueDefinition = returnValueDefinition;
 			Arguments = arguments.ToList().AsReadOnly();
 		}
 		

@@ -52,9 +52,11 @@
     <Compile Include="Exceptions\TemplateException.cs" />
     <Compile Include="Exceptions\UnrenderableTemplateModelException.cs" />
     <Compile Include="Functions\FunctionRegistry.cs" />
+    <Compile Include="Functions\ScalarTemplateFunction.cs" />
     <Compile Include="Functions\Standard\FormatDateTimeTemplateFunction.cs" />
     <Compile Include="Functions\Standard\FormatTimeTemplateFunction.cs" />
     <Compile Include="Functions\Standard\FormatDecimalTemplateFunction.cs" />
+    <Compile Include="Functions\Standard\GroupListTemplateFunction.cs" />
     <Compile Include="Functions\Standard\IfTemplateFunction.cs" />
     <Compile Include="Functions\Standard\ReplaceIfEmptyTemplateFunction.cs" />
     <Compile Include="Functions\Standard\ToLowerTemplateFunction.cs" />
@@ -62,10 +64,10 @@
     <Compile Include="Functions\Standard\ToUpperTemplateFunction.cs" />
     <Compile Include="Functions\TemplateFunction.cs" />
     <Compile Include="Functions\TemplateFunctionArgument.cs" />
-    <Compile Include="Functions\TemplateFunction`1.cs" />
-    <Compile Include="Functions\TemplateFunction`4.cs" />
-    <Compile Include="Functions\TemplateFunction`3.cs" />
-    <Compile Include="Functions\TemplateFunction`2.cs" />
+    <Compile Include="Functions\ScalarTemplateFunction`1.cs" />
+    <Compile Include="Functions\ScalarTemplateFunction`4.cs" />
+    <Compile Include="Functions\ScalarTemplateFunction`3.cs" />
+    <Compile Include="Functions\ScalarTemplateFunction`2.cs" />
     <Compile Include="Generated.Partials\QuokkaBaseVisitor.cs" />
     <Compile Include="Generated.Partials\QuokkaHtmlBaseVisitor.cs" />
     <Compile Include="HtmlTemplate.cs" />
@@ -84,6 +86,7 @@
     <Compile Include="Templating\Nodes\Boolean\NullComparisonExpression.cs" />
     <Compile Include="Templating\Nodes\Boolean\StringComparisonExpression.cs" />
     <Compile Include="Templating\Nodes\Loops\EnumerableElementBase.cs" />
+    <Compile Include="Templating\Nodes\Loops\FunctionValueEnumerableElement.cs" />
     <Compile Include="Templating\Nodes\Loops\IEnumerableElement.cs" />
     <Compile Include="Templating\Nodes\Loops\ParameterValueEnumerableElement.cs" />
     <Compile Include="Templating\Nodes\Output\OutputInstructionBlock.cs" />
@@ -113,7 +116,6 @@
     <Compile Include="Model\Definitions\IArrayModelDefinition.cs" />
     <Compile Include="Model\Definitions\ICompositeModelDefinition.cs" />
     <Compile Include="Model\Definitions\IModelDefinition.cs" />
-    <Compile Include="Model\Definitions\ModelDefinition.cs" />
     <Compile Include="Model\Definitions\IPrimitiveModelDefinition.cs" />
     <Compile Include="Model\Definitions\ModelDefinitionFactory.cs" />
     <Compile Include="Model\Definitions\PrimitiveModelDefinition.cs" />

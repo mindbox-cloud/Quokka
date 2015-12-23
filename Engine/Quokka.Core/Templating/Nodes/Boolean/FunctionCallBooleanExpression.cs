@@ -19,10 +19,14 @@ namespace Quokka
 		public override void CompileVariableDefinitions(SemanticAnalysisContext context)
 		{
 			var function = context.Functions.TryGetFunction(functionCall);
-			if (function.ReturnType != typeof(bool))
+			var functionResultType = TypeDefinition.GetTypeDefinitionFromModelDefinition(function.ReturnValueDefinition);
+
+			if (functionResultType != TypeDefinition.Boolean)
 			{
 				context.ErrorListener.AddInvalidFunctionResultTypeError(
-								function.Name, typeof(bool), function.ReturnType,
+								function.Name,
+								TypeDefinition.Boolean,
+								functionResultType,
 								functionCall.Location);
 			}
 

@@ -1,6 +1,6 @@
 ﻿namespace Quokka
 {
-	internal class ToUpperTemplateFunction : TemplateFunction<string, string>
+	internal class ToUpperTemplateFunction : ScalarTemplateFunction<string, string>
 	{
 		public ToUpperTemplateFunction()
 			: base(

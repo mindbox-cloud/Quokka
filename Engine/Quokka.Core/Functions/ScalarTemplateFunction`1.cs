@@ -3,11 +3,11 @@ using System.Collections.Generic;
 
 namespace Quokka
 {
-	public abstract class TemplateFunction<TArgument, TResult> : TemplateFunction
+	public abstract class ScalarTemplateFunction<TArgument, TResult> : ScalarTemplateFunction
 	{
 		private readonly TemplateFunctionArgument<TArgument> argument;
 
-		protected TemplateFunction(string name, TemplateFunctionArgument<TArgument> argument)
+		protected ScalarTemplateFunction(string name, TemplateFunctionArgument<TArgument> argument)
 			: base(name, typeof(TResult), argument)
 		{
 			this.argument = argument;

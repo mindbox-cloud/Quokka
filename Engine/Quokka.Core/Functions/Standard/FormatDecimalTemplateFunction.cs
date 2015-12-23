@@ -2,7 +2,7 @@
 
 namespace Quokka
 {
-	internal class FormatDecimalTemplateFunction : TemplateFunction<decimal, string, string>
+	internal class FormatDecimalTemplateFunction : ScalarTemplateFunction<decimal, string, string>
 	{
 		public FormatDecimalTemplateFunction()
 			: base(

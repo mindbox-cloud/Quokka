@@ -561,7 +561,7 @@ namespace Quokka.Tests
 			", new FunctionRegistry(Template.GetStandardFunctions()), false);
 
 			Assert.AreEqual(1, template.Errors.Count);
-			Assert.AreEqual("Недопустимый тип результата функции toUpper. Ожидался System.Boolean, а она возвращает System.String", 
+			Assert.AreEqual("Недопустимый тип результата функции toUpper. Ожидался Boolean, а она возвращает String", 
 				((SemanticError)template.Errors[0]).Message);
 		}
 	}

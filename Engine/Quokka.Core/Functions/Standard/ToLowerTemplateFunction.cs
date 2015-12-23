@@ -1,6 +1,6 @@
 ﻿namespace Quokka
 {
-	internal class ToLowerTemplateFunction : TemplateFunction<string, string>
+	internal class ToLowerTemplateFunction : ScalarTemplateFunction<string, string>
 	{
 		public ToLowerTemplateFunction()
 			: base(

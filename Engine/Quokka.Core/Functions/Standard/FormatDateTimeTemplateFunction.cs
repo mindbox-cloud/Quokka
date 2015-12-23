@@ -2,7 +2,7 @@
 
 namespace Quokka
 {
-	internal class FormatDateTimeTemplateFunction : TemplateFunction<DateTime, string, string>
+	internal class FormatDateTimeTemplateFunction : ScalarTemplateFunction<DateTime, string, string>
 	{
 		public FormatDateTimeTemplateFunction()
 			: base(

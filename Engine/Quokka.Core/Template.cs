@@ -154,6 +154,7 @@ namespace Quokka
 			yield return new FormatTimeTemplateFunction();
 			yield return new IfTemplateFunction();
 			yield return new IsEmptyTemplateFunction();
+			yield return new GroupListTemplateFunction();
 		}
 	}
 }

@@ -67,6 +67,7 @@
     <Compile Include="Rendering\RenderArithmeticOutputTests.cs" />
     <Compile Include="Rendering\RenderBasicTests.cs" />
     <Compile Include="Rendering\RenderFilterChainTests.cs" />
+    <Compile Include="Rendering\RenderForBlockTableTests.cs" />
     <Compile Include="Rendering\RenderForBlockTests.cs" />
     <Compile Include="Rendering\RenderIfBlockArithmeticLogicTests.cs" />
     <Compile Include="Rendering\RenderIfBlockBasicTests.cs" />

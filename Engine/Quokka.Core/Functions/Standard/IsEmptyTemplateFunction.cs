@@ -1,6 +1,6 @@
 ﻿namespace Quokka
 {
-	internal class IsEmptyTemplateFunction : TemplateFunction<string, bool>
+	internal class IsEmptyTemplateFunction : ScalarTemplateFunction<string, bool>
 	{
 		public IsEmptyTemplateFunction()
 			: base(

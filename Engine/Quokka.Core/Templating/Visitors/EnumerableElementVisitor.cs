@@ -17,7 +17,8 @@ namespace Quokka
 
 		public override IEnumerableElement VisitFunctionCall(QuokkaParser.FunctionCallContext context)
 		{
-			throw new NotImplementedException();
+			return new FunctionValueEnumerableElement(
+				context.Accept(new FunctionCallVisitor(visitingContext)));
 		}
 
 		public override IEnumerableElement VisitParameterValueExpression(QuokkaParser.ParameterValueExpressionContext context)

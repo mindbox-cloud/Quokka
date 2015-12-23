@@ -1,6 +1,6 @@
 ﻿namespace Quokka
 {
-	internal class ReplaceIfEmptyTemplateFunction : TemplateFunction<string, string, string>
+	internal class ReplaceIfEmptyTemplateFunction : ScalarTemplateFunction<string, string, string>
 	{
 		public ReplaceIfEmptyTemplateFunction()
 			: base(

@@ -1,6 +1,6 @@
 ﻿namespace Quokka
 {
-	internal class IfTemplateFunction : TemplateFunction<bool, string, string, string>
+	internal class IfTemplateFunction : ScalarTemplateFunction<bool, string, string, string>
 	{
 		public IfTemplateFunction()
 			: base(

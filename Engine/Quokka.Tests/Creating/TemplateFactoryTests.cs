@@ -63,7 +63,7 @@ namespace Quokka.Tests
 				template.Render(new CompositeModelValue()));
 		}
 
-		private class TestCustomFunction : TemplateFunction<string, string>
+		private class TestCustomFunction : ScalarTemplateFunction<string, string>
 		{
 			public TestCustomFunction()
 				: base("TestSubstitution", new StringFunctionArgument("str"))

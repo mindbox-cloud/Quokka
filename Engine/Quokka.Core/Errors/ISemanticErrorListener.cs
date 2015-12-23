@@ -21,8 +21,8 @@ namespace Quokka
 
 		void AddInvalidFunctionResultTypeError(
 			string functionName,
-			Type expectedType,
-			Type realType,
+			TypeDefinition expectedType,
+			TypeDefinition realType,
 			Location location);
 	}
 }
