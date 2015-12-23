@@ -14,6 +14,11 @@ namespace Quokka
 
 		public override IArithmeticExpression VisitArithmeticExpression(QuokkaParser.ArithmeticExpressionContext context)
 		{
+			// Optimization: we can use single operand of multipart-expression itself without polluting the tree with
+			// additional layer of arithmetic nodes.
+			if (!context.minusOperand().Any() && !context.plusOperand().Any())
+				return Visit(context.multiplicationExpression());
+
 			var operands = new List<AdditionOperand>
 			{
 				AdditionOperand.Plus(Visit(context.multiplicationExpression()))
@@ -27,6 +32,12 @@ namespace Quokka
 
 		public override IArithmeticExpression VisitMultiplicationExpression(QuokkaParser.MultiplicationExpressionContext context)
 		{
+
+			// Optimization: we can use single operand of multipart-expression itself without polluting the tree with
+			// additional layer of arithmetic nodes.
+			if (!context.multiplicationOperand().Any() && !context.divisionOperand().Any())
+				return Visit(context.arithmeticAtom());
+
 			var operands = new List<MultiplicationOperand>
 			{
 				MultiplicationOperand.Multiply(Visit(context.arithmeticAtom()))
@@ -56,6 +67,12 @@ namespace Quokka
 		{
 			return new ArithmeticParameterValueExpression(
 				context.Accept(new VariableVisitor(visitingContext, TypeDefinition.Decimal)));
+		}
+
+		public override IArithmeticExpression VisitFunctionCall(QuokkaParser.FunctionCallContext context)
+		{
+			return new ArithmeticFunctionCallExpression(
+				context.Accept(new FunctionCallVisitor(visitingContext)));
 		}
 
 		protected override IArithmeticExpression AggregateResult(IArithmeticExpression aggregate, IArithmeticExpression nextResult)

@@ -277,5 +277,6 @@ arithmeticAtom
 		Number
 		| parameterValueExpression
 		| negationExpression
+		| functionCall
 		| LeftParen arithmeticExpression RightParen	
 	;

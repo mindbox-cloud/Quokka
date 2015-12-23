@@ -1,4 +1,6 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using System.Linq;
+
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Quokka.Tests
 {
@@ -398,6 +400,31 @@ namespace Quokka.Tests
 					new ModelField("A", 22)));
 
 			var expected = @"
+				
+			";
+
+			Assert.AreEqual(expected, result);
+		}
+
+		[TestMethod]
+		public void Render_IfArithmeticLogic_ArithmeticFunctionComparison()
+		{
+			var template = new Template(@"
+				@{ if count(Collection) > 5 }
+					Big collection
+				@{ end if }
+			");
+
+			var result = template.Render(
+				new CompositeModelValue(
+					new ModelField("Collection",
+						new ArrayModelValue(
+							Enumerable.Range(1, 7)
+								.Select(x => new PrimitiveModelValue(x))))));
+
+			var expected = @"
+				
+					Big collection
 				
 			";
 

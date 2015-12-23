@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Antlr4.Runtime;
+
+using Quokka.Functions;
 using Quokka.Generated;
 
 namespace Quokka
@@ -155,6 +157,7 @@ namespace Quokka
 			yield return new IfTemplateFunction();
 			yield return new IsEmptyTemplateFunction();
 			yield return new GroupListTemplateFunction();
+			yield return new CountTemplateFunction();
 		}
 	}
 }

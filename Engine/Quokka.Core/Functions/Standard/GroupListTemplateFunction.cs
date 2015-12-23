@@ -54,7 +54,9 @@ namespace Quokka
 						new ModelField(
 							"Elements",
 							new ArrayModelValue(
-								grouping.Select(x => x.Element.ModelValue)))))
+								grouping
+									.OrderBy(x => x.Index)
+									.Select(x => x.Element.ModelValue)))))
 					.ToList();
 
 			return new ArrayVariableValueStorage(new ArrayModelValue(groupingStructure));

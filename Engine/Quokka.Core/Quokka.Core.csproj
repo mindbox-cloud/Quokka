@@ -54,6 +54,7 @@
     <Compile Include="Functions\CollectionArgument.cs" />
     <Compile Include="Functions\FunctionRegistry.cs" />
     <Compile Include="Functions\ScalarTemplateFunction.cs" />
+    <Compile Include="Functions\Standard\CountTemplateFunction.cs" />
     <Compile Include="Functions\Standard\FormatDateTimeTemplateFunction.cs" />
     <Compile Include="Functions\Standard\FormatTimeTemplateFunction.cs" />
     <Compile Include="Functions\Standard\FormatDecimalTemplateFunction.cs" />
@@ -83,6 +84,7 @@
     <Compile Include="ITemplate.cs" />
     <Compile Include="Model\Definitions\ModelDefinitionTools.cs" />
     <Compile Include="Semantics\GrammarSpecificDataAnalysisContext.cs" />
+    <Compile Include="Templating\Nodes\Arithmetic\ArithmeticFunctionCallExpression.cs" />
     <Compile Include="Templating\Nodes\Base\IStaticBlockPart.cs" />
     <Compile Include="Templating\Nodes\Boolean\FunctionCallBooleanExpression.cs" />
     <Compile Include="Templating\Nodes\Boolean\NullComparisonExpression.cs" />
