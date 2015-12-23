@@ -1,4 +1,6 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using System.Linq;
+
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Quokka.Tests
 {
@@ -18,9 +20,8 @@ namespace Quokka.Tests
 				new CompositeModelValue(
 					new ModelField("Collection",
 						new ArrayModelValue(
-							new PrimitiveModelValue(1),
-							new PrimitiveModelValue(2),
-							new PrimitiveModelValue(3)))));
+							Enumerable.Range(1, 9)
+								.Select(x => new PrimitiveModelValue(x))))));
 
 			var expected = @"
 				

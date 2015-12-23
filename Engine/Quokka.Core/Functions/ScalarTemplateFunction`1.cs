@@ -5,9 +5,9 @@ namespace Quokka
 {
 	public abstract class ScalarTemplateFunction<TArgument, TResult> : ScalarTemplateFunction
 	{
-		private readonly TemplateFunctionArgument<TArgument> argument;
+		private readonly ScalarArgument<TArgument> argument;
 
-		protected ScalarTemplateFunction(string name, TemplateFunctionArgument<TArgument> argument)
+		protected ScalarTemplateFunction(string name, ScalarArgument<TArgument> argument)
 			: base(name, typeof(TResult), argument)
 		{
 			this.argument = argument;

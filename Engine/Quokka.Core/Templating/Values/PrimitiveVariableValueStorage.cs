@@ -6,14 +6,17 @@ namespace Quokka
 	{
 		private readonly IPrimitiveModelValue primitiveModel;
 
+		public override IModelValue ModelValue { get; }
+
 		public PrimitiveVariableValueStorage(IPrimitiveModelValue primitiveModel)
 		{
 			this.primitiveModel = primitiveModel;
+			ModelValue = primitiveModel;
 		}
 
 		public PrimitiveVariableValueStorage(object primitiveValue)
+			: this(new PrimitiveModelValue(primitiveValue))
 		{
-			this.primitiveModel = new PrimitiveModelValue(primitiveValue);
 		}
 
 		public override object GetPrimitiveValue()

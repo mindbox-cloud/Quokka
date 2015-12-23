@@ -8,10 +8,14 @@ namespace Quokka
 	{
 		private readonly IDictionary<string, VariableValueStorage> fields;
 
+		public override IModelValue ModelValue { get; }
+
 		public CompositeVariableValueStorage(ICompositeModelValue modelValue)
 		{
 			if (modelValue == null)
 				throw new ArgumentNullException(nameof(modelValue));
+
+			ModelValue = modelValue;
 
 			fields = modelValue
 				.Fields

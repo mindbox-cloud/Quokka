@@ -30,7 +30,7 @@ namespace Quokka
 				TypeDefinition requiredType = TypeDefinition.Unknown;
 				if (function != null)
 				{
-					requiredType = TypeDefinition.GetTypeDefinitionByRuntimeType(function.Arguments[i].RuntimeType);
+					requiredType = function.Arguments[i].Type;
 
 					object staticValue;
 					if (arguments[i].TryGetStaticValue(out staticValue))

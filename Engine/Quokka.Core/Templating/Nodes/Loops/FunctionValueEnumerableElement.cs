@@ -22,7 +22,7 @@ namespace Quokka
 
 		public override IEnumerable<VariableValueStorage> Enumerate(RenderContext context)
 		{
-			throw new NotImplementedException();
+			return functionCall.GetInvocationResult(context).GetElements();
 		}
 	}
 }

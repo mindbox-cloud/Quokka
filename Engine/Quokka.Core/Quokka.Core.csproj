@@ -51,6 +51,7 @@
     <Compile Include="Exceptions\TemplateContainsErrorsException.cs" />
     <Compile Include="Exceptions\TemplateException.cs" />
     <Compile Include="Exceptions\UnrenderableTemplateModelException.cs" />
+    <Compile Include="Functions\CollectionArgument.cs" />
     <Compile Include="Functions\FunctionRegistry.cs" />
     <Compile Include="Functions\ScalarTemplateFunction.cs" />
     <Compile Include="Functions\Standard\FormatDateTimeTemplateFunction.cs" />
@@ -63,11 +64,12 @@
     <Compile Include="Functions\Standard\IsEmptyTemplateFunction.cs" />
     <Compile Include="Functions\Standard\ToUpperTemplateFunction.cs" />
     <Compile Include="Functions\TemplateFunction.cs" />
-    <Compile Include="Functions\TemplateFunctionArgument.cs" />
+    <Compile Include="Functions\ScalarArgument.cs" />
     <Compile Include="Functions\ScalarTemplateFunction`1.cs" />
     <Compile Include="Functions\ScalarTemplateFunction`4.cs" />
     <Compile Include="Functions\ScalarTemplateFunction`3.cs" />
     <Compile Include="Functions\ScalarTemplateFunction`2.cs" />
+    <Compile Include="Functions\TemplateFunctionArgument.cs" />
     <Compile Include="Generated.Partials\QuokkaBaseVisitor.cs" />
     <Compile Include="Generated.Partials\QuokkaHtmlBaseVisitor.cs" />
     <Compile Include="HtmlTemplate.cs" />

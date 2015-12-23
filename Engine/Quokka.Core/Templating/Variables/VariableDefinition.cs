@@ -81,19 +81,21 @@ namespace Quokka
 			}
 			else if (type == TypeDefinition.Array)
 			{
-				if (!collectionElementVariables.Any())
+				IModelDefinition collectionElementDefinition;
+				if (collectionElementVariables.Any())
 				{
-					throw new InvalidOperationException(
-						"The variable is of an array type but no collection variables found");
+					collectionElementDefinition = Merge(
+						"Element",
+						$"{FullName}[]",
+						collectionElementVariables)
+						.ToModelDefinition(modelDefinitionFactory, errorListener);
+				}
+				else
+				{
+					collectionElementDefinition = new PrimitiveModelDefinition(TypeDefinition.Unknown);
 				}
 
-				var collectionElementDefinition = Merge(
-					"Element",
-					$"{FullName}[]",
-					collectionElementVariables);
-
-				return modelDefinitionFactory.CreateArray(
-					collectionElementDefinition.ToModelDefinition(modelDefinitionFactory, errorListener));
+				return modelDefinitionFactory.CreateArray(collectionElementDefinition);
 			}
 			else
 				return modelDefinitionFactory.CreatePrimitive(type);
