@@ -16,9 +16,9 @@
 				variableOccurence.CloneWithSpecificLeafType(requiredArgumentType));
 		}
 
-		public override object GetValue(RenderContext renderContext)
+		public override VariableValueStorage GetValue(RenderContext renderContext)
 		{
-			return renderContext.VariableScope.GetVariableValue(variableOccurence);
+			return renderContext.VariableScope.GetValueStorageForVariable(variableOccurence);
 		}
 	}
 }

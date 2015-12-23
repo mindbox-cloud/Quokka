@@ -15,6 +15,6 @@
 		/// </remarks>
 		bool TryGetStaticValue(out object staticValue);
 
-		object GetValue(RenderContext renderContext);
+		VariableValueStorage GetValue(RenderContext renderContext);
 	}
 }

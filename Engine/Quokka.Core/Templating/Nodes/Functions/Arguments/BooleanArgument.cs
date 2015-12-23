@@ -15,9 +15,9 @@
 			expression.CompileVariableDefinitions(context);
 		}
 
-		public override object GetValue(RenderContext renderContext)
+		public override VariableValueStorage GetValue(RenderContext renderContext)
 		{
-			return expression.Evaluate(renderContext);
+			return new PrimitiveVariableValueStorage(expression.Evaluate(renderContext));
 		}
 	}
 }

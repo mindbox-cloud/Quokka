@@ -13,7 +13,7 @@ namespace Quokka
 
 		public override bool Evaluate(RenderContext renderContext)
 		{
-			return (bool)functionCall.GetInvocationValue(renderContext);
+			return (bool)functionCall.GetInvocationResult(renderContext).GetPrimitiveValue();
 		}
 
 		public override void CompileVariableDefinitions(SemanticAnalysisContext context)

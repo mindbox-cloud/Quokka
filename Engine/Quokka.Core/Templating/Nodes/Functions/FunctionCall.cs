@@ -51,7 +51,7 @@ namespace Quokka
 			}
 		}
 
-		public object GetInvocationValue(RenderContext renderContext)
+		public VariableValueStorage GetInvocationResult(RenderContext renderContext)
 		{
 			var function = renderContext.Functions.TryGetFunction(this);
 			if (function == null)

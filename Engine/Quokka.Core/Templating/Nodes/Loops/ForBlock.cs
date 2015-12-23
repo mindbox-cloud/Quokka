@@ -35,7 +35,7 @@ namespace Quokka
 			{
 				var innerScope =
 					context.VariableScope.CreateChildScope(
-						VariableValueStorage.CreateCompositeStorage(iterationVariable.Name, collectionElement));
+						new CompositeVariableValueStorage(iterationVariable.Name, collectionElement));
 
 				block.Render(resultBuilder, context.CreateInnerContext(innerScope));
 			}

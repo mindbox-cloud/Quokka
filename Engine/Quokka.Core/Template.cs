@@ -106,7 +106,7 @@ namespace Quokka
 			{
 				new ModelValidator().ValidateModel(model, requiredModelDefinition);
 
-				var valueStorage = VariableValueStorage.CreateStorageForValue(model);
+				var valueStorage = new CompositeVariableValueStorage(model);
 				var builder = new StringBuilder();
 				var context = renderContextCreator(new RuntimeVariableScope(valueStorage), functionRegistry);
 				compiledTemplateTree.Render(builder, context);

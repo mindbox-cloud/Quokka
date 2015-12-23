@@ -1,4 +1,6 @@
-﻿namespace Quokka
+﻿using System;
+
+namespace Quokka
 {
 	internal class FunctionCallArgument : FunctionArgumentBase
 	{
@@ -15,9 +17,9 @@
 			functionCall.CompileVariableDefinitions(context);
 		}
 
-		public override object GetValue(RenderContext renderContext)
+		public override VariableValueStorage GetValue(RenderContext renderContext)
 		{
-			return functionCall.GetInvocationValue(renderContext);
+			return functionCall.GetInvocationResult(renderContext);
 		}
 	}
 }

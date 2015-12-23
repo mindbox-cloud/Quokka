@@ -17,6 +17,6 @@
 			return false;
 		}
 
-		public abstract object GetValue(RenderContext renderContext);
+		public abstract VariableValueStorage GetValue(RenderContext renderContext);
 	}
 }

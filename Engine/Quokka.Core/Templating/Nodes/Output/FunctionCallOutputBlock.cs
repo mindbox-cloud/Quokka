@@ -19,7 +19,7 @@ namespace Quokka
 
 		public override void Render(StringBuilder resultBuilder, RenderContext context)
 		{
-			var value = functionCall.GetInvocationValue(context);
+			var value = functionCall.GetInvocationResult(context).GetPrimitiveValue();
 			resultBuilder.Append(value);
 		}
 	}

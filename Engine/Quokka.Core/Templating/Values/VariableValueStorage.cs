@@ -1,34 +1,28 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Quokka
 {
 	internal abstract class VariableValueStorage
 	{
-		public virtual object GetPrimitiveValue(VariableOccurence variableOccurence)
+		public virtual object GetPrimitiveValue()
 		{
 			throw new InvalidOperationException("This storage can't provide values of this type");
 		}
 
-		public virtual bool CheckIfValueIsNull(VariableOccurence variableOccurence)
+		public virtual bool CheckIfValueIsNull()
 		{
 			throw new InvalidOperationException("This storage can't provide information on values of this type");
 		}
 
-		public virtual IEnumerable<VariableValueStorage> GetElements(VariableOccurence variableOccurence)
+		public virtual IEnumerable<VariableValueStorage> GetElements()
 		{
 			throw new InvalidOperationException("This storage can't provide values of this type");
 		}
 
-		public virtual bool ContainsValueForVariable(VariableOccurence variableOccurence)
+		public virtual VariableValueStorage GetLeafMemberValueStorage(VariableOccurence variableOccurence)
 		{
-			return true;
-		}
-
-		public static VariableValueStorage CreateCompositeStorage(string fieldName, VariableValueStorage fieldValueStorage)
-		{
-			return new CompositeVariableValueStorage(fieldName, fieldValueStorage);
+			return this;
 		}
 
 		public static VariableValueStorage CreateStorageForValue(IModelValue value)
@@ -49,129 +43,6 @@ namespace Quokka
 				return new ArrayVariableValueStorage(arrayValue);
 
 			throw new NotSupportedException("Unsupported parameter value type");
-		}
-
-		private class PrimitiveVariableValueStorage : VariableValueStorage
-		{
-			private readonly IPrimitiveModelValue primitiveModel;
-
-			public PrimitiveVariableValueStorage(IPrimitiveModelValue primitiveModel)
-			{
-				this.primitiveModel = primitiveModel;
-			}
-
-			public override object GetPrimitiveValue(VariableOccurence variableOccurence)
-			{
-				if (variableOccurence.Member != null)
-					throw new InvalidOperationException(
-						"Trying to get a primitive value for a variable container, not the variable itself");
-
-				if (variableOccurence.RequiredType.IsCompatibleWithRequired(TypeDefinition.Primitive))
-					return primitiveModel.Value;
-				else
-					throw new NotImplementedException("Unsupported variable type");
-			}
-
-			public override bool CheckIfValueIsNull(VariableOccurence variableOccurence)
-			{
-				if (variableOccurence.Member != null)
-					throw new InvalidOperationException(
-						"Trying to get a primitive value for a variable container, not the variable itself");
-
-				return primitiveModel.Value == null;
-			}
-		}
-
-		private class CompositeVariableValueStorage : VariableValueStorage
-		{
-			private readonly IDictionary<string, VariableValueStorage> fields;
-
-			public CompositeVariableValueStorage(ICompositeModelValue modelValue)
-			{
-				if (modelValue == null)
-					throw new ArgumentNullException(nameof(modelValue));
-
-				fields = modelValue
-					.Fields
-					.ToDictionary(
-						field => field.Name.Trim(),
-						field => CreateStorageForValue(field.Value),
-						StringComparer.InvariantCultureIgnoreCase);
-			}
-
-			public CompositeVariableValueStorage(string fieldName, VariableValueStorage fieldValueStorage)
-			{
-				if (fieldName == null)
-					throw new ArgumentNullException(nameof(fieldName));
-				if (fieldValueStorage == null)
-					throw new ArgumentNullException(nameof(fieldValueStorage));
-
-				fields = new Dictionary<string, VariableValueStorage>(StringComparer.InvariantCultureIgnoreCase)
-				{
-					{ fieldName, fieldValueStorage }
-				};
-			}
-
-			public override bool ContainsValueForVariable(VariableOccurence variableOccurence)
-			{
-				return fields.ContainsKey(variableOccurence.Name);
-			}
-
-			public override object GetPrimitiveValue(VariableOccurence variableOccurence)
-			{
-				VariableValueStorage field;
-				if (fields.TryGetValue(variableOccurence.Name, out field))
-					return field.GetPrimitiveValue(variableOccurence.Member ?? variableOccurence);
-				else
-					throw new InvalidOperationException($"Field {variableOccurence.Name} not found");
-			}
-
-			public override bool CheckIfValueIsNull(VariableOccurence variableOccurence)
-			{
-				VariableValueStorage field;
-				if (fields.TryGetValue(variableOccurence.Name, out field))
-					return field.CheckIfValueIsNull(variableOccurence.Member ?? variableOccurence);
-				else
-					throw new InvalidOperationException($"Field {variableOccurence.Name} not found");
-			}
-
-			public override IEnumerable<VariableValueStorage> GetElements(VariableOccurence variableOccurence)
-			{
-				VariableValueStorage field;
-				if (fields.TryGetValue(variableOccurence.Name, out field))
-					return field.GetElements(variableOccurence.Member ?? variableOccurence);
-				else
-					throw new InvalidOperationException($"Field {variableOccurence.Name} not found");
-			}
-		}
-
-		private class ArrayVariableValueStorage : VariableValueStorage
-		{
-			private readonly IEnumerable<VariableValueStorage> elements;
-
-			public ArrayVariableValueStorage(IArrayModelValue modelValue)
-			{
-				if (modelValue == null)
-					throw new ArgumentNullException(nameof(modelValue));
-
-				elements = modelValue
-					.Values
-					.Select(CreateStorageForValue)
-					.ToList()
-					.AsReadOnly();
-			}
-
-			public override IEnumerable<VariableValueStorage> GetElements(VariableOccurence variableOccurence)
-			{
-				if (variableOccurence.RequiredType != TypeDefinition.Array)
-					throw new InvalidOperationException("Trying to get the array value for a variable of a wrong type");
-				return elements;
-			}
-
-			public override bool CheckIfValueIsNull(VariableOccurence variableOccurence)
-			{
-				return false;
-			}
 		}
 	}
 }

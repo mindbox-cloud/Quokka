@@ -15,7 +15,7 @@ namespace Quokka
 
 		public abstract TResult Invoke(TArgument argument);
 
-		internal override object Invoke(IList<object> argumentsValues)
+		internal override object GetScalarInvocationResult(IList<VariableValueStorage> argumentsValues)
 		{
 			if (argumentsValues.Count != 1)
 				throw new InvalidOperationException($"Function that expects 1 argument was passed {argumentsValues.Count}");

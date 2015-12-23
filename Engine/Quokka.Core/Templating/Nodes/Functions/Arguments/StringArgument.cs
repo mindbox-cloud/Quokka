@@ -10,9 +10,9 @@
 			this.value = value;
 		}
 
-		public override object GetValue(RenderContext renderContext)
+		public override VariableValueStorage GetValue(RenderContext renderContext)
 		{
-			return value;
+			return new PrimitiveVariableValueStorage(value);
 		}
 
 		public override void CompileVariableDefinitions(SemanticAnalysisContext context, TypeDefinition requiredArgumentType)

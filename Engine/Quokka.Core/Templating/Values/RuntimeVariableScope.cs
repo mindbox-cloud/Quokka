@@ -6,14 +6,14 @@ namespace Quokka
 	internal class RuntimeVariableScope
 	{
 		private readonly RuntimeVariableScope parentScope;
-		private readonly VariableValueStorage valueStorage;
+		private readonly CompositeVariableValueStorage valueStorage;
 
-		public RuntimeVariableScope(VariableValueStorage valueStorage)
+		public RuntimeVariableScope(CompositeVariableValueStorage valueStorage)
 			:this(valueStorage, null)
 		{
 		}
 
-		private RuntimeVariableScope(VariableValueStorage valueStorage, RuntimeVariableScope parentScope)
+		private RuntimeVariableScope(CompositeVariableValueStorage valueStorage, RuntimeVariableScope parentScope)
 		{
 			if (valueStorage == null)
 				throw new ArgumentNullException(nameof(valueStorage));
@@ -22,9 +22,29 @@ namespace Quokka
 			this.parentScope = parentScope;
 		}
 
-		public RuntimeVariableScope CreateChildScope(VariableValueStorage valueStorage)
+		public RuntimeVariableScope CreateChildScope(CompositeVariableValueStorage valueStorage)
 		{
 			return new RuntimeVariableScope(valueStorage, this);
+		}
+
+		public VariableValueStorage GetValueStorageForVariable(VariableOccurence variableOccurence)
+		{
+			if (valueStorage.ContainsValueForVariable(variableOccurence))
+			{
+				var variableValueStorage = valueStorage.GetValueStorageForVariable(variableOccurence);
+				if (variableValueStorage == null)
+					throw new UnrenderableTemplateModelException(
+						$"An attempt to use the value for variable {variableOccurence.GetLeafMemberFullName()} which happens to be null");
+
+				return variableValueStorage;
+			}
+			else
+			{
+				if (parentScope == null)
+					throw new InvalidOperationException($"Value for variable {variableOccurence.GetLeafMemberFullName()} not found");
+				else
+					return parentScope.GetValueStorageForVariable(variableOccurence);
+			}
 		}
 
 		public object GetVariableValue(VariableOccurence variableOccurence)
@@ -34,7 +54,7 @@ namespace Quokka
 
 			if (valueStorage.ContainsValueForVariable(variableOccurence))
 			{
-				var variableValue = valueStorage.GetPrimitiveValue(variableOccurence);
+				var variableValue = valueStorage.GetLeafMemberValueStorage(variableOccurence).GetPrimitiveValue();
 				if (variableValue == null)
 					throw new UnrenderableTemplateModelException(
 						$"An attempt to use the value for variable {variableOccurence.GetLeafMemberFullName()} which happens to be null");
@@ -57,7 +77,7 @@ namespace Quokka
 
 			if (valueStorage.ContainsValueForVariable(variableOccurence))
 			{
-				return valueStorage.GetElements(variableOccurence);
+				return valueStorage.GetLeafMemberValueStorage(variableOccurence).GetElements();
 			}
 			else
 			{
@@ -74,7 +94,7 @@ namespace Quokka
 			if (variableOccurence == null)
 				throw new ArgumentNullException(nameof(variableOccurence));
 
-			return valueStorage.CheckIfValueIsNull(variableOccurence);
+			return valueStorage.GetLeafMemberValueStorage(variableOccurence).CheckIfValueIsNull();
 		}
 	}
 }

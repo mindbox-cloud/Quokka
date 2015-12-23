@@ -29,7 +29,7 @@ namespace Quokka
 		{
 		}
 
-		internal override object Invoke(IList<object> argumentsValues)
+		internal override VariableValueStorage Invoke(IList<VariableValueStorage> argumentsValues)
 		{
 			throw new NotImplementedException();
 		}

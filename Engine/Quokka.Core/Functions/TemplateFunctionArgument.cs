@@ -21,9 +21,9 @@ namespace Quokka
 			return new ArgumentValueValidationResult(true, null);
 		}
 
-		internal virtual TType ConvertValue(object value)
+		internal virtual TType ConvertValue(VariableValueStorage value)
 		{
-			return (TType)value;
+			return (TType)value.GetPrimitiveValue();
 		}
 	}
 
@@ -50,12 +50,12 @@ namespace Quokka
 		{
 		}
 
-		internal override decimal ConvertValue(object value)
+		internal override decimal ConvertValue(VariableValueStorage value)
 		{
 			if (value == null)
 				throw new ArgumentNullException(nameof(value));
 
-			return Convert.ToDecimal(value);
+			return Convert.ToDecimal(value.GetPrimitiveValue());
 		}
 	}
 
