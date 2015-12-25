@@ -4,7 +4,9 @@ namespace Quokka
 {
 	internal abstract class EnumerableElementBase : IEnumerableElement
 	{
-		public abstract void CompileVariableDefinitions(SemanticAnalysisContext context, VariableDefinition iterationVariable);
+		public abstract void CompileVariableDefinitions(SemanticAnalysisContext context);
+
+		public abstract void ProcessIterationVariableUsages(SemanticAnalysisContext context, VariableDefinition iterationVariable);
 
 		public abstract IEnumerable<VariableValueStorage> Enumerate(RenderContext context);
 	}

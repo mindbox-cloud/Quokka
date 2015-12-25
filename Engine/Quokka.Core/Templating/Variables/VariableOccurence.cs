@@ -49,5 +49,10 @@ namespace Quokka
 
 			return new VariableOccurence(Name, Location, RequiredType, Member.CloneWithSpecificLeafType(leafMemberType));
 		}
+
+		public override string ToString()
+		{
+			return Member == null ? Name : $"{Name}.{Member}";
+		}
 	}
 }

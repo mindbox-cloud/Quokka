@@ -20,17 +20,23 @@ namespace Quokka
 		public void CompileVariableDefinitions(SemanticAnalysisContext context)
 		{
 			var function = context.Functions.TryGetFunction(this);
+
 			if (function == null)
-				context.ErrorListener.AddUndefinedFunctionError(FunctionName, Location);
-			
-			for (int i = 0; i < arguments.Count; i++)
 			{
-				// Even if the function doesn't exist we want to try and analyze arguments further so we don't miss 
-				// semantic errors that could be present there
-				TypeDefinition requiredType = TypeDefinition.Unknown;
-				if (function != null)
+				context.ErrorListener.AddUndefinedFunctionError(FunctionName, Location);
+			}
+			else if (function.Arguments.Count != arguments.Count)
+			{
+				context.ErrorListener.AddInvalidFunctionArgumentCountError(FunctionName,
+					function.Arguments.Count,
+					arguments.Count,
+					Location);
+			}
+			else
+			{
+				for (int i = 0; i < arguments.Count; i++)
 				{
-					requiredType = function.Arguments[i].Type;
+					var requiredType = function.Arguments[i].Type;
 
 					object staticValue;
 					if (arguments[i].TryGetStaticValue(out staticValue))
@@ -45,9 +51,24 @@ namespace Quokka
 								Location);
 						}
 					}
-				}
 
-				arguments[i].CompileVariableDefinitions(context, requiredType);
+					arguments[i].CompileVariableDefinitions(context, requiredType);
+				}
+			}
+		}
+		
+		public void MapArgumentVariableDefinitionsToResult(
+			SemanticAnalysisContext context,
+			VariableDefinition resultDefinition)
+		{
+			var function = context.Functions.TryGetFunction(this);
+
+			// We only do this if the template is semantically valid. If not, semantic errors are already handled
+			// earlier in the workflow.
+			if (function != null && arguments.Count == function.Arguments.Count)
+			{
+				for (int i = 0; i < arguments.Count; i++)
+					arguments[i].MapArgumentVariableDefinitionsToResult(context, resultDefinition, function.Arguments[i]);
 			}
 		}
 

@@ -54,7 +54,7 @@ namespace Quokka
 
 			if (valueStorage.ContainsValueForVariable(variableOccurence))
 			{
-				var variableValue = valueStorage.GetLeafMemberValueStorage(variableOccurence).GetPrimitiveValue();
+				var variableValue = valueStorage.GetLeafMemberValueStorage(variableOccurence)?.GetPrimitiveValue();
 				if (variableValue == null)
 					throw new UnrenderableTemplateModelException(
 						$"An attempt to use the value for variable {variableOccurence.GetLeafMemberFullName()} which happens to be null");
@@ -94,7 +94,8 @@ namespace Quokka
 			if (variableOccurence == null)
 				throw new ArgumentNullException(nameof(variableOccurence));
 
-			return valueStorage.GetLeafMemberValueStorage(variableOccurence).CheckIfValueIsNull();
+			var leafValueStorage = valueStorage.GetLeafMemberValueStorage(variableOccurence);
+			return leafValueStorage == null || leafValueStorage.CheckIfValueIsNull();
 		}
 	}
 }

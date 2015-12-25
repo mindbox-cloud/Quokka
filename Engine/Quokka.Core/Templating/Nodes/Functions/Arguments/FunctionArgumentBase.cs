@@ -18,5 +18,12 @@
 		}
 
 		public abstract VariableValueStorage GetValue(RenderContext renderContext);
+
+		public virtual void MapArgumentVariableDefinitionsToResult(
+			SemanticAnalysisContext context,
+			VariableDefinition resultDefinition,
+			TemplateFunctionArgument functionArgument)
+		{
+		}
 	}
 }

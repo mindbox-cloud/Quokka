@@ -20,9 +20,10 @@ namespace Quokka
 			var innerScope = context.VariableScope.CreateChildScope();
 			var iterationVariableDefinition = innerScope.CreateOrUpdateVariableDefinition(iterationVariable);
 
-			enumerableElement.CompileVariableDefinitions(context, iterationVariableDefinition);
+			enumerableElement.CompileVariableDefinitions(context);
 			block?.CompileVariableDefinitions(
 				new SemanticAnalysisContext(innerScope, context.Functions, context.ErrorListener));
+			enumerableElement.ProcessIterationVariableUsages(context, iterationVariableDefinition);
 		}
 
 		public override void Render(StringBuilder resultBuilder, RenderContext context)

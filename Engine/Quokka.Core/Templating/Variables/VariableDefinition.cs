@@ -24,6 +24,8 @@ namespace Quokka
 		/// <remarks>Only relevant for collection variables.</remarks>
 		private readonly IList<VariableDefinition> collectionElementVariables;
 
+		public IList<VariableDefinition> CollectionElementVariables => collectionElementVariables.ToList().AsReadOnly();
+
 		public string Name { get; }
 		public string FullName { get; }
 		

@@ -16,5 +16,10 @@
 		bool TryGetStaticValue(out object staticValue);
 
 		VariableValueStorage GetValue(RenderContext renderContext);
+
+		void MapArgumentVariableDefinitionsToResult(
+			SemanticAnalysisContext context,
+			VariableDefinition resultDefinition,
+			TemplateFunctionArgument functionArgument);
 	}
 }

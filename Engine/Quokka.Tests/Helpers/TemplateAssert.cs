@@ -38,6 +38,28 @@ namespace Quokka.Tests
 			}
 		}
 
+		/// <summary>
+		/// Asserts that two outputs are equivalent disregarding empty rows and whitespace at the ends of rows.
+		/// </summary>
+		/// <param name="expected">Expected output</param>
+		/// <param name="actual">Actual output</param>
+		public static void AreOutputsEquivalent(string expected, string actual)
+		{
+			Assert.AreEqual(CompactifyOutput(expected), CompactifyOutput(actual));
+		}
+
+		/// <summary>
+		/// Remove empty lines that are artifacts of rendering 
+		/// </summary>
+		/// <param name="output"></param>
+		/// <returns></returns>
+		private static string CompactifyOutput(string output)
+		{
+			return
+				string.Concat(
+					output.Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries).Select(str => str.Trim()));
+		}
+
 		private static void AreModelDefinitionsEqual(
 			IModelDefinition expected,
 			IModelDefinition actual)

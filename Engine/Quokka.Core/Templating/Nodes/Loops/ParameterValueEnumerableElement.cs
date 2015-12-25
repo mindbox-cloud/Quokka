@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Quokka
 {
@@ -11,9 +12,17 @@ namespace Quokka
 			this.collectionVariable = collectionVariable;
 		}
 
-		public override void CompileVariableDefinitions(SemanticAnalysisContext context, VariableDefinition iterationVariable)
+		public override void CompileVariableDefinitions(SemanticAnalysisContext context)
 		{
-			var collectionVariableDefinition = context.VariableScope.CreateOrUpdateVariableDefinition(collectionVariable);
+			context.VariableScope.CreateOrUpdateVariableDefinition(collectionVariable);
+		}
+
+		public override void ProcessIterationVariableUsages(SemanticAnalysisContext context, VariableDefinition iterationVariable)
+		{
+			var collectionVariableDefinition = context.VariableScope.TryGetVariableDefinition(collectionVariable);
+			if (collectionVariableDefinition == null)
+				throw new NotImplementedException("Variable definition for collection variable not found");
+
 			collectionVariableDefinition.AddCollectionElementVariable(iterationVariable);
 		}
 

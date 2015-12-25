@@ -58,7 +58,7 @@
     <Compile Include="Functions\Standard\FormatDateTimeTemplateFunction.cs" />
     <Compile Include="Functions\Standard\FormatTimeTemplateFunction.cs" />
     <Compile Include="Functions\Standard\FormatDecimalTemplateFunction.cs" />
-    <Compile Include="Functions\Standard\GroupListTemplateFunction.cs" />
+    <Compile Include="Functions\Standard\TableRowsTemplateFunction.cs" />
     <Compile Include="Functions\Standard\IfTemplateFunction.cs" />
     <Compile Include="Functions\Standard\ReplaceIfEmptyTemplateFunction.cs" />
     <Compile Include="Functions\Standard\ToLowerTemplateFunction.cs" />

@@ -24,5 +24,11 @@ namespace Quokka
 			TypeDefinition expectedType,
 			TypeDefinition realType,
 			Location location);
+
+		void AddInvalidFunctionArgumentCountError(
+			string functionName,
+			int requiredArgumentCount,
+			int passedArgumentCount,
+			Location location);
 	}
 }

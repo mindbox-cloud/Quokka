@@ -191,7 +191,7 @@ namespace Quokka.Tests
 					{
 						"BackupValue", new PrimitiveModelDefinition(TypeDefinition.String)
 					},
-                    {
+					{
 						"IsTest", new PrimitiveModelDefinition(TypeDefinition.Boolean)
 					}
 				}),
@@ -212,6 +212,120 @@ namespace Quokka.Tests
 				{
 					{
 						"A", new PrimitiveModelDefinition(TypeDefinition.Decimal)
+					}
+				}),
+				model);
+		}
+
+		[TestMethod]
+		public void ModelDiscovery_FunctionCount_Collection()
+		{
+			var model = new Template(@"
+				${ count(Collection) }
+			")
+				.GetModelDefinition();
+
+			TemplateAssert.AreCompositeModelDefinitionsEqual(
+				new CompositeModelDefinition(new Dictionary<string, IModelDefinition>
+				{
+					{
+						"Collection", new ArrayModelDefinition(new PrimitiveModelDefinition(TypeDefinition.Unknown))
+					}
+				}),
+				model);
+		}
+
+		[TestMethod]
+		public void ModelDiscovery_FunctionCount_CountOfArrayInArray()
+		{
+			var model = new Template(@"
+				@{ for a in ArrayCollection }
+					${ count(a) }
+				@{ end for }
+			")
+				.GetModelDefinition();
+
+			TemplateAssert.AreCompositeModelDefinitionsEqual(
+				new CompositeModelDefinition(new Dictionary<string, IModelDefinition>
+				{
+					{
+						"ArrayCollection", new ArrayModelDefinition(
+							new ArrayModelDefinition(
+								new PrimitiveModelDefinition(TypeDefinition.Unknown)))
+					}
+				}),
+				model);
+		}
+
+		[TestMethod]
+		public void ModelDiscovery_FunctionTableRows_AccessToCellValueFields()
+		{
+			var model = new Template(@"
+				@{ for row in tableRows(Collection, 1) }
+					@{ for cell in row.Cells }
+						${ cell.Value.FirstName }
+						${ cell.Value.LastName }
+						@{ for x in cell.Value.Array }
+							${ x }
+						@{ end for }
+					@{ end for }
+				@{ end for }
+			")
+				.GetModelDefinition();
+
+			TemplateAssert.AreCompositeModelDefinitionsEqual(
+				new CompositeModelDefinition(new Dictionary<string, IModelDefinition>
+				{
+					{
+						"Collection", new ArrayModelDefinition(
+							new CompositeModelDefinition(new Dictionary<string, IModelDefinition>
+							{
+								{ "FirstName", new PrimitiveModelDefinition(TypeDefinition.Primitive) },
+								{ "LastName", new PrimitiveModelDefinition(TypeDefinition.Primitive) },
+								{ "Array", new ArrayModelDefinition(new PrimitiveModelDefinition(TypeDefinition.Primitive)) }
+							}))
+					}
+				}),
+				model);
+		}
+
+		[TestMethod]
+		public void ModelDiscovery_FunctionTableRows_AccessToCellValueFieldsThroughMultipleIterations()
+		{
+			var model = new Template(@"
+				@{ for row in tableRows(Collection, 1) }
+					@{ for cell in row.Cells }
+						${ cell.Value.FirstName }
+						${ cell.Value.LastName }
+						@{ for x in cell.Value.Array }
+							${ x }
+						@{ end for }
+						@{ for x in cell.Value.Array }
+							${ x + 5 }
+						@{ end for }
+					@{ end for }
+				@{ end for }
+
+				@{ for row2 in tableRows(Collection, 1) }
+					@{ for cell2 in row2.Cells }
+						${ cell2.Value.Age + 10 }
+					@{ end for }
+				@{ end for }
+			")
+				.GetModelDefinition();
+
+			TemplateAssert.AreCompositeModelDefinitionsEqual(
+				new CompositeModelDefinition(new Dictionary<string, IModelDefinition>
+				{
+					{
+						"Collection", new ArrayModelDefinition(
+							new CompositeModelDefinition(new Dictionary<string, IModelDefinition>
+							{
+								{ "FirstName", new PrimitiveModelDefinition(TypeDefinition.Primitive) },
+								{ "LastName", new PrimitiveModelDefinition(TypeDefinition.Primitive) },
+								{ "Age", new PrimitiveModelDefinition(TypeDefinition.Decimal) },
+								{ "Array", new ArrayModelDefinition(new PrimitiveModelDefinition(TypeDefinition.Decimal)) }
+							}))
 					}
 				}),
 				model);

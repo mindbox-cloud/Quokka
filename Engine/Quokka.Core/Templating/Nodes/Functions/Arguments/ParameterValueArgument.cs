@@ -2,23 +2,34 @@
 {
 	internal class ParameterValueArgument : FunctionArgumentBase
 	{
-		private readonly VariableOccurence variableOccurence;
+		public VariableOccurence VariableOccurence { get; }
 
 		public ParameterValueArgument(VariableOccurence variableOccurence, Location location)
 			: base(location)
 		{
-			this.variableOccurence = variableOccurence;
+			VariableOccurence = variableOccurence;
 		}
 
 		public override void CompileVariableDefinitions(SemanticAnalysisContext context, TypeDefinition requiredArgumentType)
 		{
 			context.VariableScope.CreateOrUpdateVariableDefinition(
-				variableOccurence.CloneWithSpecificLeafType(requiredArgumentType));
+				VariableOccurence.CloneWithSpecificLeafType(requiredArgumentType));
 		}
 
 		public override VariableValueStorage GetValue(RenderContext renderContext)
 		{
-			return renderContext.VariableScope.GetValueStorageForVariable(variableOccurence);
+			return renderContext.VariableScope.GetValueStorageForVariable(VariableOccurence);
+		}
+
+		public override void MapArgumentVariableDefinitionsToResult(
+			SemanticAnalysisContext context,
+			VariableDefinition resultDefinition,
+			TemplateFunctionArgument functionArgument)
+		{
+			functionArgument.MapArgumentValueToResult(
+				context,
+				resultDefinition,
+				context.VariableScope.TryGetVariableDefinition(VariableOccurence));
 		}
 	}
 }

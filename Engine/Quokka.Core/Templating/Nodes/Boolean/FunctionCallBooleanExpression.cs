@@ -21,7 +21,7 @@ namespace Quokka
 			var function = context.Functions.TryGetFunction(functionCall);
 			var functionResultType = TypeDefinition.GetTypeDefinitionFromModelDefinition(function.ReturnValueDefinition);
 
-			if (functionResultType != TypeDefinition.Boolean)
+			if (!functionResultType.IsCompatibleWithRequired(TypeDefinition.Boolean))
 			{
 				context.ErrorListener.AddInvalidFunctionResultTypeError(
 								function.Name,

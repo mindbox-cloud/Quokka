@@ -45,6 +45,12 @@
 			return Variables.CreateOrUpdateVariableDefinition(variableOccurence);
 		}
 
+		public VariableDefinition TryGetVariableDefinition(VariableOccurence variableOccurence)
+		{
+			return Variables.TryGetVariableDefinition(variableOccurence)
+					?? parentScope?.TryGetVariableDefinition(variableOccurence);
+		}
+
 		private CompilationVariableScope GetRootScope()
 		{
 			return parentScope == null ? this : parentScope.GetRootScope();

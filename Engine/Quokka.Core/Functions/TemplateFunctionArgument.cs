@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 
 namespace Quokka
 {
@@ -16,5 +17,12 @@ namespace Quokka
 		}
 
 		internal abstract ArgumentValueValidationResult ValidateValue(object value);
+
+		internal virtual void MapArgumentValueToResult(
+			SemanticAnalysisContext context,
+			VariableDefinition resultDefinition,
+			VariableDefinition argumentVariableDefinition)
+		{
+		}
 	}
 }

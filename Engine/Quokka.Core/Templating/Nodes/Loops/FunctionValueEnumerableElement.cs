@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Quokka
 {
@@ -14,10 +11,15 @@ namespace Quokka
 		{
 			this.functionCall = functionCall;
 		}
-
-		public override void CompileVariableDefinitions(SemanticAnalysisContext context, VariableDefinition iterationVariable)
+		
+		public override void CompileVariableDefinitions(SemanticAnalysisContext context)
 		{
 			functionCall.CompileVariableDefinitions(context);
+		}
+
+		public override void ProcessIterationVariableUsages(SemanticAnalysisContext context, VariableDefinition iterationVariable)
+		{
+			functionCall.MapArgumentVariableDefinitionsToResult(context, iterationVariable);
 		}
 
 		public override IEnumerable<VariableValueStorage> Enumerate(RenderContext context)

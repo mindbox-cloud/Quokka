@@ -46,6 +46,17 @@ namespace Quokka
 				location));
 		}
 
+		public void AddInvalidFunctionArgumentCountError(
+			string functionName,
+			int requiredArgumentCount,
+			int passedArgumentCount,
+			Location location)
+		{
+			AddError(new SemanticError(
+				$"Функции \"{functionName}\" вместо ожидаемого количества аргументов ({requiredArgumentCount}) передано {passedArgumentCount}",
+				location));
+		}
+
 		public void AddInvalidFunctionResultTypeError(string functionName, 
 			TypeDefinition expectedType, 
 			TypeDefinition realType, 

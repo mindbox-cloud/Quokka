@@ -21,7 +21,7 @@ namespace Quokka
 				.Fields
 				.ToDictionary(
 					field => field.Name.Trim(),
-					field => CreateStorageForValue(field.Value),
+					field => field.Value != null ? CreateStorageForValue(field.Value) : null,
 					StringComparer.InvariantCultureIgnoreCase);
 		}
 
@@ -48,11 +48,18 @@ namespace Quokka
 			return fields[variableOccurence.Name];
 		}
 
+		/// <summary>
+		/// Get the value storage for the leaf member of potentially multi-part identifier. For example, for variable
+		/// Product.Details.Description
+		/// this method will return the storage that contains the value for the rightmost Description field.
+		/// </summary>
+		/// <param name="variableOccurence">Variable occurence</param>
+		/// <returns>Will return the storage for value or <c>null</c> if the .</returns>
 		public override VariableValueStorage GetLeafMemberValueStorage(VariableOccurence variableOccurence)
 		{
 			VariableValueStorage field;
 			if (fields.TryGetValue(variableOccurence.Name, out field))
-				return field.GetLeafMemberValueStorage(variableOccurence.Member ?? variableOccurence);
+				return field?.GetLeafMemberValueStorage(variableOccurence.Member ?? variableOccurence);
 			else
 				throw new InvalidOperationException($"Field {variableOccurence.Name} not found");
 		}

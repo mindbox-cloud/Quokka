@@ -51,7 +51,7 @@ namespace Quokka
 				var fullName = ownerVariableOccurence == null
 					? variableOccurence.Name
 					: $"{ownerVariableOccurence.Name}.{variableOccurence.Name}";
-                definition = new VariableDefinition(variableOccurence.Name, fullName);
+				definition = new VariableDefinition(variableOccurence.Name, fullName);
 				items.Add(variableOccurence.Name, definition);
 			}
 
@@ -61,6 +61,29 @@ namespace Quokka
 				return definition.Fields.CreateOrUpdateVariableDefinition(variableOccurence.Member, variableOccurence);
 
 			return definition;
+		}
+
+		public VariableDefinition TryGetVariableDefinition(VariableOccurence variableOccurence)
+		{
+			VariableDefinition definition;
+			if (items.TryGetValue(variableOccurence.Name, out definition))
+			{
+				if (variableOccurence.Member != null)
+					return definition.Fields.TryGetVariableDefinition(variableOccurence.Member);
+
+				return definition;
+			}
+
+			return null;
+		}
+
+		public VariableDefinition TryGetVariableDefinition(string name)
+		{
+			VariableDefinition definition;
+			if (items.TryGetValue(name, out definition))
+				return definition;
+
+			return null;
 		}
 
 		public static VariableCollection Merge(string ownerFullName, IList<VariableCollection> collections)
