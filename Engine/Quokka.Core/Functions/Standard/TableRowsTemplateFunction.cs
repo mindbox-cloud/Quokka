@@ -110,6 +110,9 @@ namespace Quokka
 							IndexFieldName,
 							new PrimitiveModelValue(row.Index + 1)),
 						new ModelField(
+							ValueCountFieldName,
+							new PrimitiveModelValue(row.Cells.Count(c => c.Value != null))),
+						new ModelField(
 							IsFirstFieldName,
 							new PrimitiveModelValue(row.Index == firstRowIndex)),
 						new ModelField(

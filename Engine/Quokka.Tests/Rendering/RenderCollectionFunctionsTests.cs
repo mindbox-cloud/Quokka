@@ -470,5 +470,29 @@ namespace Quokka.Tests
 
 			TemplateAssert.AreOutputsEquivalent(expected, result);
 		}
+
+		[TestMethod]
+		public void Render_ForBlockTableRows_OneFullRowOnePartialRow_ValueCount()
+		{
+			var template = new Template(@"
+				@{ for row in tableRows(Collection, 5) }
+					${ row.ValueCount}
+				@{ end for }
+			");
+
+			var result = template.Render(
+				new CompositeModelValue(
+					new ModelField("Collection",
+						new ArrayModelValue(
+							Enumerable.Range(1000, 8)
+								.Select(x => new PrimitiveModelValue(x))))));
+
+			var expected = @"
+				5
+				3
+			";
+
+			TemplateAssert.AreOutputsEquivalent(expected, result);
+		}
 	}
 }
