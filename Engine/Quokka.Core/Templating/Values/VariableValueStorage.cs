@@ -14,7 +14,7 @@ namespace Quokka
 
 		public virtual bool CheckIfValueIsNull()
 		{
-			throw new InvalidOperationException("This storage can't provide information on values of this type");
+			return false;
 		}
 
 		public virtual IEnumerable<VariableValueStorage> GetElements()

@@ -256,7 +256,7 @@ namespace Quokka.Tests
 			TemplateAssert.AreCompositeModelDefinitionsEqual(
 				new CompositeModelDefinition(new Dictionary<string, IModelDefinition>
 				{
-					{ "City", new PrimitiveModelDefinition(TypeDefinition.Primitive) }
+					{ "City", new PrimitiveModelDefinition(TypeDefinition.Unknown) }
 				}),
 				model);
 		}

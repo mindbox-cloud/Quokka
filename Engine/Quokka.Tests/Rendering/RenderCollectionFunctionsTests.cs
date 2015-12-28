@@ -494,5 +494,37 @@ namespace Quokka.Tests
 
 			TemplateAssert.AreOutputsEquivalent(expected, result);
 		}
+
+		[TestMethod]
+		public void Render_ForBlockTableRows_CompositeValue_NullCheck()
+		{
+			var template = new Template(@"
+				@{ for row in tableRows(Collection, 3) }
+					@{ for cell in row.Cells }
+						@{ if cell.Value != null }
+							${ cell.Value.Name }	
+						@{ else if cell.Value = null }
+							Null
+						@{ end if }
+					@{ end for }
+				@{ end for }
+			");
+
+			var result = template.Render(
+				new CompositeModelValue(
+					new ModelField("Collection",
+						new ArrayModelValue(
+							Enumerable.Range(1, 2)
+								.Select(x => new CompositeModelValue(
+									new ModelField("Name", "Name_" + x)))))));
+
+			var expected = @"
+				Name_1
+				Name_2
+				Null
+			";
+
+			TemplateAssert.AreOutputsEquivalent(expected, result);
+		}
 	}
 }

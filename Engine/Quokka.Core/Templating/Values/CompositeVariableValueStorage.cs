@@ -59,7 +59,11 @@ namespace Quokka
 		{
 			VariableValueStorage field;
 			if (fields.TryGetValue(variableOccurence.Name, out field))
-				return field?.GetLeafMemberValueStorage(variableOccurence.Member ?? variableOccurence);
+			{
+				return variableOccurence.Member == null 
+					? field 
+					: field?.GetLeafMemberValueStorage(variableOccurence.Member ?? variableOccurence);
+			}
 			else
 				throw new InvalidOperationException($"Field {variableOccurence.Name} not found");
 		}

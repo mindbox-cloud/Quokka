@@ -94,7 +94,7 @@ namespace Quokka
 					"None of possible comparison operators encountered, the grammar is most likely faulty");
 
 			return new NullComparisonExpression(
-				context.parameterValueExpression().Accept(new VariableVisitor(visitingContext, TypeDefinition.Primitive)),
+				context.parameterValueExpression().Accept(new VariableVisitor(visitingContext, TypeDefinition.Unknown)),
 				operation);
 		}
 
