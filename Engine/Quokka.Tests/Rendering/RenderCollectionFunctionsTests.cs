@@ -238,5 +238,237 @@ namespace Quokka.Tests
 							Enumerable.Range(1, 1)
 								.Select(x => new PrimitiveModelValue(x))))));
 		}
+
+		[TestMethod]
+		public void Render_ForBlockTableRows_SingleRow_IsFirst_IsLast()
+		{
+			var template = new Template(@"
+				@{ for row in tableRows(Collection, 3) }
+					${ if (row.isFirst, ""First row"", ""Non-first row"") }
+					${ if (row.isLast, ""Last row"", ""Non-last row"") }
+				@{ end for }
+			");
+
+			var result = template.Render(
+				new CompositeModelValue(
+					new ModelField("Collection",
+						new ArrayModelValue(
+							Enumerable.Range(1, 3)
+								.Select(x => new PrimitiveModelValue(x))))));
+
+			var expected = @"
+				First row
+				Last row
+			";
+
+			TemplateAssert.AreOutputsEquivalent(expected, result);
+		}
+
+		[TestMethod]
+		public void Render_ForBlockTableRows_ThreeRows_IsFirstIsLastCorrect()
+		{
+			var template = new Template(@"
+				@{ for row in tableRows(Collection, 3) }
+					----
+					${ if (row.isFirst, ""First row"", ""Non-first row"") }
+					${ if (row.isLast, ""Last row"", ""Non-last row"") }
+				@{ end for }
+			");
+
+			var result = template.Render(
+				new CompositeModelValue(
+					new ModelField("Collection",
+						new ArrayModelValue(
+							Enumerable.Range(1, 9)
+								.Select(x => new PrimitiveModelValue(x))))));
+
+			var expected = @"
+				----
+				First row
+				Non-last row
+				----
+				Non-first row
+				Non-last row
+				----
+				Non-first row
+				Last row
+			";
+
+			TemplateAssert.AreOutputsEquivalent(expected, result);
+		}
+
+		[TestMethod]
+		public void Render_ForBlockTableRows_SingleRow_Index1()
+		{
+			var template = new Template(@"
+				@{ for row in tableRows(Collection, 3) }
+					${ row.Index }
+				@{ end for }
+			");
+
+			var result = template.Render(
+				new CompositeModelValue(
+					new ModelField("Collection",
+						new ArrayModelValue(
+							Enumerable.Range(1000, 3)
+								.Select(x => new PrimitiveModelValue(x))))));
+
+			var expected = @"
+				1
+			";
+
+			TemplateAssert.AreOutputsEquivalent(expected, result);
+		}
+
+		[TestMethod]
+		public void Render_ForBlockTableRows_ThreeRows_CorrectIndices()
+		{
+			var template = new Template(@"
+				@{ for row in tableRows(Collection, 3) }
+					${ row.Index }
+				@{ end for }
+			");
+
+			var result = template.Render(
+				new CompositeModelValue(
+					new ModelField("Collection",
+						new ArrayModelValue(
+							Enumerable.Range(1000, 9)
+								.Select(x => new PrimitiveModelValue(x))))));
+
+			var expected = @"
+				1
+				2
+				3
+			";
+
+			TemplateAssert.AreOutputsEquivalent(expected, result);
+		}
+
+		[TestMethod]
+		public void Render_ForBlockTableRows_SingleCell_IsFirst_IsLast()
+		{
+			var template = new Template(@"
+				@{ for row in tableRows(Collection, 1) }
+					@{ for cell in row.Cells }
+						${ if (cell.isFirst, ""First cell"", ""Non-first cell"") }
+						${ if (cell.isLast, ""Last cell"", ""Non-last cell"") }
+					@{ end for }
+				@{ end for }
+			");
+
+			var result = template.Render(
+				new CompositeModelValue(
+					new ModelField("Collection",
+						new ArrayModelValue(
+							Enumerable.Range(1, 1)
+								.Select(x => new PrimitiveModelValue(x))))));
+
+			var expected = @"
+				First cell
+				Last cell
+			";
+
+			TemplateAssert.AreOutputsEquivalent(expected, result);
+		}
+
+		[TestMethod]
+		public void Render_ForBlockTableRows_FullRowOfCellsWithValues_IsFirstIsLast()
+		{
+			var template = new Template(@"
+				@{ for row in tableRows(Collection, 3) }
+					@{ for cell in row.Cells }
+						----
+						${ if (cell.isFirst, ""First cell"", ""Non-first cell"") }
+						${ if (cell.isLast, ""Last cell"", ""Non-last cell"") }
+					@{ end for }
+				@{ end for }
+			");
+
+			var result = template.Render(
+				new CompositeModelValue(
+					new ModelField("Collection",
+						new ArrayModelValue(
+							Enumerable.Range(1, 3)
+								.Select(x => new PrimitiveModelValue(x))))));
+
+			var expected = @"
+				----
+				First cell
+				Non-last cell
+				----
+				Non-first cell
+				Non-last cell
+				----
+				Non-first cell
+				Last cell
+			";
+
+			TemplateAssert.AreOutputsEquivalent(expected, result);
+		}
+
+		[TestMethod]
+		public void Render_ForBlockTableRows_CellsWithoutValues_IsFirstIsLast()
+		{
+			var template = new Template(@"
+				@{ for row in tableRows(Collection, 3) }
+					@{ for cell in row.Cells }
+						----
+						${ if (cell.isFirst, ""First cell"", ""Non-first cell"") }
+						${ if (cell.isLast, ""Last cell"", ""Non-last cell"") }
+					@{ end for }
+				@{ end for }
+			");
+
+			var result = template.Render(
+				new CompositeModelValue(
+					new ModelField("Collection",
+						new ArrayModelValue(
+							Enumerable.Range(1, 1)
+								.Select(x => new PrimitiveModelValue(x))))));
+
+			var expected = @"
+				----
+				First cell
+				Non-last cell
+				----
+				Non-first cell
+				Non-last cell
+				----
+				Non-first cell
+				Last cell
+			";
+
+			TemplateAssert.AreOutputsEquivalent(expected, result);
+		}
+
+		[TestMethod]
+		public void Render_ForBlockTableRows_FullRowOfCellsSomeWithoutValues_AllIndexes()
+		{
+			var template = new Template(@"
+				@{ for row in tableRows(Collection, 5) }
+					@{ for cell in row.Cells }
+						${ cell.Index }
+					@{ end for }
+				@{ end for }
+			");
+
+			var result = template.Render(
+				new CompositeModelValue(
+					new ModelField("Collection",
+						new ArrayModelValue(
+							Enumerable.Range(1000, 3)
+								.Select(x => new PrimitiveModelValue(x))))));
+
+			var expected = @"
+				1
+				2
+				3
+				4
+				5
+			";
+
+			TemplateAssert.AreOutputsEquivalent(expected, result);
+		}
 	}
 }

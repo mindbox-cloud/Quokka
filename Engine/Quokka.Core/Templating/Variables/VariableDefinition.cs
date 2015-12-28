@@ -125,7 +125,7 @@ namespace Quokka
 			if (actualType == TypeDefinition.Unknown)
 				return;
 
-			if (expectedType == actualType)
+			if (expectedType.IsCompatibleWithRequired(actualType))
 			{
 				if (expectedType == TypeDefinition.Composite)
 				{

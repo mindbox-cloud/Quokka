@@ -11,24 +11,54 @@ namespace Quokka
 		private const string ValueFieldName = "Value";
 		private const string CellsFieldName = "Cells";
 		private const string ValueCountFieldName = "ValueCount";
+		private const string IndexFieldName = "Index";
+		private const string IsFirstFieldName = "IsFirst";
+		private const string IsLastFieldName = "IsLast";
 
 		private static readonly IModelDefinition resultModelDefinition =
 			new ArrayModelDefinition(
-				new CompositeModelDefinition(new Dictionary<string, IModelDefinition>
+				new CompositeModelDefinition(new Dictionary<string, IModelDefinition>(StringComparer.InvariantCultureIgnoreCase)
 				{
 					{
 						CellsFieldName,
 						new ArrayModelDefinition(
-							new CompositeModelDefinition(new Dictionary<string, IModelDefinition>
+							new CompositeModelDefinition(new Dictionary<string, IModelDefinition>(StringComparer.InvariantCultureIgnoreCase)
 							{
 								// Not sure if Primitive is actually correct here since the element can be of any type,
 								// but it matches the current implementation of parameter discovery
-								{ ValueFieldName, new PrimitiveModelDefinition(TypeDefinition.Unknown) }
+								{
+									ValueFieldName,
+									new PrimitiveModelDefinition(TypeDefinition.Unknown)
+								},
+								{
+									IndexFieldName,
+									new PrimitiveModelDefinition(TypeDefinition.Integer)
+								},
+								{
+									IsFirstFieldName,
+									new PrimitiveModelDefinition(TypeDefinition.Boolean)
+								},
+								{
+									IsLastFieldName,
+									new PrimitiveModelDefinition(TypeDefinition.Boolean)
+								}
 							}))
 					},
 					{
 						ValueCountFieldName,
 						new PrimitiveModelDefinition(TypeDefinition.Integer)
+					},
+					{
+						IndexFieldName,
+						new PrimitiveModelDefinition(TypeDefinition.Integer)
+					},
+					{
+						IsFirstFieldName,
+						new PrimitiveModelDefinition(TypeDefinition.Boolean)
+					},
+					{
+						IsLastFieldName,
+						new PrimitiveModelDefinition(TypeDefinition.Boolean)
 					}
 				}));
 
@@ -51,26 +81,63 @@ namespace Quokka
 				throw new InvalidOperationException("rowSize < 1");
 
 			int collectionSize = collectionElements.Count;
-			int cellCount = collectionSize % rowSize == 0
-				? collectionSize
-				: rowSize * ((collectionSize / rowSize) + 1);
+			int rowCount = collectionSize / rowSize + 
+				(collectionSize % rowSize == 0 ? 0 : 1);
+
+			int firstRowIndex = 0;
+			int lastRowIndex = rowCount - 1;
+			int firstCellIndex = 0;
+			int lastCellIndex = rowSize - 1;
+
+			int cellCount = rowCount * rowSize;
 
 			var groupingStructure =
 				Enumerable.Range(0, cellCount)
 					.Select(index => new
 					{
-						Element = index < collectionElements.Count ? collectionElements[index] : null,
+						Value = index < collectionElements.Count ? collectionElements[index] : null,
 						Index = index
 					})
 					.GroupBy(item => item.Index / rowSize)
-					.Select(grouping => new CompositeModelValue(
+					.Select(grouping => new
+					{
+						Index = grouping.Key,
+						Cells = grouping
+					})
+					.OrderBy(row => row.Index)
+					.Select(row => new CompositeModelValue(
+						new ModelField(
+							IndexFieldName,
+							new PrimitiveModelValue(row.Index + 1)),
+						new ModelField(
+							IsFirstFieldName,
+							new PrimitiveModelValue(row.Index == firstRowIndex)),
+						new ModelField(
+							IsLastFieldName,
+							new PrimitiveModelValue(row.Index == lastRowIndex)),
 						new ModelField(
 							CellsFieldName,
 							new ArrayModelValue(
-								grouping
+								row.Cells
 									.OrderBy(x => x.Index)
-									.Select(x => new CompositeModelValue(
-										new ModelField(ValueFieldName, x.Element?.ModelValue)))))))
+									.Select(x => new
+									{
+										IndexInsideRow = x.Index % rowSize,
+										x.Value
+									})
+									.Select(cell => new CompositeModelValue(
+										new ModelField(
+											ValueFieldName,
+											cell.Value?.ModelValue),
+										new ModelField(
+											IndexFieldName,
+											new PrimitiveModelValue(cell.IndexInsideRow + 1)),
+										new ModelField(
+											IsFirstFieldName,
+											new PrimitiveModelValue(cell.IndexInsideRow == firstCellIndex)),
+										new ModelField(
+											IsLastFieldName,
+											new PrimitiveModelValue(cell.IndexInsideRow == lastCellIndex))))))))
 					.ToList();
 
 			return new ArrayVariableValueStorage(new ArrayModelValue(groupingStructure));

@@ -31,7 +31,7 @@ namespace Quokka
 		{
 			if (valueStorage.ContainsValueForVariable(variableOccurence))
 			{
-				var variableValueStorage = valueStorage.GetValueStorageForVariable(variableOccurence);
+				var variableValueStorage = valueStorage.GetLeafMemberValueStorage(variableOccurence);
 				if (variableValueStorage == null)
 					throw new UnrenderableTemplateModelException(
 						$"An attempt to use the value for variable {variableOccurence.GetLeafMemberFullName()} which happens to be null");
