@@ -30,5 +30,15 @@ namespace Quokka
 			int requiredArgumentCount,
 			int passedArgumentCount,
 			Location location);
+
+		void AddActualTypeNotMatchingDeclaredTypeError(
+			VariableDefinition definition,
+			TypeDefinition actualType,
+			TypeDefinition declaredType,
+			Location location);
+
+		void AddUnexpectedFieldOnCompositeDeclaredTypeError(
+			VariableDefinition definition,
+			Location location);
 	}
 }

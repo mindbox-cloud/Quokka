@@ -36,15 +36,53 @@ namespace Quokka
 							StringComparer.InvariantCultureIgnoreCase)));
 		}
 
+		public void ValidateAgainstExpectedModelDefinition(
+			ICompositeModelDefinition expectedModelDefinition,
+			ISemanticErrorListener errorListener)
+		{
+			if (expectedModelDefinition == null)
+				return;
+
+			foreach (var actualItem in items)
+			{
+				IModelDefinition fieldExpectedDefinition;
+				if (expectedModelDefinition.Fields.TryGetValue(actualItem.Key, out fieldExpectedDefinition))
+				{
+					actualItem.Value.ValidateAgainstExpectedModelDefinition(fieldExpectedDefinition, errorListener);
+				}
+				else
+				{
+					errorListener.AddUnexpectedFieldOnCompositeDeclaredTypeError(
+						actualItem.Value,
+						actualItem.Value.GetFirstLocation());
+				}
+			}
+		}
+
 		public bool CheckIfVariableExists(string variableName)
 		{
 			return items.ContainsKey(variableName);
 		}
 
-		public VariableDefinition CreateOrUpdateVariableDefinition(
-			VariableOccurence variableOccurence,
-			VariableOccurence ownerVariableOccurence = null)
+		public VariableDefinition CreateDefinitionForVariableDeclaration(
+			VariableDeclaration variableDeclaration)
 		{
+			return CreateOrUpdateVariableDefinition(variableDeclaration, null);
+		}
+
+		public VariableDefinition CreateOrUpdateVariableDefinition(VariableOccurence variableOccurence)
+		{
+			if (variableOccurence is VariableDeclaration)
+				throw new ArgumentException("variableOccurence is VariableDeclaration, specific method should be used for declaring variables");
+
+			return CreateOrUpdateVariableDefinition(variableOccurence, null);
+		}
+
+		private VariableDefinition CreateOrUpdateVariableDefinition(
+			VariableOccurence variableOccurence,
+			VariableOccurence ownerVariableOccurence)
+		{
+
 			VariableDefinition definition;
 			if (!items.TryGetValue(variableOccurence.Name, out definition))
 			{
@@ -58,7 +96,11 @@ namespace Quokka
 			definition.AddOccurence(variableOccurence);
 
 			if (variableOccurence.Member != null)
-				return definition.Fields.CreateOrUpdateVariableDefinition(variableOccurence.Member, variableOccurence);
+			{
+				return definition.Fields.CreateOrUpdateVariableDefinition(
+					variableOccurence.Member,
+					variableOccurence);
+			}
 
 			return definition;
 		}

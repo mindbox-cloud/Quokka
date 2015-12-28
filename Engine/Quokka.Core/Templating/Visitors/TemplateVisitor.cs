@@ -50,8 +50,7 @@ namespace Quokka
 				new VariableDeclaration(
 					iterationVariableIdentifier.GetText(),
 					GetLocationFromToken(iterationVariableIdentifier.Symbol),
-					TypeDefinition.Unknown,
-					null),
+					TypeDefinition.Unknown),
 				forInstruction.Accept(new EnumerableElementVisitor(visitingContext)));
 		}
 

@@ -18,12 +18,17 @@ namespace Quokka
 		public override void CompileVariableDefinitions(SemanticAnalysisContext context)
 		{
 			var innerScope = context.VariableScope.CreateChildScope();
-			var iterationVariableDefinition = innerScope.CreateOrUpdateVariableDefinition(iterationVariable);
+			
+			var iterationVariableDefinition = innerScope.DeclareVariable(iterationVariable);
 
 			enumerableElement.CompileVariableDefinitions(context);
 			block?.CompileVariableDefinitions(
 				new SemanticAnalysisContext(innerScope, context.Functions, context.ErrorListener));
 			enumerableElement.ProcessIterationVariableUsages(context, iterationVariableDefinition);
+			
+			iterationVariableDefinition.ValidateAgainstExpectedModelDefinition(
+				enumerableElement.GetEnumerationVariableDeclarationDefinition(context),
+				context.ErrorListener);
 		}
 
 		public override void Render(StringBuilder resultBuilder, RenderContext context)

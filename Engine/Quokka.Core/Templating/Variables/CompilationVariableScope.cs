@@ -31,6 +31,11 @@
 			return childScope;
 		}
 
+		public  VariableDefinition DeclareVariable(VariableDeclaration variableDeclaration)
+		{
+			return Variables.CreateDefinitionForVariableDeclaration(variableDeclaration);
+		}
+		
 		public VariableDefinition CreateOrUpdateVariableDefinition(VariableOccurence variableOccurence)
 		{
 			var scope = GetExistingScopeForVariable(variableOccurence);

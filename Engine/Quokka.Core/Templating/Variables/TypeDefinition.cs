@@ -124,13 +124,13 @@ namespace Quokka
 				throw new InvalidOperationException("Unsupported model definition");
 		}
 
-		internal static TypeDefinition GetResultingTypeForMultupleOccurences<TTypedObject>(
+		internal static TypeDefinition GetResultingTypeForMultipleOccurences<TTypedObject>(
 			IList<TTypedObject> occurences,
 			Func<TTypedObject, TypeDefinition> typeSelector,
 			Action<TTypedObject, TypeDefinition> inconsistentTypeErrorHandler)
 		{
 			if (!occurences.Any())
-				throw new InvalidOperationException("Variable has no occurences");
+				throw new InvalidOperationException("No occurences");
 
 			if (occurences.Count == 1)
 				return typeSelector(occurences.Single());

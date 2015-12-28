@@ -26,6 +26,11 @@ namespace Quokka
 			collectionVariableDefinition.AddCollectionElementVariable(iterationVariable);
 		}
 
+		public override IModelDefinition GetEnumerationVariableDeclarationDefinition(SemanticAnalysisContext context)
+		{
+			return new PrimitiveModelDefinition(TypeDefinition.Unknown);
+		}
+
 		public override IEnumerable<VariableValueStorage> Enumerate(RenderContext context)
 		{
 			return context.VariableScope.GetVariableValueCollection(collectionVariable);

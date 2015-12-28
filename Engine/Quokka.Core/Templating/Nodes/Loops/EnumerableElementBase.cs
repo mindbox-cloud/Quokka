@@ -8,6 +8,8 @@ namespace Quokka
 
 		public abstract void ProcessIterationVariableUsages(SemanticAnalysisContext context, VariableDefinition iterationVariable);
 
+		public abstract IModelDefinition GetEnumerationVariableDeclarationDefinition(SemanticAnalysisContext context);
+
 		public abstract IEnumerable<VariableValueStorage> Enumerate(RenderContext context);
 	}
 }

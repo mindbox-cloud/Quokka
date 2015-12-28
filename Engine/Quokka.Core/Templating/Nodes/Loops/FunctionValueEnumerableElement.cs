@@ -22,6 +22,13 @@ namespace Quokka
 			functionCall.MapArgumentVariableDefinitionsToResult(context, iterationVariable);
 		}
 
+		public override IModelDefinition GetEnumerationVariableDeclarationDefinition(SemanticAnalysisContext context)
+		{
+			var function = context.Functions.TryGetFunction(functionCall);
+			var arrayModelDefinition = function?.ReturnValueDefinition as IArrayModelDefinition;
+			return arrayModelDefinition?.ElementModelDefinition;
+		}
+
 		public override IEnumerable<VariableValueStorage> Enumerate(RenderContext context)
 		{
 			return functionCall.GetInvocationResult(context).GetElements();

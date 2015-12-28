@@ -24,11 +24,12 @@ namespace Quokka
 		/// <remarks>Only relevant for collection variables.</remarks>
 		private readonly IList<VariableDefinition> collectionElementVariables;
 
+
 		public IList<VariableDefinition> CollectionElementVariables => collectionElementVariables.ToList().AsReadOnly();
 
 		public string Name { get; }
 		public string FullName { get; }
-		
+
 		/// <summary>
 		/// Own fields of the variable.
 		/// </summary>
@@ -36,7 +37,12 @@ namespace Quokka
 		public VariableCollection Fields { get; }
 		
 		public VariableDefinition(string name, string fullName)
-			: this(name, fullName, new VariableCollection(), new List<VariableOccurence>(), new List<VariableDefinition>())
+			: this(
+				  name,
+				  fullName,
+				  new VariableCollection(),
+				  new List<VariableOccurence>(),
+				  new List<VariableDefinition>())
 		{
 		}
 
@@ -69,7 +75,7 @@ namespace Quokka
 
 		public IModelDefinition ToModelDefinition(ModelDefinitionFactory modelDefinitionFactory, ISemanticErrorListener errorListener)
 		{
-			var type = TypeDefinition.GetResultingTypeForMultupleOccurences(
+			var type = TypeDefinition.GetResultingTypeForMultipleOccurences(
 				occurences,
 				occurence => occurence.RequiredType,
 				(occurence, correctType) => errorListener.AddInconsistentVariableTypingError(
@@ -103,7 +109,64 @@ namespace Quokka
 				return modelDefinitionFactory.CreatePrimitive(type);
 		}
 
-		public static VariableDefinition Merge(string resultName, string resultFullName, IList<VariableDefinition> definitions)
+		public void ValidateAgainstExpectedModelDefinition(IModelDefinition expectedModelDefinition, ISemanticErrorListener errorListener)
+		{
+			if (expectedModelDefinition == null)
+				return;
+
+			var expectedType = TypeDefinition.GetTypeDefinitionFromModelDefinition(expectedModelDefinition);
+			if (expectedType == TypeDefinition.Unknown)
+				return;
+
+			var actualType = TypeDefinition.GetResultingTypeForMultipleOccurences(
+				occurences,
+				occurence => occurence.RequiredType,
+				(occurence, correctType) => { });
+			if (actualType == TypeDefinition.Unknown)
+				return;
+
+			if (expectedType == actualType)
+			{
+				if (expectedType == TypeDefinition.Composite)
+				{
+					Fields.ValidateAgainstExpectedModelDefinition(
+						(CompositeModelDefinition)expectedModelDefinition,
+						errorListener);
+				}
+				else if (expectedType == TypeDefinition.Array)
+				{
+					if (collectionElementVariables.Any())
+					{
+						var mergedCollectionElement = Merge(
+							"Element",
+							$"{FullName}[]",
+							collectionElementVariables);
+
+						mergedCollectionElement.ValidateAgainstExpectedModelDefinition(
+							((IArrayModelDefinition)expectedModelDefinition).ElementModelDefinition,
+							errorListener);
+					}
+				}
+			}
+			else
+			{
+				errorListener.AddActualTypeNotMatchingDeclaredTypeError(
+					this,
+					actualType,
+					expectedType,
+					occurences.First().Location);
+			}
+		}
+
+		public Location GetFirstLocation()
+		{
+			return occurences.First().Location;
+		}
+
+		public static VariableDefinition Merge(
+			string resultName,
+			string resultFullName,
+			IList<VariableDefinition> definitions)
 		{
 			var fields = VariableCollection.Merge(resultFullName, definitions.Select(definition => definition.Fields).ToList());
 			var occurences = definitions.SelectMany(definition => definition.occurences);

@@ -102,7 +102,7 @@ namespace Quokka
 					return null;
 				}
 
-				var resultingType = TypeDefinition.GetResultingTypeForMultupleOccurences(
+				var resultingType = TypeDefinition.GetResultingTypeForMultipleOccurences(
 					primitiveValues,
 					primitiveValue => primitiveValue.Type,
 					(primitiveValue, correctType) => errorListener.AddInconsistenDefinitionTypesError(fieldName));
