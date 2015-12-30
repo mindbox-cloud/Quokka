@@ -112,5 +112,29 @@ namespace Quokka.Tests
 
 			Assert.AreEqual("ES-335", result);
 		}
+
+		[TestMethod]
+		public void Render_ParametersWithUnderscores()
+		{
+			var template = new Template(@"
+				${ _prefix }
+				${ in_fix }
+				${ suffix_ }
+			");
+
+			var result = template.Render(
+				new CompositeModelValue(
+					new ModelField("_prefix", "Hope"),
+					new ModelField("in_fix", "Empire"),
+					new ModelField("suffix_", "Return")));
+
+			var expected = @"
+				Hope
+				Empire
+				Return
+			";
+
+			Assert.AreEqual(expected, result);
+		}
 	}
 }
