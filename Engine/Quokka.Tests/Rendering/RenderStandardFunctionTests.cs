@@ -239,5 +239,17 @@ namespace Quokka.Tests
 
 			Assert.AreEqual("test.example.com", result);
 		}
+
+		[TestMethod]
+		public void Render_IfDecimalNull_Works()
+		{
+			var template = new Template("${ if( Price != NULL, formatDecimal(Price, \".00\"), \"Unknown price\") }");
+
+			var result = template.Render(
+				new CompositeModelValue(
+					new ModelField("Price", new PrimitiveModelValue(45345.5m))));
+
+			Assert.AreEqual("Unknown price", result);
+		}
 	}
 }
