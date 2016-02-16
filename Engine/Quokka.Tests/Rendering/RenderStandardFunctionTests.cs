@@ -249,7 +249,7 @@ namespace Quokka.Tests
 				new CompositeModelValue(
 					new ModelField("Price", new PrimitiveModelValue(45345.5m))));
 
-			Assert.AreEqual("Unknown price", result);
+			Assert.AreEqual("45345,50", result);
 		}
 	}
 }
