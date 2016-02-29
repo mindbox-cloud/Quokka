@@ -13,7 +13,7 @@ namespace Quokka
 			this.argument = argument;
 		}
 
-		public abstract TResult Invoke(TArgument argument);
+		public abstract TResult Invoke(TArgument value);
 
 		internal override object GetScalarInvocationResult(IList<VariableValueStorage> argumentsValues)
 		{

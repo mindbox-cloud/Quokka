@@ -18,7 +18,7 @@ namespace Quokka
 			this.argument2 = argument2;
 		}
 
-		public abstract TResult Invoke(TArgument1 argument1, TArgument2 argument2);
+		public abstract TResult Invoke(TArgument1 value1, TArgument2 value2);
 
 		internal override object GetScalarInvocationResult(IList<VariableValueStorage> argumentsValues)
 		{

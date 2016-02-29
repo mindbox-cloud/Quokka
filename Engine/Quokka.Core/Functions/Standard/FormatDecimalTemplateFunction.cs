@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 
 namespace Quokka
 {
@@ -14,14 +15,14 @@ namespace Quokka
 
 		public override string Invoke(decimal argument1, string argument2)
 		{
-			return argument1.ToString(argument2);
+			return argument1.ToString(argument2, CultureInfo.CurrentCulture);
 		}
 
 		private static ArgumentValueValidationResult ValidateFormat(string format)
 		{
 			try
 			{
-				default(decimal).ToString(format);
+				default(decimal).ToString(format, CultureInfo.CurrentCulture);
 				return new ArgumentValueValidationResult(true);
 			}
 			catch (FormatException)

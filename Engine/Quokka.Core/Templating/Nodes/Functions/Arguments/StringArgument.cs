@@ -17,6 +17,7 @@
 
 		public override void CompileVariableDefinitions(SemanticAnalysisContext context, TypeDefinition requiredArgumentType)
 		{
+			// This node is constant and therefore can't affect semantic analysis context.
 		}
 
 		public override bool TryGetStaticValue(out object staticValue)
