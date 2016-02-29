@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Quokka
 {
-	internal class GrammarMergeTools
+	internal static class GrammarMergeTools
 	{
 		internal static List<IStaticBlockPart> MergeInnerAndOuterBlocks(
 			List<IStaticBlockPart> outerGrammarBlocks,

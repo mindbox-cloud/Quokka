@@ -125,12 +125,21 @@ namespace Quokka
 			if (actualType == TypeDefinition.Unknown)
 				return;
 
+			ValidateKnownTypeAgaintExpectedModelDefinition(expectedModelDefinition, expectedType, actualType, errorListener);
+		}
+
+		private void ValidateKnownTypeAgaintExpectedModelDefinition(
+			IModelDefinition expectedModelDefinition,
+			TypeDefinition expectedType,
+			TypeDefinition actualType,
+			ISemanticErrorListener errorListener)
+		{
 			if (expectedType.IsCompatibleWithRequired(actualType))
 			{
 				if (expectedType == TypeDefinition.Composite)
 				{
 					Fields.ValidateAgainstExpectedModelDefinition(
-						(CompositeModelDefinition)expectedModelDefinition,
+						(CompositeModelDefinition) expectedModelDefinition,
 						errorListener);
 				}
 				else if (expectedType == TypeDefinition.Array)
@@ -143,7 +152,7 @@ namespace Quokka
 							collectionElementVariables);
 
 						mergedCollectionElement.ValidateAgainstExpectedModelDefinition(
-							((IArrayModelDefinition)expectedModelDefinition).ElementModelDefinition,
+							((IArrayModelDefinition) expectedModelDefinition).ElementModelDefinition,
 							errorListener);
 					}
 				}
