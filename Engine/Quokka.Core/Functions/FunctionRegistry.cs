@@ -17,10 +17,10 @@ namespace Quokka
 					StringComparer.InvariantCultureIgnoreCase));
 		}
 
-		public TemplateFunction TryGetFunction(FunctionCall functionCall)
+		public TemplateFunction TryGetFunction(string functionName)
 		{
 			TemplateFunction result;
-			functions.TryGetValue(functionCall.FunctionName, out result);
+			functions.TryGetValue(functionName, out result);
 			return result;
 		}
 	}

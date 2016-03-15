@@ -23,7 +23,11 @@ namespace Quokka.Tests
 		[ExpectedException(typeof(TemplateContainsErrorsException))]
 		public void CreateTemplate_InvalidFunctionArgumentType_Error()
 		{
-			new Template(@"${ if (toLower(""this is not a boolean function""), ""A"", ""B"") }");
+			new Template(@"
+				@{ if (toLower(""this is not a boolean function""), ""A"", ""B"") }
+					Something
+				@{ end if }
+			");
 		}
 
 		[TestMethod]
@@ -34,6 +38,17 @@ namespace Quokka.Tests
 				@{ for a in toLower(""string"") }
 				
 				@{ end for }
+			");
+		}
+
+		[TestMethod]
+		[ExpectedException(typeof(TemplateContainsErrorsException))]
+		public void CreateTemplate_UnknownFunctionName_Error()
+		{
+			new Template(@"
+				@{ if nonExistingFunction(""value"") }
+					Something
+				@{ end if }
 			");
 		}
 	}

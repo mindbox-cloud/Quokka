@@ -68,5 +68,27 @@ namespace Quokka.Tests
 					new CompositeModelValue(
 						new ModelField("A", true))));
 		}
+
+		[TestMethod]
+		public void Render_DoubleQuotedString()
+		{
+			var template = new Template(@"${ ""Some 'value'"" }");
+
+			Assert.AreEqual(
+				"Some 'value'",
+				template.Render(
+					new CompositeModelValue()));
+		}
+
+		[TestMethod]
+		public void Render_SingleQuotedString()
+		{
+			var template = new Template(@"${ 'Some ""value""' }");
+
+			Assert.AreEqual(
+				"Some \"value\"",
+				template.Render(
+					new CompositeModelValue()));
+		}
 	}
 }

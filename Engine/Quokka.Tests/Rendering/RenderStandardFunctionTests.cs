@@ -251,5 +251,16 @@ namespace Quokka.Tests
 
 			Assert.AreEqual("45345,50", result);
 		}
+
+		[TestMethod]
+		public void Render_FunctionWithSingleQuotedValue_Works()
+		{
+			var template = new Template("${ toUpper('lowered') }");
+
+			var result = template.Render(
+				new CompositeModelValue());
+
+			Assert.AreEqual("LOWERED", result);
+		}
 	}
 }

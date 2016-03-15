@@ -54,7 +54,9 @@ Slash
 // lexing mode for attribute values
 //
 TAG_EQUALS     
-    : '=' -> pushMode(ATTVALUE)
+    : 
+    	'='
+    	[ \t\r\n]* -> pushMode(ATTVALUE)
     ;
 
 TAG_NAME      

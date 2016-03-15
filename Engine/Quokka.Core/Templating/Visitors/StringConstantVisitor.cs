@@ -11,7 +11,7 @@ namespace Quokka
 
 		public override string VisitStringConstant(QuokkaParser.StringConstantContext context)
 		{
-			var quotedString = context.DoubleQuotedString().GetText();
+			var quotedString = context.DoubleQuotedString()?.GetText() ?? context.SingleQuotedString().GetText();
 			return quotedString.Substring(1, quotedString.Length - 2);
 		}
 	}

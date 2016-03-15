@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-// Generated from C:\Code\Quokka\Grammar\Quokka\QuokkaHtml.g4 by ANTLR 4.5.1
+// Generated from C:\Users\Ivonin\Code\Quokka\Grammar\Quokka\QuokkaHtml.g4 by ANTLR 4.5.1
 
 // Unreachable code detected
 #pragma warning disable 0162
@@ -50,7 +50,7 @@ internal partial class QuokkaHtml : Parser {
 	};
 
 	private static readonly string[] _LiteralNames = {
-		null, null, null, null, "'<'", null, null, "'>'", "'/'", "'='"
+		null, null, null, null, "'<'", null, null, "'>'", "'/'"
 	};
 	private static readonly string[] _SymbolicNames = {
 		null, "HtmlComment", "HtmlDtd", "CDATA", "LeftAngularBracket", "OutputBlock", 

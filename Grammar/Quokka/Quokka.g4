@@ -87,7 +87,7 @@ expression
 	
 stringConstant
 	:
-		DoubleQuotedString
+		DoubleQuotedString | SingleQuotedString
 	;
 
 ifStatement

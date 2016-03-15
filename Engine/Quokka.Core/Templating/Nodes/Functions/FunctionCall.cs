@@ -19,7 +19,7 @@ namespace Quokka
 
 		public void CompileVariableDefinitions(SemanticAnalysisContext context)
 		{
-			var function = context.Functions.TryGetFunction(this);
+			var function = TryGetFunctionForSemanticAnalysis(context); 
 
 			if (function == null)
 			{
@@ -61,7 +61,7 @@ namespace Quokka
 			SemanticAnalysisContext context,
 			VariableDefinition resultDefinition)
 		{
-			var function = context.Functions.TryGetFunction(this);
+			var function = TryGetFunctionForSemanticAnalysis(context);
 
 			// We only do this if the template is semantically valid. If not, semantic errors are already handled
 			// earlier in the workflow.
@@ -74,11 +74,20 @@ namespace Quokka
 
 		public VariableValueStorage GetInvocationResult(RenderContext renderContext)
 		{
-			var function = renderContext.Functions.TryGetFunction(this);
+			var function = renderContext.Functions.TryGetFunction(FunctionName);
 			if (function == null)
-				throw new InvalidOperationException($"Function {FunctionName}");
+				throw new InvalidOperationException($"Function {FunctionName} not found");
 
 			return function.Invoke(arguments.Select(arg => arg.GetValue(renderContext)).ToList());
+		}
+
+		public TemplateFunction TryGetFunctionForSemanticAnalysis(SemanticAnalysisContext context)
+		{
+			var function = context.Functions.TryGetFunction(FunctionName);
+			if (function == null)
+				context.ErrorListener.AddUndefinedFunctionError(FunctionName, Location);
+
+			return function;
 		}
 	}
 }

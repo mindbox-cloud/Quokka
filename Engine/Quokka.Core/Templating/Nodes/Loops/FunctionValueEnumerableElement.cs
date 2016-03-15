@@ -16,17 +16,17 @@ namespace Quokka
 		{
 			functionCall.CompileVariableDefinitions(context);
 
-			var function = context.Functions.TryGetFunction(functionCall);
-			if (function != null)
-			{
-				var returnType = TypeDefinition.GetTypeDefinitionFromModelDefinition(function.ReturnValueDefinition);
-				if (!returnType.IsCompatibleWithRequired(TypeDefinition.Array))
-					context.ErrorListener.AddInvalidFunctionResultTypeError(
-						functionCall.FunctionName,
-						TypeDefinition.Array,
-						returnType,
-						functionCall.Location);
-			}
+			var function = functionCall.TryGetFunctionForSemanticAnalysis(context);
+			if (function == null)
+				return;
+
+			var returnType = TypeDefinition.GetTypeDefinitionFromModelDefinition(function.ReturnValueDefinition);
+			if (!returnType.IsCompatibleWithRequired(TypeDefinition.Array))
+				context.ErrorListener.AddInvalidFunctionResultTypeError(
+					functionCall.FunctionName,
+					TypeDefinition.Array,
+					returnType,
+					functionCall.Location);
 		}
 
 		public override void ProcessIterationVariableUsages(SemanticAnalysisContext context, VariableDefinition iterationVariable)
@@ -36,7 +36,7 @@ namespace Quokka
 
 		public override IModelDefinition GetEnumerationVariableDeclarationDefinition(SemanticAnalysisContext context)
 		{
-			var function = context.Functions.TryGetFunction(functionCall);
+			var function = functionCall.TryGetFunctionForSemanticAnalysis(context);
 			var arrayModelDefinition = function?.ReturnValueDefinition as IArrayModelDefinition;
 			return arrayModelDefinition?.ElementModelDefinition;
 		}

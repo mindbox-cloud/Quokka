@@ -18,7 +18,10 @@ namespace Quokka
 
 		public override void CompileVariableDefinitions(SemanticAnalysisContext context)
 		{
-			var function = context.Functions.TryGetFunction(functionCall);
+			var function = functionCall.TryGetFunctionForSemanticAnalysis(context);
+			if (function == null)
+				return;
+
 			var functionResultType = TypeDefinition.GetTypeDefinitionFromModelDefinition(function.ReturnValueDefinition);
 
 			if (!functionResultType.IsCompatibleWithRequired(TypeDefinition.Decimal))
