@@ -54,6 +54,7 @@
     <Compile Include="Functions\CollectionArgument.cs" />
     <Compile Include="Functions\FunctionRegistry.cs" />
     <Compile Include="Functions\ScalarTemplateFunction.cs" />
+    <Compile Include="Functions\Standard\AddDaysTemplateFunction.cs" />
     <Compile Include="Functions\Standard\CountTemplateFunction.cs" />
     <Compile Include="Functions\Standard\FormatDateTimeTemplateFunction.cs" />
     <Compile Include="Functions\Standard\FormatTimeTemplateFunction.cs" />

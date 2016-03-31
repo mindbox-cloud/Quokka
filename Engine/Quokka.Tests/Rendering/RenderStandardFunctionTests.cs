@@ -262,5 +262,56 @@ namespace Quokka.Tests
 
 			Assert.AreEqual("LOWERED", result);
 		}
+
+		[TestMethod]
+		public void Render_AddDays_PositiveInt_Works()
+		{
+			var template = new Template("${ formatDateTime(AddDays(Date, 3), 'yyyy.MM.dd HH:mm:ss') }");
+
+			var result = template.Render(
+				new CompositeModelValue(
+					new ModelField("Date", new DateTime(2016, 01, 01, 15, 03, 05))));
+
+			Assert.AreEqual("2016.01.04 15:03:05", result);
+		}
+
+		[TestMethod]
+		public void Render_AddDays_NegativeInt_Works()
+		{
+			var template = new Template("${ formatDateTime(AddDays(Date, -3), 'yyyy.MM.dd HH:mm:ss') }");
+
+			var result = template.Render(
+				new CompositeModelValue(
+					new ModelField("Date", new DateTime(2016, 01, 15, 15, 03, 05))));
+
+			Assert.AreEqual("2016.01.12 15:03:05", result);
+		}
+
+
+
+		[TestMethod]
+		public void Render_AddDays_Zero_Works()
+		{
+			var template = new Template("${ formatDateTime(AddDays(Date, 0), 'yyyy.MM.dd HH:mm:ss') }");
+
+			var result = template.Render(
+				new CompositeModelValue(
+					new ModelField("Date", new DateTime(2016, 01, 15, 15, 03, 05))));
+
+			Assert.AreEqual("2016.01.15 15:03:05", result);
+		}
+
+		[TestMethod]
+		public void Render_AddDays_PositiveDecimal_Works()
+		{
+			var template = new Template("${ formatDateTime(AddDays(Date, DateOffset), 'yyyy.MM.dd HH:mm:ss') }");
+
+			var result = template.Render(
+				new CompositeModelValue(
+					new ModelField("Date", new DateTime(2016, 01, 01, 00, 00, 00)),
+					new ModelField("DateOffset", 1.5m)));
+
+			Assert.AreEqual("2016.01.02 12:00:00", result);
+		}
 	}
 }

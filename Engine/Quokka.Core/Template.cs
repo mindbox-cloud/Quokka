@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using Antlr4.Runtime;
 
-using Quokka.Functions;
 using Quokka.Generated;
 
 namespace Quokka
@@ -158,6 +157,7 @@ namespace Quokka
 			yield return new IsEmptyTemplateFunction();
 			yield return new TableRowsTemplateFunction();
 			yield return new CountTemplateFunction();
+			yield return new AddDaysTemplateFunction();
 		}
 	}
 }

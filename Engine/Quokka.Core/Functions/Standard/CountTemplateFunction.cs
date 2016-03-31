@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace Quokka.Functions
+namespace Quokka
 {
 	internal class CountTemplateFunction : TemplateFunction
 	{
