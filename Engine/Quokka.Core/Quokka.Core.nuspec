@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>$id$</id>
+    <version>$version$</version>
+    <authors>$author$</authors>
+    <owners>$author$</owners>
+    <projectUrl>http://mindbox.ru</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>$description$</description>
+    <releaseNotes></releaseNotes>
+    <copyright>Copyright Mindbox 2016</copyright>
+    <tags>string templating</tags>
+  </metadata>
+  <files>
+    <file src="bin\$configuration$\Antlr4.Runtime.dll" target="lib\net452\" />
+  </files>
+</package>
