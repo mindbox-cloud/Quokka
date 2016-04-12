@@ -15,6 +15,11 @@
 			expression.CompileVariableDefinitions(context);
 		}
 
+		public override TypeDefinition TryGetStaticType(SemanticAnalysisContext context)
+		{
+			return expression.Type;
+		}
+
 		public override VariableValueStorage GetValue(RenderContext renderContext)
 		{
 			return new PrimitiveVariableValueStorage(expression.GetValue(renderContext));

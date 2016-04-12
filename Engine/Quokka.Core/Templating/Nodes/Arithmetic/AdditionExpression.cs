@@ -7,6 +7,16 @@ namespace Quokka
 	{
 		private readonly IReadOnlyCollection<AdditionOperand> operands;
 
+		public override TypeDefinition Type
+		{
+			get
+			{
+				return operands.All(op => op.Expression.Type == TypeDefinition.Integer)
+					? TypeDefinition.Integer
+					: TypeDefinition.Decimal;
+			}
+		}
+
 		public AdditionExpression(IEnumerable<AdditionOperand> operands)
 		{
 			this.operands = operands.ToList().AsReadOnly();

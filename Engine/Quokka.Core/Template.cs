@@ -58,6 +58,7 @@ namespace Quokka
 						functionRegistry,
 						semanticErrorListener);
 					compiledTemplateTree.CompileVariableDefinitions(analysisContext);
+					analysisContext.VariableScope.CheckForChildScopesDeclarationConflicts(analysisContext);
 					requiredModelDefinition = analysisContext.VariableScope.Variables.ToModelDefinition(
 						new ModelDefinitionFactory(),
                         semanticErrorListener);

@@ -37,18 +37,33 @@ namespace Quokka
 				for (int i = 0; i < arguments.Count; i++)
 				{
 					var requiredType = function.Arguments[i].Type;
-
-					object staticValue;
-					if (arguments[i].TryGetStaticValue(out staticValue))
+					var staticArgumentType = arguments[i].TryGetStaticType(context);
+					if (staticArgumentType != null)
 					{
-						var validationResult = function.Arguments[i].ValidateValue(staticValue);
-						if (!validationResult.IsValid)
+						if (!staticArgumentType.IsCompatibleWithRequired(requiredType))
 						{
-							context.ErrorListener.AddInvalidFunctionArgumentValueError(
+							context.ErrorListener.AddInvalidFunctionArgumentTypeError(
 								function.Name,
 								function.Arguments[i].Name,
-								validationResult.ErrorMessage,
+								staticArgumentType,
+								requiredType,
 								Location);
+						}
+						else
+						{
+							object staticValue;
+							if (arguments[i].TryGetStaticValue(out staticValue))
+							{
+								var validationResult = function.Arguments[i].ValidateValue(staticValue);
+								if (!validationResult.IsValid)
+								{
+									context.ErrorListener.AddInvalidFunctionArgumentValueError(
+										function.Name,
+										function.Arguments[i].Name,
+										validationResult.ErrorMessage,
+										Location);
+								}
+							}
 						}
 					}
 

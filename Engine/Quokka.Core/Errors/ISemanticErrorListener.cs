@@ -13,6 +13,13 @@ namespace Quokka
 			string functionName,
 			Location location);
 
+		void AddInvalidFunctionArgumentTypeError(
+			string functionName,
+			string argumentName,
+			TypeDefinition realType,
+			TypeDefinition expectedType,
+			Location location);
+
 		void AddInvalidFunctionArgumentValueError(
 			string functionName,
 			string argumentName,
@@ -38,6 +45,10 @@ namespace Quokka
 			Location location);
 
 		void AddUnexpectedFieldOnCompositeDeclaredTypeError(
+			VariableDefinition definition,
+			Location location);
+
+		void AddVariableDeclarationScopeConflictError(
 			VariableDefinition definition,
 			Location location);
 	}

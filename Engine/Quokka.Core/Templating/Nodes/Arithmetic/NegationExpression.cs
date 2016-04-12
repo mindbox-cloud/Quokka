@@ -4,6 +4,8 @@
 	{
 		private readonly IArithmeticExpression innerExpression;
 
+		public override TypeDefinition Type => innerExpression.Type;
+
 		public NegationExpression(IArithmeticExpression innerExpression)
 		{
 			this.innerExpression = innerExpression;

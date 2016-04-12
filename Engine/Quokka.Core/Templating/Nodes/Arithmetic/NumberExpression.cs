@@ -9,6 +9,8 @@
 			this.number = number;
 		}
 
+		public override TypeDefinition Type => TypeDefinition.Integer;
+
 		public override double GetValue(RenderContext renderContext)
 		{
 			return number;

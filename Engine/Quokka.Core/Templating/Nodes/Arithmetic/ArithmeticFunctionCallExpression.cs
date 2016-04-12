@@ -6,6 +6,8 @@ namespace Quokka
 	{
 		private readonly FunctionCall functionCall;
 
+		public override TypeDefinition Type => TypeDefinition.Decimal;
+
 		public ArithmeticFunctionCallExpression(FunctionCall functionCall)
 		{
 			this.functionCall = functionCall;

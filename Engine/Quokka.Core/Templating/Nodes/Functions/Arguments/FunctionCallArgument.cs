@@ -29,6 +29,14 @@ namespace Quokka
 					functionCall.Location);
 		}
 
+		public override TypeDefinition TryGetStaticType(SemanticAnalysisContext context)
+		{
+			var function = functionCall.TryGetFunctionForSemanticAnalysis(context);
+			return function != null 
+				? TypeDefinition.GetTypeDefinitionFromModelDefinition(function.ReturnValueDefinition) 
+				: null;
+		}
+
 		public override VariableValueStorage GetValue(RenderContext renderContext)
 		{
 			return functionCall.GetInvocationResult(renderContext);

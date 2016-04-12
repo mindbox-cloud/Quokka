@@ -15,6 +15,8 @@
 		/// </remarks>
 		bool TryGetStaticValue(out object staticValue);
 
+		TypeDefinition TryGetStaticType(SemanticAnalysisContext context);
+
 		VariableValueStorage GetValue(RenderContext renderContext);
 
 		void MapArgumentVariableDefinitionsToResult(

@@ -6,6 +6,16 @@ namespace Quokka
 	internal class MultiplicationExpression : ArithmeticExpressionBase
 	{
 		private readonly IReadOnlyCollection<MultiplicationOperand> operands;
+		
+		public override TypeDefinition Type
+		{
+			get
+			{
+				return operands.All(op => op.Expression.Type == TypeDefinition.Integer)
+					? TypeDefinition.Integer
+					: TypeDefinition.Decimal;
+			}
+		}
 
 		public MultiplicationExpression(IEnumerable<MultiplicationOperand> operands)
 		{

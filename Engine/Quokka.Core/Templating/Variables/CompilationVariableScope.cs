@@ -1,4 +1,6 @@
-﻿namespace Quokka
+﻿using System.Collections.Generic;
+
+namespace Quokka
 {
 	/// <summary>
 	/// Variable scope used for template analysis and parameter discovery.
@@ -12,6 +14,7 @@
 	internal class CompilationVariableScope
 	{
 		private readonly CompilationVariableScope parentScope;
+		private readonly List<CompilationVariableScope> childScopes = new List<CompilationVariableScope>(); 
 
 		public VariableCollection Variables { get; } = new VariableCollection();
 		
@@ -28,6 +31,7 @@
 		public CompilationVariableScope CreateChildScope()
 		{
 			var childScope = new CompilationVariableScope(this);
+			childScopes.Add(childScope);
 			return childScope;
 		}
 
@@ -38,12 +42,27 @@
 		
 		public VariableDefinition CreateOrUpdateVariableDefinition(VariableOccurence variableOccurence)
 		{
-			var scope = GetExistingScopeForVariable(variableOccurence);
+			var scope = GetExistingScopeForVariable(variableOccurence.Name);
 			if (scope == null)
 				scope = variableOccurence.IsExternal ? GetRootScope() : this;
 
 			return scope.CreateOrUpdateVariableDefinitionIgnoringParentScopes(variableOccurence);
 		}
+
+		public void CheckForChildScopesDeclarationConflicts(SemanticAnalysisContext context)
+		{
+			if (parentScope != null)
+			{
+				foreach (var variable in Variables.Items)
+				{
+					if (parentScope.GetExistingScopeForVariable(variable.Name) != null)
+						context.ErrorListener.AddVariableDeclarationScopeConflictError(variable, variable.GetFirstLocation());
+				}
+			}
+
+			foreach (var childScope in childScopes)
+				childScope.CheckForChildScopesDeclarationConflicts(context);
+		} 
 
 		private VariableDefinition CreateOrUpdateVariableDefinitionIgnoringParentScopes(VariableOccurence variableOccurence)
 		{
@@ -61,11 +80,11 @@
 			return parentScope == null ? this : parentScope.GetRootScope();
 		}
 
-		private CompilationVariableScope GetExistingScopeForVariable(VariableOccurence variableOccurence)
+		private CompilationVariableScope GetExistingScopeForVariable(string variableName)
 		{
-			return Variables.CheckIfVariableExists(variableOccurence.Name) 
+			return Variables.CheckIfVariableExists(variableName) 
 				? this 
-				: parentScope?.GetExistingScopeForVariable(variableOccurence);
+				: parentScope?.GetExistingScopeForVariable(variableName);
 		}
 	}
 }

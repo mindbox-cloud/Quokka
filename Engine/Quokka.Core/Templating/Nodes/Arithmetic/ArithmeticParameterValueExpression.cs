@@ -6,6 +6,8 @@ namespace Quokka
 	{
 		private readonly VariableOccurence variableOccurence;
 
+		public override TypeDefinition Type => TypeDefinition.Decimal;
+
 		public ArithmeticParameterValueExpression(VariableOccurence variableOccurence)
 		{
 			this.variableOccurence = variableOccurence;

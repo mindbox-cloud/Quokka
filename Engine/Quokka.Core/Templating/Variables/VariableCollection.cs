@@ -13,6 +13,8 @@ namespace Quokka
 	{
 		private readonly Dictionary<string, VariableDefinition> items;
 
+		public IReadOnlyCollection<VariableDefinition> Items => items.Values.ToList().AsReadOnly(); 
+
 		public VariableCollection()
 			: this(new Dictionary<string, VariableDefinition>(StringComparer.InvariantCultureIgnoreCase))
 		{

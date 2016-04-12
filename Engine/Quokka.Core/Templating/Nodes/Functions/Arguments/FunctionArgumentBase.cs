@@ -17,6 +17,8 @@
 			return false;
 		}
 
+		public abstract TypeDefinition TryGetStaticType(SemanticAnalysisContext context);
+
 		public abstract VariableValueStorage GetValue(RenderContext renderContext);
 
 		public virtual void MapArgumentVariableDefinitionsToResult(

@@ -16,6 +16,14 @@
 				VariableOccurence.CloneWithSpecificLeafType(requiredArgumentType));
 		}
 
+		public override TypeDefinition TryGetStaticType(SemanticAnalysisContext context)
+		{
+			// We never really know the variable type at compile-time. It's ok not to return anything here
+			// because if parameter of the wrong type is used as a function parameter we catch it when we try to determine
+			// parameter's type.
+			return null;
+		}
+
 		public override VariableValueStorage GetValue(RenderContext renderContext)
 		{
 			return renderContext.VariableScope.GetValueStorageForVariable(VariableOccurence);

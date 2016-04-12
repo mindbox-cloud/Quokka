@@ -18,18 +18,7 @@ namespace Quokka.Tests
 		{
 			new Template(@"${ toLower() }");
 		}
-
-		[TestMethod]
-		[ExpectedException(typeof(TemplateContainsErrorsException))]
-		public void CreateTemplate_InvalidFunctionArgumentType_Error()
-		{
-			new Template(@"
-				@{ if (toLower(""this is not a boolean function""), ""A"", ""B"") }
-					Something
-				@{ end if }
-			");
-		}
-
+		
 		[TestMethod]
 		[ExpectedException(typeof(TemplateContainsErrorsException))]
 		public void CreateTemplate_InvalidFunctionTypeInForLoop_Error()
@@ -50,6 +39,13 @@ namespace Quokka.Tests
 					Something
 				@{ end if }
 			");
+		}
+
+		[TestMethod]
+		[ExpectedException(typeof(TemplateContainsErrorsException))]
+		public void CreateTemplate_InvalidStaticArgumentType_Error()
+		{
+			new Template("${ formatDecimal(5, 0) }");
 		}
 	}
 }

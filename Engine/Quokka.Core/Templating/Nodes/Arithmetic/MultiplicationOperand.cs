@@ -4,6 +4,8 @@
 	{
 		public IArithmeticExpression Expression { get; }
 
+		public abstract TypeDefinition TypeAfterOperandInclusion { get; }
+
 		protected MultiplicationOperand(IArithmeticExpression expression)
 		{
 			this.Expression = expression;
@@ -23,6 +25,8 @@
 		
 		private class MultOperand : MultiplicationOperand
 		{
+			public override TypeDefinition TypeAfterOperandInclusion => Expression.Type;
+
 			public MultOperand(IArithmeticExpression expression)
 				: base(expression)
 			{
@@ -34,8 +38,10 @@
 			}
 		}
 
-		private class DivOperand : MultOperand
+		private class DivOperand : MultiplicationOperand
 		{
+			public override TypeDefinition TypeAfterOperandInclusion => TypeDefinition.Decimal;
+
 			public DivOperand(IArithmeticExpression expression)
 				: base(expression)
 			{

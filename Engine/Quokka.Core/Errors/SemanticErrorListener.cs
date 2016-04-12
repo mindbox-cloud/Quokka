@@ -35,6 +35,18 @@ namespace Quokka
 				location));
 		}
 
+		public void AddInvalidFunctionArgumentTypeError(string functionName,
+			string argumentName,
+			TypeDefinition realType,
+			TypeDefinition expectedType,
+			Location location)
+		{
+			AddError(new SemanticError(
+				$"Недопустимый тип аргумента \"{argumentName}\" функции \"{functionName}\": " +
+				$"Ожидался {expectedType.Name}, а передан {realType.Name}",
+				location));
+		}
+
 		public void AddInvalidFunctionArgumentValueError(
 			string functionName,
 			string argumentName, 
@@ -85,6 +97,13 @@ namespace Quokka
 		{
 			AddError(new SemanticError(
 				$"Неизвестный параметр \"{definition.FullName}\"",
+				location));
+		}
+
+		public void AddVariableDeclarationScopeConflictError(VariableDefinition definition, Location location)
+		{
+			AddError(new SemanticError(
+				$"Имя переменной \"{definition.FullName}\" конфликтует с другой переменной, объявленной выше или ниже",
 				location));
 		}
 	}
