@@ -48,5 +48,17 @@ namespace Quokka.Tests
 					new ModelField("A", new PrimitiveModelValue(null))));
 		}
 
+		[TestMethod]
+		[ExpectedException(typeof(UnrenderableTemplateModelException))]
+		public void Render_FormatNullDateTime_UnrenderableTemplate()
+		{
+			var template = new Template(@"
+				${ formatDateTime(SomeDateTime, ""yyyy.MM.dd"") }
+			");
+
+			template.Render(
+				new CompositeModelValue(
+					new ModelField("SomeDateTime", new PrimitiveModelValue(null))));
+		}
 	}
 }

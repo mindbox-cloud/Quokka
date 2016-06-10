@@ -26,7 +26,7 @@
 
 		public override VariableValueStorage GetValue(RenderContext renderContext)
 		{
-			return renderContext.VariableScope.GetValueStorageForVariable(VariableOccurence);
+			return renderContext.VariableScope.GetValueStorageForVariable(VariableOccurence, false);
 		}
 
 		public override void MapArgumentVariableDefinitionsToResult(

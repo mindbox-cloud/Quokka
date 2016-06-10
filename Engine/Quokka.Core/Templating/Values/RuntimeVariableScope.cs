@@ -27,12 +27,12 @@ namespace Quokka
 			return new RuntimeVariableScope(valueStorage, this);
 		}
 
-		public VariableValueStorage GetValueStorageForVariable(VariableOccurence variableOccurence)
+		public VariableValueStorage GetValueStorageForVariable(VariableOccurence variableOccurence, bool allowNullVariableValues = true)
 		{
 			if (valueStorage.ContainsValueForVariable(variableOccurence))
 			{
 				var variableValueStorage = valueStorage.GetLeafMemberValueStorage(variableOccurence);
-				if (variableValueStorage == null)
+				if (variableValueStorage == null || (!allowNullVariableValues && variableValueStorage.CheckIfValueIsNull()))
 					throw new UnrenderableTemplateModelException(
 						$"An attempt to use the value for variable {variableOccurence.GetLeafMemberFullName()} which happens to be null");
 
