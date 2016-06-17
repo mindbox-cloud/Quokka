@@ -16,6 +16,12 @@
 			return number;
 		}
 
+		public override bool TryGetStaticValue(out object value)
+		{
+			value = number;
+			return true;
+		}
+
 		public override void CompileVariableDefinitions(SemanticAnalysisContext context)
 		{
 			// This node is constant and therefore can't affect semantic analysis context.

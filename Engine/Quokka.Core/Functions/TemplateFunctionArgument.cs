@@ -16,7 +16,7 @@ namespace Quokka
 			Name = name;
 		}
 
-		internal abstract ArgumentValueValidationResult ValidateValue(object value);
+		internal abstract ArgumentValueValidationResult ValidateValue(VariableValueStorage value);
 
 		internal virtual void MapArgumentValueToResult(
 			SemanticAnalysisContext context,

@@ -14,10 +14,10 @@ namespace Quokka
 			this.valueValidator = valueValidator;
 		}
 
-		internal override ArgumentValueValidationResult ValidateValue(object value)
+		internal override ArgumentValueValidationResult ValidateValue(VariableValueStorage value)
 		{
 			return valueValidator != null 
-				? valueValidator((TType)value) 
+				? valueValidator(ConvertValue(value)) 
 				: ArgumentValueValidationResult.Valid;
 		}
 
@@ -72,6 +72,14 @@ namespace Quokka
 		public IntegerFunctionArgument(string name, Func<int, ArgumentValueValidationResult> valueValidator = null)
 			: base(name, valueValidator)
 		{
+		}
+
+		internal override int ConvertValue(VariableValueStorage value)
+		{
+			if (value == null)
+				throw new ArgumentNullException(nameof(value));
+
+			return Convert.ToInt32(value.GetPrimitiveValue());
 		}
 	}
 

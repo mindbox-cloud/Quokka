@@ -15,6 +15,11 @@
 			expression.CompileVariableDefinitions(context);
 		}
 
+		public override bool TryGetStaticValue(out object staticValue)
+		{
+			return expression.TryGetStaticValue(out staticValue);
+		}
+
 		public override TypeDefinition TryGetStaticType(SemanticAnalysisContext context)
 		{
 			return expression.Type;

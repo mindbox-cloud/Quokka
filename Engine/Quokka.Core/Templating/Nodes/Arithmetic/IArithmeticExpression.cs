@@ -7,5 +7,7 @@
 		double GetValue(RenderContext renderContext);
 
 		void CompileVariableDefinitions(SemanticAnalysisContext context);
+
+		bool TryGetStaticValue(out object value);
 	}
 }

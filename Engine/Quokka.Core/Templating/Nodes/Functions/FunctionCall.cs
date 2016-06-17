@@ -54,7 +54,7 @@ namespace Quokka
 							object staticValue;
 							if (arguments[i].TryGetStaticValue(out staticValue))
 							{
-								var validationResult = function.Arguments[i].ValidateValue(staticValue);
+								var validationResult = function.Arguments[i].ValidateValue(new PrimitiveVariableValueStorage(staticValue));
 								if (!validationResult.IsValid)
 								{
 									context.ErrorListener.AddInvalidFunctionArgumentValueError(

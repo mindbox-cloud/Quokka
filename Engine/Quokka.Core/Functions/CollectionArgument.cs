@@ -11,7 +11,7 @@ namespace Quokka
 
 		internal override TypeDefinition Type => TypeDefinition.Array;
 
-		internal override ArgumentValueValidationResult ValidateValue(object value)
+		internal override ArgumentValueValidationResult ValidateValue(VariableValueStorage value)
 		{
 			// Shouldn't be called because this argument couldn't possibly receive a static scalar value known at compile-time
 			throw new NotImplementedException();
