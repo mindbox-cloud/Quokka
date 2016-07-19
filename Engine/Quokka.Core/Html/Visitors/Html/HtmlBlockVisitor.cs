@@ -46,15 +46,23 @@ namespace Quokka.Html
 
 		private IStaticBlockPart TryGetLinkNodeFromTagAttributes(IEnumerable<QuokkaHtml.AttributeContext> attributes)
 		{
-			var hrefAttributeValueVisitor = new HrefAttributeValueVisitor(parsingContext);
+			var hrefAttributeValueVisitor = new AttributeValueVisitor(parsingContext);
+
+			AttributeValue hrefValue = null;
+			AttributeValue nameValue = null;
+
 			foreach (var attribute in attributes)
 			{
 				var attributeName = attribute.TAG_NAME().GetText();
 				if (attributeName.Equals("href", StringComparison.InvariantCultureIgnoreCase))
-					return attribute.attributeValue()?.Accept(hrefAttributeValueVisitor);
+					hrefValue = attribute.attributeValue()?.Accept(hrefAttributeValueVisitor);
+				if (attributeName.Equals("data-name", StringComparison.InvariantCultureIgnoreCase))
+					nameValue = attribute.attributeValue()?.Accept(hrefAttributeValueVisitor);
 			}
 
-			return null;
+			return hrefValue != null
+				? new LinkBlock(hrefValue, nameValue)
+				: null;
 		}
 	}
 }

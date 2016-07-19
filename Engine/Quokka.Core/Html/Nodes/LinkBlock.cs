@@ -7,32 +7,24 @@ namespace Quokka.Html
 {
 	internal class LinkBlock : TemplateNodeBase, IStaticBlockPart
 	{
-		/// <summary>
-		/// Link url may consist of multiple constant blocks and parameter/expression output blocks,
-		/// e.g. "http://${ domain }/index.${ extension }". So we store 
-		/// </summary>
-		private readonly IReadOnlyList<ITemplateNode> urlComponents;
+		public int Offset => hrefValue.Offset;
+		public int Length => hrefValue.Length;
 
-		private readonly string redirectUrlText;
+		private readonly AttributeValue hrefValue;
+		private readonly AttributeValue nameValue;
 
 		private readonly Guid uniqueKey;
 
-		public int Offset { get; }
-		public int Length { get; }
-
-		public LinkBlock(IReadOnlyList<ITemplateNode> urlComponents, string redirectUrlText, int offset, int length)
+		public LinkBlock(AttributeValue hrefValue, AttributeValue nameValue)
 		{
-			this.urlComponents = urlComponents;
-			this.redirectUrlText = redirectUrlText.Trim();
-			Offset = offset;
-			Length = length;
-
+			this.hrefValue = hrefValue;
+			this.nameValue = nameValue;
 			uniqueKey = Guid.NewGuid();
 		}
 
 		public override void CompileVariableDefinitions(SemanticAnalysisContext context)
 		{
-			foreach (var component in urlComponents)
+			foreach (var component in hrefValue.TextComponents)
 			{
 				component.CompileVariableDefinitions(context);
 			}
@@ -44,7 +36,7 @@ namespace Quokka.Html
 
 			var linkBuilder = new StringBuilder();
 
-			foreach (var component in urlComponents)
+			foreach (var component in hrefValue.TextComponents)
 			{
 				component.Render(linkBuilder, context);
 			}
@@ -66,10 +58,10 @@ namespace Quokka.Html
 			var htmlContext = (HtmlDataAnalysisContext)context;
 			htmlContext.AddReference(
 				new Reference(
-					redirectUrlText,
-					null,
+					hrefValue.Text,
+					nameValue?.Text,
 					uniqueKey,
-					isConstant: !urlComponents.OfType<OutputInstructionBlock>().Any()));
+					isConstant: !hrefValue.TextComponents.OfType<OutputInstructionBlock>().Any()));
 		}
 	}
 }

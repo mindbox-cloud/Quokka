@@ -10,3 +10,4 @@ Engine/.vs/*
 Engine/*DotSettings.user
 Engine/Quokka.Core/*.DotSettings
 Engine/TestResults/
+Engine/_ReSharper.Caches/*

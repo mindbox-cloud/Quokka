@@ -80,6 +80,7 @@
     <Compile Include="Html\HtmlRenderContext.cs" />
     <Compile Include="Html\Nodes\IdentificationCodePlaceHolderBlock.cs" />
     <Compile Include="Html\Reference.cs" />
+    <Compile Include="Html\Visitors\Html\AttributeValue.cs" />
     <Compile Include="Html\Visitors\Html\LinkNameAttributeValueVisitor.cs" />
     <Compile Include="IHtmlTemplate.cs" />
     <Compile Include="ITemplate.cs" />
@@ -111,7 +112,7 @@
     <Compile Include="Html\Nodes\LinkBlock.cs" />
     <Compile Include="Html\Visitors\HtmlStaticBlockVisitor.cs" />
     <Compile Include="Html\Visitors\Html\AttributeValuePartsVisitor.cs" />
-    <Compile Include="Html\Visitors\Html\HrefAttributeValueVisitor.cs" />
+    <Compile Include="Html\Visitors\Html\AttributeValueVisitor.cs" />
     <Compile Include="Html\Visitors\Html\HtmlBlockParsingContext.cs" />
     <Compile Include="Html\Visitors\Html\HtmlBlockVisitor.cs" />
     <Compile Include="ITemplateFactory.cs" />

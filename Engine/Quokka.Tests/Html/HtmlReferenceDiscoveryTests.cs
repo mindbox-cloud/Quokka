@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -278,6 +276,36 @@ namespace Quokka.Tests.Html
 				new[]
 				{
 					new Reference("http://example.com", null, Guid.NewGuid(), true),
+				},
+				references);
+		}
+
+		[TestMethod]
+		public void Html_ReferenceDiscovery_AHref_WithName()
+		{
+			var template = new HtmlTemplate("<a href=\"http://example.com\" data-name=\"This link has a name \">Test</a>");
+			var references = template.GetReferences();
+
+			ReferencesAssert.AreCollectionsEquivalent(
+				new[]
+				{
+					new Reference("http://example.com", "This link has a name", Guid.NewGuid(), true),
+				},
+				references);
+		}
+
+
+
+		[TestMethod]
+		public void Html_ReferenceDiscovery_AreaHref_WithName()
+		{
+			var template = new HtmlTemplate("<area href=\"http://example.com\" data-name=\"This link has a name \" />");
+			var references = template.GetReferences();
+
+			ReferencesAssert.AreCollectionsEquivalent(
+				new[]
+				{
+					new Reference("http://example.com", "This link has a name", Guid.NewGuid(), true)
 				},
 				references);
 		}
