@@ -206,5 +206,33 @@ namespace Quokka.Tests
 
 			Assert.AreEqual(expected, result);
 		}
+
+		[TestMethod]
+		public void Render_IfNullComparison_ParentScopeVariable()
+		{
+			var template = new Template(@"
+				@{for purchase in Order.Purchases}
+					@{ if (Order.DeliveryCost != null) }
+						${ purchase.Product }
+					@{ end if }
+				@{ end for }
+			");
+
+			var result = template.Render(
+				new CompositeModelValue(
+					new ModelField("Order", new CompositeModelValue(
+												new ModelField("DeliveryCost", 5190),
+												new ModelField("Purchases", new ArrayModelValue(
+													new CompositeModelValue(
+														new ModelField("Product", "T-Shirt"))))
+								))
+					
+				));
+			var expected = @"				
+				T-Shirt				
+			";
+
+			Assert.AreEqual(expected.Trim(), result.Trim());
+		}
 	}
 }

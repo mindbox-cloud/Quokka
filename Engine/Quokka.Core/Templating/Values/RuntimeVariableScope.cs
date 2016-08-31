@@ -38,13 +38,9 @@ namespace Quokka
 
 				return variableValueStorage;
 			}
-			else
-			{
-				if (parentScope == null)
-					throw new InvalidOperationException($"Value for variable {variableOccurence.GetLeafMemberFullName()} not found");
-				else
-					return parentScope.GetValueStorageForVariable(variableOccurence);
-			}
+			if (parentScope == null)
+				throw new InvalidOperationException($"Value for variable {variableOccurence.GetLeafMemberFullName()} not found");
+			return parentScope.GetValueStorageForVariable(variableOccurence);
 		}
 
 		public object GetVariableValue(VariableOccurence variableOccurence)
@@ -61,13 +57,9 @@ namespace Quokka
 
 				return variableValue;
 			}
-			else
-			{
-				if (parentScope == null)
-					throw new InvalidOperationException($"Value for variable {variableOccurence.GetLeafMemberFullName()} not found");
-				else
-					return parentScope.GetVariableValue(variableOccurence);
-			}
+			if (parentScope == null)
+				throw new InvalidOperationException($"Value for variable {variableOccurence.GetLeafMemberFullName()} not found");
+			return parentScope.GetVariableValue(variableOccurence);
 		}
 
 		public IEnumerable<VariableValueStorage> GetVariableValueCollection(VariableOccurence variableOccurence)
@@ -79,13 +71,9 @@ namespace Quokka
 			{
 				return valueStorage.GetLeafMemberValueStorage(variableOccurence).GetElements();
 			}
-			else
-			{
-				if (parentScope == null)
-					throw new InvalidOperationException($"Value for variable {variableOccurence.GetLeafMemberFullName()} not found");
-				else
-					return parentScope.GetVariableValueCollection(variableOccurence);
-			}
+			if (parentScope == null)
+				throw new InvalidOperationException($"Value for variable {variableOccurence.GetLeafMemberFullName()} not found");
+			return parentScope.GetVariableValueCollection(variableOccurence);
 		}
 
 
@@ -93,9 +81,15 @@ namespace Quokka
 		{
 			if (variableOccurence == null)
 				throw new ArgumentNullException(nameof(variableOccurence));
+			if (valueStorage.ContainsValueForVariable(variableOccurence))
+			{
+				var leafValueStorage = valueStorage.GetLeafMemberValueStorage(variableOccurence);
+				return leafValueStorage == null || leafValueStorage.CheckIfValueIsNull();
+			}
+			if (parentScope == null)
+				throw new InvalidOperationException($"Value for variable {variableOccurence.GetLeafMemberFullName()} not found");
+			return parentScope.CheckIfVariableIsNull(variableOccurence);
 
-			var leafValueStorage = valueStorage.GetLeafMemberValueStorage(variableOccurence);
-			return leafValueStorage == null || leafValueStorage.CheckIfValueIsNull();
 		}
 	}
 }
