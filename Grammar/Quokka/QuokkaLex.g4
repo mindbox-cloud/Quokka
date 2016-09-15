@@ -165,7 +165,7 @@ Divide
 
 Number
 	:
-		Digit+
+		Digit+ ('.'Digit+)?
 	;
 
 Digit

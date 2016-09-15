@@ -1,4 +1,6 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using System.Globalization;
+using System.Threading;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Quokka.Tests
 {
@@ -47,6 +49,19 @@ namespace Quokka.Tests
 
 			Assert.AreEqual("54", result);
 		}
+
+		[TestMethod]
+		public void Render_ArithmeticOutput_MultiplicationWithDecimal()
+		{
+			Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
+			var template = new Template("${ 6*0.1 }");
+
+			var result = template.Render(
+				new CompositeModelValue());
+
+			Assert.AreEqual("0.60", result);
+		}
+
 
 		[TestMethod]
 		public void Render_ArithmeticOutput_SimpleDivision()

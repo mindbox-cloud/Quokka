@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 
 using Quokka.Generated;
@@ -58,7 +59,7 @@ namespace Quokka
 		{
 			var number = context.Number();
 			if (number != null)
-				return new NumberExpression(double.Parse(number.GetText()));
+				return new NumberExpression(double.Parse(number.GetText(), CultureInfo.InvariantCulture));
 
 			return base.VisitArithmeticAtom(context);
 		}
