@@ -4,11 +4,11 @@ using System.Linq;
 
 namespace Quokka
 {
-	internal class RandomTextFunction : VariadicScalarTemplateFunction<string>
+	internal class ChooseRandomTextFunction : VariadicScalarTemplateFunction<string>
 	{
 		private readonly Random random = new Random();
 		
-		public RandomTextFunction() 
+		public ChooseRandomTextFunction() 
 			: base(
 				"chooseRandomText",
 				typeof(string),
@@ -18,8 +18,6 @@ namespace Quokka
 
 		internal override object GetScalarInvocationResult(IList<VariableValueStorage> argumentsValues)
 		{
-			if (!argumentsValues.Any())
-				return string.Empty;
 			var next = random.Next(0, argumentsValues.Count - 1);
 			return VariadicArgument.ConvertValue(argumentsValues[next]);
 		}

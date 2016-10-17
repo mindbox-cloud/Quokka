@@ -159,7 +159,7 @@ namespace Quokka
 			yield return new TableRowsTemplateFunction();
 			yield return new CountTemplateFunction();
 			yield return new AddDaysTemplateFunction();
-			yield return new RandomTextFunction();
+			yield return new ChooseRandomTextFunction();
 		}
 	}
 }
