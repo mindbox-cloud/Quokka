@@ -7,6 +7,36 @@ namespace Quokka.Tests
 	public class RenderStandardFunctionTests
 	{
 		[TestMethod]
+		public void Render_Function_RandomText_DoesSomethingWithTwoArguments()
+		{
+			var template = new Template("${ randomText(\"Marilyn\", \"Keira\") }");
+
+			var result = template.Render(new CompositeModelValue());
+
+			Assert.IsTrue(result == "Marilyn" || result == "Keira");
+		}
+
+		[TestMethod]
+		public void Render_Function_RandomText_DoesSomethingWithSingleArgument()
+		{
+			var template = new Template("${ randomText(\"Marilyn\") }");
+
+			var result = template.Render(new CompositeModelValue());
+
+			Assert.AreEqual("Marilyn", result);
+		}
+
+		[TestMethod]
+		public void Render_Function_RandomText_WorksWithoutArguments()
+		{
+			var template = new Template("${ randomText() }");
+
+			var result = template.Render(new CompositeModelValue());
+
+			Assert.AreEqual("", result);
+		}
+
+		[TestMethod]
 		public void Render_Function_ReplaceIfEmpty_FirstOptionNotEmpty()
 		{
 			var template = new Template("${ replaceIfEmpty(\"Marilyn\", \"Keira\") }");
@@ -15,7 +45,7 @@ namespace Quokka.Tests
 
 			Assert.AreEqual("Marilyn", result);
 		}
-
+		
 		[TestMethod]
 		public void Render_Function_ReplaceIfEmpty_FirstOptionEmpty()
 		{

@@ -51,6 +51,7 @@
     <Compile Include="Exceptions\TemplateContainsErrorsException.cs" />
     <Compile Include="Exceptions\TemplateException.cs" />
     <Compile Include="Exceptions\UnrenderableTemplateModelException.cs" />
+    <Compile Include="Functions\ArgumentList.cs" />
     <Compile Include="Functions\CollectionArgument.cs" />
     <Compile Include="Functions\FunctionRegistry.cs" />
     <Compile Include="Functions\ScalarTemplateFunction.cs" />
@@ -59,6 +60,7 @@
     <Compile Include="Functions\Standard\FormatDateTimeTemplateFunction.cs" />
     <Compile Include="Functions\Standard\FormatTimeTemplateFunction.cs" />
     <Compile Include="Functions\Standard\FormatDecimalTemplateFunction.cs" />
+    <Compile Include="Functions\Standard\RandomTextFunction.cs" />
     <Compile Include="Functions\Standard\TableRowsTemplateFunction.cs" />
     <Compile Include="Functions\Standard\IfTemplateFunction.cs" />
     <Compile Include="Functions\Standard\ReplaceIfEmptyTemplateFunction.cs" />
@@ -72,6 +74,9 @@
     <Compile Include="Functions\ScalarTemplateFunction`3.cs" />
     <Compile Include="Functions\ScalarTemplateFunction`2.cs" />
     <Compile Include="Functions\TemplateFunctionArgument.cs" />
+    <Compile Include="Functions\VariadicArgument.cs" />
+    <Compile Include="Functions\VariadicArgumentList.cs" />
+    <Compile Include="Functions\VariadicScalarTemplateFunction.cs" />
     <Compile Include="Generated.Partials\QuokkaBaseVisitor.cs" />
     <Compile Include="Generated.Partials\QuokkaHtmlBaseVisitor.cs" />
     <Compile Include="HtmlTemplate.cs" />
