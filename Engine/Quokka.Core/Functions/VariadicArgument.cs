@@ -2,10 +2,13 @@
 {
 	public class VariadicArgument<TType> : TemplateFunctionArgument
 	{
+		public int MinimumOccurrences { get; }
+
 		private readonly ScalarArgument<TType> argument;
 
-		public VariadicArgument(ScalarArgument<TType> argument) : base(argument.Name)
+		public VariadicArgument(ScalarArgument<TType> argument, int minimumOccurrences = 0) : base(argument.Name)
 		{
+			MinimumOccurrences = minimumOccurrences;
 			this.argument = argument;
 		}
 

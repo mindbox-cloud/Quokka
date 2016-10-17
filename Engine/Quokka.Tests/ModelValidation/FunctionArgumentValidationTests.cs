@@ -37,6 +37,17 @@ namespace Quokka.Tests
 			template.Render(new CompositeModelValue());
 		}
 
+
+		[TestMethod]
+		[ExpectedException(typeof(TemplateContainsErrorsException))]
+		public void Render_Function_RandomText_WorksWithoutArguments()
+		{
+			var template = new Template("${ chooseRandomText() }");
+
+			template.Render(new CompositeModelValue());
+		}
+
+
 		[TestMethod]
 		public void ValidArgument_Ok()
 		{

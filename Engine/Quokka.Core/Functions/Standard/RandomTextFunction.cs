@@ -10,9 +10,9 @@ namespace Quokka
 		
 		public RandomTextFunction() 
 			: base(
-				"randomText",
+				"chooseRandomText",
 				typeof(string),
-				new VariadicArgument<string>(new StringFunctionArgument("inputString")))
+				new VariadicArgument<string>(new StringFunctionArgument("inputString"), 1))
 		{
 		}
 

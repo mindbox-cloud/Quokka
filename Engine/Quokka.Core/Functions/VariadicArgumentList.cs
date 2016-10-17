@@ -17,7 +17,7 @@ namespace Quokka
 
 		internal override bool CheckArgumentNumber(IReadOnlyList<IFunctionArgument> arguments)
 		{
-			return arguments.Count >= Arguments.Count;
+			return arguments.Count >= Arguments.Count + variadicArgument.MinimumOccurrences;
 		}
 
 		protected override TemplateFunctionArgument GetArgument(int argumentNumber)

@@ -9,7 +9,7 @@ namespace Quokka.Tests
 		[TestMethod]
 		public void Render_Function_RandomText_DoesSomethingWithTwoArguments()
 		{
-			var template = new Template("${ randomText(\"Marilyn\", \"Keira\") }");
+			var template = new Template("${ chooseRandomText(\"Marilyn\", \"Keira\") }");
 
 			var result = template.Render(new CompositeModelValue());
 
@@ -19,21 +19,11 @@ namespace Quokka.Tests
 		[TestMethod]
 		public void Render_Function_RandomText_DoesSomethingWithSingleArgument()
 		{
-			var template = new Template("${ randomText(\"Marilyn\") }");
+			var template = new Template("${ chooseRandomText(\"Marilyn\") }");
 
 			var result = template.Render(new CompositeModelValue());
 
 			Assert.AreEqual("Marilyn", result);
-		}
-
-		[TestMethod]
-		public void Render_Function_RandomText_WorksWithoutArguments()
-		{
-			var template = new Template("${ randomText() }");
-
-			var result = template.Render(new CompositeModelValue());
-
-			Assert.AreEqual("", result);
 		}
 
 		[TestMethod]
