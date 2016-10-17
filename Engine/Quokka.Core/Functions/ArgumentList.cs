@@ -20,7 +20,8 @@ namespace Quokka
 			IReadOnlyList<IFunctionArgument> arguments,
 			VariableDefinition resultDefinition)
 		{
-			if (arguments.Count != Arguments.Count) return;
+			if (arguments.Count != Arguments.Count)
+				return;
 			for (int i = 0; i < arguments.Count; i++)
 				arguments[i].MapArgumentVariableDefinitionsToResult(context, resultDefinition, Arguments[i]);
 		}
