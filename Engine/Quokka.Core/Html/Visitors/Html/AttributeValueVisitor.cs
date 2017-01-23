@@ -1,4 +1,7 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Net;
+
 using Quokka.Generated;
 
 namespace Quokka.Html
@@ -24,7 +27,7 @@ namespace Quokka.Html
 				var length = context.ClosingDoubleQuotes().Symbol.StartIndex - offset;
 				var quotedText = context.GetText();
 				var stringValue = quotedText.Substring(1, quotedText.Length - 2);
-				return new AttributeValue(blockChildren, stringValue, offset, length);
+				return CreateAttributeValue(stringValue, blockChildren, offset, length);
 			}
 			else
 			{
@@ -45,7 +48,7 @@ namespace Quokka.Html
 				var length = context.ClosingSingleQuotes().Symbol.StartIndex - offset;
 				var quotedText = context.GetText();
 				var stringValue = quotedText.Substring(1, quotedText.Length - 2);
-				return new AttributeValue(blockChildren, stringValue, offset, length);
+				return CreateAttributeValue(stringValue, blockChildren, offset, length);
 			}
 			else
 			{
@@ -58,11 +61,20 @@ namespace Quokka.Html
 			var offset = context.Start.StartIndex;
 			var length = context.Stop.StopIndex - offset + 1;
 			var stringValue = context.GetText();
-			return new AttributeValue(
-				new [] { new ConstantBlock(stringValue, offset, length) },
+			return CreateAttributeValue(
 				stringValue,
+				new [] { new ConstantBlock(stringValue, offset, length) },
 				offset,
 				length);
+		}
+		private static AttributeValue CreateAttributeValue(
+			string stringValue,
+			IReadOnlyList<ITemplateNode> blockChildren,
+			int offset,
+			int length)
+		{
+			var decodedValue = WebUtility.HtmlDecode(stringValue);
+			return new AttributeValue(blockChildren, decodedValue, offset, length);
 		}
 	}
 }

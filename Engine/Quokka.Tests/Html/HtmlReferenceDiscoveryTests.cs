@@ -294,8 +294,6 @@ namespace Quokka.Tests.Html
 				references);
 		}
 
-
-
 		[TestMethod]
 		public void Html_ReferenceDiscovery_AreaHref_WithName()
 		{
@@ -306,6 +304,20 @@ namespace Quokka.Tests.Html
 				new[]
 				{
 					new Reference("http://example.com", "This link has a name", Guid.NewGuid(), true)
+				},
+				references);
+		}
+
+		[TestMethod]
+		public void Html_ReferenceDiscovery_AHref_HtmlEncoded()
+		{
+			var template = new HtmlTemplate("<area href=\"http://example.com?param1=1&amp;param2=2\"/>");
+			var references = template.GetReferences();
+
+			ReferencesAssert.AreCollectionsEquivalent(
+				new[]
+				{
+					new Reference("http://example.com?param1=1&param2=2", null, Guid.NewGuid(), true)
 				},
 				references);
 		}

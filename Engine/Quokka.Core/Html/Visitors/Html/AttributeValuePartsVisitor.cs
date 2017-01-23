@@ -1,4 +1,7 @@
-﻿using Quokka.Generated;
+﻿using System.Net;
+using System.Web;
+
+using Quokka.Generated;
 
 namespace Quokka.Html
 {
@@ -12,7 +15,8 @@ namespace Quokka.Html
 		public override ITemplateNode VisitInsideAttributeConstant(QuokkaHtml.InsideAttributeConstantContext context)
 		{
 			var text = context.GetText();
-			return new ConstantBlock(text, context.Start.StartIndex, text.Length);
+			var decodedText = WebUtility.HtmlDecode(text);
+			return new ConstantBlock(decodedText, context.Start.StartIndex, text.Length);
 		}
 
 		public override ITemplateNode VisitInsideAttributeOutputBlock(QuokkaHtml.InsideAttributeOutputBlockContext context)
