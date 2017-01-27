@@ -526,5 +526,39 @@ namespace Quokka.Tests
 
 			TemplateAssert.AreOutputsEquivalent(expected, result);
 		}
+
+
+
+		[TestMethod]
+		public void Render_ForBlockTableRows_EmptyCellValue_Exception()
+		{
+			var template = new Template(@"
+				@{ for row in tableRows(Collection, 2) }
+					@{ for cell in row.Cells }
+						${ cell.Value.Name }
+					@{ end for }					
+				@{ end for }
+			");
+
+			try
+			{
+				var result = template.Render(
+					new CompositeModelValue(
+						new ModelField(
+							"Collection",
+							new ArrayModelValue(
+								new CompositeModelValue(
+									new ModelField("Name", "Nikita"))))));
+			}
+			catch (UnrenderableTemplateModelException exception)
+			{
+				Assert.AreEqual("An attempt to use the value for variable cell.Value " +
+								"which happens to be null",
+								exception.Message);
+				return;
+			}
+
+			Assert.Fail("Expected exception did not occur");
+		}
 	}
 }

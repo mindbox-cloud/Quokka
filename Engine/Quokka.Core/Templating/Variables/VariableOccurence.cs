@@ -37,6 +37,13 @@ namespace Quokka
 				: $"{Name}.{Member.GetLeafMemberFullName()}";
 		}
 
+		public string GetMemberFullName(VariableOccurence member)
+		{
+			return member == this 
+				? Name 
+				: $"{Name}.{Member.GetMemberFullName(member)}";
+		}
+
 		public virtual VariableOccurence CloneWithSpecificLeafType(TypeDefinition leafMemberType)
 		{
 			if (Member == null)

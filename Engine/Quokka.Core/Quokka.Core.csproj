@@ -104,6 +104,7 @@
     <Compile Include="Templating\Values\ArrayVariableValueStorage.cs" />
     <Compile Include="Templating\Values\CompositeVariableValueStorage.cs" />
     <Compile Include="Templating\Values\PrimitiveVariableValueStorage.cs" />
+    <Compile Include="Templating\Values\ValueStorageAccessException.cs" />
     <Compile Include="Templating\Visitors\EnumerableElementVisitor.cs" />
     <Compile Include="Templating\Visitors\GrammarMergeTools.cs" />
     <Compile Include="Templating\Visitors\StaticBlockVisitor.cs" />
