@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
+using Quokka.Templating;
+
 namespace Quokka
 {
 	internal class CompositeVariableValueStorage : VariableValueStorage
@@ -60,9 +62,17 @@ namespace Quokka
 			VariableValueStorage field;
 			if (fields.TryGetValue(variableOccurence.Name, out field))
 			{
-				return variableOccurence.Member == null 
-					? field 
-					: field?.GetLeafMemberValueStorage(variableOccurence.Member ?? variableOccurence);
+				if (variableOccurence.Member == null)
+				{
+					return field;
+				}
+				else
+				{
+					if (field == null)
+						throw new ValueStorageAccessException("Value storage for field is null", variableOccurence);
+
+					return field.GetLeafMemberValueStorage(variableOccurence.Member ?? variableOccurence);
+				}
 			}
 			else
 				throw new InvalidOperationException($"Field {variableOccurence.Name} not found");
