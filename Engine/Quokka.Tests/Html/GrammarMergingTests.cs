@@ -26,9 +26,7 @@ namespace Quokka.Tests.Html
 					20)
 			};
 
-			var result = GrammarMergeTools.MergeInnerAndOuterBlocks(
-				outer,
-				inner)
+			var result = GrammarMergeTools.MergeInnerAndOuterBlocks(outer, inner)
 				.Cast<ConstantBlock>()
 				.ToList();
 
@@ -55,9 +53,7 @@ namespace Quokka.Tests.Html
 					10)
 			};
 
-			var result = GrammarMergeTools.MergeInnerAndOuterBlocks(
-				outer,
-				inner)
+			var result = GrammarMergeTools.MergeInnerAndOuterBlocks(outer, inner)
 				.Cast<ConstantBlock>()
 				.ToList();
 
@@ -84,9 +80,7 @@ namespace Quokka.Tests.Html
 					6)
 			};
 
-			var result = GrammarMergeTools.MergeInnerAndOuterBlocks(
-				outer,
-				inner)
+			var result = GrammarMergeTools.MergeInnerAndOuterBlocks(outer, inner)
 				.Cast<ConstantBlock>()
 				.ToList();
 
@@ -119,9 +113,7 @@ namespace Quokka.Tests.Html
 					5)
 			};
 
-			var result = GrammarMergeTools.MergeInnerAndOuterBlocks(
-				outer,
-				inner)
+			var result = GrammarMergeTools.MergeInnerAndOuterBlocks(outer, inner)
 				.Cast<ConstantBlock>()
 				.ToList();
 

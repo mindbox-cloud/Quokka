@@ -139,6 +139,20 @@ namespace Quokka.Tests.Html
 		}
 
 		[TestMethod]
+		public void Html_ReferenceDiscovery_AHref_UnQuoted_ParameterOutput()
+		{
+			var template = new HtmlTemplate("<a href=${ Link }>Test</a>");
+			var references = template.GetReferences();
+
+			ReferencesAssert.AreCollectionsEquivalent(
+				new[]
+				{
+					new Reference("${ Link }", null, Guid.NewGuid(), false),
+				},
+				references);
+		}
+
+		[TestMethod]
 		public void Html_ReferenceDiscovery_LinksInsideIfConditions()
 		{
 			var template = new HtmlTemplate(@"

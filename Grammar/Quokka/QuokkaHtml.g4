@@ -33,7 +33,7 @@ attributeValue
 
 unquotedValue
 	:
-		insideAttributeConstant
+		insideAttributeConstant | insideAttributeOutputBlock
 	;
 
 singleQuotedValue
@@ -52,7 +52,7 @@ doubleQuotedValue
 
 insideAttributeOutputBlock
 	:
-		SQS_OUTPUTBLOCK | DQS_OUTPUTBLOCK
+		SQS_OUTPUTBLOCK | DQS_OUTPUTBLOCK | UnquotedOutputBlock
 	;
 	
 insideAttributeConstant

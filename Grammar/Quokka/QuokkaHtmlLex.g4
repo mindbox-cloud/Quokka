@@ -178,6 +178,11 @@ OpeningSingleQuotes
 	:
 		'\'' -> pushMode(SingleQuotes)
 	;
+	
+UnquotedOutputBlock
+	:
+		'${' ~'}'* '}' -> popMode
+	;
 
 mode DoubleQuotes;
 
