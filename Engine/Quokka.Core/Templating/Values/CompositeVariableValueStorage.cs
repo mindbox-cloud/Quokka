@@ -71,7 +71,7 @@ namespace Quokka
 					if (field == null)
 						throw new ValueStorageAccessException("Value storage for field is null", variableOccurence);
 
-					return field.GetLeafMemberValueStorage(variableOccurence.Member ?? variableOccurence);
+					return field?.GetLeafMemberValueStorage(variableOccurence.Member ?? variableOccurence);
 				}
 			}
 			else

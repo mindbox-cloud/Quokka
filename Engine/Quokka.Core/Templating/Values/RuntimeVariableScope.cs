@@ -80,13 +80,22 @@ namespace Quokka
 		{
 			if (variableOccurence == null)
 				throw new ArgumentNullException(nameof(variableOccurence));
+
 			if (valueStorage.ContainsValueForVariable(variableOccurence))
 			{
-				var leafValueStorage = valueStorage.GetLeafMemberValueStorage(variableOccurence);
-				return leafValueStorage == null || leafValueStorage.CheckIfValueIsNull();
+				try
+				{
+					var leafValueStorage = valueStorage.GetLeafMemberValueStorage(variableOccurence);
+					return leafValueStorage == null || leafValueStorage.CheckIfValueIsNull();
+				}
+				catch (ValueStorageAccessException)
+				{
+					return true;
+				}
 			}
 			if (parentScope == null)
 				throw new InvalidOperationException($"Value for variable {variableOccurence.GetLeafMemberFullName()} not found");
+
 			return parentScope.CheckIfVariableIsNull(variableOccurence);
 
 		}

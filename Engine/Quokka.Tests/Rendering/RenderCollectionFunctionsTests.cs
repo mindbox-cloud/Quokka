@@ -560,5 +560,27 @@ namespace Quokka.Tests
 
 			Assert.Fail("Expected exception did not occur");
 		}
+
+		[TestMethod]
+		public void Render_ForBlockTableRows_PropagatingCellValueNullChecking()
+		{
+			var template = new Template(@"
+				@{ for row in tableRows(Collection, 10) }
+					@{ for cell in row.Cells }
+						@{ if cell.Value.Name != null  }
+							ok
+						@{ end if }
+					@{ end for }					
+				@{ end for }
+			");
+
+			template.Render(
+				new CompositeModelValue(
+					new ModelField(
+						"Collection",
+						new ArrayModelValue(
+							new CompositeModelValue(
+								new ModelField("Name", new PrimitiveModelValue(null)))))));
+		}
 	}
 }
