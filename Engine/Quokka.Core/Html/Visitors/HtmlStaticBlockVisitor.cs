@@ -25,8 +25,10 @@ namespace Quokka.Html
 			var blockText = context.Start.InputStream.GetText(
 				new Interval(context.Start.StartIndex, context.Stop.StopIndex));
 			var inputStream = new AntlrInputStream(blockText);
-			var commonTokenStream = new CommonTokenStream(new QuokkaHtmlLex(inputStream));
-
+			var lexer = new QuokkaHtmlLex(inputStream);
+			lexer.RemoveErrorListeners();
+			var commonTokenStream = new CommonTokenStream(lexer);
+			
 			var parser = new QuokkaHtml(commonTokenStream);
 			parser.RemoveErrorListeners();
 			var htmlSyntaxErrorListener = new HtmlSyntaxErrorListener();
