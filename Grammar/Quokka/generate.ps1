@@ -2,7 +2,7 @@ function GenerateGrammarFiles ($grammarFile, $generatedDirectory)
 {	
 	& java `
 		"-jar" `
-		"..\..\Tools\antlr-4.5.1-complete.jar" `
+		"..\..\Tools\antlr-4.7-complete.jar" `
 		"$grammarFile" `
 		"-lib" $generatedDirectory `
 		"-encoding" "UTF-8" `

@@ -1,6 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>net462</TargetFramework>
+    <NoWarn>1701;1702;1705;3021</NoWarn>
     <Company>Mindbox</Company>
     <Version>1.1.0-beta1</Version>
     <Product>Quokka template engine</Product>
@@ -15,9 +16,6 @@
     <None Remove="Generated\*.tokens" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="Antlr4.Runtime, Version=4.5.1.0, Culture=neutral, PublicKeyToken=e78b2c5abd1fcb3f, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\ExternalLibraries\Antlr4.Runtime.dll</HintPath>
-    </Reference>
+    <PackageReference Include="Antlr4.Runtime.Standard" Version="4.7.0" />
   </ItemGroup>
 </Project>

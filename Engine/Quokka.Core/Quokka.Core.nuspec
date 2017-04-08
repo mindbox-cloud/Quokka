@@ -12,7 +12,4 @@
     <copyright>Copyright Mindbox 2016</copyright>
     <tags>string templating</tags>
   </metadata>
-  <files>
-    <file src="bin\$configuration$\Antlr4.Runtime.dll" target="lib\net452\" />
-  </files>
 </package>
