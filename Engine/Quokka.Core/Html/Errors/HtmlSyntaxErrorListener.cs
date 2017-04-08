@@ -1,10 +1,13 @@
-﻿using Antlr4.Runtime;
+﻿using System.IO;
+
+using Antlr4.Runtime;
 
 namespace Quokka.Html
 {
 	internal class HtmlSyntaxErrorListener : SyntaxErrorListener
 	{
 		public override void SyntaxError(
+			TextWriter output,
 			IRecognizer recognizer,
 			IToken offendingSymbol,
 			int line,

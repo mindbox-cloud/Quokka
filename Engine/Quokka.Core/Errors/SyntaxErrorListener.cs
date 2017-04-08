@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.IO;
 
 using Antlr4.Runtime;
 
@@ -14,6 +15,7 @@ namespace Quokka
 		}
 
 		public override void SyntaxError(
+			TextWriter output,
 			IRecognizer recognizer,
 			IToken offendingSymbol,
 			int line,

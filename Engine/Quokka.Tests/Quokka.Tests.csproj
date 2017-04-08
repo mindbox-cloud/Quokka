@@ -7,12 +7,6 @@
     <PackageReference Include="MSTest.TestFramework" Version="1.1.14" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="Antlr4.Runtime, Version=4.5.1.0, Culture=neutral, PublicKeyToken=e78b2c5abd1fcb3f, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\ExternalLibraries\Antlr4.Runtime.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\Quokka.Core\Quokka.Core.csproj" />
   </ItemGroup>
 </Project>
