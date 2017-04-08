@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Quokka
+namespace Mindbox.Quokka
 {
 	/// <summary>
 	/// Variable scope used for template analysis and parameter discovery.

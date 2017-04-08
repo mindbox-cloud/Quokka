@@ -1,7 +1,7 @@
 ﻿using System.Linq;
-using Quokka.Generated;
+using Mindbox.Quokka.Generated;
 
-namespace Quokka
+namespace Mindbox.Quokka
 {
 	internal class StaticBlockVisitor : QuokkaBaseVisitor<StaticBlock>
 	{

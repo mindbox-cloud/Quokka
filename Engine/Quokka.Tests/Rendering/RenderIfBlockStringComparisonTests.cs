@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace Quokka.Tests
+namespace Mindbox.Quokka.Tests
 {
 	[TestClass]
 	public class RenderIfBlockStringComparisonTests

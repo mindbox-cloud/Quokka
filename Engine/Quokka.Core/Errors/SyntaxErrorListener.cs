@@ -3,7 +3,7 @@ using System.IO;
 
 using Antlr4.Runtime;
 
-namespace Quokka
+namespace Mindbox.Quokka
 {
 	internal class SyntaxErrorListener : BaseErrorListener
 	{

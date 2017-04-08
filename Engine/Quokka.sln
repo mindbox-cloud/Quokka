@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26228.4
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Quokka.Core", "Quokka.Core\Quokka.Core.csproj", "{08D9024F-39B0-4932-9A85-7B908453E465}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mindbox.Quokka", "Quokka.Core\Mindbox.Quokka.csproj", "{08D9024F-39B0-4932-9A85-7B908453E465}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Quokka.Tests", "Quokka.Tests\Quokka.Tests.csproj", "{EAF6CD98-FB9B-4F33-8FEE-92778FF994D8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mindbox.Quokka.Tests", "Quokka.Tests\Mindbox.Quokka.Tests.csproj", "{EAF6CD98-FB9B-4F33-8FEE-92778FF994D8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

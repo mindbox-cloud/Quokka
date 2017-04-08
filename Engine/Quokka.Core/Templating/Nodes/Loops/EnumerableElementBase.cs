@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Quokka
+namespace Mindbox.Quokka
 {
 	internal abstract class EnumerableElementBase : IEnumerableElement
 	{

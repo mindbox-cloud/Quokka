@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace Quokka.Tests
+using Mindbox.Quokka.Html;
+
+namespace Mindbox.Quokka.Tests
 {
 	[TestClass]
 	public class RedirectLinkProcessingTests

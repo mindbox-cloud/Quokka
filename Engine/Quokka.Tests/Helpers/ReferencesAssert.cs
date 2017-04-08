@@ -3,9 +3,9 @@ using System.Linq;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-using Quokka.Html;
+using Mindbox.Quokka.Html;
 
-namespace Quokka.Tests
+namespace Mindbox.Quokka.Tests
 {
 	internal static class ReferencesAssert
 	{

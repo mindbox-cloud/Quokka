@@ -8,7 +8,7 @@ function GenerateGrammarFiles ($grammarFile, $generatedDirectory)
 		"-encoding" "UTF-8" `
 		"-visitor" `
 		"-no-listener" `
-		"-package" "Quokka.Generated" `
+		"-package" "Mindbox.Quokka.Generated" `
 		"-Dlanguage=CSharp" `
 		"-Werror" `
 		"-o" $generatedDirectory

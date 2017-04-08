@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Quokka
+namespace Mindbox.Quokka
 {
 	public class CompositeModelValue : ICompositeModelValue
 	{

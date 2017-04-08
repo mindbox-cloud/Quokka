@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Text;
 
-namespace Quokka
+namespace Mindbox.Quokka
 {
 	internal class IfBlock : TemplateNodeBase
 	{

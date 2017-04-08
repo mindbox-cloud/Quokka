@@ -1,6 +1,6 @@
-﻿using Quokka.Generated;
+﻿using Mindbox.Quokka.Generated;
 
-namespace Quokka
+namespace Mindbox.Quokka
 {
 	internal class StaticPartVisitor : QuokkaBaseVisitor<IStaticBlockPart>
 	{

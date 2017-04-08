@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Linq;
 
-using Quokka.Generated;
+using Mindbox.Quokka.Generated;
 
-namespace Quokka
+namespace Mindbox.Quokka
 {
 	internal class BooleanExpressionVisitor : QuokkaBaseVisitor<IBooleanExpression>
 	{

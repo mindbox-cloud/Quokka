@@ -19,7 +19,7 @@
 // Ambiguous reference in cref attribute
 #pragma warning disable 419
 
-namespace Quokka.Generated {
+namespace Mindbox.Quokka.Generated {
 using Antlr4.Runtime.Misc;
 using Antlr4.Runtime.Tree;
 using IToken = Antlr4.Runtime.IToken;
@@ -165,4 +165,4 @@ internal partial class QuokkaHtmlBaseVisitor<Result> : AbstractParseTreeVisitor<
 	/// <return>The visitor result.</return>
 	public virtual Result VisitSelfClosingTag([NotNull] QuokkaHtml.SelfClosingTagContext context) { return VisitChildren(context); }
 }
-} // namespace Quokka.Generated
+} // namespace Mindbox.Quokka.Generated

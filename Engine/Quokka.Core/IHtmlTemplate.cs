@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-using Quokka.Html;
-
-namespace Quokka
+namespace Mindbox.Quokka.Html
 {
 	public interface IHtmlTemplate : ITemplate
 	{

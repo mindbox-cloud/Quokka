@@ -2,7 +2,7 @@
 
 using Antlr4.Runtime;
 
-namespace Quokka.Html
+namespace Mindbox.Quokka.Html
 {
 	internal class HtmlSyntaxErrorListener : SyntaxErrorListener
 	{

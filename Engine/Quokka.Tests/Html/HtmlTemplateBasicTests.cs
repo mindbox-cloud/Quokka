@@ -1,6 +1,8 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace Quokka.Tests.Html
+using Mindbox.Quokka.Html;
+
+namespace Mindbox.Quokka.Tests.Html
 {
 	[TestClass]
 	public class HtmlTemplateBasicTests

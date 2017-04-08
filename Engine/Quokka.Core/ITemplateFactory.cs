@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 
-namespace Quokka
+using Mindbox.Quokka.Html;
+
+namespace Mindbox.Quokka
 {
 	public interface ITemplateFactory
 	{

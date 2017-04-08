@@ -1,4 +1,4 @@
-﻿namespace Quokka
+﻿namespace Mindbox.Quokka
 {
 	/// <summary>
 	/// Location in a template string

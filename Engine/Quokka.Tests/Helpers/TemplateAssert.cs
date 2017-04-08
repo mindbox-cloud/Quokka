@@ -3,7 +3,7 @@ using System.Linq;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace Quokka.Tests
+namespace Mindbox.Quokka.Tests
 {
 	internal static class TemplateAssert
 	{

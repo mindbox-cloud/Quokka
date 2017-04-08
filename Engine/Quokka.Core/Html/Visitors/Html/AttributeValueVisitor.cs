@@ -2,9 +2,9 @@
 using System.Linq;
 using System.Net;
 
-using Quokka.Generated;
+using Mindbox.Quokka.Generated;
 
-namespace Quokka.Html
+namespace Mindbox.Quokka.Html
 {
 	internal class AttributeValueVisitor : QuokkaHtmlBaseVisitor<AttributeValue>
 	{

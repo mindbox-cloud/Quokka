@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Quokka
+namespace Mindbox.Quokka
 {
 	/// <summary>
 	/// This exceptions occurs when the model technically fits the requirements, but some runtime operations can't be performed.

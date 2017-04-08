@@ -1,4 +1,4 @@
-﻿namespace Quokka
+﻿namespace Mindbox.Quokka
 {
 	internal abstract class BooleanExpressionBase : IBooleanExpression
 	{

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Text;
 
-namespace Quokka.Html
+namespace Mindbox.Quokka.Html
 {
 	/// <summary>
 	/// Block that will be injected in the html code for tracking purposes (most commonly a tracking image).

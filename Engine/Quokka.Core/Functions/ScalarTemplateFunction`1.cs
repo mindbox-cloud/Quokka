@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Quokka
+namespace Mindbox.Quokka
 {
 	public abstract class ScalarTemplateFunction<TArgument, TResult> : ScalarTemplateFunction
 	{
