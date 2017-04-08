@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Quokka
+namespace Mindbox.Quokka
 {
 	/// <summary>
 	/// The definition of a variable that we discover from the template - its name, required type, properties etc.

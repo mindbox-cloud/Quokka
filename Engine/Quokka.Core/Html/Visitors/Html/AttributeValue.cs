@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Quokka.Html
+namespace Mindbox.Quokka.Html
 {
 	internal class AttributeValue
 	{

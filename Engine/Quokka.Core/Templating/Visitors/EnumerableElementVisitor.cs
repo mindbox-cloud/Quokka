@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using Quokka.Generated;
+using Mindbox.Quokka.Generated;
 
-namespace Quokka
+namespace Mindbox.Quokka
 {
 	internal class EnumerableElementVisitor : QuokkaBaseVisitor<IEnumerableElement>
 	{

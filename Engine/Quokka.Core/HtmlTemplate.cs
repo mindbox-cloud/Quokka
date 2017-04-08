@@ -2,9 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-using Quokka.Html;
-
-namespace Quokka
+namespace Mindbox.Quokka.Html
 {
 	internal class HtmlTemplate : Template, IHtmlTemplate
 	{

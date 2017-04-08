@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 
-namespace Quokka
+namespace Mindbox.Quokka
 {
 	/// <summary>
 	/// The collection of variables of the same level (can represent a collection of root-level variables in the scope

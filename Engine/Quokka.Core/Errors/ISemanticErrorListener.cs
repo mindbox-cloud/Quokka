@@ -1,6 +1,6 @@
 using System;
 
-namespace Quokka
+namespace Mindbox.Quokka
 {
 	internal interface ISemanticErrorListener : IErrorListener
 	{

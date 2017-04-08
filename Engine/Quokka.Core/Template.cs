@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using Antlr4.Runtime;
 
-using Quokka.Generated;
+using Mindbox.Quokka.Generated;
 
-namespace Quokka
+namespace Mindbox.Quokka
 {
 	internal class Template : ITemplate
 	{

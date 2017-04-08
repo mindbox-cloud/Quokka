@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Quokka
+namespace Mindbox.Quokka
 {
 	internal class SemanticErrorListener : ISemanticErrorListener
 	{

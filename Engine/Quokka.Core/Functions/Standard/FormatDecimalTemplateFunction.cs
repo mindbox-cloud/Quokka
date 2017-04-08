@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Globalization;
 
-namespace Quokka
+namespace Mindbox.Quokka
 {
 	internal class FormatDecimalTemplateFunction : ScalarTemplateFunction<decimal, string, string>
 	{

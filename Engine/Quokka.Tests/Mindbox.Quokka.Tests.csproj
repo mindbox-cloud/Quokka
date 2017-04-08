@@ -1,0 +1,14 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net462</TargetFramework>
+    <RootNamespace>Mindbox.Quokka.Tests</RootNamespace>
+    <AssemblyName>Mindbox.Quokka.Tests</AssemblyName>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="MSTest.TestAdapter" Version="1.1.14" />
+    <PackageReference Include="MSTest.TestFramework" Version="1.1.14" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Quokka.Core\Mindbox.Quokka.csproj" />
+  </ItemGroup>
+</Project>

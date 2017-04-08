@@ -1,4 +1,4 @@
-﻿namespace Quokka
+﻿namespace Mindbox.Quokka
 {
 	public class ModelField : IModelField
 	{

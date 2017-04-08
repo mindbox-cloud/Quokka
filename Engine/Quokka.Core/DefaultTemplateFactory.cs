@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace Quokka
+using Mindbox.Quokka.Html;
+
+namespace Mindbox.Quokka
 {
 	public class DefaultTemplateFactory : ITemplateFactory
 	{

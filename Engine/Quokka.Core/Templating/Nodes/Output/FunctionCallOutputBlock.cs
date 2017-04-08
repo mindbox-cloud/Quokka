@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Text;
 
-namespace Quokka
+namespace Mindbox.Quokka
 {
 	internal class FunctionCallOutputBlock : TemplateNodeBase, IOutputBlock
 	{

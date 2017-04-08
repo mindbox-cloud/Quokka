@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using Quokka.Html;
+using Mindbox.Quokka.Html;
 
-namespace Quokka.Generated
+namespace Mindbox.Quokka.Generated
 {
 	internal partial class QuokkaHtmlBaseVisitor<Result>
 	{

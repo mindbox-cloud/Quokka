@@ -1,6 +1,6 @@
 ﻿using System.Globalization;
 
-namespace Quokka
+namespace Mindbox.Quokka
 {
 	internal class ToLowerTemplateFunction : ScalarTemplateFunction<string, string>
 	{

@@ -1,7 +1,7 @@
 ﻿
 using System;
 
-namespace Quokka.Html
+namespace Mindbox.Quokka.Html
 {
 	public class Reference
 	{

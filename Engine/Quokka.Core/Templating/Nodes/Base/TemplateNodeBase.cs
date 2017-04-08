@@ -1,6 +1,6 @@
 ﻿using System.Text;
 
-namespace Quokka
+namespace Mindbox.Quokka
 {
 	internal abstract class TemplateNodeBase : ITemplateNode
 	{

@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 
-using Quokka.Errors;
+using Mindbox.Quokka.Errors;
 
-namespace Quokka
+namespace Mindbox.Quokka
 {
 	internal static class ModelDefinitionTools
 	{

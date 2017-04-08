@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Quokka.Html
+namespace Mindbox.Quokka.Html
 {
 	internal class LinkBlock : TemplateNodeBase, IStaticBlockPart
 	{

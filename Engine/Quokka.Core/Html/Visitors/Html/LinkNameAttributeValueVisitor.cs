@@ -1,6 +1,6 @@
-﻿using Quokka.Generated;
+﻿using Mindbox.Quokka.Generated;
 
-namespace Quokka.Html
+namespace Mindbox.Quokka.Html
 {
 	internal class LinkNameAttributeValueVisitor : QuokkaHtmlBaseVisitor<string>
 	{

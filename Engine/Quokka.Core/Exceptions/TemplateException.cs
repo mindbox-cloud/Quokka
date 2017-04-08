@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.Serialization;
 
-namespace Quokka
+namespace Mindbox.Quokka
 {
 	[Serializable]
 	public class TemplateException : Exception

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
-namespace Quokka
+namespace Mindbox.Quokka
 {
 	internal class CompositeModelDefinition : ICompositeModelDefinition
 	{

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Text;
 
-namespace Quokka.Html
+namespace Mindbox.Quokka.Html
 {
 	internal class HtmlRenderContext : RenderContext
 	{

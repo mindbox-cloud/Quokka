@@ -1,3 +1,3 @@
 ﻿using System.Runtime.CompilerServices;
 
-[assembly: InternalsVisibleTo("Quokka.Tests")]
+[assembly: InternalsVisibleTo("Mindbox.Quokka.Tests")]

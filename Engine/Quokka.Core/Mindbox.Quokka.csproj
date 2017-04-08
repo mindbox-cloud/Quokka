@@ -1,0 +1,24 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net462</TargetFramework>
+    <NoWarn>1701;1702;1705;3021</NoWarn>
+    <Company>Mindbox</Company>
+    <Version>1.1.1-beta1</Version>
+    <Product>Quokka template engine</Product>
+    <Description>String templating library</Description>
+    <Copyright>Mindbox 2017</Copyright>
+    <PackageProjectUrl>https://github.com/mindbox-moscow/Quokka</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/mindbox-moscow/Quokka</RepositoryUrl>
+    <PackageTags>string templating</PackageTags>
+    <RootNamespace>Mindbox.Quokka</RootNamespace>
+    <AssemblyName>Mindbox.Quokka</AssemblyName>
+    <Authors>Mindbox</Authors>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Remove="**\*.nuspec" />
+    <None Remove="Generated\*.tokens" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Antlr4.Runtime.Standard" Version="4.7.0" />
+  </ItemGroup>
+</Project>

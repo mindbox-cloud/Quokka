@@ -19,7 +19,7 @@
 // Ambiguous reference in cref attribute
 #pragma warning disable 419
 
-namespace Quokka.Generated {
+namespace Mindbox.Quokka.Generated {
 using System;
 using System.IO;
 using System.Text;
@@ -2700,4 +2700,4 @@ internal partial class QuokkaParser : Parser {
 
 
 }
-} // namespace Quokka.Generated
+} // namespace Mindbox.Quokka.Generated

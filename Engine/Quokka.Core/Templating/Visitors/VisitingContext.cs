@@ -1,8 +1,8 @@
 ﻿using System;
 
-using Quokka.Generated;
+using Mindbox.Quokka.Generated;
 
-namespace Quokka
+namespace Mindbox.Quokka
 {
 	internal class VisitingContext
 	{

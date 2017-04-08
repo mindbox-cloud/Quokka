@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-using Quokka.Templating;
-
-namespace Quokka
+namespace Mindbox.Quokka
 {
 	internal class RuntimeVariableScope
 	{

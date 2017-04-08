@@ -1,6 +1,4 @@
-﻿using Quokka;
-
-namespace Quokka
+﻿namespace Mindbox.Quokka
 {
 	internal abstract class ArithmeticExpressionBase : IArithmeticExpression
 	{

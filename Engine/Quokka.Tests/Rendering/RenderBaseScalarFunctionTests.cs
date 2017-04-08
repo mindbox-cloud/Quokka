@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace Quokka.Tests
+namespace Mindbox.Quokka.Tests
 {
 	[TestClass]
 	public class RenderBaseScalarFunctionTests

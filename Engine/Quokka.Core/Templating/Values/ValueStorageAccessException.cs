@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Quokka.Templating
+namespace Mindbox.Quokka
 {
 	internal class ValueStorageAccessException : Exception
 	{

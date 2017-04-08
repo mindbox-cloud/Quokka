@@ -1,4 +1,4 @@
-﻿namespace Quokka
+﻿namespace Mindbox.Quokka
 {
 	internal class StringArgument : FunctionArgumentBase
 	{

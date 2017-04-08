@@ -4,9 +4,9 @@ using System.Linq;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-using Quokka.Html;
+using Mindbox.Quokka.Html;
 
-namespace Quokka.Tests.Html
+namespace Mindbox.Quokka.Tests.Html
 {
 	[TestClass]
 	public class HtmlReferenceDiscoveryTests

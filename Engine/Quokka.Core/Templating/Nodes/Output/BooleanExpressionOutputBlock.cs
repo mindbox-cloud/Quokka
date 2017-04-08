@@ -1,6 +1,6 @@
 ﻿using System.Text;
 
-namespace Quokka
+namespace Mindbox.Quokka
 {
 	internal class BooleanExpressionOutputBlock : TemplateNodeBase, IOutputBlock
 	{

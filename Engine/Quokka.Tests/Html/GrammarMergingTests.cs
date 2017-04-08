@@ -3,7 +3,7 @@ using System.Linq;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace Quokka.Tests.Html
+namespace Mindbox.Quokka.Tests.Html
 {
 	[TestClass]
 	public class GrammarMergingTests

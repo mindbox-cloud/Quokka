@@ -1,6 +1,6 @@
 ﻿using Antlr4.Runtime;
 
-namespace Quokka.Generated
+namespace Mindbox.Quokka.Generated
 {
 	internal partial class QuokkaBaseVisitor<Result>
 	{
