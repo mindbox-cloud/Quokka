@@ -66,15 +66,14 @@ namespace Mindbox.Quokka
 			string fieldFullName,
 			StringBuilder errorMessageBuilder)
 		{
-			if (requiredValue is IPrimitiveModelDefinition)
+			if (requiredValue is IPrimitiveModelDefinition primitiveModelDefinition)
 			{
-				var primitiveModelDefinition = (IPrimitiveModelDefinition)requiredValue;
 				if (primitiveModelDefinition.Type != TypeDefinition.Unknown)
 				{
-					if (actualValue is IPrimitiveModelValue)
+					if (actualValue is IPrimitiveModelValue primitivaActualValue)
 					{
 						return ValidatePrimitiveModel(
-							(IPrimitiveModelValue)actualValue,
+							primitivaActualValue,
 							primitiveModelDefinition,
 							fieldFullName,
 							errorMessageBuilder);
@@ -90,13 +89,13 @@ namespace Mindbox.Quokka
 					return true;
 				}
 			}
-			else if (requiredValue is ICompositeModelDefinition)
+			else if (requiredValue is ICompositeModelDefinition compositeRequiredValue)
 			{
-				if (actualValue is ICompositeModelValue)
+				if (actualValue is ICompositeModelValue compositeActualValue)
 				{
 					return ValidateCompositeModel(
-						(ICompositeModelValue)actualValue,
-						(ICompositeModelDefinition)requiredValue,
+						compositeActualValue,
+						compositeRequiredValue,
 						fieldFullName,
 						errorMessageBuilder);
 				}
@@ -106,13 +105,13 @@ namespace Mindbox.Quokka
 					return false;
 				}
 			}
-			else if (requiredValue is IArrayModelDefinition)
+			else if (requiredValue is IArrayModelDefinition arrayRequiredValue)
 			{
-				if (actualValue is IArrayModelValue)
+				if (actualValue is IArrayModelValue arrayActualValue)
 				{
 					return ValidateArrayModel(
-						(IArrayModelValue)actualValue,
-						(IArrayModelDefinition)requiredValue,
+						arrayActualValue,
+						arrayRequiredValue,
 						fieldFullName,
 						errorMessageBuilder);
 				}
