@@ -45,6 +45,7 @@
 *.[aA][sS][aA][xX]                                       text=auto diff merge
 *.[xX][sS][lL][tT]                                       text=auto diff merge
 *.[cC][fF][gG]                                           text=auto diff merge
+*.[gG][4]                                                text=auto diff merge
 
 *.[cC][oO][nN][fF][iI][gG].[dD][eE][bB][uU][gG]          text=auto diff merge
 *.[cC][oO][nN][fF][iI][gG].[rR][eE][lL][eE][aA][sS][eE]  text=auto diff merge

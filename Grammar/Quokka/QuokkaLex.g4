@@ -15,10 +15,9 @@ ControlInstructionStart
 		'@{' -> pushMode(Instruction)
 	;
 	
-Fluff : [$@] ~'{' ~[$@]*? '}'
-      | [$@] '{' '{' ~[$@]*? '}'
-      | [$@]
-      | ~[$@]+
+Fluff : 
+	      ~[$@]+
+	      | [$@]
       ;
 	
 mode Instruction;
