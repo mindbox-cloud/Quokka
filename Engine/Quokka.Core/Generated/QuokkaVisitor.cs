@@ -63,59 +63,11 @@ internal interface IQuokkaVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <return>The visitor result.</return>
 	Result VisitConstantBlock([NotNull] QuokkaParser.ConstantBlockContext context);
 	/// <summary>
-	/// Visit a parse tree produced by <see cref="QuokkaParser.outputBlock"/>.
+	/// Visit a parse tree produced by <see cref="QuokkaParser.commentBlock"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
-	Result VisitOutputBlock([NotNull] QuokkaParser.OutputBlockContext context);
-	/// <summary>
-	/// Visit a parse tree produced by <see cref="QuokkaParser.parameterValueExpression"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	/// <return>The visitor result.</return>
-	Result VisitParameterValueExpression([NotNull] QuokkaParser.ParameterValueExpressionContext context);
-	/// <summary>
-	/// Visit a parse tree produced by <see cref="QuokkaParser.parameterExpression"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	/// <return>The visitor result.</return>
-	Result VisitParameterExpression([NotNull] QuokkaParser.ParameterExpressionContext context);
-	/// <summary>
-	/// Visit a parse tree produced by <see cref="QuokkaParser.memberAccessExpression"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	/// <return>The visitor result.</return>
-	Result VisitMemberAccessExpression([NotNull] QuokkaParser.MemberAccessExpressionContext context);
-	/// <summary>
-	/// Visit a parse tree produced by <see cref="QuokkaParser.filterChain"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	/// <return>The visitor result.</return>
-	Result VisitFilterChain([NotNull] QuokkaParser.FilterChainContext context);
-	/// <summary>
-	/// Visit a parse tree produced by <see cref="QuokkaParser.functionCall"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	/// <return>The visitor result.</return>
-	Result VisitFunctionCall([NotNull] QuokkaParser.FunctionCallContext context);
-	/// <summary>
-	/// Visit a parse tree produced by <see cref="QuokkaParser.functionArgumentList"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	/// <return>The visitor result.</return>
-	Result VisitFunctionArgumentList([NotNull] QuokkaParser.FunctionArgumentListContext context);
-	/// <summary>
-	/// Visit a parse tree produced by <see cref="QuokkaParser.expression"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	/// <return>The visitor result.</return>
-	Result VisitExpression([NotNull] QuokkaParser.ExpressionContext context);
-	/// <summary>
-	/// Visit a parse tree produced by <see cref="QuokkaParser.stringConstant"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	/// <return>The visitor result.</return>
-	Result VisitStringConstant([NotNull] QuokkaParser.StringConstantContext context);
+	Result VisitCommentBlock([NotNull] QuokkaParser.CommentBlockContext context);
 	/// <summary>
 	/// Visit a parse tree produced by <see cref="QuokkaParser.ifStatement"/>.
 	/// </summary>
@@ -189,11 +141,95 @@ internal interface IQuokkaVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <return>The visitor result.</return>
 	Result VisitEndForInstruction([NotNull] QuokkaParser.EndForInstructionContext context);
 	/// <summary>
-	/// Visit a parse tree produced by <see cref="QuokkaParser.commentBlock"/>.
+	/// Visit a parse tree produced by <see cref="QuokkaParser.outputBlock"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
-	Result VisitCommentBlock([NotNull] QuokkaParser.CommentBlockContext context);
+	Result VisitOutputBlock([NotNull] QuokkaParser.OutputBlockContext context);
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="QuokkaParser.filterChain"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitFilterChain([NotNull] QuokkaParser.FilterChainContext context);
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="QuokkaParser.expression"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitExpression([NotNull] QuokkaParser.ExpressionContext context);
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="QuokkaParser.variantValueExpression"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitVariantValueExpression([NotNull] QuokkaParser.VariantValueExpressionContext context);
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="QuokkaParser.rootVariantValueExpression"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitRootVariantValueExpression([NotNull] QuokkaParser.RootVariantValueExpressionContext context);
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="QuokkaParser.variableValueExpression"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitVariableValueExpression([NotNull] QuokkaParser.VariableValueExpressionContext context);
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="QuokkaParser.memberValueExpression"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitMemberValueExpression([NotNull] QuokkaParser.MemberValueExpressionContext context);
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="QuokkaParser.memberAccess"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitMemberAccess([NotNull] QuokkaParser.MemberAccessContext context);
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="QuokkaParser.member"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitMember([NotNull] QuokkaParser.MemberContext context);
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="QuokkaParser.property"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitProperty([NotNull] QuokkaParser.PropertyContext context);
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="QuokkaParser.methodCall"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitMethodCall([NotNull] QuokkaParser.MethodCallContext context);
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="QuokkaParser.functionCallExpression"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitFunctionCallExpression([NotNull] QuokkaParser.FunctionCallExpressionContext context);
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="QuokkaParser.argumentList"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitArgumentList([NotNull] QuokkaParser.ArgumentListContext context);
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="QuokkaParser.stringExpression"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitStringExpression([NotNull] QuokkaParser.StringExpressionContext context);
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="QuokkaParser.stringConstant"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitStringConstant([NotNull] QuokkaParser.StringConstantContext context);
 	/// <summary>
 	/// Visit a parse tree produced by <see cref="QuokkaParser.booleanExpression"/>.
 	/// </summary>
@@ -284,6 +320,12 @@ internal interface IQuokkaVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
 	Result VisitNegationExpression([NotNull] QuokkaParser.NegationExpressionContext context);
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="QuokkaParser.parenthesizedArithmeticExpression"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitParenthesizedArithmeticExpression([NotNull] QuokkaParser.ParenthesizedArithmeticExpressionContext context);
 	/// <summary>
 	/// Visit a parse tree produced by <see cref="QuokkaParser.arithmeticAtom"/>.
 	/// </summary>

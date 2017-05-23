@@ -1,0 +1,11 @@
+@{ for product in Order.Products }
+
+	${ product.GetPrice() }
+	
+	@{ for category in product.Categories().GetActiveOly() }
+		
+		${ category.Name }
+		
+	@{ end for }
+	
+@{ end for}

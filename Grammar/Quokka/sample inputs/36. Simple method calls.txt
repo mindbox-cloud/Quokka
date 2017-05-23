@@ -1,0 +1,3 @@
+${ Recipient.GetAge() }
+${ Recipient.GetParameter("Height") }
+${ Recipient.GetAgeAtDate(2017, 05, 23, true, Segment) }
