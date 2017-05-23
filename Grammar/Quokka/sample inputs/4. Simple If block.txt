@@ -1,3 +1,0 @@
-@{ if IsTodayRecipientsBirthday}
-	Happy birthday, man
-@{ end if}

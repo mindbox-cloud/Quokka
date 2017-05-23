@@ -1,3 +1,0 @@
-@{ for iterated in Collection }
-	Not meant to be seen.
-@{ end for }
