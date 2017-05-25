@@ -10,11 +10,11 @@ namespace Mindbox.Quokka.Generated
 {
 	internal partial class QuokkaHtmlBaseVisitor<Result>
 	{
-		protected readonly HtmlBlockParsingContext parsingContext;
+		protected readonly HtmlBlockParsingContext ParsingContext;
 
 		protected QuokkaHtmlBaseVisitor(HtmlBlockParsingContext parsingContext)
 		{
-			this.parsingContext = parsingContext;
+			ParsingContext = parsingContext;
 		}
 	}
 }

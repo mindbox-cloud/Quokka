@@ -48,8 +48,7 @@ namespace Mindbox.Quokka
 						syntaxErrorListener,
 						staticBlockVisitorCreator ?? (context => new StaticBlockVisitor(context)));
 
-					compiledTemplateTree = new RootTemplateVisitor(visitingContext).Visit(templateParseTree) 
-						?? TemplateBlock.Empty();
+					compiledTemplateTree = new RootTemplateVisitor(visitingContext).Visit(templateParseTree);
 
 					IsConstant = compiledTemplateTree.IsConstant;
 
@@ -127,11 +126,6 @@ namespace Mindbox.Quokka
 		protected void CompileGrammarSpecificData(GrammarSpecificDataAnalysisContext context)
 		{
 			compiledTemplateTree.CompileGrammarSpecificData(context);
-		}
-
-		protected virtual RenderContext CreateRenderContext(RuntimeVariableScope scope, FunctionRegistry contextFunctionRegistry)
-		{
-			return new RenderContext(scope, contextFunctionRegistry);
 		}
 
 		private QuokkaParser.TemplateContext ParseTemplateText(string templateText, SyntaxErrorListener syntaxErrorListener)

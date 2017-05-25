@@ -46,7 +46,7 @@ namespace Mindbox.Quokka.Html
 
 		private IStaticBlockPart TryGetLinkNodeFromTagAttributes(IEnumerable<QuokkaHtml.AttributeContext> attributes)
 		{
-			var hrefAttributeValueVisitor = new AttributeValueVisitor(parsingContext);
+			var hrefAttributeValueVisitor = new AttributeValueVisitor(ParsingContext);
 
 			AttributeValue hrefValue = null;
 			AttributeValue nameValue = null;

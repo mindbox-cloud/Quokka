@@ -75,6 +75,12 @@ namespace Mindbox.Quokka
 					?? parentScope?.TryGetVariableDefinition(variableOccurence);
 		}
 
+		public VariableDefinition TryGetVariableDefinition(string variableName)
+		{
+			return Variables.TryGetVariableDefinition(variableName)
+					?? parentScope?.TryGetVariableDefinition(variableName);
+		}
+
 		private CompilationVariableScope GetRootScope()
 		{
 			return parentScope == null ? this : parentScope.GetRootScope();

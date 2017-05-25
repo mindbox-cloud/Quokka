@@ -84,7 +84,6 @@ namespace Mindbox.Quokka
 			VariableOccurence variableOccurence,
 			VariableOccurence ownerVariableOccurence)
 		{
-
 			VariableDefinition definition;
 			if (!items.TryGetValue(variableOccurence.Name, out definition))
 			{
@@ -96,29 +95,14 @@ namespace Mindbox.Quokka
 			}
 
 			definition.AddOccurence(variableOccurence);
-
-			if (variableOccurence.Member != null)
-			{
-				return definition.Fields.CreateOrUpdateVariableDefinition(
-					variableOccurence.Member,
-					variableOccurence);
-			}
-
 			return definition;
 		}
-
+		
 		public VariableDefinition TryGetVariableDefinition(VariableOccurence variableOccurence)
 		{
-			VariableDefinition definition;
-			if (items.TryGetValue(variableOccurence.Name, out definition))
-			{
-				if (variableOccurence.Member != null)
-					return definition.Fields.TryGetVariableDefinition(variableOccurence.Member);
-
-				return definition;
-			}
-
-			return null;
+			return items.TryGetValue(variableOccurence.Name, out VariableDefinition definition) 
+				? definition 
+				: null;
 		}
 
 		public VariableDefinition TryGetVariableDefinition(string name)

@@ -15,5 +15,13 @@
 			Functions = functions;
 			ErrorListener = errorListener;
 		}
+
+		public SemanticAnalysisContext CloneForNestedScope()
+		{
+			return new SemanticAnalysisContext(
+				VariableScope.CreateChildScope(),
+				Functions,
+				ErrorListener);
+		}
 	}
 }

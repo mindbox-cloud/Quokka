@@ -183,23 +183,17 @@ internal interface IQuokkaVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <return>The visitor result.</return>
 	Result VisitMemberValueExpression([NotNull] QuokkaParser.MemberValueExpressionContext context);
 	/// <summary>
-	/// Visit a parse tree produced by <see cref="QuokkaParser.memberAccess"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	/// <return>The visitor result.</return>
-	Result VisitMemberAccess([NotNull] QuokkaParser.MemberAccessContext context);
-	/// <summary>
 	/// Visit a parse tree produced by <see cref="QuokkaParser.member"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
 	Result VisitMember([NotNull] QuokkaParser.MemberContext context);
 	/// <summary>
-	/// Visit a parse tree produced by <see cref="QuokkaParser.property"/>.
+	/// Visit a parse tree produced by <see cref="QuokkaParser.field"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
-	Result VisitProperty([NotNull] QuokkaParser.PropertyContext context);
+	Result VisitField([NotNull] QuokkaParser.FieldContext context);
 	/// <summary>
 	/// Visit a parse tree produced by <see cref="QuokkaParser.methodCall"/>.
 	/// </summary>
@@ -255,12 +249,6 @@ internal interface IQuokkaVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <return>The visitor result.</return>
 	Result VisitParenthesizedBooleanExpression([NotNull] QuokkaParser.ParenthesizedBooleanExpressionContext context);
 	/// <summary>
-	/// Visit a parse tree produced by <see cref="QuokkaParser.booleanAtom"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	/// <return>The visitor result.</return>
-	Result VisitBooleanAtom([NotNull] QuokkaParser.BooleanAtomContext context);
-	/// <summary>
 	/// Visit a parse tree produced by <see cref="QuokkaParser.stringComparisonExpression"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
@@ -278,6 +266,12 @@ internal interface IQuokkaVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
 	Result VisitArithmeticComparisonExpression([NotNull] QuokkaParser.ArithmeticComparisonExpressionContext context);
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="QuokkaParser.booleanAtom"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitBooleanAtom([NotNull] QuokkaParser.BooleanAtomContext context);
 	/// <summary>
 	/// Visit a parse tree produced by <see cref="QuokkaParser.arithmeticExpression"/>.
 	/// </summary>

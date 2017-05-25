@@ -80,14 +80,14 @@ namespace Mindbox.Quokka
 		}
 
 		/// <summary>
-		/// Checks if the less concrete type compatible with the more concrete type for model validation purposes
+		/// Checks if the type can be assigned to the required type and is therefore compatible to it.
 		/// </summary>
-		internal bool IsCompatibleWithRequired(TypeDefinition requiredType)
+		internal bool IsAssignableTo(TypeDefinition requiredType)
 		{
 			if (this == requiredType)
 				return true;
 			
-			if (BaseType != null && BaseType.IsCompatibleWithRequired(requiredType))
+			if (BaseType != null && BaseType.IsAssignableTo(requiredType))
 				return true;
 			
 			return false;
@@ -150,7 +150,7 @@ namespace Mindbox.Quokka
 				}
 				else
 				{
-					if (occurenceType != resultingType && !resultingType.IsCompatibleWithRequired(occurenceType))
+					if (occurenceType != resultingType && !resultingType.IsAssignableTo(occurenceType))
 						inconsistentTypeErrorHandler(occurence, resultingType);
 				}
 			}

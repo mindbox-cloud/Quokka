@@ -162,24 +162,40 @@ namespace Mindbox.Quokka
 				: base(name)
 			{
 			}
+			
 
-			internal override void MapArgumentValueToResult(
+			internal override void AnalyzeArgumentValueBasedOnFunctionResultUsages(
 				SemanticAnalysisContext context,
-				VariableDefinition resultDefinition,
-				VariableDefinition argumentVariableDefinition)
+				VariableDefinition resultVariableDefinition,
+				IExpression argumentValueExpression)
 			{
-				var cellsField = resultDefinition
+				VariableDefinition argumentVariableDefinition;
+
+				switch (argumentValueExpression)
+				{
+					case VariableValueExpression variableValueExpression:
+						argumentVariableDefinition = variableValueExpression.GetVariableDefinition(context);
+						break;
+					case MemberValueExpression memberValueExpression:
+						argumentVariableDefinition = memberValueExpression.GetLeafMemberVariableDefinition(context);
+						break;
+					default:
+						// Should probably add some static validation error here
+						return;
+				}
+
+				var cellsField = resultVariableDefinition
 					.Fields
 					.TryGetVariableDefinition("Cells");
 
 				if (cellsField != null)
 				{
-					var a = cellsField.CollectionElementVariables
+					var cellValueUsages = cellsField.CollectionElementVariables
 						.Select(iterator => iterator.Fields.TryGetVariableDefinition("Value"))
 						.Where(value => value != null);
 
-					foreach (var cellUsage in a)
-						argumentVariableDefinition.AddCollectionElementVariable(cellUsage);
+					foreach (var cellValueUsage in cellValueUsages)
+						argumentVariableDefinition.AddCollectionElementVariable(cellValueUsage);
 				}
 			}
 		}

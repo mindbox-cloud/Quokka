@@ -37,43 +37,18 @@ namespace Mindbox.Quokka
 				{ fieldName, fieldValueStorage }
 			};
 		}
-
-		public bool ContainsValueForVariable(VariableOccurence variableOccurence)
+		
+		public bool ContainsValueForVariable(string variableName)
 		{
-			return fields.ContainsKey(variableOccurence.Name);
+			return fields.ContainsKey(variableName);
 		}
 
-		public VariableValueStorage GetValueStorageForVariable(VariableOccurence variableOccurence)
+		public override VariableValueStorage GetMemberValueStorage(string memberName)
 		{
-			return fields[variableOccurence.Name];
-		}
-
-		/// <summary>
-		/// Get the value storage for the leaf member of potentially multi-part identifier. For example, for variable
-		/// Product.Details.Description
-		/// this method will return the storage that contains the value for the rightmost Description field.
-		/// </summary>
-		/// <param name="variableOccurence">Variable occurence</param>
-		/// <returns>Will return the storage for value or <c>null</c> if the .</returns>
-		public override VariableValueStorage GetLeafMemberValueStorage(VariableOccurence variableOccurence)
-		{
-			VariableValueStorage field;
-			if (fields.TryGetValue(variableOccurence.Name, out field))
-			{
-				if (variableOccurence.Member == null)
-				{
-					return field;
-				}
-				else
-				{
-					if (field == null)
-						throw new ValueStorageAccessException("Value storage for field is null", variableOccurence);
-
-					return field?.GetLeafMemberValueStorage(variableOccurence.Member ?? variableOccurence);
-				}
-			}
+			if (fields.TryGetValue(memberName, out VariableValueStorage field))
+				return field;
 			else
-				throw new InvalidOperationException($"Field {variableOccurence.Name} not found");
+				throw new InvalidOperationException($"Member {memberName} not found");
 		}
 	}
 }

@@ -138,7 +138,7 @@ namespace Mindbox.Quokka
 			if (model.Value != null)
 			{
 				var actualType = TypeDefinition.GetTypeDefinitionByRuntimeType(model.Value.GetType());
-				if (!actualType.IsCompatibleWithRequired(requiredModelDefinition.Type))
+				if (!actualType.IsAssignableTo(requiredModelDefinition.Type))
 				{
 					hasErrors = true;
 					errorMessageBuilder.AppendLine(

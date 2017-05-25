@@ -23,8 +23,7 @@ namespace Mindbox.Quokka
 		/// </summary>
 		/// <remarks>Only relevant for collection variables.</remarks>
 		private readonly IList<VariableDefinition> collectionElementVariables;
-
-
+		
 		public IList<VariableDefinition> CollectionElementVariables => collectionElementVariables.ToList().AsReadOnly();
 
 		public string Name { get; }
@@ -134,7 +133,7 @@ namespace Mindbox.Quokka
 			TypeDefinition actualType,
 			ISemanticErrorListener errorListener)
 		{
-			if (expectedType.IsCompatibleWithRequired(actualType))
+			if (expectedType.IsAssignableTo(actualType))
 			{
 				if (expectedType == TypeDefinition.Composite)
 				{

@@ -18,10 +18,20 @@ namespace Mindbox.Quokka
 
 		internal abstract ArgumentValueValidationResult ValidateValue(VariableValueStorage value);
 
-		internal virtual void MapArgumentValueToResult(
+		/// <summary>
+		/// Performs additional semantic analysis on expressions used argument values based on usages
+		/// of function result.
+		/// Some function return a "projection" of its argument (array or other value) meaning that the subsequent usages of
+		/// function result should be considered when determining the exact type of said array or other value.
+		/// </summary>
+		/// <remarks>
+		/// This mechanism isn't available for third-party functions. Functions that use this mechanism
+		/// are designed with strong understanding of implementation details of the templating process.
+		/// </remarks>
+		internal virtual void AnalyzeArgumentValueBasedOnFunctionResultUsages(
 			SemanticAnalysisContext context,
-			VariableDefinition resultDefinition,
-			VariableDefinition argumentVariableDefinition)
+			VariableDefinition resultVariableDefinition,
+			IExpression argumentValueExpression)
 		{
 		}
 	}

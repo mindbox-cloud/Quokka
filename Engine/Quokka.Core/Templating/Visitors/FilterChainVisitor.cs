@@ -1,25 +1,30 @@
-﻿using Mindbox.Quokka.Generated;
+﻿using System;
+
+using Mindbox.Quokka.Generated;
 
 namespace Mindbox.Quokka
 {
-	internal class FilterChainVisitor : QuokkaBaseVisitor<FunctionCall>
+	internal class FilterChainVisitor : QuokkaBaseVisitor<FunctionCallExpression>
 	{
 		public FilterChainVisitor(VisitingContext visitingContext)
 			: base(visitingContext)
 		{
 		}
 
-		public override FunctionCall VisitOutputBlock(QuokkaParser.OutputBlockContext context)
+		public override FunctionCallExpression VisitOutputBlock(QuokkaParser.OutputBlockContext context)
 		{
-			FunctionCall latestFilterFunctionCall = null;
-			var implicitlyPassedArgument = context.expression().Accept(new FunctionArgumentVisitor(visitingContext));
+			var implicitlyPassedArgument = new Argument(
+				context.expression().Accept(new ExpressionVisitor(VisitingContext)),
+				GetLocationFromToken(context.expression().Start));
+			
+			FunctionCallExpression latestFilterFunctionCall = null;
 
-			foreach (var filter in context.filterChain().functionCall())
+			foreach (var filter in context.filterChain().functionCallExpression())
 			{
-				latestFilterFunctionCall = filter.Accept(new FunctionCallVisitor(visitingContext, implicitlyPassedArgument));
-				implicitlyPassedArgument = new FunctionCallArgument(latestFilterFunctionCall, latestFilterFunctionCall.Location);
+				latestFilterFunctionCall = filter.Accept(new FunctionCallExpressionVisitor(VisitingContext, implicitlyPassedArgument));
+				implicitlyPassedArgument = new Argument(latestFilterFunctionCall, latestFilterFunctionCall.Location);
 			}
-
+			
 			return latestFilterFunctionCall;
 		}
 	}

@@ -5,7 +5,7 @@ options { tokenVocab = QuokkaLex; }
 
 template
 	:
-		templateBlock*
+		templateBlock?
 		EOF
 	;
 
@@ -144,11 +144,11 @@ filterChain
 // Expressions
 
 expression
-	:
-		stringExpression
+	:		
+		variantValueExpression
+		| stringExpression
 		| booleanExpression 
 		| arithmeticExpression
-		| variantValueExpression
 	;	
 
 variantValueExpression
@@ -170,23 +170,19 @@ variableValueExpression
 	
 memberValueExpression
 	:
-		rootVariantValueExpression
-		memberAccess
-	;
-	
-memberAccess
-	:
-		MemberAccessOperator
-		member
-		memberAccess?
+		variableValueExpression
+		(
+			MemberAccessOperator
+			member
+		)+
 	;
 	
 member
 	:
-		property | methodCall
+		field | methodCall
 	;
 	
-property
+field
 	:
 		Identifier
 	;
@@ -250,22 +246,12 @@ parenthesizedBooleanExpression
 	:
 		LeftParen booleanExpression RightParen	
 	;
-	
-booleanAtom
-	:
-		variantValueExpression
-		| arithmeticComparisonExpression
-		| nullComparisonExpression
-		| stringComparisonExpression	
-		| notExpression
-		| parenthesizedBooleanExpression
-	;
 
 stringComparisonExpression
 	:
 		variantValueExpression
 		(Equals | NotEquals)
-		stringConstant
+		stringExpression
 	;
 	
 nullComparisonExpression
@@ -280,6 +266,16 @@ arithmeticComparisonExpression
 		arithmeticExpression
 		(Equals | NotEquals | LessThan | GreaterThan | LessThanOrEquals | GreaterThanOrEquals)
 		arithmeticExpression
+	;
+	
+booleanAtom
+	:
+		variantValueExpression
+		| notExpression
+		| parenthesizedBooleanExpression
+		| stringComparisonExpression
+		| nullComparisonExpression	
+		| arithmeticComparisonExpression		
 	;
 
 // Arithmetic expressions

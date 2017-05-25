@@ -31,22 +31,11 @@ namespace Mindbox.Quokka.Tests
 		public void InvalidArgument_Fails()
 		{
 			var template = new Template(
-				@"${ validate(4) }", 
-				new FunctionRegistry(new []{new TestFunction()}));
+				@"${ validate(4) }",
+				new FunctionRegistry(new[] { new TestFunction() }));
 
 			template.Render(new CompositeModelValue());
 		}
-
-
-		[TestMethod]
-		[ExpectedException(typeof(TemplateContainsErrorsException))]
-		public void Render_Function_RandomText_WorksWithoutArguments()
-		{
-			var template = new Template("${ chooseRandomText() }");
-
-			template.Render(new CompositeModelValue());
-		}
-
 
 		[TestMethod]
 		public void ValidArgument_Ok()
@@ -57,6 +46,20 @@ namespace Mindbox.Quokka.Tests
 
 			var result = template.Render(new CompositeModelValue());
 			Assert.AreEqual("5", result);
+		}
+
+		[TestMethod]
+		public void InvliadArgument_InCondition_Error()
+		{
+			var template = new Template(@"
+				@{ if toUpper(value) }
+					Empty.
+				@{ end if }
+			", new FunctionRegistry(Template.GetStandardFunctions()), false);
+
+			Assert.AreEqual(1, template.Errors.Count);
+			Assert.AreEqual("Недопустимый тип результата функции toUpper. Ожидался Boolean, а она возвращает String",
+				((SemanticError)template.Errors[0]).Message);
 		}
 	}
 }

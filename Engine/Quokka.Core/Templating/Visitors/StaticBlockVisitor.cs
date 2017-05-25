@@ -13,7 +13,7 @@ namespace Mindbox.Quokka
 		public override StaticBlock VisitStaticBlock(QuokkaParser.StaticBlockContext context)
 		{
 			return new StaticBlock(context.children
-				.Select(child => child.Accept(new StaticPartVisitor(visitingContext, context.Start.StartIndex))));
+				.Select(child => child.Accept(new StaticPartVisitor(VisitingContext, context.Start.StartIndex))));
 		}
 	}
 }

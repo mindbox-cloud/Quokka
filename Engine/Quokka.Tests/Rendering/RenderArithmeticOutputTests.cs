@@ -8,6 +8,26 @@ namespace Mindbox.Quokka.Tests
 	public class RenderArithmeticOutputTests
 	{
 		[TestMethod]
+		public void Render_ArithmeticOutput_IntegerConstant()
+		{
+			var template = new Template("${ 335 }");
+
+			var result = template.Render(
+				new CompositeModelValue());
+			Assert.AreEqual("335", result);
+		}
+		
+		[TestMethod]
+		public void Render_ArithmeticOutput_DecimalConstant()
+		{
+			var template = new Template("${ 24.05 }");
+
+			var result = template.Render(
+				new CompositeModelValue());
+			Assert.AreEqual("24,05", result);
+		}
+
+		[TestMethod]
 		public void Render_ArithmeticOutput_SimplePlus()
 		{
 			var template = new Template("${ 4 + 7 }");
@@ -58,7 +78,7 @@ namespace Mindbox.Quokka.Tests
 			var result = template.Render(
 				new CompositeModelValue());
 
-			Assert.AreEqual("0,60", result);
+			Assert.AreEqual("0,6", result);
 		}
 
 

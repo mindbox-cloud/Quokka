@@ -333,5 +333,14 @@ namespace Mindbox.Quokka.Tests
 
 			Assert.AreEqual("2016.01.02 12:00:00", result);
 		}
+
+		[TestMethod]
+		[ExpectedException(typeof(TemplateContainsErrorsException))]
+		public void Render_Function_RandomText_WorksWithoutArguments()
+		{
+			var template = new Template("${ chooseRandomText() }");
+
+			template.Render(new CompositeModelValue());
+		}
 	}
 }

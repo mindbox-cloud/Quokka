@@ -15,7 +15,7 @@ namespace Mindbox.Quokka
 			this.variadicArgument = variadicArgument;
 		}
 
-		internal override bool CheckArgumentNumber(IReadOnlyList<IFunctionArgument> arguments)
+		internal override bool CheckArgumentNumber(IReadOnlyList<Argument> arguments)
 		{
 			return arguments.Count >= Arguments.Count + variadicArgument.MinimumOccurrences;
 		}

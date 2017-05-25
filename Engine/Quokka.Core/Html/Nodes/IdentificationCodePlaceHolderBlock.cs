@@ -16,9 +16,9 @@ namespace Mindbox.Quokka.Html
 			Offset = offset;
 		}
 
-		public override void Render(StringBuilder resultBuilder, RenderContext context)
+		public override void Render(StringBuilder resultBuilder, RenderContext renderContext)
 		{
-			var htmlRenderContext = (HtmlRenderContext)context;
+			var htmlRenderContext = (HtmlRenderContext)renderContext;
 			if (htmlRenderContext.IdentificationCode != null && !htmlRenderContext.HasIdentificationCodeBeenRendered)
 			{
 				resultBuilder.Append(htmlRenderContext.IdentificationCode);

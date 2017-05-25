@@ -30,15 +30,15 @@ namespace Mindbox.Quokka.Html
 			}
 		}
 
-		public override void Render(StringBuilder resultBuilder, RenderContext context)
+		public override void Render(StringBuilder resultBuilder, RenderContext renderContext)
 		{
-			var htmlRenderContext = (HtmlRenderContext)context;
+			var htmlRenderContext = (HtmlRenderContext)renderContext;
 
 			var linkBuilder = new StringBuilder();
 
 			foreach (var component in hrefValue.TextComponents)
 			{
-				component.Render(linkBuilder, context);
+				component.Render(linkBuilder, renderContext);
 			}
 
 			string redirectUrl = linkBuilder.ToString();
