@@ -72,8 +72,7 @@ namespace Mindbox.Quokka
 		
 		public VariableValueStorage TryGetValueStorage(RenderContext renderContext)
 		{
-			var valueStorage = renderContext.VariableScope.TryGetValueStorageForVariable(variableName);
-			return valueStorage;
+			return renderContext.VariableScope.TryGetValueStorageForVariable(variableName);
 		}
 	}
 }

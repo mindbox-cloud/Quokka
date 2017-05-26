@@ -136,7 +136,7 @@ namespace Mindbox.Quokka.Tests
 
 			Assert.AreEqual(expected, result);
 		}
-
+		
 		[TestMethod]
 		public void Render_IfNullComparison_CheckIfCompositeFieldNull_NotNull()
 		{

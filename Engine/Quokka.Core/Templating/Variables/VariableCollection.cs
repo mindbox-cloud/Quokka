@@ -97,29 +97,16 @@ namespace Mindbox.Quokka
 			definition.AddOccurence(variableOccurence);
 			return definition;
 		}
-		
-		public VariableDefinition TryGetVariableDefinition(VariableOccurence variableOccurence)
+
+		public VariableDefinition TryGetVariableDefinition(string name)
 		{
-			return items.TryGetValue(variableOccurence.Name, out VariableDefinition definition) 
+			return items.TryGetValue(name, out VariableDefinition definition) 
 				? definition 
 				: null;
 		}
 
-		public VariableDefinition TryGetVariableDefinition(string name)
-		{
-			VariableDefinition definition;
-			if (items.TryGetValue(name, out definition))
-				return definition;
-
-			return null;
-		}
-
 		public static VariableCollection Merge(string ownerFullName, IList<VariableCollection> collections)
 		{
-			/*
-			if (collections.Count == 1)
-				return collections.Single();
-				*/
 			var fields = collections
 				.SelectMany(fieldCollection => fieldCollection.items.Values)
 				.GroupBy(

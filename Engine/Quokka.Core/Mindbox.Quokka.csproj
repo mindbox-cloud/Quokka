@@ -16,9 +16,12 @@
   </PropertyGroup>
   <ItemGroup>
     <None Remove="**\*.nuspec" />
-    <None Remove="Generated\*.tokens" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Antlr4.Runtime.Standard" Version="4.7.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Generated\" />
+    <Folder Include="Html\Generated\" />
   </ItemGroup>
 </Project>

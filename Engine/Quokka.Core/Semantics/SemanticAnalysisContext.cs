@@ -16,7 +16,7 @@
 			ErrorListener = errorListener;
 		}
 
-		public SemanticAnalysisContext CloneForNestedScope()
+		public SemanticAnalysisContext CreateNestedScopeContext()
 		{
 			return new SemanticAnalysisContext(
 				VariableScope.CreateChildScope(),

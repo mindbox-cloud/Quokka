@@ -20,9 +20,5 @@ namespace Mindbox.Quokka
 			Location = location;
 			RequiredType = requiredType;
 		}
-		public override string ToString()
-		{
-			return Name;
-		}
 	}
 }

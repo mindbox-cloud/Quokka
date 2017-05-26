@@ -18,7 +18,7 @@ namespace Mindbox.Quokka
 
 		public override void CompileVariableDefinitions(SemanticAnalysisContext context)
 		{
-			var innerSemanticContext = context.CloneForNestedScope();
+			var innerSemanticContext = context.CreateNestedScopeContext();
 			var iterationVariableDefinition = innerSemanticContext.VariableScope.DeclareVariable(iterationVariable);
 
 			enumerableExpression.CompileVariableDefinitions(context, TypeDefinition.Array);

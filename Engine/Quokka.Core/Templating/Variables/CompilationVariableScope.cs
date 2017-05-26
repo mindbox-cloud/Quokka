@@ -40,13 +40,13 @@ namespace Mindbox.Quokka
 			return Variables.CreateDefinitionForVariableDeclaration(variableDeclaration);
 		}
 		
-		public VariableDefinition CreateOrUpdateVariableDefinition(VariableOccurence variableOccurence)
+		public void CreateOrUpdateVariableDefinition(VariableOccurence variableOccurence)
 		{
 			var scope = GetExistingScopeForVariable(variableOccurence.Name);
 			if (scope == null)
 				scope = variableOccurence.IsExternal ? GetRootScope() : this;
 
-			return scope.CreateOrUpdateVariableDefinitionIgnoringParentScopes(variableOccurence);
+			scope.CreateOrUpdateVariableDefinitionIgnoringParentScopes(variableOccurence);
 		}
 
 		public void CheckForChildScopesDeclarationConflicts(SemanticAnalysisContext context)
@@ -67,12 +67,6 @@ namespace Mindbox.Quokka
 		private VariableDefinition CreateOrUpdateVariableDefinitionIgnoringParentScopes(VariableOccurence variableOccurence)
 		{
 			return Variables.CreateOrUpdateVariableDefinition(variableOccurence);
-		}
-
-		public VariableDefinition TryGetVariableDefinition(VariableOccurence variableOccurence)
-		{
-			return Variables.TryGetVariableDefinition(variableOccurence)
-					?? parentScope?.TryGetVariableDefinition(variableOccurence);
 		}
 
 		public VariableDefinition TryGetVariableDefinition(string variableName)
