@@ -24,14 +24,7 @@ namespace Mindbox.Quokka
 
 		public override void Render(StringBuilder resultBuilder, RenderContext renderContext)
 		{
-			var value = expression.Evaluate(renderContext).GetPrimitiveValue();
-
-			// This logic probably should be moved elsewhere or reworked.
-
-			if (value is double doubleValue)
-				resultBuilder.Append(Math.Round(doubleValue, 2));
-			else
-				resultBuilder.Append(value);
+			resultBuilder.Append(expression.GetOutputValue(renderContext));
 		}
 	}
 }

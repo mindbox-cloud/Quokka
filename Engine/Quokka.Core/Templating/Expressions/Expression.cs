@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Mindbox.Quokka
 {
-    internal abstract class ExpressionBase : IExpression
+    internal abstract class Expression : IExpression
 	{
 		public abstract VariableValueStorage TryGetStaticEvaluationResult();
 
@@ -15,5 +15,10 @@ namespace Mindbox.Quokka
 		public abstract TypeDefinition GetResultType(SemanticAnalysisContext context);
 
 		public abstract void CompileVariableDefinitions(SemanticAnalysisContext context, TypeDefinition expectedExpressionType);
+
+		public virtual string GetOutputValue(RenderContext renderContext)
+		{
+			return Evaluate(renderContext).GetPrimitiveValue().ToString();
+		}
 	}
 }

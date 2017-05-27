@@ -4,10 +4,10 @@ namespace Mindbox.Quokka
 {
 	internal class ConditionBlock : TemplateNodeBase
 	{
-		private readonly IBooleanExpression conditionExpression;
+		private readonly BooleanExpression conditionExpression;
 		private readonly ITemplateNode block;
 		
-		public ConditionBlock(IBooleanExpression conditionExpression, ITemplateNode block)
+		public ConditionBlock(BooleanExpression conditionExpression, ITemplateNode block)
 		{
 			this.block = block;
 			this.conditionExpression = conditionExpression;

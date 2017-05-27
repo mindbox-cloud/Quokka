@@ -3,11 +3,11 @@ using System.Linq;
 
 namespace Mindbox.Quokka
 {
-	internal class AndExpression : BooleanExpressionBase
+	internal class AndExpression : BooleanExpression
 	{
-		private readonly IReadOnlyCollection<IBooleanExpression> subExpressions;
+		private readonly IReadOnlyCollection<BooleanExpression> subExpressions;
 
-		public AndExpression(IEnumerable<IBooleanExpression> subExpressions)
+		public AndExpression(IEnumerable<BooleanExpression> subExpressions)
 		{
 			this.subExpressions = subExpressions.ToList().AsReadOnly();
 		}

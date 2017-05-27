@@ -9,10 +9,10 @@ namespace Mindbox.Quokka
     internal abstract class Member
     {
 	    public abstract void CompileMemberVariableDefinition(
-			VariableDefinition ownerVariableDefinition,
+			ValueUsageSummary ownerValueUsageSummary,
 			TypeDefinition memberType);
 
-	    public abstract VariableDefinition GetMemberVariableDefinition(VariableDefinition ownerVariableDefinition);
+	    public abstract ValueUsageSummary GetMemberVariableDefinition(ValueUsageSummary ownerValueUsageSummary);
 
 	    public abstract VariableValueStorage GetMemberValue(VariableValueStorage ownerValueStorage);
 

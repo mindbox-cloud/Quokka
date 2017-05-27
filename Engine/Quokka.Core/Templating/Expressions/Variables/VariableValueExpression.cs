@@ -28,24 +28,24 @@ namespace Mindbox.Quokka
 		public override void CompileVariableDefinitions(SemanticAnalysisContext context, TypeDefinition expectedExpressionType)
 		{
 			context.VariableScope.CreateOrUpdateVariableDefinition(
-				new VariableOccurence(
-					variableName,
+				variableName,
+				new ValueUsage(
 					variableLocation,
 					expectedExpressionType));
 		}
 
-		public VariableDefinition GetVariableDefinition(SemanticAnalysisContext context)
+		public ValueUsageSummary GetVariableDefinition(SemanticAnalysisContext context)
 		{
 			return context.VariableScope.TryGetVariableDefinition(variableName);
 		}
 
-		public override void RegisterIterationOverExpressionResult(SemanticAnalysisContext context, VariableDefinition iterationVariable)
+		public override void RegisterIterationOverExpressionResult(SemanticAnalysisContext context, ValueUsageSummary iterationVariable)
 		{
 			var existingVariableDefinition = context.VariableScope.TryGetVariableDefinition(variableName);
 			if (existingVariableDefinition == null)
 				throw new InvalidOperationException($"Variable definition for variable {variableName} not found");
 
-			existingVariableDefinition.AddCollectionElementVariable(iterationVariable);
+			existingVariableDefinition.AddEnumerationResultUsageSummary(iterationVariable);
 		}
 
 		public override IModelDefinition GetExpressionResultModelDefinition(SemanticAnalysisContext context)

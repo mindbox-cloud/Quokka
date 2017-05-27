@@ -18,8 +18,8 @@ namespace Mindbox.Quokka
 		} 
 
 		public void AddInconsistentVariableTypingError(
-			VariableDefinition definition,
-			VariableOccurence faultyOccurence,
+			ValueUsageSummary definition,
+			ValueUsage faultyOccurence,
 			TypeDefinition correctType)
 		{
 			AddError(new SemanticError(
@@ -80,7 +80,7 @@ namespace Mindbox.Quokka
 		}
 
 		public void AddActualTypeNotMatchingDeclaredTypeError(
-			VariableDefinition definition,
+			ValueUsageSummary definition,
 			TypeDefinition actualType,
 			TypeDefinition declaredType,
 			Location location)
@@ -92,7 +92,7 @@ namespace Mindbox.Quokka
 		}
 
 		public void AddUnexpectedFieldOnCompositeDeclaredTypeError(
-			VariableDefinition definition,
+			ValueUsageSummary definition,
 			Location location)
 		{
 			AddError(new SemanticError(
@@ -100,7 +100,7 @@ namespace Mindbox.Quokka
 				location));
 		}
 
-		public void AddVariableDeclarationScopeConflictError(VariableDefinition definition, Location location)
+		public void AddVariableDeclarationScopeConflictError(ValueUsageSummary definition, Location location)
 		{
 			AddError(new SemanticError(
 				$"Имя переменной \"{definition.FullName}\" конфликтует с другой переменной, объявленной выше или ниже",

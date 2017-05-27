@@ -5,14 +5,14 @@ using Mindbox.Quokka.Generated;
 
 namespace Mindbox.Quokka
 {
-	internal class BooleanExpressionVisitor : QuokkaBaseVisitor<IBooleanExpression>
+	internal class BooleanExpressionVisitor : QuokkaBaseVisitor<BooleanExpression>
 	{
 		public BooleanExpressionVisitor(VisitingContext visitingContext)
 			: base(visitingContext)
 		{
 		}
 
-		public override IBooleanExpression VisitBooleanExpression(QuokkaParser.BooleanExpressionContext context)
+		public override BooleanExpression VisitBooleanExpression(QuokkaParser.BooleanExpressionContext context)
 		{
 			var andExpressions = context.andExpression().Select(Visit).ToList();
 
@@ -20,11 +20,11 @@ namespace Mindbox.Quokka
 			// We use this fact to "flatten" the expression tree.
 
 			return andExpressions.Count > 1
-				? new OrExpression(andExpressions)
-				: andExpressions.Single();
+						? new OrExpression(andExpressions)
+						: andExpressions.Single();
 		}
 
-		public override IBooleanExpression VisitAndExpression(QuokkaParser.AndExpressionContext context)
+		public override BooleanExpression VisitAndExpression(QuokkaParser.AndExpressionContext context)
 		{
 			var atoms = context.booleanAtom().Select(Visit).ToList();
 
@@ -32,16 +32,16 @@ namespace Mindbox.Quokka
 			// We use this fact to "flatten" the expression tree.
 
 			return atoms.Count > 1
-				? new AndExpression(atoms)
-				: atoms.Single();
+						? new AndExpression(atoms)
+						: atoms.Single();
 		}
 
-		public override IBooleanExpression VisitNotExpression(QuokkaParser.NotExpressionContext context)
+		public override BooleanExpression VisitNotExpression(QuokkaParser.NotExpressionContext context)
 		{
 			return new NotExpression(context.booleanAtom().Accept(this));
 		}
 
-		public override IBooleanExpression VisitStringComparisonExpression(QuokkaParser.StringComparisonExpressionContext context)
+		public override BooleanExpression VisitStringComparisonExpression(QuokkaParser.StringComparisonExpressionContext context)
 		{
 			ComparisonOperation operation;
 
@@ -59,7 +59,7 @@ namespace Mindbox.Quokka
 				operation);
 		}
 
-		public override IBooleanExpression VisitNullComparisonExpression(QuokkaParser.NullComparisonExpressionContext context)
+		public override BooleanExpression VisitNullComparisonExpression(QuokkaParser.NullComparisonExpressionContext context)
 		{
 			ComparisonOperation operation;
 
@@ -76,7 +76,8 @@ namespace Mindbox.Quokka
 				operation);
 		}
 
-		public override IBooleanExpression VisitArithmeticComparisonExpression(QuokkaParser.ArithmeticComparisonExpressionContext context)
+		public override BooleanExpression VisitArithmeticComparisonExpression(
+			QuokkaParser.ArithmeticComparisonExpressionContext context)
 		{
 			ComparisonOperation operation;
 
@@ -105,12 +106,12 @@ namespace Mindbox.Quokka
 				context.arithmeticExpression(1).Accept(arithmeticVisitor));
 		}
 
-		public override IBooleanExpression VisitVariantValueExpression(QuokkaParser.VariantValueExpressionContext context)
+		public override BooleanExpression VisitVariantValueExpression(QuokkaParser.VariantValueExpressionContext context)
 		{
 			return new VariantValueBooleanExpression(context.Accept(new VariantValueExpressionVisitor(VisitingContext)));
 		}
 
-		protected override IBooleanExpression AggregateResult(IBooleanExpression aggregate, IBooleanExpression nextResult)
+		protected override BooleanExpression AggregateResult(BooleanExpression aggregate, BooleanExpression nextResult)
 		{
 			// Works for Atom alternatives: we'll take the first alternative that is present.
 			return aggregate ?? nextResult;

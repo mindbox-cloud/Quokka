@@ -6,14 +6,14 @@ using Mindbox.Quokka.Generated;
 
 namespace Mindbox.Quokka
 {
-	internal class ArithmeticExpressionVisitor : QuokkaBaseVisitor<IArithmeticExpression>
+	internal class ArithmeticExpressionVisitor : QuokkaBaseVisitor<ArithmeticExpression>
 	{
 		public ArithmeticExpressionVisitor(VisitingContext visitingContext)
 			: base(visitingContext)
 		{
 		}
 
-		public override IArithmeticExpression VisitArithmeticExpression(QuokkaParser.ArithmeticExpressionContext context)
+		public override ArithmeticExpression VisitArithmeticExpression(QuokkaParser.ArithmeticExpressionContext context)
 		{
 			// Optimization: we can use single operand of multipart-expression itself without polluting the tree with
 			// additional layer of arithmetic nodes.
@@ -34,7 +34,7 @@ namespace Mindbox.Quokka
 			return new AdditionExpression(operands);
 		}
 
-		public override IArithmeticExpression VisitMultiplicationExpression(QuokkaParser.MultiplicationExpressionContext context)
+		public override ArithmeticExpression VisitMultiplicationExpression(QuokkaParser.MultiplicationExpressionContext context)
 		{
 
 			// Optimization: we can use single operand of multipart-expression itself without polluting the tree with
@@ -56,12 +56,12 @@ namespace Mindbox.Quokka
 			return new MultiplicationExpression(operands);
 		}
 
-		public override IArithmeticExpression VisitNegationExpression(QuokkaParser.NegationExpressionContext context)
+		public override ArithmeticExpression VisitNegationExpression(QuokkaParser.NegationExpressionContext context)
 		{
 			return new NegationExpression(Visit(context.arithmeticAtom()));
 		}
 
-		public override IArithmeticExpression VisitArithmeticAtom(QuokkaParser.ArithmeticAtomContext context)
+		public override ArithmeticExpression VisitArithmeticAtom(QuokkaParser.ArithmeticAtomContext context)
 		{
 			var number = context.Number();
 			if (number != null)
@@ -70,12 +70,12 @@ namespace Mindbox.Quokka
 			return base.VisitArithmeticAtom(context);
 		}
 
-		public override IArithmeticExpression VisitVariantValueExpression(QuokkaParser.VariantValueExpressionContext context)
+		public override ArithmeticExpression VisitVariantValueExpression(QuokkaParser.VariantValueExpressionContext context)
 		{
 			return new VariantValueArithmeticExpression(context.Accept(new VariantValueExpressionVisitor(VisitingContext)));
 		}
 
-		protected override IArithmeticExpression AggregateResult(IArithmeticExpression aggregate, IArithmeticExpression nextResult)
+		protected override ArithmeticExpression AggregateResult(ArithmeticExpression aggregate, ArithmeticExpression nextResult)
 		{
 			return aggregate ?? nextResult;
 		}

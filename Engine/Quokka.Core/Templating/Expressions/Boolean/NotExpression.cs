@@ -1,10 +1,10 @@
 ﻿namespace Mindbox.Quokka
 {
-	internal class NotExpression : BooleanExpressionBase
+	internal class NotExpression : BooleanExpression
 	{
-		private readonly IBooleanExpression inner;
+		private readonly BooleanExpression inner;
 
-		public NotExpression(IBooleanExpression inner)
+		public NotExpression(BooleanExpression inner)
 		{
 			this.inner = inner;
 		}

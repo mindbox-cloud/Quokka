@@ -24,7 +24,10 @@ namespace Mindbox.Quokka
 
 	    public override Member VisitMethodCall(QuokkaParser.MethodCallContext context)
 	    {
-		    throw new NotImplementedException();
+			return new MethodMember(
+				context.Identifier().GetText(),
+				context.argumentList().Accept(new ArgumentListVisitor(VisitingContext)),
+				GetLocationFromToken(context.Identifier().Symbol));
 	    }
     }
 }

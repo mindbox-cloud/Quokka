@@ -58,7 +58,8 @@ namespace Mindbox.Quokka
 						semanticErrorListener);
 					compiledTemplateTree.CompileVariableDefinitions(analysisContext);
 					analysisContext.VariableScope.CheckForChildScopesDeclarationConflicts(analysisContext);
-					requiredModelDefinition = analysisContext.VariableScope.Variables.ToModelDefinition(
+					requiredModelDefinition = ValueUsageSummary.ConvertCollectionToModelDefinition(
+						analysisContext.VariableScope.Members,
 						new ModelDefinitionFactory(),
                         semanticErrorListener);
 				}

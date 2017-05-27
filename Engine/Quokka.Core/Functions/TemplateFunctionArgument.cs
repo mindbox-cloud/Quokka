@@ -30,7 +30,7 @@ namespace Mindbox.Quokka
 		/// </remarks>
 		internal virtual void AnalyzeArgumentValueBasedOnFunctionResultUsages(
 			SemanticAnalysisContext context,
-			VariableDefinition resultVariableDefinition,
+			ValueUsageSummary resultValueUsageSummary,
 			IExpression argumentValueExpression)
 		{
 		}

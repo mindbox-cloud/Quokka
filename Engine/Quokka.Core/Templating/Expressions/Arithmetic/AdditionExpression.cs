@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace Mindbox.Quokka
 {
-	internal class AdditionExpression : ArithmeticExpressionBase
+	internal class AdditionExpression : ArithmeticExpression
 	{
 		private readonly IReadOnlyCollection<AdditionOperand> operands;
 

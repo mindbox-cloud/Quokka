@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Mindbox.Quokka
 {
@@ -16,7 +17,7 @@ namespace Mindbox.Quokka
 		private readonly CompilationVariableScope parentScope;
 		private readonly List<CompilationVariableScope> childScopes = new List<CompilationVariableScope>(); 
 
-		public VariableCollection Variables { get; } = new VariableCollection();
+		public MemberCollection<string> Members { get; } = new MemberCollection<string>(StringComparer.OrdinalIgnoreCase);
 		
 		public CompilationVariableScope()
 			: this(null)
@@ -35,28 +36,28 @@ namespace Mindbox.Quokka
 			return childScope;
 		}
 
-		public  VariableDefinition DeclareVariable(VariableDeclaration variableDeclaration)
+		public ValueUsageSummary DeclareVariable(string name, VariableDeclaration variableDeclaration)
 		{
-			return Variables.CreateDefinitionForVariableDeclaration(variableDeclaration);
+			return Members.CreateOrUpdateMember(name, variableDeclaration);
 		}
 		
-		public void CreateOrUpdateVariableDefinition(VariableOccurence variableOccurence)
+		public void CreateOrUpdateVariableDefinition(string name, ValueUsage valueUsage)
 		{
-			var scope = GetExistingScopeForVariable(variableOccurence.Name);
+			var scope = GetExistingScopeForVariable(name);
 			if (scope == null)
-				scope = variableOccurence.IsExternal ? GetRootScope() : this;
+				scope = valueUsage.IsExternal ? GetRootScope() : this;
 
-			scope.CreateOrUpdateVariableDefinitionIgnoringParentScopes(variableOccurence);
+			scope.CreateOrUpdateVariableDefinitionIgnoringParentScopes(name, valueUsage);
 		}
 
 		public void CheckForChildScopesDeclarationConflicts(SemanticAnalysisContext context)
 		{
 			if (parentScope != null)
 			{
-				foreach (var variable in Variables.Items)
+				foreach (var item in Members.Items)
 				{
-					if (parentScope.GetExistingScopeForVariable(variable.Name) != null)
-						context.ErrorListener.AddVariableDeclarationScopeConflictError(variable, variable.GetFirstLocation());
+					if (parentScope.GetExistingScopeForVariable(item.Key) != null)
+						context.ErrorListener.AddVariableDeclarationScopeConflictError(item.Value, item.Value.GetFirstLocation());
 				}
 			}
 
@@ -64,14 +65,14 @@ namespace Mindbox.Quokka
 				childScope.CheckForChildScopesDeclarationConflicts(context);
 		} 
 
-		private VariableDefinition CreateOrUpdateVariableDefinitionIgnoringParentScopes(VariableOccurence variableOccurence)
+		private void CreateOrUpdateVariableDefinitionIgnoringParentScopes(string name, ValueUsage valueUsage)
 		{
-			return Variables.CreateOrUpdateVariableDefinition(variableOccurence);
+			Members.CreateOrUpdateMember(name, valueUsage);
 		}
 
-		public VariableDefinition TryGetVariableDefinition(string variableName)
+		public ValueUsageSummary TryGetVariableDefinition(string variableName)
 		{
-			return Variables.TryGetVariableDefinition(variableName)
+			return Members.TryGetMemberUsageSummary(variableName)
 					?? parentScope?.TryGetVariableDefinition(variableName);
 		}
 
@@ -82,7 +83,7 @@ namespace Mindbox.Quokka
 
 		private CompilationVariableScope GetExistingScopeForVariable(string variableName)
 		{
-			return Variables.CheckIfVariableExists(variableName) 
+			return Members.CheckIfMemberExists(variableName) 
 				? this 
 				: parentScope?.GetExistingScopeForVariable(variableName);
 		}

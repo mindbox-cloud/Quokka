@@ -20,21 +20,20 @@ namespace Mindbox.Quokka
 
 	    public override string StringRepresentation => fieldName;
 
-		public override void CompileMemberVariableDefinition(VariableDefinition ownerVariableDefinition, TypeDefinition memberType)
+		public override void CompileMemberVariableDefinition(ValueUsageSummary ownerValueUsageSummary, TypeDefinition memberType)
 	    {
-		    ownerVariableDefinition.Fields
-			    .CreateOrUpdateVariableDefinition(
-				    new VariableOccurence(fieldName, location, memberType));
+		    ownerValueUsageSummary.Fields
+			    .CreateOrUpdateMember(fieldName, new ValueUsage(location, memberType));
 	    }
 
-	    public override VariableDefinition GetMemberVariableDefinition(VariableDefinition ownerVariableDefinition)
+	    public override ValueUsageSummary GetMemberVariableDefinition(ValueUsageSummary ownerValueUsageSummary)
 	    {
-		    return ownerVariableDefinition.Fields.TryGetVariableDefinition(fieldName);
+		    return ownerValueUsageSummary.Fields.TryGetMemberUsageSummary(fieldName);
 	    }
 
 	    public override VariableValueStorage GetMemberValue(VariableValueStorage ownerValueStorage)
 	    {
-		    return ownerValueStorage.GetMemberValueStorage(fieldName);
+		    return ownerValueStorage.GetFieldValueStorage(fieldName);
 	    }
     }
 }

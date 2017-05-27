@@ -1,49 +1,35 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Mindbox.Quokka
+﻿namespace Mindbox.Quokka
 {
 	internal class Argument
 	{
-		private readonly IExpression expression;
+		public IExpression Expression { get; }
 
 		public Location Location { get; }
 
 		public Argument(IExpression expression, Location location)
 		{
-			this.expression = expression;
+			Expression = expression;
 			Location = location;
 		}
 
 		public void CompileVariableDefinitions(SemanticAnalysisContext context, TypeDefinition requiredArgumentType)
 		{
-			expression.CompileVariableDefinitions(context, requiredArgumentType);
+			Expression.CompileVariableDefinitions(context, requiredArgumentType);
 		}
 
 		public TypeDefinition GetStaticType(SemanticAnalysisContext context)
 		{
-			return expression.GetResultType(context);
+			return Expression.GetResultType(context);
 		}
 
 		public VariableValueStorage GetValue(RenderContext renderContext)
 		{
-			return expression.Evaluate(renderContext);
+			return Expression.Evaluate(renderContext);
 		}
 
 		public VariableValueStorage TryGetStaticValue()
 		{
-			return expression.TryGetStaticEvaluationResult();
-		}
-
-		public void AnalyzeArgumentValueBasedOnFunctionResultUsages(
-			SemanticAnalysisContext context,
-			VariableDefinition resultDefinition,
-			TemplateFunctionArgument functionArgument)
-		{
-			functionArgument.AnalyzeArgumentValueBasedOnFunctionResultUsages(context, resultDefinition, expression);
+			return Expression.TryGetStaticEvaluationResult();
 		}
 	}
 }

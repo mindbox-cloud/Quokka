@@ -5,8 +5,8 @@ namespace Mindbox.Quokka
 	internal interface ISemanticErrorListener : IErrorListener
 	{
 		void AddInconsistentVariableTypingError(
-			VariableDefinition definition,
-			VariableOccurence faultyOccurence,
+			ValueUsageSummary definition,
+			ValueUsage faultyOccurence,
 			TypeDefinition correctType);
 
 		void AddUndefinedFunctionError(
@@ -39,17 +39,17 @@ namespace Mindbox.Quokka
 			Location location);
 
 		void AddActualTypeNotMatchingDeclaredTypeError(
-			VariableDefinition definition,
+			ValueUsageSummary definition,
 			TypeDefinition actualType,
 			TypeDefinition declaredType,
 			Location location);
 
 		void AddUnexpectedFieldOnCompositeDeclaredTypeError(
-			VariableDefinition definition,
+			ValueUsageSummary definition,
 			Location location);
 
 		void AddVariableDeclarationScopeConflictError(
-			VariableDefinition definition,
+			ValueUsageSummary definition,
 			Location location);
 	}
 }

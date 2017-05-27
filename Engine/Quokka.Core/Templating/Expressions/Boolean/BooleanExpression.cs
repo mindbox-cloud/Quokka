@@ -2,7 +2,7 @@
 
 namespace Mindbox.Quokka
 {
-	internal abstract class BooleanExpressionBase : ExpressionBase, IBooleanExpression
+	internal abstract class BooleanExpression : Expression
 	{
 		public abstract bool GetBooleanValue(RenderContext renderContext);
 

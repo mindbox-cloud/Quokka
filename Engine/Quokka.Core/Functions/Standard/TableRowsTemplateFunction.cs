@@ -166,36 +166,36 @@ namespace Mindbox.Quokka
 
 			internal override void AnalyzeArgumentValueBasedOnFunctionResultUsages(
 				SemanticAnalysisContext context,
-				VariableDefinition resultVariableDefinition,
+				ValueUsageSummary resultValueUsageSummary,
 				IExpression argumentValueExpression)
 			{
-				VariableDefinition argumentVariableDefinition;
+				ValueUsageSummary argumentValueUsageSummary;
 
 				switch (argumentValueExpression)
 				{
 					case VariableValueExpression variableValueExpression:
-						argumentVariableDefinition = variableValueExpression.GetVariableDefinition(context);
+						argumentValueUsageSummary = variableValueExpression.GetVariableDefinition(context);
 						break;
 					case MemberValueExpression memberValueExpression:
-						argumentVariableDefinition = memberValueExpression.GetLeafMemberVariableDefinition(context);
+						argumentValueUsageSummary = memberValueExpression.GetLeafMemberVariableDefinition(context);
 						break;
 					default:
 						// Should probably add some static validation error here
 						return;
 				}
 
-				var cellsField = resultVariableDefinition
+				var cellsField = resultValueUsageSummary
 					.Fields
-					.TryGetVariableDefinition("Cells");
+					.TryGetMemberUsageSummary("Cells");
 
 				if (cellsField != null)
 				{
-					var cellValueUsages = cellsField.CollectionElementVariables
-						.Select(iterator => iterator.Fields.TryGetVariableDefinition("Value"))
+					var cellValueUsages = cellsField.EnumerationResultUsageSummaries
+						.Select(iterator => iterator.Fields.TryGetMemberUsageSummary("Value"))
 						.Where(value => value != null);
 
 					foreach (var cellValueUsage in cellValueUsages)
-						argumentVariableDefinition.AddCollectionElementVariable(cellValueUsage);
+						argumentValueUsageSummary.AddEnumerationResultUsageSummary(cellValueUsage);
 				}
 			}
 		}

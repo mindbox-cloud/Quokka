@@ -2,7 +2,7 @@
 
 namespace Mindbox.Quokka
 {
-	internal class StringComparisonExpression : BooleanExpressionBase
+	internal class StringComparisonExpression : BooleanExpression
 	{
 		private readonly VariantValueExpression variantValueExpression;
 		private readonly StringExpression stringExpression;

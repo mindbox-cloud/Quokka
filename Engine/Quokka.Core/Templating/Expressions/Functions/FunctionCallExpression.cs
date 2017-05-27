@@ -14,11 +14,11 @@ namespace Mindbox.Quokka
 
 	    private readonly IReadOnlyList<Argument> arguments;
 
-		public FunctionCallExpression(string functionName, Location location, IEnumerable<Argument> arguments)
+		public FunctionCallExpression(string functionName, IEnumerable<Argument> arguments, Location location)
 	    {
 			FunctionName = functionName;
-		    Location = location;
 		    this.arguments = arguments.ToList().AsReadOnly();
+			Location = location;
 		}
 
 	    public override TypeDefinition GetResultType(SemanticAnalysisContext context)
@@ -52,7 +52,7 @@ namespace Mindbox.Quokka
 		    return function.Invoke(arguments.Select(arg => arg.GetValue(renderContext)).ToList());
 		}
 
-	    public override void RegisterIterationOverExpressionResult(SemanticAnalysisContext context, VariableDefinition iterationVariable)
+	    public override void RegisterIterationOverExpressionResult(SemanticAnalysisContext context, ValueUsageSummary iterationVariable)
 	    {
 		    var function = TryGetFunctionForSemanticAnalysis(context);
 

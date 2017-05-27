@@ -1,0 +1,22 @@
+﻿using System;
+
+namespace Mindbox.Quokka
+{
+	internal class ValueUsage
+	{
+		public Location Location { get; }
+		public TypeDefinition RequiredType { get; }
+
+		/// <summary>
+		/// Shows if the variable represents a part of external data required to be passed into template.
+		/// First-level external variables go into global scope while internal variables are declared in the inner-most scope.
+		/// </summary>
+		public virtual bool IsExternal => true;
+
+		public ValueUsage(Location location, TypeDefinition requiredType)
+		{ 
+			Location = location;
+			RequiredType = requiredType;
+		}
+	}
+}

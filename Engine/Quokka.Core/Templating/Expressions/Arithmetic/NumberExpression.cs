@@ -1,6 +1,6 @@
 ﻿namespace Mindbox.Quokka
 {
-	internal class NumberExpression : ArithmeticExpressionBase
+	internal class NumberExpression : ArithmeticExpression
 	{
 		private readonly double number;
 
@@ -16,15 +16,15 @@
 			return number;
 		}
 
-		public override bool TryGetStaticValue(out object value)
-		{
-			value = number;
-			return true;
-		}
-
 		public override void CompileVariableDefinitions(SemanticAnalysisContext context)
 		{
 			// This node is constant and therefore can't affect semantic analysis context.
+		}
+		
+		protected override bool TryGetStaticValue(out double value)
+		{
+			value = number;
+			return true;
 		}
 	}
 }

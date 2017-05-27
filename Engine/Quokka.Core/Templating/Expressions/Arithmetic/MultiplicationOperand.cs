@@ -2,28 +2,28 @@
 {
 	internal abstract class MultiplicationOperand
 	{
-		public IArithmeticExpression Expression { get; }
+		public ArithmeticExpression Expression { get; }
 
-		protected MultiplicationOperand(IArithmeticExpression expression)
+		protected MultiplicationOperand(ArithmeticExpression expression)
 		{
 			Expression = expression;
 		}
 
 		public abstract double Calculate(double leftOperand, RenderContext renderContext);
 
-		public static MultiplicationOperand Multiply(IArithmeticExpression expression)
+		public static MultiplicationOperand Multiply(ArithmeticExpression expression)
 		{
 			return new MultOperand(expression);
 		}
 
-		public static MultiplicationOperand Divide(IArithmeticExpression expression)
+		public static MultiplicationOperand Divide(ArithmeticExpression expression)
 		{
 			return new DivOperand(expression);
 		}
 		
 		private class MultOperand : MultiplicationOperand
 		{
-			public MultOperand(IArithmeticExpression expression)
+			public MultOperand(ArithmeticExpression expression)
 				: base(expression)
 			{
 			}
@@ -36,7 +36,7 @@
 
 		private class DivOperand : MultiplicationOperand
 		{
-			public DivOperand(IArithmeticExpression expression)
+			public DivOperand(ArithmeticExpression expression)
 				: base(expression)
 			{
 			}

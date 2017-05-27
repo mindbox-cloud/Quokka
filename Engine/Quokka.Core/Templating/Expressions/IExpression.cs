@@ -15,5 +15,7 @@ namespace Mindbox.Quokka
 	    TypeDefinition GetResultType(SemanticAnalysisContext context);
 
 	    void CompileVariableDefinitions(SemanticAnalysisContext context, TypeDefinition expectedExpressionType);
+
+	    string GetOutputValue(RenderContext context);
     }
 }

@@ -1,6 +1,6 @@
 ﻿namespace Mindbox.Quokka
 {
-	internal class TrueExpression : BooleanExpressionBase
+	internal class TrueExpression : BooleanExpression
 	{
 		public override bool GetBooleanValue(RenderContext renderContext)
 		{

@@ -22,7 +22,11 @@ namespace Mindbox.Quokka
 			throw new InvalidOperationException("This storage can't provide values of this type");
 		}
 
-		public virtual VariableValueStorage GetMemberValueStorage(string memberName)
+		public virtual VariableValueStorage GetFieldValueStorage(string memberName)
+		{
+			throw new InvalidOperationException("This storage type doesn't contain members");
+		}
+		public virtual VariableValueStorage GetMethodCallResultValueStorage(MethodCall methodCall)
 		{
 			throw new InvalidOperationException("This storage type doesn't contain members");
 		}

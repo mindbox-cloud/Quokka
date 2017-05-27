@@ -1,12 +1,12 @@
 ﻿namespace Mindbox.Quokka
 {
-	internal class NegationExpression : ArithmeticExpressionBase
+	internal class NegationExpression : ArithmeticExpression
 	{
-		private readonly IArithmeticExpression innerExpression;
+		private readonly ArithmeticExpression innerExpression;
 
 		public override TypeDefinition Type => innerExpression.Type;
 
-		public NegationExpression(IArithmeticExpression innerExpression)
+		public NegationExpression(ArithmeticExpression innerExpression)
 		{
 			this.innerExpression = innerExpression;
 		}

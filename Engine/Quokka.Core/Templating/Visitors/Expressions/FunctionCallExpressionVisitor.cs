@@ -31,22 +31,13 @@ namespace Mindbox.Quokka
 			if (implicitlyPassedArgument != null)
 				arguments.Add(implicitlyPassedArgument);
 
-
-			var expressionVisitor = new ExpressionVisitor(VisitingContext);
-
 			arguments.AddRange(
-				context
-					.argumentList()
-					.expression()
-					.Select(
-						argumentExpression => new Argument(
-							argumentExpression.Accept(expressionVisitor),
-							GetLocationFromToken(argumentExpression.Start))));
+				context.argumentList().Accept(new ArgumentListVisitor(VisitingContext)));
 
 			return new FunctionCallExpression(
 				functionNameToken.GetText(),
-				GetLocationFromToken(functionNameToken.Symbol),
-				arguments);
+				arguments,
+				GetLocationFromToken(functionNameToken.Symbol));
 		}
 	}
 }

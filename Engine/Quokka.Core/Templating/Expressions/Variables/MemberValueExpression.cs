@@ -32,22 +32,26 @@ namespace Mindbox.Quokka
 
 			for (int i = 0; i < members.Count; i++)
 		    {
-			    var memberType = i == members.Count - 1
+			    bool isLastMember = i == members.Count - 1;
+
+			    var memberType = isLastMember
 									? expectedExpressionType
 									: TypeDefinition.Composite;
 			    
 			    members[i].CompileMemberVariableDefinition(ownerVariableDefinition, memberType);
-			    ownerVariableDefinition = members[i].GetMemberVariableDefinition(ownerVariableDefinition);
+
+			    if (!isLastMember)
+				    ownerVariableDefinition = members[i].GetMemberVariableDefinition(ownerVariableDefinition);
 		    }
 	    }
 
-	    public override void RegisterIterationOverExpressionResult(SemanticAnalysisContext context, VariableDefinition iterationVariable)
+	    public override void RegisterIterationOverExpressionResult(SemanticAnalysisContext context, ValueUsageSummary iterationVariable)
 	    {
 		    var leafMemberVariableDefinition = GetLeafMemberVariableDefinition(context);
-		    leafMemberVariableDefinition.AddCollectionElementVariable(iterationVariable);
+		    leafMemberVariableDefinition.AddEnumerationResultUsageSummary(iterationVariable);
 	    }
 
-	    public VariableDefinition GetLeafMemberVariableDefinition(SemanticAnalysisContext context)
+	    public ValueUsageSummary GetLeafMemberVariableDefinition(SemanticAnalysisContext context)
 	    {
 		    var leafMemberVariableDefinition = ownerExpression.GetVariableDefinition(context);
 

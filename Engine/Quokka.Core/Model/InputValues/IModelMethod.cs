@@ -6,7 +6,12 @@ using System.Threading.Tasks;
 
 namespace Mindbox.Quokka
 {
-    internal abstract class StringExpression : Expression
+    public interface IModelMethod
     {
-    }
+		string Name { get; }
+
+		IReadOnlyList<object> Arguments { get; }
+
+	    IModelValue Value { get; }
+	}
 }

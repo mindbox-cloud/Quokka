@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 
 namespace Mindbox.Quokka
@@ -7,6 +8,7 @@ namespace Mindbox.Quokka
 	internal class CompositeVariableValueStorage : VariableValueStorage
 	{
 		private readonly IDictionary<string, VariableValueStorage> fields;
+		private readonly IDictionary<MethodCall, VariableValueStorage> methods;
 
 		public override IModelValue ModelValue { get; }
 
@@ -23,6 +25,12 @@ namespace Mindbox.Quokka
 					field => field.Name.Trim(),
 					field => field.Value != null ? CreateStorageForValue(field.Value) : null,
 					StringComparer.InvariantCultureIgnoreCase);
+
+			methods = modelValue
+				.Methods
+				.ToDictionary(
+					method => new MethodCall(method.Name, method.Arguments), 
+					method => method.Value != null ? CreateStorageForValue(method.Value) : null);
 		}
 
 		public CompositeVariableValueStorage(string fieldName, VariableValueStorage fieldValueStorage)
@@ -43,12 +51,20 @@ namespace Mindbox.Quokka
 			return fields.ContainsKey(variableName);
 		}
 
-		public override VariableValueStorage GetMemberValueStorage(string memberName)
+		public override VariableValueStorage GetFieldValueStorage(string memberName)
 		{
-			if (fields.TryGetValue(memberName, out VariableValueStorage field))
-				return field;
+			if (fields.TryGetValue(memberName, out VariableValueStorage fieldValue))
+				return fieldValue;
 			else
 				throw new InvalidOperationException($"Member {memberName} not found");
+		}
+
+		public override VariableValueStorage GetMethodCallResultValueStorage(MethodCall methodCall)
+		{
+			if (methods.TryGetValue(methodCall, out VariableValueStorage methodValue))
+				return methodValue;
+			else
+				throw new InvalidOperationException($"Method call result for {methodCall.Name} not found");
 		}
 	}
 }

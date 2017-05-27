@@ -18,13 +18,13 @@ namespace Mindbox.Quokka
 		internal void MapArgumentVariableDefinitionsToResult(
 			SemanticAnalysisContext context, 
 			IReadOnlyList<Argument> arguments,
-			VariableDefinition resultDefinition)
+			ValueUsageSummary resultDefinition)
 		{
 			if (arguments.Count != Arguments.Count)
 				return;
 
 			for (int i = 0; i < arguments.Count; i++)
-				arguments[i].AnalyzeArgumentValueBasedOnFunctionResultUsages(context, resultDefinition, Arguments[i]);
+				Arguments[i].AnalyzeArgumentValueBasedOnFunctionResultUsages(context, resultDefinition, arguments[i].Expression);
 		}
 
 		internal void CompileVariableDefinitions(

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Mindbox.Quokka
 {
-    internal class VariantValueArithmeticExpression : ArithmeticExpressionBase
+    internal class VariantValueArithmeticExpression : ArithmeticExpression
     {
 	    private readonly VariantValueExpression variantValueExpression;
 
