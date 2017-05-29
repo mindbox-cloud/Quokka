@@ -5,14 +5,7 @@ namespace Mindbox.Quokka
 {
 	internal abstract class ArithmeticExpression : Expression
 	{
-		public abstract TypeDefinition Type { get; }
-
 		public abstract double GetValue(RenderContext renderContext);
-
-		public override TypeDefinition GetResultType(AnalysisContext context)
-		{
-			return Type;
-		}
 
 		public abstract void PerformSemanticAnalysis(AnalysisContext context);
 
@@ -20,10 +13,6 @@ namespace Mindbox.Quokka
 			AnalysisContext context,
 			TypeDefinition expectedExpressionType)
 		{
-			/*
-			if (!Type.IsCompatibleWithRequired(expectedExpressionType))
-				throw new InvalidOperationException("Type is not compatible");
-			*/
 			PerformSemanticAnalysis(context);
 		}
 

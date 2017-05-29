@@ -6,15 +6,12 @@ namespace Mindbox.Quokka
 	internal class MultiplicationExpression : ArithmeticExpression
 	{
 		private readonly IReadOnlyCollection<MultiplicationOperand> operands;
-		
-		public override TypeDefinition Type
+
+		public override TypeDefinition GetResultType(AnalysisContext context)
 		{
-			get
-			{
-				return operands.All(op => op.Expression.Type == TypeDefinition.Integer)
-					? TypeDefinition.Integer
-					: TypeDefinition.Decimal;
-			}
+			return operands.All(op => op.Expression.GetResultType(context) == TypeDefinition.Integer)
+						? TypeDefinition.Integer
+						: TypeDefinition.Decimal;
 		}
 
 		public MultiplicationExpression(IEnumerable<MultiplicationOperand> operands)

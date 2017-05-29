@@ -15,7 +15,13 @@ namespace Mindbox.Quokka
 		    this.variantValueExpression = variantValueExpression;
 	    }
 
-	    public override TypeDefinition Type => TypeDefinition.Decimal;
+	    public override TypeDefinition GetResultType(AnalysisContext context)
+	    {
+		    var expressionType = variantValueExpression.GetResultType(context);
+		    return expressionType == TypeDefinition.Unknown 
+				? TypeDefinition.Decimal 
+				: expressionType;
+	    }
 
 	    public override double GetValue(RenderContext renderContext)
 	    {

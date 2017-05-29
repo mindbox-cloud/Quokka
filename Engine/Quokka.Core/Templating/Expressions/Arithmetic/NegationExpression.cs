@@ -3,8 +3,11 @@
 	internal class NegationExpression : ArithmeticExpression
 	{
 		private readonly ArithmeticExpression innerExpression;
-
-		public override TypeDefinition Type => innerExpression.Type;
+		
+		public override TypeDefinition GetResultType(AnalysisContext context)
+		{
+			return innerExpression.GetResultType(context);
+		}
 
 		public NegationExpression(ArithmeticExpression innerExpression)
 		{
