@@ -13,11 +13,6 @@ namespace Mindbox.Quokka
 
 	    private readonly IReadOnlyList<Member> members;
 
-	    public override TypeDefinition GetResultType(AnalysisContext context)
-	    {
-		    return TypeDefinition.Unknown;
-	    }
-
 		public MemberValueExpression(VariableValueExpression ownerExpression, IReadOnlyList<Member> members)
 	    {
 		    this.ownerExpression = ownerExpression;

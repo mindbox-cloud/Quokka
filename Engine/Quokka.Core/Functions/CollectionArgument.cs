@@ -11,7 +11,7 @@ namespace Mindbox.Quokka
 
 		internal override TypeDefinition Type => TypeDefinition.Array;
 
-		internal override ArgumentValueValidationResult ValidateValue(VariableValueStorage value)
+		internal override ArgumentValueValidationResult ValidateConstantValue(VariableValueStorage value)
 		{
 			// Shouldn't be called because this argument couldn't possibly receive a static scalar value known at compile-time
 			throw new NotImplementedException();

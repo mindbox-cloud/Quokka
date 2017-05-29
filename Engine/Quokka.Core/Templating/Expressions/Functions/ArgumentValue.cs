@@ -1,12 +1,12 @@
 ﻿namespace Mindbox.Quokka
 {
-	internal class Argument
+	internal class ArgumentValue
 	{
 		public IExpression Expression { get; }
 
 		public Location Location { get; }
 
-		public Argument(IExpression expression, Location location)
+		public ArgumentValue(IExpression expression, Location location)
 		{
 			Expression = expression;
 			Location = location;

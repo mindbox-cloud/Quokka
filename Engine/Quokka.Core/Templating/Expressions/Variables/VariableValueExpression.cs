@@ -19,11 +19,6 @@ namespace Mindbox.Quokka
 		}
 
 		public string StringRepresentation => variableName;
-
-		public override TypeDefinition GetResultType(AnalysisContext context)
-		{
-			return TypeDefinition.Unknown;
-		}
 		
 		public override void PerformSemanticAnalysis(AnalysisContext context, TypeDefinition expectedExpressionType)
 		{
@@ -50,7 +45,6 @@ namespace Mindbox.Quokka
 
 		public override IModelDefinition GetExpressionResultModelDefinition(AnalysisContext context)
 		{
-			// probably wrong
 			return new PrimitiveModelDefinition(TypeDefinition.Unknown);
 		}
 		

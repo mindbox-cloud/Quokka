@@ -11,14 +11,14 @@ namespace Mindbox.Quokka
 		/// First function argument that is passed to the function implicitly (used when functions are invoked
 		/// via filter chain).
 		/// </summary>
-		private readonly Argument implicitlyPassedArgument;
+		private readonly ArgumentValue implicitlyPassedArgumentValue;
 
 		public FunctionCallExpressionVisitor(
 			VisitingContext visitingContext,
-			Argument implicitlyPassedArgument = null)
+			ArgumentValue implicitlyPassedArgumentValue = null)
 			: base(visitingContext)
 		{
-			this.implicitlyPassedArgument = implicitlyPassedArgument;
+			this.implicitlyPassedArgumentValue = implicitlyPassedArgumentValue;
 		}
 
 		public override FunctionCallExpression VisitFunctionCallExpression(QuokkaParser.FunctionCallExpressionContext context)
@@ -27,9 +27,9 @@ namespace Mindbox.Quokka
 			if (functionNameToken == null)
 				throw new InvalidOperationException("No function name token found");
 
-			var arguments = new List<Argument>();
-			if (implicitlyPassedArgument != null)
-				arguments.Add(implicitlyPassedArgument);
+			var arguments = new List<ArgumentValue>();
+			if (implicitlyPassedArgumentValue != null)
+				arguments.Add(implicitlyPassedArgumentValue);
 
 			arguments.AddRange(
 				context.argumentList().Accept(new ArgumentListVisitor(VisitingContext)));

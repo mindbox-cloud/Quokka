@@ -180,7 +180,7 @@ namespace Mindbox.Quokka
 						argumentValueUsageSummary = memberValueExpression.GetLeafMemberVariableDefinition(context);
 						break;
 					default:
-						// Should probably add some static validation error here
+						// No other known expressions that have an Array result type should exist at the moment.
 						return;
 				}
 

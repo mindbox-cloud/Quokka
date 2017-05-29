@@ -16,7 +16,7 @@ namespace Mindbox.Quokka
 			Name = name;
 		}
 
-		internal abstract ArgumentValueValidationResult ValidateValue(VariableValueStorage value);
+		internal abstract ArgumentValueValidationResult ValidateConstantValue(VariableValueStorage value);
 
 		/// <summary>
 		/// Performs additional semantic analysis on expressions used argument values based on usages

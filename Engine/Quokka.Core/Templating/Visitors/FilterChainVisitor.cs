@@ -13,7 +13,7 @@ namespace Mindbox.Quokka
 
 		public override FunctionCallExpression VisitOutputBlock(QuokkaParser.OutputBlockContext context)
 		{
-			var implicitlyPassedArgument = new Argument(
+			var implicitlyPassedArgument = new ArgumentValue(
 				context.expression().Accept(new ExpressionVisitor(VisitingContext)),
 				GetLocationFromToken(context.expression().Start));
 			
@@ -22,7 +22,7 @@ namespace Mindbox.Quokka
 			foreach (var filter in context.filterChain().functionCallExpression())
 			{
 				latestFilterFunctionCall = filter.Accept(new FunctionCallExpressionVisitor(VisitingContext, implicitlyPassedArgument));
-				implicitlyPassedArgument = new Argument(latestFilterFunctionCall, latestFilterFunctionCall.Location);
+				implicitlyPassedArgument = new ArgumentValue(latestFilterFunctionCall, latestFilterFunctionCall.Location);
 			}
 			
 			return latestFilterFunctionCall;

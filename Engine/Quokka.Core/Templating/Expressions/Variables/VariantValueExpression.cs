@@ -16,5 +16,10 @@ namespace Mindbox.Quokka
 		{
 			return null;
 		}
+
+		public sealed override TypeDefinition GetResultType(AnalysisContext context)
+		{
+			return TypeDefinition.GetTypeDefinitionFromModelDefinition(GetExpressionResultModelDefinition(context));
+		}
 	}
 }

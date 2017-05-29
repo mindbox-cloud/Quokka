@@ -9,10 +9,10 @@ namespace Mindbox.Quokka
     internal class MethodMember : Member
     {
 	    private readonly string name;
-	    private readonly IReadOnlyList<Argument> arguments;
+	    private readonly IReadOnlyList<ArgumentValue> arguments;
 		private readonly Location location;
 
-	    public MethodMember(string name, IEnumerable<Argument> arguments, Location location)
+	    public MethodMember(string name, IEnumerable<ArgumentValue> arguments, Location location)
 	    {
 		    this.name = name;
 		    this.arguments = arguments.ToList().AsReadOnly();

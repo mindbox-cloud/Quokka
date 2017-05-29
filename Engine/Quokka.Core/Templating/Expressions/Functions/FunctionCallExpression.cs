@@ -12,22 +12,14 @@ namespace Mindbox.Quokka
 
 	    public Location Location { get; }
 
-	    private readonly IReadOnlyList<Argument> arguments;
+	    private readonly IReadOnlyList<ArgumentValue> argumentValues;
 
-		public FunctionCallExpression(string functionName, IEnumerable<Argument> arguments, Location location)
+		public FunctionCallExpression(string functionName, IEnumerable<ArgumentValue> argumentValues, Location location)
 	    {
 			FunctionName = functionName;
-		    this.arguments = arguments.ToList().AsReadOnly();
+		    this.argumentValues = argumentValues.ToList().AsReadOnly();
 			Location = location;
 		}
-
-	    public override TypeDefinition GetResultType(AnalysisContext context)
-	    {
-		    var function = TryGetFunctionForSemanticAnalysis(context);
-		    return function != null
-						? TypeDefinition.GetTypeDefinitionFromModelDefinition(function.ReturnValueDefinition)
-						: TypeDefinition.Unknown;
-	    }
 
 	    public override void PerformSemanticAnalysis(AnalysisContext context, TypeDefinition expectedExpressionType)
 	    {
@@ -40,7 +32,7 @@ namespace Mindbox.Quokka
 				    Location);
 
 			var function = TryGetFunctionForSemanticAnalysis(context);
-		    function?.Arguments.PerformSemanticAnalysis(context, arguments, Location);
+		    function?.Arguments.PerformSemanticAnalysis(context, argumentValues, Location);
 		}
 		
 	    public override VariableValueStorage Evaluate(RenderContext renderContext)
@@ -49,7 +41,7 @@ namespace Mindbox.Quokka
 		    if (function == null)
 			    throw new InvalidOperationException($"Function {FunctionName} not found");
 
-		    return function.Invoke(arguments.Select(arg => arg.GetValue(renderContext)).ToList());
+		    return function.Invoke(argumentValues.Select(arg => arg.GetValue(renderContext)).ToList());
 		}
 
 	    public override void RegisterIterationOverExpressionResult(AnalysisContext context, ValueUsageSummary iterationVariable)
@@ -58,19 +50,22 @@ namespace Mindbox.Quokka
 
 		    // We only do this if the template is semantically valid. If not, semantic errors are already handled
 		    // earlier in the workflow.
-		    function?.Arguments.MapArgumentVariableDefinitionsToResult(context, arguments, iterationVariable);
+		    function?.Arguments.AnalyzeArgumentValuesBasedOnFunctionResultUsages(context, argumentValues, iterationVariable);
 		}
 
 	    public override IModelDefinition GetExpressionResultModelDefinition(AnalysisContext context)
 	    {
 			var function = TryGetFunctionForSemanticAnalysis(context);
-		    var arrayModelDefinition = function?.ReturnValueDefinition as IArrayModelDefinition;
-		    return arrayModelDefinition?.ElementModelDefinition;
-		}
+		    if (function == null)
+			    return new PrimitiveModelDefinition(TypeDefinition.Unknown);
+
+		    return function.ReturnValueDefinition;
+	    }
 
 	    public override bool CheckIfExpressionIsNull(RenderContext renderContext)
 	    {
-		    throw new NotImplementedException();
+		    var evaluationResult = Evaluate(renderContext);
+		    return evaluationResult.CheckIfValueIsNull();
 	    }
 		
 	    private TemplateFunction TryGetFunctionForSemanticAnalysis(AnalysisContext context)

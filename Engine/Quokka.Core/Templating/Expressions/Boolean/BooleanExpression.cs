@@ -18,9 +18,6 @@ namespace Mindbox.Quokka
 
 		public sealed override void PerformSemanticAnalysis(AnalysisContext context, TypeDefinition expectedExpressionType)
 		{
-			if (!TypeDefinition.Boolean.IsAssignableTo(expectedExpressionType))
-				throw new InvalidOperationException("Type is not compatible");
-
 			PerformSemanticAnalysis(context);
 		}
 

@@ -286,5 +286,66 @@ namespace Mindbox.Quokka.Tests
 
 			TemplateAssert.AreOutputsEquivalent(expected, result);
 		}
+
+		[TestMethod]
+		public void Render_IfNullComparison_CheckIfFunctionResultIsNotNull_Null()
+		{
+			var template = new DefaultTemplateFactory(new[] { new ReturnNullIfTrueFunction() })
+				.CreateTemplate(@"
+					@{ if ReturnNullIfTrue(A) != null }
+						Not null.
+					@{ else }
+						Null.
+					@{ end if }
+				");
+
+			var result = template.Render(
+				new CompositeModelValue(
+					new ModelField("a", new PrimitiveModelValue(false))));
+
+			var expected = @"				
+					Not null.				
+			";
+
+			TemplateAssert.AreOutputsEquivalent(expected, result);
+		}
+
+		[TestMethod]
+		public void Render_IfNullComparison_CheckIfFunctionResultIsNotNull_NotNull()
+		{
+			var template = new DefaultTemplateFactory(new[] { new ReturnNullIfTrueFunction() })
+				.CreateTemplate(@"
+					@{ if ReturnNullIfTrue(A) != null }
+						Not null.
+					@{ else }
+						Null.
+					@{ end if }
+				");
+
+			var result = template.Render(
+				new CompositeModelValue(
+					new ModelField("a", new PrimitiveModelValue(true))));
+
+			var expected = @"				
+					Null.				
+			";
+
+			TemplateAssert.AreOutputsEquivalent(expected, result);
+		}
+
+		private class ReturnNullIfTrueFunction : ScalarTemplateFunction<bool, string>
+		{
+			public ReturnNullIfTrueFunction()
+				: base(
+					"ReturnNullIfTrue",
+					new BoolFunctionArgument("flag"))
+			{
+			}
+
+			public override string Invoke(bool value)
+			{
+				return value ? null : "";
+			}
+		}
 	}
 }

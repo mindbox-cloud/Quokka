@@ -32,9 +32,14 @@ namespace Mindbox.Quokka
 			enumerableExpression.PerformSemanticAnalysis(context, TypeDefinition.Array);
 			block?.PerformSemanticAnalysis(innerSemanticContext);
 			enumerableExpression.RegisterIterationOverExpressionResult(context, iterationVariableDefinition);
-			
+
+			var enumerableElementModelDefinition =
+				enumerableExpression.GetExpressionResultModelDefinition(context) is IArrayModelDefinition arrayModelDefinition
+					? arrayModelDefinition.ElementModelDefinition
+					: new PrimitiveModelDefinition(TypeDefinition.Unknown);
+
 			iterationVariableDefinition.ValidateAgainstExpectedModelDefinition(
-				enumerableExpression.GetExpressionResultModelDefinition(context),
+				enumerableElementModelDefinition,
 				context.ErrorListener);
 		}
 
