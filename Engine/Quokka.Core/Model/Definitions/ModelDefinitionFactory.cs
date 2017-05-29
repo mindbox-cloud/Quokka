@@ -9,9 +9,11 @@ namespace Mindbox.Quokka
 			return new PrimitiveModelDefinition(type);
 		}
 
-		public ICompositeModelDefinition CreateComposite(IReadOnlyDictionary<string, IModelDefinition> fieldDefinitions)
+		public ICompositeModelDefinition CreateComposite(
+			IReadOnlyDictionary<string, IModelDefinition> fieldDefinitions,
+			IReadOnlyDictionary<IMethodCallDefinition, IModelDefinition> methodDefinitions)
 		{
-			return new CompositeModelDefinition(fieldDefinitions);
+			return new CompositeModelDefinition(fieldDefinitions, methodDefinitions);
 		}
 
 		public IArrayModelDefinition CreateArray(IModelDefinition elementModelDefinition)

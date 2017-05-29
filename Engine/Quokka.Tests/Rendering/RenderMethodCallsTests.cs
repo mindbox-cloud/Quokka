@@ -47,7 +47,7 @@ namespace Mindbox.Quokka
 	    }
 
 	    [TestMethod]
-	    public void Render_MethodCall__MethodNameCaseInsensitivity()
+	    public void Render_MethodCall_MethodNameCaseInsensitivity()
 	    {
 		    var template = new Template("${ Object.BEaweSOME() }");
 

@@ -13,9 +13,19 @@ namespace Mindbox.Quokka
 	    public MethodCall(string name, IReadOnlyList<object> argumentValues)
 	    {
 		    Name = name;
-		    this.argumentValues = argumentValues
-			    .Select(NormalizeValue)
-			    .ToArray();
+		    this.argumentValues = argumentValues;
+	    }
+
+	    public IMethodCallDefinition ToMethodCallDefinition()
+	    {
+		    return new MethodCallDefinition(
+			    Name,
+			    argumentValues
+				    .Select(argumentValue =>
+						    new MethodArgumentDefinition(
+							    TypeDefinition.GetTypeDefinitionByRuntimeType(argumentValue.GetType()),
+							    argumentValue))
+				    .ToArray());
 	    }
 
 	    public bool Equals(MethodCall other)
@@ -32,8 +42,20 @@ namespace Mindbox.Quokka
 			    return false;
 
 		    for (int i = 0; i < argumentValues.Count; i++)
-			    if (!argumentValues[i].Equals(other.argumentValues[i]))
+		    {
+			    var thisValue = argumentValues[i];
+				var otherValue = other.argumentValues[i];
+
+				// Messy, probably should rework this logic
+
+			    if (thisValue is string thisStringValue && otherValue is string otherStringValue)
+			    {
+				    if (!StringComparer.OrdinalIgnoreCase.Equals(thisStringValue, otherStringValue))
+					    return false;
+			    }
+				else if (!argumentValues[i].Equals(other.argumentValues[i]))
 				    return false;
+		    }
 
 		    return true;
 	    }
@@ -52,13 +74,5 @@ namespace Mindbox.Quokka
 	    {
 			return StringComparer.OrdinalIgnoreCase.GetHashCode(Name);
 		}
-
-	    private object NormalizeValue(object value)
-	    {
-		    if (value is string stringValue)
-			    return stringValue.ToLowerInvariant();
-
-		    return value;
-	    }
     }
 }

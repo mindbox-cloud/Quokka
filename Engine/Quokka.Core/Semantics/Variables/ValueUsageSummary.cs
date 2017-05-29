@@ -87,7 +87,18 @@ namespace Mindbox.Quokka
 
 			if (type == TypeDefinition.Composite)
 			{
-				return ConvertCollectionToModelDefinition(Fields, modelDefinitionFactory, errorListener);
+				return modelDefinitionFactory.CreateComposite(
+					new ReadOnlyDictionary<string, IModelDefinition>(
+						Fields.Items
+							.ToDictionary(
+								kvp => kvp.Key,
+								kvp => kvp.Value.ToModelDefinition(modelDefinitionFactory, errorListener),
+								StringComparer.InvariantCultureIgnoreCase)),
+					new ReadOnlyDictionary<IMethodCallDefinition, IModelDefinition>(
+						Methods.Items
+							.ToDictionary(
+								kvp => kvp.Key.ToMethodCallDefinition(),
+								kvp => kvp.Value.ToModelDefinition(modelDefinitionFactory, errorListener))));
 			}
 			else if (type == TypeDefinition.Array)
 			{
@@ -206,7 +217,8 @@ namespace Mindbox.Quokka
 						.ToDictionary(
 							kvp => kvp.Key,
 							kvp => kvp.Value.ToModelDefinition(modelDefinitionFactory, errorListener),
-							StringComparer.InvariantCultureIgnoreCase)));
+							StringComparer.InvariantCultureIgnoreCase)),
+				null);
 		}
 
 		public static ValueUsageSummary Merge(
@@ -220,16 +232,22 @@ namespace Mindbox.Quokka
 					.ToList(),
 				StringComparer.OrdinalIgnoreCase);
 
-			var occurences = definitions.SelectMany(definition => definition.usages);
-			var collectionElementVariables = definitions.SelectMany(definition => definition.enumerationResultUsageSummaries);
+			var methods = MemberCollection<MethodCall>.Merge(
+				resultFullName,
+				definitions
+					.Select(definition => definition.Methods)
+					.ToList(),
+				null);
+
+			var usages = definitions.SelectMany(definition => definition.usages);
+			var enumerationResultUsageSummaries = definitions.SelectMany(definition => definition.enumerationResultUsageSummaries);
 
 			return new ValueUsageSummary(
 				resultFullName,
 				fields,
-				// should be merged also
-				new MemberCollection<MethodCall>(null), 
-				occurences.ToList(),
-				collectionElementVariables.ToList());
+				methods, 
+				usages.ToList(),
+				enumerationResultUsageSummaries.ToList());
 		}
 	}
 }
