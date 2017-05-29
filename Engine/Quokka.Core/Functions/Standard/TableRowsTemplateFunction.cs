@@ -165,7 +165,7 @@ namespace Mindbox.Quokka
 			
 
 			internal override void AnalyzeArgumentValueBasedOnFunctionResultUsages(
-				SemanticAnalysisContext context,
+				AnalysisContext context,
 				ValueUsageSummary resultValueUsageSummary,
 				IExpression argumentValueExpression)
 			{

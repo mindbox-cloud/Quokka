@@ -13,10 +13,10 @@ namespace Mindbox.Quokka
 			this.conditionExpression = conditionExpression;
 		}
 
-		public override void CompileVariableDefinitions(SemanticAnalysisContext context)
+		public override void PerformSemanticAnalysis(AnalysisContext context)
 		{
-			conditionExpression.CompileVariableDefinitions(context);
-			block?.CompileVariableDefinitions(context);
+			conditionExpression.PerformSemanticAnalysis(context);
+			block?.PerformSemanticAnalysis(context);
 		}
 
 		public override void Render(StringBuilder resultBuilder, RenderContext renderContext)

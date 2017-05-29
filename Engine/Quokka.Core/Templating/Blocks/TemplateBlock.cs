@@ -25,10 +25,10 @@ namespace Mindbox.Quokka
 			return new TemplateBlock(Enumerable.Empty<ITemplateNode>());
 		}
 
-		public override void CompileVariableDefinitions(SemanticAnalysisContext context)
+		public override void PerformSemanticAnalysis(AnalysisContext context)
 		{
 			foreach (var child in children)
-				child.CompileVariableDefinitions(context);
+				child.PerformSemanticAnalysis(context);
 		}
 
 		public override void Render(StringBuilder resultBuilder, RenderContext renderContext)

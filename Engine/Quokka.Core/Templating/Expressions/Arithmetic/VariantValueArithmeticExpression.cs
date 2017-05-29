@@ -22,9 +22,9 @@ namespace Mindbox.Quokka
 			return Convert.ToDouble(variantValueExpression.Evaluate(renderContext).GetPrimitiveValue());
 		}
 
-	    public override void CompileVariableDefinitions(SemanticAnalysisContext context)
+	    public override void PerformSemanticAnalysis(AnalysisContext context)
 	    {
-		    variantValueExpression.CompileVariableDefinitions(context, TypeDefinition.Decimal);
+		    variantValueExpression.PerformSemanticAnalysis(context, TypeDefinition.Decimal);
 	    }
     }
 }

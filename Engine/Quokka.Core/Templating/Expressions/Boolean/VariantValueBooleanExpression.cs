@@ -22,9 +22,9 @@ namespace Mindbox.Quokka
 		    return booleanValue;
 	    }
 
-	    public override void CompileVariableDefinitions(SemanticAnalysisContext context)
+	    public override void PerformSemanticAnalysis(AnalysisContext context)
 	    {
-		    variantValueExpression.CompileVariableDefinitions(context, TypeDefinition.Boolean);
+		    variantValueExpression.PerformSemanticAnalysis(context, TypeDefinition.Boolean);
 	    }
     }
 }

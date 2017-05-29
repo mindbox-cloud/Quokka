@@ -6,16 +6,16 @@ using System.Threading.Tasks;
 
 namespace Mindbox.Quokka
 {
-    internal interface IExpression
-    {
+	internal interface IExpression
+	{
 		VariableValueStorage TryGetStaticEvaluationResult();
 
 		VariableValueStorage Evaluate(RenderContext renderContext);
 
-	    TypeDefinition GetResultType(SemanticAnalysisContext context);
+		TypeDefinition GetResultType(AnalysisContext context);
 
-	    void CompileVariableDefinitions(SemanticAnalysisContext context, TypeDefinition expectedExpressionType);
+		void PerformSemanticAnalysis(AnalysisContext context, TypeDefinition expectedExpressionType);
 
-	    string GetOutputValue(RenderContext context);
-    }
+		string GetOutputValue(RenderContext context);
+	}
 }

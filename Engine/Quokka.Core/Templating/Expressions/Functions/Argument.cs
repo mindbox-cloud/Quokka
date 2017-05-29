@@ -12,12 +12,12 @@
 			Location = location;
 		}
 
-		public void CompileVariableDefinitions(SemanticAnalysisContext context, TypeDefinition requiredArgumentType)
+		public void PerformSemanticAnalysis(AnalysisContext context, TypeDefinition requiredArgumentType)
 		{
-			Expression.CompileVariableDefinitions(context, requiredArgumentType);
+			Expression.PerformSemanticAnalysis(context, requiredArgumentType);
 		}
 
-		public TypeDefinition GetStaticType(SemanticAnalysisContext context)
+		public TypeDefinition GetStaticType(AnalysisContext context)
 		{
 			return Expression.GetResultType(context);
 		}

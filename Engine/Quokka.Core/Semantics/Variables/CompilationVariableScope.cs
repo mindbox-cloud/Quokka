@@ -47,7 +47,7 @@ namespace Mindbox.Quokka
 			scope.RegisterVariableValueUsageIgnoringParentScopes(name, valueUsage);
 		}
 
-		public void CheckForChildScopesDeclarationConflicts(SemanticAnalysisContext context)
+		public void CheckForChildScopesDeclarationConflicts(AnalysisContext context)
 		{
 			if (parentScope != null)
 			{

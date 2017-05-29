@@ -4,7 +4,7 @@ namespace Mindbox.Quokka
 	{
 		private readonly string stringValue;
 
-		public override TypeDefinition GetResultType(SemanticAnalysisContext context)
+		public override TypeDefinition GetResultType(AnalysisContext context)
 		{
 			return TypeDefinition.String;
 		}
@@ -14,7 +14,7 @@ namespace Mindbox.Quokka
 			this.stringValue = stringValue;
 		}
 
-		public override void CompileVariableDefinitions(SemanticAnalysisContext context, TypeDefinition expectedExpressionType)
+		public override void PerformSemanticAnalysis(AnalysisContext context, TypeDefinition expectedExpressionType)
 		{
 		}
 

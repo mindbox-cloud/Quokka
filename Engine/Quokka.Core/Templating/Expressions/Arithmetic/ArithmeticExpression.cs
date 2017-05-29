@@ -9,22 +9,22 @@ namespace Mindbox.Quokka
 
 		public abstract double GetValue(RenderContext renderContext);
 
-		public override TypeDefinition GetResultType(SemanticAnalysisContext context)
+		public override TypeDefinition GetResultType(AnalysisContext context)
 		{
 			return Type;
 		}
 
-		public abstract void CompileVariableDefinitions(SemanticAnalysisContext context);
+		public abstract void PerformSemanticAnalysis(AnalysisContext context);
 
-		public sealed override void CompileVariableDefinitions(
-			SemanticAnalysisContext context,
+		public sealed override void PerformSemanticAnalysis(
+			AnalysisContext context,
 			TypeDefinition expectedExpressionType)
 		{
 			/*
 			if (!Type.IsCompatibleWithRequired(expectedExpressionType))
 				throw new InvalidOperationException("Type is not compatible");
 			*/
-			CompileVariableDefinitions(context);
+			PerformSemanticAnalysis(context);
 		}
 
 		protected virtual bool TryGetStaticValue(out double value)

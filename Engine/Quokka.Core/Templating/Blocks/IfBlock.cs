@@ -13,10 +13,10 @@ namespace Mindbox.Quokka
 			this.conditions = conditions.ToList().AsReadOnly();
 		}
 
-		public override void CompileVariableDefinitions(SemanticAnalysisContext context)
+		public override void PerformSemanticAnalysis(AnalysisContext context)
 		{
 			foreach (var condition in conditions)
-				condition.CompileVariableDefinitions(context);
+				condition.PerformSemanticAnalysis(context);
 		}
 
 		public override void Render(StringBuilder resultBuilder, RenderContext renderContext)

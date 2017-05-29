@@ -22,11 +22,11 @@ namespace Mindbox.Quokka.Html
 			uniqueKey = Guid.NewGuid();
 		}
 
-		public override void CompileVariableDefinitions(SemanticAnalysisContext context)
+		public override void PerformSemanticAnalysis(AnalysisContext context)
 		{
 			foreach (var component in hrefValue.TextComponents)
 			{
-				component.CompileVariableDefinitions(context);
+				component.PerformSemanticAnalysis(context);
 			}
 		}
 

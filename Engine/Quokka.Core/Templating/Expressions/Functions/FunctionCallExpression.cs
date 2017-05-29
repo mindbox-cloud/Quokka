@@ -21,7 +21,7 @@ namespace Mindbox.Quokka
 			Location = location;
 		}
 
-	    public override TypeDefinition GetResultType(SemanticAnalysisContext context)
+	    public override TypeDefinition GetResultType(AnalysisContext context)
 	    {
 		    var function = TryGetFunctionForSemanticAnalysis(context);
 		    return function != null
@@ -29,7 +29,7 @@ namespace Mindbox.Quokka
 						: TypeDefinition.Unknown;
 	    }
 
-	    public override void CompileVariableDefinitions(SemanticAnalysisContext context, TypeDefinition expectedExpressionType)
+	    public override void PerformSemanticAnalysis(AnalysisContext context, TypeDefinition expectedExpressionType)
 	    {
 		    var resultType = GetResultType(context);
 		    if (!resultType.IsAssignableTo(expectedExpressionType))
@@ -40,7 +40,7 @@ namespace Mindbox.Quokka
 				    Location);
 
 			var function = TryGetFunctionForSemanticAnalysis(context);
-		    function?.Arguments.CompileVariableDefinitions(context, arguments, Location);
+		    function?.Arguments.PerformSemanticAnalysis(context, arguments, Location);
 		}
 		
 	    public override VariableValueStorage Evaluate(RenderContext renderContext)
@@ -52,7 +52,7 @@ namespace Mindbox.Quokka
 		    return function.Invoke(arguments.Select(arg => arg.GetValue(renderContext)).ToList());
 		}
 
-	    public override void RegisterIterationOverExpressionResult(SemanticAnalysisContext context, ValueUsageSummary iterationVariable)
+	    public override void RegisterIterationOverExpressionResult(AnalysisContext context, ValueUsageSummary iterationVariable)
 	    {
 		    var function = TryGetFunctionForSemanticAnalysis(context);
 
@@ -61,7 +61,7 @@ namespace Mindbox.Quokka
 		    function?.Arguments.MapArgumentVariableDefinitionsToResult(context, arguments, iterationVariable);
 		}
 
-	    public override IModelDefinition GetExpressionResultModelDefinition(SemanticAnalysisContext context)
+	    public override IModelDefinition GetExpressionResultModelDefinition(AnalysisContext context)
 	    {
 			var function = TryGetFunctionForSemanticAnalysis(context);
 		    var arrayModelDefinition = function?.ReturnValueDefinition as IArrayModelDefinition;
@@ -73,7 +73,7 @@ namespace Mindbox.Quokka
 		    throw new NotImplementedException();
 	    }
 		
-	    private TemplateFunction TryGetFunctionForSemanticAnalysis(SemanticAnalysisContext context)
+	    private TemplateFunction TryGetFunctionForSemanticAnalysis(AnalysisContext context)
 	    {
 		    var function = context.Functions.TryGetFunction(FunctionName);
 		    if (function == null)

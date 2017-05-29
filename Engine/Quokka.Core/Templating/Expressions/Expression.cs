@@ -12,9 +12,9 @@ namespace Mindbox.Quokka
 
 		public abstract VariableValueStorage Evaluate(RenderContext renderContext);
 
-		public abstract TypeDefinition GetResultType(SemanticAnalysisContext context);
+		public abstract TypeDefinition GetResultType(AnalysisContext context);
 
-		public abstract void CompileVariableDefinitions(SemanticAnalysisContext context, TypeDefinition expectedExpressionType);
+		public abstract void PerformSemanticAnalysis(AnalysisContext context, TypeDefinition expectedExpressionType);
 
 		public virtual string GetOutputValue(RenderContext renderContext)
 		{

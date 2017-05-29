@@ -16,9 +16,9 @@
 			return -1.0 * innerExpression.GetValue(renderContext);
 		}
 
-		public override void CompileVariableDefinitions(SemanticAnalysisContext context)
+		public override void PerformSemanticAnalysis(AnalysisContext context)
 		{
-			innerExpression.CompileVariableDefinitions(context);
+			innerExpression.PerformSemanticAnalysis(context);
 		}
 	}
 }

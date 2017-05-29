@@ -29,7 +29,7 @@ namespace Mindbox.Quokka
 		/// are designed with strong understanding of implementation details of the templating process.
 		/// </remarks>
 		internal virtual void AnalyzeArgumentValueBasedOnFunctionResultUsages(
-			SemanticAnalysisContext context,
+			AnalysisContext context,
 			ValueUsageSummary resultValueUsageSummary,
 			IExpression argumentValueExpression)
 		{

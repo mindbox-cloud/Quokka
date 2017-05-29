@@ -35,9 +35,9 @@ namespace Mindbox.Quokka
 			}
 		}
 
-		public override void CompileVariableDefinitions(SemanticAnalysisContext context)
+		public override void PerformSemanticAnalysis(AnalysisContext context)
 		{
-			variantValueExpression.CompileVariableDefinitions(context, TypeDefinition.Unknown);
+			variantValueExpression.PerformSemanticAnalysis(context, TypeDefinition.Unknown);
 		}
 	}
 }

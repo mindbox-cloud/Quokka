@@ -17,10 +17,10 @@ namespace Mindbox.Quokka
 			return subExpressions.All(subExpression => subExpression.GetBooleanValue(renderContext));
 		}
 
-		public override void CompileVariableDefinitions(SemanticAnalysisContext context)
+		public override void PerformSemanticAnalysis(AnalysisContext context)
 		{
 			foreach (var subExpression in subExpressions)
-				subExpression.CompileVariableDefinitions(context);
+				subExpression.PerformSemanticAnalysis(context);
 		}
 	}
 }

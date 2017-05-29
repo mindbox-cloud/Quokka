@@ -6,7 +6,7 @@ namespace Mindbox.Quokka
 	{
 		bool IsConstant { get; }
 
-		void CompileVariableDefinitions(SemanticAnalysisContext context);
+		void PerformSemanticAnalysis(AnalysisContext context);
 
 		void Render(StringBuilder resultBuilder, RenderContext renderContext);
 

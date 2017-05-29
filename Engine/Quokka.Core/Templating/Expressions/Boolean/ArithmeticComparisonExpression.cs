@@ -46,10 +46,10 @@ namespace Mindbox.Quokka
 			}
 		}
 
-		public override void CompileVariableDefinitions(SemanticAnalysisContext context)
+		public override void PerformSemanticAnalysis(AnalysisContext context)
 		{
-			left.CompileVariableDefinitions(context);
-			right.CompileVariableDefinitions(context);
+			left.PerformSemanticAnalysis(context);
+			right.PerformSemanticAnalysis(context);
 		}
 	}
 }

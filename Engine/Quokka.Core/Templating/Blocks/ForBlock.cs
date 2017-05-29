@@ -22,15 +22,15 @@ namespace Mindbox.Quokka
 			this.enumerableExpression = enumerableExpression;
 		}
 
-		public override void CompileVariableDefinitions(SemanticAnalysisContext context)
+		public override void PerformSemanticAnalysis(AnalysisContext context)
 		{
 			var innerSemanticContext = context.CreateNestedScopeContext();
 			var iterationVariableDefinition = innerSemanticContext.VariableScope.DeclareVariable(
 				iterationVariableName,
 				new ValueUsage(iterationVariableLocation, TypeDefinition.Unknown));
 
-			enumerableExpression.CompileVariableDefinitions(context, TypeDefinition.Array);
-			block?.CompileVariableDefinitions(innerSemanticContext);
+			enumerableExpression.PerformSemanticAnalysis(context, TypeDefinition.Array);
+			block?.PerformSemanticAnalysis(innerSemanticContext);
 			enumerableExpression.RegisterIterationOverExpressionResult(context, iterationVariableDefinition);
 			
 			iterationVariableDefinition.ValidateAgainstExpectedModelDefinition(

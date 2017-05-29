@@ -6,7 +6,7 @@ namespace Mindbox.Quokka
 	{
 		public virtual bool IsConstant => false;
 
-		public virtual void CompileVariableDefinitions(SemanticAnalysisContext context)
+		public virtual void PerformSemanticAnalysis(AnalysisContext context)
 		{
 		}
 

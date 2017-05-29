@@ -20,12 +20,12 @@ namespace Mindbox.Quokka
 
 		public string StringRepresentation => variableName;
 
-		public override TypeDefinition GetResultType(SemanticAnalysisContext context)
+		public override TypeDefinition GetResultType(AnalysisContext context)
 		{
 			return TypeDefinition.Unknown;
 		}
 		
-		public override void CompileVariableDefinitions(SemanticAnalysisContext context, TypeDefinition expectedExpressionType)
+		public override void PerformSemanticAnalysis(AnalysisContext context, TypeDefinition expectedExpressionType)
 		{
 			context.VariableScope.RegisterVariableValueUsage(
 				variableName,
@@ -34,12 +34,12 @@ namespace Mindbox.Quokka
 					expectedExpressionType));
 		}
 
-		public ValueUsageSummary GetVariableDefinition(SemanticAnalysisContext context)
+		public ValueUsageSummary GetVariableDefinition(AnalysisContext context)
 		{
 			return context.VariableScope.TryGetVariableDefinition(variableName);
 		}
 
-		public override void RegisterIterationOverExpressionResult(SemanticAnalysisContext context, ValueUsageSummary iterationVariable)
+		public override void RegisterIterationOverExpressionResult(AnalysisContext context, ValueUsageSummary iterationVariable)
 		{
 			var existingVariableDefinition = context.VariableScope.TryGetVariableDefinition(variableName);
 			if (existingVariableDefinition == null)
@@ -48,7 +48,7 @@ namespace Mindbox.Quokka
 			existingVariableDefinition.AddEnumerationResultUsageSummary(iterationVariable);
 		}
 
-		public override IModelDefinition GetExpressionResultModelDefinition(SemanticAnalysisContext context)
+		public override IModelDefinition GetExpressionResultModelDefinition(AnalysisContext context)
 		{
 			// probably wrong
 			return new PrimitiveModelDefinition(TypeDefinition.Unknown);

@@ -16,7 +16,7 @@
 			return number;
 		}
 
-		public override void CompileVariableDefinitions(SemanticAnalysisContext context)
+		public override void PerformSemanticAnalysis(AnalysisContext context)
 		{
 			// This node is constant and therefore can't affect semantic analysis context.
 		}

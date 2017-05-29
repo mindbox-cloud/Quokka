@@ -13,7 +13,7 @@ namespace Mindbox.Quokka
 
 	    private readonly IReadOnlyList<Member> members;
 
-	    public override TypeDefinition GetResultType(SemanticAnalysisContext context)
+	    public override TypeDefinition GetResultType(AnalysisContext context)
 	    {
 		    return TypeDefinition.Unknown;
 	    }
@@ -24,9 +24,9 @@ namespace Mindbox.Quokka
 		    this.members = members;
 	    }
 
-	    public override void CompileVariableDefinitions(SemanticAnalysisContext context, TypeDefinition expectedExpressionType)
+	    public override void PerformSemanticAnalysis(AnalysisContext context, TypeDefinition expectedExpressionType)
 	    {
-		    ownerExpression.CompileVariableDefinitions(context, TypeDefinition.Composite);
+		    ownerExpression.PerformSemanticAnalysis(context, TypeDefinition.Composite);
 
 		    var ownerVariableDefinition = ownerExpression.GetVariableDefinition(context);
 
@@ -45,13 +45,13 @@ namespace Mindbox.Quokka
 		    }
 	    }
 
-	    public override void RegisterIterationOverExpressionResult(SemanticAnalysisContext context, ValueUsageSummary iterationVariable)
+	    public override void RegisterIterationOverExpressionResult(AnalysisContext context, ValueUsageSummary iterationVariable)
 	    {
 		    var leafMemberVariableDefinition = GetLeafMemberVariableDefinition(context);
 		    leafMemberVariableDefinition.AddEnumerationResultUsageSummary(iterationVariable);
 	    }
 
-	    public ValueUsageSummary GetLeafMemberVariableDefinition(SemanticAnalysisContext context)
+	    public ValueUsageSummary GetLeafMemberVariableDefinition(AnalysisContext context)
 	    {
 		    var leafMemberVariableDefinition = ownerExpression.GetVariableDefinition(context);
 
@@ -61,7 +61,7 @@ namespace Mindbox.Quokka
 		    return leafMemberVariableDefinition;
 	    }
 
-	    public override IModelDefinition GetExpressionResultModelDefinition(SemanticAnalysisContext context)
+	    public override IModelDefinition GetExpressionResultModelDefinition(AnalysisContext context)
 	    {
 		    return new PrimitiveModelDefinition(TypeDefinition.Unknown);
 	    }

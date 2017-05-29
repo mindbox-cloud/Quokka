@@ -16,7 +16,7 @@ namespace Mindbox.Quokka
 		}
 
 		internal void MapArgumentVariableDefinitionsToResult(
-			SemanticAnalysisContext context, 
+			AnalysisContext context, 
 			IReadOnlyList<Argument> arguments,
 			ValueUsageSummary resultDefinition)
 		{
@@ -27,8 +27,8 @@ namespace Mindbox.Quokka
 				Arguments[i].AnalyzeArgumentValueBasedOnFunctionResultUsages(context, resultDefinition, arguments[i].Expression);
 		}
 
-		internal void CompileVariableDefinitions(
-			SemanticAnalysisContext context, 
+		internal void PerformSemanticAnalysis(
+			AnalysisContext context, 
 			IReadOnlyList<Argument> arguments,
 			Location location)
 		{
@@ -45,7 +45,7 @@ namespace Mindbox.Quokka
 				{
 					var requiredType = GetRequiredType(i);
 					CheckArgument(context, arguments, location, i, requiredType);
-					arguments[i].CompileVariableDefinitions(context, requiredType);
+					arguments[i].PerformSemanticAnalysis(context, requiredType);
 				}
 			}
 		}
@@ -56,7 +56,7 @@ namespace Mindbox.Quokka
 		}
 
 		private void CheckArgument(
-			SemanticAnalysisContext context,
+			AnalysisContext context,
 			IReadOnlyList<Argument> arguments,
 			Location location,
 			int argumentNumber,

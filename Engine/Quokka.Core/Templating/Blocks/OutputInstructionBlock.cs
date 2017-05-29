@@ -17,9 +17,9 @@ namespace Mindbox.Quokka
 			Length = length;
 		}
 
-		public override void CompileVariableDefinitions(SemanticAnalysisContext context)
+		public override void PerformSemanticAnalysis(AnalysisContext context)
 		{
-			expression.CompileVariableDefinitions(context, TypeDefinition.Primitive);
+			expression.PerformSemanticAnalysis(context, TypeDefinition.Primitive);
 		}
 
 		public override void Render(StringBuilder resultBuilder, RenderContext renderContext)

@@ -18,10 +18,10 @@ namespace Mindbox.Quokka
 			this.children = children.ToList().AsReadOnly();
 		}
 
-		public override void CompileVariableDefinitions(SemanticAnalysisContext context)
+		public override void PerformSemanticAnalysis(AnalysisContext context)
 		{
 			foreach (var child in children)
-				child.CompileVariableDefinitions(context);
+				child.PerformSemanticAnalysis(context);
 		}
 
 		public override void Render(StringBuilder resultBuilder, RenderContext renderContext)

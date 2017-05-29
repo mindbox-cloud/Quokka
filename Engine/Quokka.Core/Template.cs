@@ -52,12 +52,12 @@ namespace Mindbox.Quokka
 
 					IsConstant = compiledTemplateTree.IsConstant;
 
-					var analysisContext = new SemanticAnalysisContext
+					var analysisContext = new AnalysisContext
 						(new CompilationVariableScope(),
 						functionRegistry,
 						semanticErrorListener);
 
-					compiledTemplateTree.CompileVariableDefinitions(analysisContext);
+					compiledTemplateTree.PerformSemanticAnalysis(analysisContext);
 					analysisContext.VariableScope.CheckForChildScopesDeclarationConflicts(analysisContext);
 					requiredModelDefinition = ValueUsageSummary.ConvertCollectionToModelDefinition(
 						analysisContext.VariableScope.Variables,

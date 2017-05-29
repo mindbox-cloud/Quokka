@@ -28,10 +28,10 @@ namespace Mindbox.Quokka
 				.Aggregate(0.0, (current, operand) => operand.Calculate(current, renderContext));
 		}
 
-		public override void CompileVariableDefinitions(SemanticAnalysisContext context)
+		public override void PerformSemanticAnalysis(AnalysisContext context)
 		{
 			foreach (var operand in operands)
-				operand.Expression.CompileVariableDefinitions(context);
+				operand.Expression.PerformSemanticAnalysis(context);
 		}
 	}
 }

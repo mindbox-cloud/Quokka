@@ -14,9 +14,9 @@
 			return !inner.GetBooleanValue(renderContext);
 		}
 
-		public override void CompileVariableDefinitions(SemanticAnalysisContext context)
+		public override void PerformSemanticAnalysis(AnalysisContext context)
 		{
-			inner.CompileVariableDefinitions(context);
+			inner.PerformSemanticAnalysis(context);
 		}
 	}
 }
