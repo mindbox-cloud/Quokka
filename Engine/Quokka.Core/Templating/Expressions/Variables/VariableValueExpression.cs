@@ -27,7 +27,7 @@ namespace Mindbox.Quokka
 		
 		public override void CompileVariableDefinitions(SemanticAnalysisContext context, TypeDefinition expectedExpressionType)
 		{
-			context.VariableScope.CreateOrUpdateVariableDefinition(
+			context.VariableScope.RegisterVariableValueUsage(
 				variableName,
 				new ValueUsage(
 					variableLocation,

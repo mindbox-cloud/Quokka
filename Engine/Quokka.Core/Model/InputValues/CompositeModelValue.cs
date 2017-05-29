@@ -10,7 +10,7 @@ namespace Mindbox.Quokka
 		public IEnumerable<IModelMethod> Methods { get; }
 
 		internal CompositeModelValue()
-			:this(Array.Empty<IModelField>(), Array.Empty<IModelMethod>())
+			: this(Enumerable.Empty<IModelField>(), Enumerable.Empty<IModelMethod>())
 		{
 		}
 
@@ -25,11 +25,11 @@ namespace Mindbox.Quokka
 		}
 
 		internal CompositeModelValue(IEnumerable<IModelField> fields)
-			: this(fields, Array.Empty<IModelMethod>())
+			: this(fields, Enumerable.Empty<IModelMethod>())
 		{
 		}
 		internal CompositeModelValue(IEnumerable<IModelMethod> methods)
-			: this(Array.Empty<IModelField>(), methods)
+			: this(Enumerable.Empty<IModelField>(), methods)
 		{
 		}
 
@@ -46,6 +46,5 @@ namespace Mindbox.Quokka
 				.ToList()
 				.AsReadOnly();
 		}
-
 	}
 }

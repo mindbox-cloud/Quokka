@@ -6,7 +6,7 @@ using System.Linq;
 namespace Mindbox.Quokka
 {
 	/// <summary>
-	/// The collection of variables of the same level (can represent a collection of root-level variables in the scope
+	/// The collection of members (can represent a collection of root-level variables in the scope
 	/// or a member collection of a single composite variable).
 	/// </summary>
 	internal class MemberCollection<TMemberKey>
@@ -45,8 +45,8 @@ namespace Mindbox.Quokka
 
 		public ValueUsageSummary TryGetMemberUsageSummary(TMemberKey key)
 		{
-			return items.TryGetValue(key, out ValueUsageSummary definition) 
-				? definition 
+			return items.TryGetValue(key, out ValueUsageSummary usageSummary) 
+				? usageSummary 
 				: null;
 		}
 

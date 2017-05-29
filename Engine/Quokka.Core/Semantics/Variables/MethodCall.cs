@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Mindbox.Quokka
 {
@@ -15,7 +13,9 @@ namespace Mindbox.Quokka
 	    public MethodCall(string name, IReadOnlyList<object> argumentValues)
 	    {
 		    Name = name;
-		    this.argumentValues = argumentValues;
+		    this.argumentValues = argumentValues
+			    .Select(NormalizeValue)
+			    .ToArray();
 	    }
 
 	    public bool Equals(MethodCall other)
@@ -52,5 +52,13 @@ namespace Mindbox.Quokka
 	    {
 			return StringComparer.OrdinalIgnoreCase.GetHashCode(Name);
 		}
+
+	    private object NormalizeValue(object value)
+	    {
+		    if (value is string stringValue)
+			    return stringValue.ToLowerInvariant();
+
+		    return value;
+	    }
     }
 }

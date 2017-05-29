@@ -158,16 +158,16 @@ namespace Mindbox.Quokka
 			StringBuilder errorMessageBuilder)
 		{
 			bool hasErrors = false;
-			if (model.Values == null)
+			if (model.Elements == null)
 			{
 				hasErrors = true;
 				errorMessageBuilder.AppendLine($"{modelPrefix} values collection is null");
 			}
 			else
 			{
-				for (int index = 0; index < model.Values.Count; index++)
+				for (int index = 0; index < model.Elements.Count; index++)
 				{
-					var arrayElementValue = model.Values[index];
+					var arrayElementValue = model.Elements[index];
 					string fullElementName = $"{modelPrefix}[{index}]";
 
 					if (!ValidateValue(requiredModelDefinition.ElementModelDefinition,

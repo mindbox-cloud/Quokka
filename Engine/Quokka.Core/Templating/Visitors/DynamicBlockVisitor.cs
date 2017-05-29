@@ -38,10 +38,8 @@ namespace Mindbox.Quokka
 
 		    return new ForBlock(
 			    context.templateBlock()?.Accept(new TemplateVisitor(VisitingContext)),
-			    new VariableDeclaration(
-				    iterationVariableIdentifier.GetText(),
-				    GetLocationFromToken(iterationVariableIdentifier.Symbol),
-				    TypeDefinition.Unknown),
+			    iterationVariableIdentifier.GetText(),
+			    GetLocationFromToken(iterationVariableIdentifier.Symbol),
 			    forInstruction.variantValueExpression().Accept(new VariantValueExpressionVisitor(VisitingContext)));
 	    }
 

@@ -234,5 +234,57 @@ namespace Mindbox.Quokka.Tests
 
 			Assert.AreEqual(expected.Trim(), result.Trim());
 		}
+
+		[TestMethod]
+		public void Render_IfNullComparison_CheckIfMethodValueNull_Null()
+		{
+			var template = new Template(@"
+				@{ if A.Child.Method() != null }
+					Not null
+				@{ else if A.Child.Method() = null }
+					Null
+				@{ end if }
+			");
+
+			var result = template.Render(
+				new CompositeModelValue(
+					new ModelField("A",
+						new CompositeModelValue(
+							new ModelField("Child",
+								new CompositeModelValue(
+									new ModelMethod("Method", new PrimitiveModelValue(null))))))));
+
+			var expected = @"				
+					Null				
+			";
+
+			TemplateAssert.AreOutputsEquivalent(expected, result);
+		}
+
+		[TestMethod]
+		public void Render_IfNullComparison_CheckIfMethodValueNull_NotNull()
+		{
+			var template = new Template(@"
+				@{ if A.Child.Method() != null }
+					Not null
+				@{ else if A.Child.Method() = null }
+					Null
+				@{ end if }
+			");
+
+			var result = template.Render(
+				new CompositeModelValue(
+					new ModelField("A",
+						new CompositeModelValue(
+							new ModelField("Child",
+								new CompositeModelValue(
+									new ModelMethod("Method", "Andy")))))));
+
+			var expected = @"
+				Not null
+			";
+
+			TemplateAssert.AreOutputsEquivalent(expected, result);
+		}
 	}
 }

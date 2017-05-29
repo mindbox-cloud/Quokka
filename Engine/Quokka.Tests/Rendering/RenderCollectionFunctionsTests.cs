@@ -522,7 +522,7 @@ namespace Mindbox.Quokka.Tests
 
 			try
 			{
-				var result = template.Render(
+				template.Render(
 					new CompositeModelValue(
 						new ModelField(
 							"Collection",

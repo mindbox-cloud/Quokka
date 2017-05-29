@@ -6,21 +6,28 @@ namespace Mindbox.Quokka
 	internal class ForBlock : TemplateNodeBase
 	{
 		private readonly ITemplateNode block;
+		private readonly string iterationVariableName;
+		private readonly Location iterationVariableLocation;
 		private readonly VariantValueExpression enumerableExpression;
-		private readonly VariableDeclaration iterationVariable;
 
-		public ForBlock(ITemplateNode block, VariableDeclaration iterationVariable, VariantValueExpression enumerableExpression)
+		public ForBlock(
+			ITemplateNode block,
+			string iterationVariableName, 
+			Location iterationVariableLocation,
+			VariantValueExpression enumerableExpression)
 		{
 			this.block = block;
-			this.iterationVariable = iterationVariable;
+			this.iterationVariableName = iterationVariableName;
+			this.iterationVariableLocation = iterationVariableLocation;
 			this.enumerableExpression = enumerableExpression;
 		}
 
 		public override void CompileVariableDefinitions(SemanticAnalysisContext context)
 		{
 			var innerSemanticContext = context.CreateNestedScopeContext();
-			var iterationVariableDefinition = innerSemanticContext.VariableScope
-				.DeclareVariable(iterationVariable.Name, iterationVariable);
+			var iterationVariableDefinition = innerSemanticContext.VariableScope.DeclareVariable(
+				iterationVariableName,
+				new ValueUsage(iterationVariableLocation, TypeDefinition.Unknown));
 
 			enumerableExpression.CompileVariableDefinitions(context, TypeDefinition.Array);
 			block?.CompileVariableDefinitions(innerSemanticContext);
@@ -42,7 +49,7 @@ namespace Mindbox.Quokka
 			{
 				var innerScope =
 					renderContext.VariableScope.CreateChildScope(
-						new CompositeVariableValueStorage(iterationVariable.Name, collectionElement));
+						new CompositeVariableValueStorage(iterationVariableName, collectionElement));
 
 				block.Render(resultBuilder, renderContext.CreateInnerContext(innerScope));
 			}

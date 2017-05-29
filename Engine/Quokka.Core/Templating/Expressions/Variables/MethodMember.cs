@@ -21,7 +21,8 @@ namespace Mindbox.Quokka
 
 	    public override void CompileMemberVariableDefinition(ValueUsageSummary ownerValueUsageSummary, TypeDefinition memberType)
 	    {
-		    //throw new NotImplementedException();
+		    ownerValueUsageSummary.Methods
+			    .CreateOrUpdateMember(TryBuildMethodCall(), new ValueUsage(location, memberType));
 	    }
 
 	    public override ValueUsageSummary GetMemberVariableDefinition(ValueUsageSummary ownerValueUsageSummary)

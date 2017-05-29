@@ -74,5 +74,27 @@ namespace Mindbox.Quokka.Tests
 
 			Assert.AreEqual(expected, result);
 		}
+		[TestMethod]
+		public void Render_IfStringComparison_MethodResult_CaseInsensitivity()
+		{
+			var template = new Template(@"
+				@{ if Recipient.GetName() = ""Margaret"" }
+					Correct.
+				@{ end if }
+			");
+
+			var result = template.Render(
+				new CompositeModelValue(
+					new ModelField(
+						"Recipient",
+						new CompositeModelValue(
+							new ModelMethod("GetName", "margaRET")))));
+
+			var expected = @"				
+					Correct.				
+			";
+
+			TemplateAssert.AreOutputsEquivalent(expected, result);
+		}
 	}
 }

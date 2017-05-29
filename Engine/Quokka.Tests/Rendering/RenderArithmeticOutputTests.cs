@@ -145,5 +145,24 @@ namespace Mindbox.Quokka.Tests
 
 			Assert.AreEqual("-8232,64", result);
 		}
+
+		[TestMethod]
+		public void Render_ArithmeticOutput_ArithmeticMethodResults()
+		{
+			// A smoke test
+			var template = new Template("${ Math.Min(32, 16) + Math.Square(6) + Math.DecimalPart() }");
+
+			var result = template.Render(
+				new CompositeModelValue(
+					new ModelField("Math",
+						new CompositeModelValue(
+							new ModelMethod("Min", new object[] { 32, 16 }, 16),
+							new ModelMethod("Square", new object[] { 6 }, 36),
+							new ModelMethod("DecimalPart", 0.45m)
+							))
+					));
+
+			Assert.AreEqual("52,45", result);
+		}
 	}
 }

@@ -32,13 +32,13 @@ namespace Mindbox.Quokka
 		/// <summary>
 		/// Own fields of the value.
 		/// </summary>
-		/// <remarks>Only relevant for composite variables.</remarks>
+		/// <remarks>Only relevant for composite values.</remarks>
 		public MemberCollection<string> Fields { get; }
 
 		/// <summary>
 		/// Own methods of the value.
 		/// </summary>
-		/// <remarks>Only relevant for composite variables.</remarks>
+		/// <remarks>Only relevant for composite values.</remarks>
 		public MemberCollection<MethodCall> Methods { get; }
 
 		public ValueUsageSummary(string fullName)
@@ -121,15 +121,15 @@ namespace Mindbox.Quokka
 
 			var actualType = TypeDefinition.GetResultingTypeForMultipleOccurences(
 				usages,
-				occurence => occurence.RequiredType,
-				(occurence, correctType) => { });
+				occurence => occurence.RequiredType);
+
 			if (actualType == TypeDefinition.Unknown)
 				return;
 
-			ValidateKnownTypeAgaintExpectedModelDefinition(expectedModelDefinition, expectedType, actualType, errorListener);
+			ValidateKnownTypeAgainstExpectedModelDefinition(expectedModelDefinition, expectedType, actualType, errorListener);
 		}
 
-		private void ValidateKnownTypeAgaintExpectedModelDefinition(
+		private void ValidateKnownTypeAgainstExpectedModelDefinition(
 			IModelDefinition expectedModelDefinition,
 			TypeDefinition expectedType,
 			TypeDefinition actualType,

@@ -1,22 +1,33 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Mindbox.Quokka
 {
 	public class ArrayModelValue : IArrayModelValue
 	{
-		public IList<IModelValue> Values { get; }
+		public IList<IModelValue> Elements { get; }
 
-		public ArrayModelValue(params IModelValue[] values)
+		internal ArrayModelValue(params IModelValue[] elements)
+			: this((IEnumerable<IModelValue>)elements)
 		{
-			Values = values
-				.ToList()
-				.AsReadOnly();
 		}
 
-		public ArrayModelValue(IEnumerable<IModelValue> values)
+		public ArrayModelValue(IEnumerable<IModelValue> elements)
+			: this(Enumerable.Empty<IModelField>(), Enumerable.Empty<IModelMethod>(), elements)
 		{
-			Values = values
+		}
+		
+		public ArrayModelValue(
+			IEnumerable<IModelField> fields,
+			IEnumerable<IModelMethod> methods,
+			IEnumerable<IModelValue> elements)
+			//: base(fields, methods)
+		{
+			if (elements == null)
+				throw new ArgumentNullException(nameof(elements));
+
+			Elements = elements
 				.ToList()
 				.AsReadOnly();
 		}

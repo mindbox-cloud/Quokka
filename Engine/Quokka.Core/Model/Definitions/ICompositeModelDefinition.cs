@@ -5,5 +5,6 @@ namespace Mindbox.Quokka
 	public interface ICompositeModelDefinition : IModelDefinition
 	{
 		IReadOnlyDictionary<string, IModelDefinition> Fields { get; }
+		IReadOnlyDictionary<IMethodCallDefinition, IModelDefinition> Methods { get; }
 	}
 }
