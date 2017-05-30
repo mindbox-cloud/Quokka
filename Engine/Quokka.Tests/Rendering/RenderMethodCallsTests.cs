@@ -86,7 +86,7 @@ namespace Mindbox.Quokka
 				    new ModelField(
 					    "Computer",
 					    new CompositeModelValue(
-						    new ModelMethod("Square", new object[] { 1.11m }, 1.2321)))));
+						    new ModelMethod("Square", new object[] { 1.11m }, 1.2321m)))));
 
 		    Assert.AreEqual("1,2321", result);
 		}

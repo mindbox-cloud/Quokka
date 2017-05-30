@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -67,6 +68,38 @@ namespace Mindbox.Quokka
 		}
 
 	    [TestMethod]
+	    public void ModelDiscovery_Method_StringConstantParameter_CaseInsensitivity()
+	    {
+		    var modelDefinition = new Template(@"
+					${ Object.GetValue('rAnDoM cAsInG') }
+					${ Object.GetValue('Random Casing') }
+				")
+			    .GetModelDefinition();
+
+		    TemplateAssert.AreCompositeModelDefinitionsEqual(
+			    new CompositeModelDefinition(
+				    new Dictionary<string, IModelDefinition>
+				    {
+					    {
+						    "Object", new CompositeModelDefinition(
+							    methods: new Dictionary<IMethodCallDefinition, IModelDefinition>
+							    {
+								    {
+									    new MethodCallDefinition(
+										    "GetValue",
+										    new[]
+										    {
+											    new MethodArgumentDefinition(TypeDefinition.String, "rAnDoM cAsInG")
+										    }),
+									    new PrimitiveModelDefinition(TypeDefinition.Primitive)
+								    }
+							    })
+					    }
+				    }),
+			    modelDefinition);
+	    }
+
+		[TestMethod]
 	    public void ModelDiscovery_Method_SingleIntegerConstantParameter()
 	    {
 		    var modelDefinition = new Template("${ Math.Square(5) }")
@@ -154,6 +187,33 @@ namespace Mindbox.Quokka
 		}
 
 	    [TestMethod]
+	    public void ModelDiscovery_Method_ResultIsIntegerExpression()
+	    {
+		    var modelDefinition = new DefaultTemplateFactory(new[] { new IntegerIdentityFunction() })
+			    .CreateTemplate("${ IntegerIdentity(Math.GetIntValue()) }")
+			    .GetModelDefinition();
+
+		    TemplateAssert.AreCompositeModelDefinitionsEqual(
+			    new CompositeModelDefinition(
+				    new Dictionary<string, IModelDefinition>
+				    {
+					    {
+						    "Math", new CompositeModelDefinition(
+							    methods: new Dictionary<IMethodCallDefinition, IModelDefinition>
+							    {
+								    {
+									    new MethodCallDefinition(
+											"GetIntValue",
+										    Array.Empty<IMethodArgumentDefinition>()),
+									    new PrimitiveModelDefinition(TypeDefinition.Integer)
+								    }
+							    })
+					    }
+				    }),
+			    modelDefinition);
+	    }
+
+		[TestMethod]
 	    public void ModelDiscovery_Method_ResultIsBooleanExpression()
 	    {
 		    var modelDefinition = new Template(@"
@@ -210,6 +270,35 @@ namespace Mindbox.Quokka
 		}
 
 	    [TestMethod]
+	    public void ModelDiscovery_Method_ResultIsComposite()
+	    {
+		    var modelDefinition = new Template(
+				@"${ Root.GetObject().Id }")
+			    .GetModelDefinition();
+
+		    TemplateAssert.AreCompositeModelDefinitionsEqual(
+			    new CompositeModelDefinition(
+				    new Dictionary<string, IModelDefinition>
+				    {
+					    {
+						    "Root", new CompositeModelDefinition(
+							    methods: new Dictionary<IMethodCallDefinition, IModelDefinition>
+							    {
+								    {
+									    new MethodCallDefinition("GetObject", Array.Empty<IMethodArgumentDefinition>()),
+									    new CompositeModelDefinition(
+										    new Dictionary<string, IModelDefinition>
+										    {
+											    { "Id", new PrimitiveModelDefinition(TypeDefinition.Primitive) }
+										    })
+								    }
+							    })
+					    }
+				    }),
+			    modelDefinition);
+	    }
+
+		[TestMethod]
 	    public void ModelDiscovery_Method_ResultIsComparedToNull()
 	    {
 		    var modelDefinition = new Template(@"
@@ -236,5 +325,91 @@ namespace Mindbox.Quokka
 				    }),
 			    modelDefinition);
 		}
+
+		[TestMethod]
+	    public void ModelDiscovery_Method_MultipleCallsWithSameParameters()
+	    {
+		    var modelDefinition = new Template(@"
+					${ Items.GetByIndex(5).Value }
+					${ Items.GetByIndex(5).Key }
+				")
+			    .GetModelDefinition();
+
+		    TemplateAssert.AreCompositeModelDefinitionsEqual(
+			    new CompositeModelDefinition(
+				    new Dictionary<string, IModelDefinition>
+				    {
+					    {
+						    "Items", new CompositeModelDefinition(
+							    methods: new Dictionary<IMethodCallDefinition, IModelDefinition>
+							    {
+								    {
+									    new MethodCallDefinition(
+										    "GetByIndex",
+										    new[]
+										    {
+											    new MethodArgumentDefinition(TypeDefinition.Integer, 5)
+										    }),
+									    new CompositeModelDefinition(new Dictionary<string, IModelDefinition>
+									    {
+											{ "Value", new PrimitiveModelDefinition(TypeDefinition.Primitive) },
+											{ "Key", new PrimitiveModelDefinition(TypeDefinition.Primitive) }
+									    })
+								    }
+							    })
+					    }
+				    }),
+			    modelDefinition);
+	    }
+	    [TestMethod]
+	    public void ModelDiscovery_Method_MultipleCallsWithDifferentParameters()
+	    {
+		    var modelDefinition = new Template(@"
+					${ Items.GetByIndex(5).Value }
+					${ Items.GetByIndex(5).Key }
+				")
+			    .GetModelDefinition();
+
+		    TemplateAssert.AreCompositeModelDefinitionsEqual(
+			    new CompositeModelDefinition(
+				    new Dictionary<string, IModelDefinition>
+				    {
+					    {
+						    "Items", new CompositeModelDefinition(
+							    methods: new Dictionary<IMethodCallDefinition, IModelDefinition>
+							    {
+								    {
+									    new MethodCallDefinition(
+										    "GetByIndex",
+										    new[]
+										    {
+											    new MethodArgumentDefinition(TypeDefinition.Integer, 5)
+										    }),
+									    new CompositeModelDefinition(new Dictionary<string, IModelDefinition>
+									    {
+										    { "Value", new PrimitiveModelDefinition(TypeDefinition.Primitive) },
+										    { "Key", new PrimitiveModelDefinition(TypeDefinition.Primitive) }
+									    })
+								    }
+							    })
+					    }
+				    }),
+			    modelDefinition);
+	    }
+
+	    private class IntegerIdentityFunction : ScalarTemplateFunction<int, int>
+	    {
+		    public IntegerIdentityFunction()
+			    : base(
+				    "IntegerIdentity",
+				    new IntegerFunctionArgument("intValue"))
+		    {
+		    }
+
+		    public override int Invoke(int value)
+		    {
+			    return value;
+		    }
+	    }
 	}
 }

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -328,6 +329,89 @@ namespace Mindbox.Quokka.Tests
 							}))
 					}
 				}),
+				model);
+		}
+
+		[TestMethod]
+		public void ModelDiscovery_FunctionTableRows_MethodResultAsCollection_AccessToCellValueFields()
+		{
+			var model = new Template(@"
+				@{ for row in tableRows(Root.GetCollection(), 1) }
+					@{ for cell in row.Cells }
+						${ cell.Value.FirstName }
+						${ cell.Value.LastName }
+						@{ for x in cell.Value.Array }
+							${ x }
+						@{ end for }
+						@{ for x in cell.Value.Array }
+							${ x + 5 }
+						@{ end for }
+					@{ end for }
+				@{ end for }
+
+				@{ for row2 in tableRows(Root.GetCollection(), 1) }
+					@{ for cell2 in row2.Cells }
+						${ cell2.Value.Age + 10 }
+					@{ end for }
+				@{ end for }
+			")
+				.GetModelDefinition();
+
+			TemplateAssert.AreCompositeModelDefinitionsEqual(
+				new CompositeModelDefinition(
+					new Dictionary<string, IModelDefinition>
+					{
+						{
+							"Root",
+							new CompositeModelDefinition(
+								methods: new Dictionary<IMethodCallDefinition, IModelDefinition>
+								{
+									{
+										new MethodCallDefinition("GetCollection", Array.Empty<IMethodArgumentDefinition>()),
+										new ArrayModelDefinition(
+											new CompositeModelDefinition(
+												new Dictionary<string, IModelDefinition>
+												{
+													{ "FirstName", new PrimitiveModelDefinition(TypeDefinition.Primitive) },
+													{ "LastName", new PrimitiveModelDefinition(TypeDefinition.Primitive) },
+													{ "Age", new PrimitiveModelDefinition(TypeDefinition.Decimal) },
+													{ "Array", new ArrayModelDefinition(new PrimitiveModelDefinition(TypeDefinition.Decimal)) }
+												}))
+									}
+								})
+						}
+					}),
+				model);
+		}
+
+		[TestMethod]
+		public void ModelDiscovery_FunctionTableRows_AccessToCellValueMethod()
+		{
+			var model = new Template(@"
+				@{ for row in tableRows(Collection, 1) }
+					@{ for cell in row.Cells }
+						${ cell.Value.GetNumber() + 5 }
+					@{ end for }
+				@{ end for }
+			")
+				.GetModelDefinition();
+
+			TemplateAssert.AreCompositeModelDefinitionsEqual(
+				new CompositeModelDefinition(
+					new Dictionary<string, IModelDefinition>
+					{
+						{
+							"Collection", new ArrayModelDefinition(
+								new CompositeModelDefinition(
+									methods: new Dictionary<IMethodCallDefinition, IModelDefinition>
+									{
+										{
+											new MethodCallDefinition("GetNumber", Array.Empty<IMethodArgumentDefinition>()),
+											new PrimitiveModelDefinition(TypeDefinition.Decimal)
+										}
+									}))
+						}
+					}),
 				model);
 		}
 	}

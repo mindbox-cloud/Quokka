@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
@@ -8,36 +9,45 @@ namespace Mindbox.Quokka
 	{
 		public void ValidateModel(ICompositeModelValue model, ICompositeModelDefinition requiredModelDefinition)
 		{
-			var errorMessageBuilder = new StringBuilder();
-			if (!ValidateCompositeModel(model, requiredModelDefinition, null, errorMessageBuilder))
+			var validationContext = new ValidationContext();
+			ValidateCompositeModel(validationContext, model, requiredModelDefinition, null);
+
+			if (!validationContext.IsValid)
 				throw new InvalidTemplateModelException(
 					"The model doesn't meet template requirements",
-					errorMessageBuilder.ToString());
+					string.Join(Environment.NewLine, validationContext.ErrorMessages));
 		}
 
-		private bool ValidateCompositeModel(
+		private void ValidateCompositeModel(
+			ValidationContext validationContext,
 			ICompositeModelValue model,
 			ICompositeModelDefinition requiredModelDefinition,
-			string modelPrefix,
-			StringBuilder errorMessageBuilder)
+			string modelPrefix)
+		{
+			ValidationCompositeModelFields(validationContext, model, requiredModelDefinition, modelPrefix);
+			ValidationCompositeModelMethods(validationContext, model, requiredModelDefinition, modelPrefix);
+		}
+
+		private void ValidationCompositeModelFields(
+			ValidationContext validationContext,
+			ICompositeModelValue model,
+			ICompositeModelDefinition requiredModelDefinition,
+			string modelPrefix)
 		{
 			var requiredFields = requiredModelDefinition.Fields.OrderBy(kvp => kvp.Key).ToList();
 			var actualFields = model
 				.Fields
 				.ToDictionary(field => field.Name, StringComparer.InvariantCultureIgnoreCase);
 
-			bool hasErrors = false;
 			foreach (var requiredField in requiredFields)
 			{
 				var fieldFullName = modelPrefix == null
-					? requiredField.Key
-					: $"{modelPrefix}.{requiredField.Key}";
+										? requiredField.Key
+										: $"{modelPrefix}.{requiredField.Key}";
 
-				IModelField actualField;
-				if (!actualFields.TryGetValue(requiredField.Key, out actualField))
+				if (!actualFields.TryGetValue(requiredField.Key, out IModelField actualField))
 				{
-					hasErrors = true;
-					errorMessageBuilder.AppendLine($"Field {fieldFullName} not found");
+					validationContext.AddError($"Field {fieldFullName} not found");
 				}
 				else
 				{
@@ -45,26 +55,58 @@ namespace Mindbox.Quokka
 					var actualValue = actualField.Value;
 
 					if (actualValue == null)
-					{
-						hasErrors = true;
-						errorMessageBuilder.AppendLine($"Field {fieldFullName} value is null");
-					}
+						validationContext.AddError($"Field {fieldFullName} value is null");
 					else
-					{
-						if (!ValidateValue(requiredValue, actualValue, fieldFullName, errorMessageBuilder))
-							hasErrors = true;
-					}
+						ValidateValue(validationContext, requiredValue, actualValue, fieldFullName);
 				}
 			}
-
-			return !hasErrors;
 		}
 
-		private bool ValidateValue(
+		private void ValidationCompositeModelMethods(
+			ValidationContext validationContext,
+			ICompositeModelValue model,
+			ICompositeModelDefinition requiredModelDefinition,
+			string modelPrefix)
+		{
+			var requiredMethods = requiredModelDefinition.Methods.ToList();
+			var actualMethods = model
+				.Methods
+				.ToDictionary(method => new MethodCall(method.Name, method.Arguments));
+
+			foreach (var requiredMethod in requiredMethods)
+			{
+				string argumentList = string.Join(", ", requiredMethod.Key.Arguments.Select(arg => $"{arg.Type.Name}: {arg.Value}"));
+				var requiredMethodSignature = $"{requiredMethod.Key.Name}({argumentList})";
+				var methodFullName = modelPrefix == null
+										? requiredMethodSignature
+										: $"{modelPrefix}.{requiredMethodSignature}";
+
+				var requiredMethodCall = new MethodCall(
+					requiredMethod.Key.Name,
+					requiredMethod.Key.Arguments.Select(arg => arg.Value).ToArray());
+
+				if (!actualMethods.TryGetValue(requiredMethodCall, out IModelMethod actualMethod))
+				{
+					validationContext.AddError($"Method call result for {methodFullName} not found");
+				}
+				else
+				{
+					var requiredValue = requiredMethod.Value;
+					var actualValue = actualMethod.Value;
+
+					if (actualValue == null)
+						validationContext.AddError($"Field {methodFullName} value is null");
+					else
+						ValidateValue(validationContext, requiredValue, actualValue, methodFullName);
+				}
+			}
+		}
+
+		private void ValidateValue(
+			ValidationContext validationContext,
 			IModelDefinition requiredValue,
 			IModelValue actualValue,
-			string fieldFullName,
-			StringBuilder errorMessageBuilder)
+			string fieldFullName)
 		{
 			if (requiredValue is IPrimitiveModelDefinition primitiveModelDefinition)
 			{
@@ -72,53 +114,46 @@ namespace Mindbox.Quokka
 				{
 					if (actualValue is IPrimitiveModelValue primitivaActualValue)
 					{
-						return ValidatePrimitiveModel(
+						ValidatePrimitiveModel(
+							validationContext,
 							primitivaActualValue,
 							primitiveModelDefinition,
-							fieldFullName,
-							errorMessageBuilder);
+							fieldFullName);
 					}
 					else
 					{
-						errorMessageBuilder.AppendLine($"Field {fieldFullName} expects a primitive value");
-						return false;
+						validationContext.AddError($"Field {fieldFullName} expects a primitive value");
 					}
-				}
-				else
-				{
-					return true;
 				}
 			}
 			else if (requiredValue is ICompositeModelDefinition compositeRequiredValue)
 			{
 				if (actualValue is ICompositeModelValue compositeActualValue)
 				{
-					return ValidateCompositeModel(
+					ValidateCompositeModel(
+						validationContext,
 						compositeActualValue,
 						compositeRequiredValue,
-						fieldFullName,
-						errorMessageBuilder);
+						fieldFullName);
 				}
 				else
 				{
-					errorMessageBuilder.AppendLine($"Field {fieldFullName} expects a composite value");
-					return false;
+					validationContext.AddError($"Field {fieldFullName} expects a composite value");
 				}
 			}
 			else if (requiredValue is IArrayModelDefinition arrayRequiredValue)
 			{
 				if (actualValue is IArrayModelValue arrayActualValue)
 				{
-					return ValidateArrayModel(
+					ValidateArrayModel(
+						validationContext,
 						arrayActualValue,
 						arrayRequiredValue,
-						fieldFullName,
-						errorMessageBuilder);
+						fieldFullName);
 				}
 				else
 				{
-					errorMessageBuilder.AppendLine($"Field {fieldFullName} expects an array");
-					return false;
+					validationContext.AddError($"Field {fieldFullName} expects an array");
 				}
 			}
 			else
@@ -127,41 +162,34 @@ namespace Mindbox.Quokka
 			}
 		}
 
-		private bool ValidatePrimitiveModel(
+		private void ValidatePrimitiveModel(
+			ValidationContext validationContext,
 			IPrimitiveModelValue model,
 			IPrimitiveModelDefinition requiredModelDefinition,
-			string modelPrefix,
-			StringBuilder errorMessageBuilder)
+			string modelPrefix)
 		{
-			bool hasErrors = false;
-
 			if (model.Value != null)
 			{
 				var actualType = TypeDefinition.GetTypeDefinitionByRuntimeType(model.Value.GetType());
 				if (!actualType.IsAssignableTo(requiredModelDefinition.Type))
 				{
-					hasErrors = true;
-					errorMessageBuilder.AppendLine(
+					validationContext.AddError(
 						$"{modelPrefix} value \"{model.Value}\" is not compatible " +
 						$"with a required type {requiredModelDefinition.Type}");
 				}
 			}
-
-			return !hasErrors;
 		}
 
 
-		private bool ValidateArrayModel(
+		private void ValidateArrayModel(
+			ValidationContext validationContext,
 			IArrayModelValue model,
 			IArrayModelDefinition requiredModelDefinition,
-			string modelPrefix,
-			StringBuilder errorMessageBuilder)
+			string modelPrefix)
 		{
-			bool hasErrors = false;
 			if (model.Elements == null)
 			{
-				hasErrors = true;
-				errorMessageBuilder.AppendLine($"{modelPrefix} values collection is null");
+				validationContext.AddError($"{modelPrefix} values collection is null");
 			}
 			else
 			{
@@ -170,17 +198,25 @@ namespace Mindbox.Quokka
 					var arrayElementValue = model.Elements[index];
 					string fullElementName = $"{modelPrefix}[{index}]";
 
-					if (!ValidateValue(requiredModelDefinition.ElementModelDefinition,
+					ValidateValue(
+						validationContext,
+						requiredModelDefinition.ElementModelDefinition,
 						arrayElementValue,
-						fullElementName,
-						errorMessageBuilder))
-					{
-						hasErrors = true;
-					}
+						fullElementName);
 				}
 			}
+		}
 
-			return !hasErrors;
+		private class ValidationContext
+		{
+			public IList<string> ErrorMessages { get; } = new List<string>();
+
+			public bool IsValid => !ErrorMessages.Any();
+
+			public void AddError(string errorMessage)
+			{
+				ErrorMessages.Add(errorMessage);
+			}
 		}
 	}
 }
