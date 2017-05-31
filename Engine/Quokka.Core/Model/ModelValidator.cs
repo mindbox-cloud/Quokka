@@ -26,6 +26,22 @@ namespace Mindbox.Quokka
 		{
 			ValidationCompositeModelFields(validationContext, model, requiredModelDefinition, modelPrefix);
 			ValidationCompositeModelMethods(validationContext, model, requiredModelDefinition, modelPrefix);
+
+			if (requiredModelDefinition is IArrayModelDefinition arrayRequiredValue)
+			{
+				if (model is IArrayModelValue arrayActualValue)
+				{
+					ValidateArrayModel(
+						validationContext,
+						arrayActualValue,
+						arrayRequiredValue,
+						modelPrefix);
+				}
+				else
+				{
+					validationContext.AddError($"Field {modelPrefix} expects an array");
+				}
+			}
 		}
 
 		private void ValidationCompositeModelFields(
@@ -137,21 +153,6 @@ namespace Mindbox.Quokka
 				else
 				{
 					validationContext.AddError($"Field {fieldFullName} expects a composite value");
-				}
-			}
-			else if (requiredValue is IArrayModelDefinition arrayRequiredValue)
-			{
-				if (actualValue is IArrayModelValue arrayActualValue)
-				{
-					ValidateArrayModel(
-						validationContext,
-						arrayActualValue,
-						arrayRequiredValue,
-						fieldFullName);
-				}
-				else
-				{
-					validationContext.AddError($"Field {fieldFullName} expects an array");
 				}
 			}
 			else

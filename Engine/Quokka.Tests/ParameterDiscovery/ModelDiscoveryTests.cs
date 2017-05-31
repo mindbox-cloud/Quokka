@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -791,6 +792,47 @@ namespace Mindbox.Quokka.Tests
 							new PrimitiveModelDefinition(TypeDefinition.Unknown))
 					}
 				}),
+				model);
+		}
+
+		[TestMethod]
+		public void ModelDiscovery_ForLoop_ArrayContainsFieldsAndMethods()
+		{
+			var model = new Template(@"
+				@{ for element in Offers } 
+					${ element.Date } 
+				@{ end for }
+
+				${ Offers.Count }
+				${ Offers.GetNonEmptyCount() + 10 }
+				")
+				.GetModelDefinition();
+
+			TemplateAssert.AreCompositeModelDefinitionsEqual(
+				new CompositeModelDefinition(
+					new Dictionary<string, IModelDefinition>
+					{
+						{
+							"Offers",
+							new ArrayModelDefinition(
+								new CompositeModelDefinition(
+									new Dictionary<string, IModelDefinition>
+									{
+										{ "Date", new PrimitiveModelDefinition(TypeDefinition.Primitive) }
+									}),
+								fields: new Dictionary<string, IModelDefinition>
+								{
+									{ "Count", new PrimitiveModelDefinition(TypeDefinition.Primitive) }
+								},
+								methods: new Dictionary<IMethodCallDefinition, IModelDefinition>
+								{
+									{
+										new MethodCallDefinition("GetNonEmptyCount", Array.Empty<IMethodArgumentDefinition>()),
+										new PrimitiveModelDefinition(TypeDefinition.Decimal)
+									}
+								})
+						}
+					}),
 				model);
 		}
 	}

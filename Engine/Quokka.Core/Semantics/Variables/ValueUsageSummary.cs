@@ -85,37 +85,46 @@ namespace Mindbox.Quokka
 					occurence,
 					correctType));
 
-			if (type == TypeDefinition.Composite)
+			if (type.IsAssignableTo(TypeDefinition.Composite))
 			{
-				return modelDefinitionFactory.CreateComposite(
-					new ReadOnlyDictionary<string, IModelDefinition>(
-						Fields.Items
-							.ToDictionary(
-								kvp => kvp.Key,
-								kvp => kvp.Value.ToModelDefinition(modelDefinitionFactory, errorListener),
-								StringComparer.InvariantCultureIgnoreCase)),
-					new ReadOnlyDictionary<IMethodCallDefinition, IModelDefinition>(
-						Methods.Items
-							.ToDictionary(
-								kvp => kvp.Key.ToMethodCallDefinition(),
-								kvp => kvp.Value.ToModelDefinition(modelDefinitionFactory, errorListener))));
-			}
-			else if (type == TypeDefinition.Array)
-			{
-				IModelDefinition collectionElementDefinition;
-				if (enumerationResultUsageSummaries.Any())
+				var fields = new ReadOnlyDictionary<string, IModelDefinition>(
+					Fields.Items
+						.ToDictionary(
+							kvp => kvp.Key,
+							kvp => kvp.Value.ToModelDefinition(modelDefinitionFactory, errorListener),
+							StringComparer.InvariantCultureIgnoreCase));
+
+				var methods = new ReadOnlyDictionary<IMethodCallDefinition, IModelDefinition>(
+					Methods.Items
+						.ToDictionary(
+							kvp => kvp.Key.ToMethodCallDefinition(),
+							kvp => kvp.Value.ToModelDefinition(modelDefinitionFactory, errorListener)));
+
+				if (type == TypeDefinition.Array)
 				{
-					collectionElementDefinition = Merge(
-						$"{FullName}[]",
-						enumerationResultUsageSummaries)
-						.ToModelDefinition(modelDefinitionFactory, errorListener);
+					IModelDefinition collectionElementDefinition;
+					if (enumerationResultUsageSummaries.Any())
+					{
+						collectionElementDefinition = Merge(
+								$"{FullName}[]",
+								enumerationResultUsageSummaries)
+							.ToModelDefinition(modelDefinitionFactory, errorListener);
+					}
+					else
+					{
+						collectionElementDefinition = new PrimitiveModelDefinition(TypeDefinition.Unknown);
+					}
+
+					return modelDefinitionFactory.CreateArray(collectionElementDefinition, fields, methods);
+				}
+				else if (type == TypeDefinition.Composite)
+				{
+					return modelDefinitionFactory.CreateComposite(fields, methods);
 				}
 				else
 				{
-					collectionElementDefinition = new PrimitiveModelDefinition(TypeDefinition.Unknown);
+					throw new InvalidOperationException($"Unexpected type {type}");
 				}
-
-				return modelDefinitionFactory.CreateArray(collectionElementDefinition);
 			}
 			else
 				return modelDefinitionFactory.CreatePrimitive(type);

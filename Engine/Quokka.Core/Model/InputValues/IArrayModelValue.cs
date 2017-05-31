@@ -2,7 +2,7 @@
 
 namespace Mindbox.Quokka
 {
-	public interface IArrayModelValue : IModelValue
+	public interface IArrayModelValue : ICompositeModelValue
 	{
 		IList<IModelValue> Elements { get; }
 	}

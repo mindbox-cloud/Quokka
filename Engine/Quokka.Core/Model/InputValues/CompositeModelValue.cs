@@ -35,16 +35,8 @@ namespace Mindbox.Quokka
 
 		public CompositeModelValue(IEnumerable<IModelField> fields, IEnumerable<IModelMethod> methods)
 		{
-			if (fields == null)
-				throw new ArgumentNullException(nameof(fields));
-			if (methods == null)
-				throw new ArgumentNullException(nameof(methods));
-
-			Fields = fields.ToList();
-
-			Methods = methods
-				.ToList()
-				.AsReadOnly();
+			Fields = fields?.ToArray() ?? Array.Empty<IModelField>();
+			Methods = methods?.ToArray() ?? Array.Empty<IModelMethod>();
 		}
 	}
 }

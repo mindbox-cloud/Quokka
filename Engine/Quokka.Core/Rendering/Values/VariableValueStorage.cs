@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.InteropServices.WindowsRuntime;
 
 namespace Mindbox.Quokka
 {
@@ -36,19 +37,17 @@ namespace Mindbox.Quokka
 			if (value == null)
 				throw new ArgumentNullException(nameof(value));
 
-			var primitiveValue = value as IPrimitiveModelValue;
-			if (primitiveValue != null)
-				return new PrimitiveVariableValueStorage(primitiveValue);
-
-			var compositeValue = value as ICompositeModelValue;
-			if (compositeValue != null)
-				return new CompositeVariableValueStorage(compositeValue);
-
-			var arrayValue = value as IArrayModelValue;
-			if (arrayValue != null)
-				return new ArrayVariableValueStorage(arrayValue);
-
-			throw new NotSupportedException("Unsupported parameter value type");
+			switch (value)
+			{
+				case IPrimitiveModelValue primitiveValue:
+					return new PrimitiveVariableValueStorage(primitiveValue);
+				case IArrayModelValue arrayValue:
+					return new ArrayVariableValueStorage(arrayValue);
+				case ICompositeModelValue compositeValue:
+					return new CompositeVariableValueStorage(compositeValue);
+				default:
+					throw new NotSupportedException($"Unsupported parameter value type {value.GetType().Name}");
+			}
 		}
 	}
 }

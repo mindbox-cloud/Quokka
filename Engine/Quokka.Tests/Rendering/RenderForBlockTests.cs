@@ -1,4 +1,7 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using System;
+using System.Collections.Generic;
+
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Mindbox.Quokka.Tests
 {
@@ -267,6 +270,63 @@ namespace Mindbox.Quokka.Tests
 			var expected = @"";
 
 			Assert.AreEqual(expected, result);
+		}
+
+
+
+		[TestMethod]
+		public void Render_ForBlock_IterationOverArrayWithMethods()
+		{
+			var template = new Template(@"
+				@{ for item in Collection }
+					${ item }
+				@{ end for }
+
+				@{ for item in Collection.Take(1) }
+					${ item.Key }
+				@{ end for }
+
+				@{ for item in Collection.ConvertToIntegers() }
+					${ item + 5 }
+				@{ end for }
+			");
+
+			var result = template.Render(
+				new CompositeModelValue(
+					new ModelField(
+						"Collection",
+						new ArrayModelValue(
+							methods: new List<IModelMethod>
+							{
+								new ModelMethod(
+									"Take",
+									new object[] { 1 },
+									new ArrayModelValue(
+										new CompositeModelValue(new ModelField("Key", "One")))),
+								new ModelMethod(
+									"ConvertToIntegers",
+									Array.Empty<object>(),
+									new ArrayModelValue(
+										new PrimitiveModelValue(1),
+										new PrimitiveModelValue(2)))
+							},
+							elements: new List<IModelValue>
+							{
+								new PrimitiveModelValue("One"),
+								new PrimitiveModelValue("Two")
+							}))));
+
+			var expected = @"
+				One
+				Two
+	
+				One
+
+				6
+				7
+			";
+
+			TemplateAssert.AreOutputsEquivalent(expected, result);
 		}
 	}
 }

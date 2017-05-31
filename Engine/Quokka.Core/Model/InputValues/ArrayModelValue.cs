@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace Mindbox.Quokka
 {
-	public class ArrayModelValue : IArrayModelValue
+	public class ArrayModelValue : CompositeModelValue, IArrayModelValue
 	{
 		public IList<IModelValue> Elements { get; }
 
@@ -14,15 +14,15 @@ namespace Mindbox.Quokka
 		}
 
 		public ArrayModelValue(IEnumerable<IModelValue> elements)
-			: this(Enumerable.Empty<IModelField>(), Enumerable.Empty<IModelMethod>(), elements)
+			: this(elements, Enumerable.Empty<IModelField>(), Enumerable.Empty<IModelMethod>())
 		{
 		}
-		
+
 		public ArrayModelValue(
-			IEnumerable<IModelField> fields,
-			IEnumerable<IModelMethod> methods,
-			IEnumerable<IModelValue> elements)
-			//: base(fields, methods)
+			IEnumerable<IModelValue> elements,
+			IEnumerable<IModelField> fields = null,
+			IEnumerable<IModelMethod> methods = null)
+			: base(fields, methods)
 		{
 			if (elements == null)
 				throw new ArgumentNullException(nameof(elements));

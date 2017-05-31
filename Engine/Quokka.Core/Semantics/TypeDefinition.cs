@@ -48,7 +48,7 @@ namespace Mindbox.Quokka
 			Primitive = new TypeDefinition("Primitive", Unknown, 5);
 
 			Composite = new TypeDefinition("Composite", Unknown, 20);
-			Array = new TypeDefinition("Array", Unknown, 50);
+			Array = new TypeDefinition("Array", Composite, 50);
 
 			Boolean = new PrimitiveTypeDefinition<bool>("Boolean", Primitive, 10);
 			Decimal = new PrimitiveTypeDefinition<decimal>("Decimal", Primitive, 15);

@@ -1,6 +1,6 @@
 ﻿namespace Mindbox.Quokka
 {
-	public interface IArrayModelDefinition : IModelDefinition
+	public interface IArrayModelDefinition : ICompositeModelDefinition
 	{
 		IModelDefinition ElementModelDefinition { get; }
 	}

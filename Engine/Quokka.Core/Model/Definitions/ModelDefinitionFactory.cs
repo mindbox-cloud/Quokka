@@ -16,9 +16,12 @@ namespace Mindbox.Quokka
 			return new CompositeModelDefinition(fieldDefinitions, methodDefinitions);
 		}
 
-		public IArrayModelDefinition CreateArray(IModelDefinition elementModelDefinition)
+		public IArrayModelDefinition CreateArray(
+			IModelDefinition elementModelDefinition,
+			IReadOnlyDictionary<string, IModelDefinition> fieldDefinitions = null,
+			IReadOnlyDictionary<IMethodCallDefinition, IModelDefinition> methodDefinitions = null)
 		{
-			return new ArrayModelDefinition(elementModelDefinition);
+			return new ArrayModelDefinition(elementModelDefinition, fieldDefinitions, methodDefinitions);
 		}
 	}
 }
