@@ -23,8 +23,8 @@ namespace Mindbox.Quokka
 			TypeDefinition correctType)
 		{
 			AddError(new SemanticError(
-				$"Параметр \"{definition.FullName}\" не может использоваться как {faultyOccurence.RequiredType}, " +
-				$"так как в других местах он используется как {correctType}",
+				$"Значение \"{definition.FullName}\" не может использоваться как {faultyOccurence.RequiredType}, " +
+				$"так как в других местах оно используется как {correctType}",
 				faultyOccurence.Location));
 		}
 

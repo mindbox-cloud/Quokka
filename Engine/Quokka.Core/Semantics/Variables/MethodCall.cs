@@ -74,5 +74,10 @@ namespace Mindbox.Quokka
 	    {
 			return StringComparer.OrdinalIgnoreCase.GetHashCode(Name);
 		}
+
+	    public override string ToString()
+	    {
+		    return $"{Name}({string.Join(", ", argumentValues)})";
+	    }
     }
 }

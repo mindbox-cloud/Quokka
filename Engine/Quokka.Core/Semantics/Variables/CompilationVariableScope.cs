@@ -17,7 +17,7 @@ namespace Mindbox.Quokka
 		private readonly CompilationVariableScope parentScope;
 		private readonly List<CompilationVariableScope> childScopes = new List<CompilationVariableScope>(); 
 
-		public MemberCollection<string> Variables { get; } = new MemberCollection<string>(StringComparer.OrdinalIgnoreCase);
+		public MemberCollection<string> Variables { get; } = new MemberCollection<string>();
 		
 		public CompilationVariableScope()
 			: this(null)

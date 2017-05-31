@@ -44,8 +44,8 @@ namespace Mindbox.Quokka
 		public ValueUsageSummary(string fullName)
 			: this(
 				  fullName,
-				  new MemberCollection<string>(StringComparer.OrdinalIgnoreCase),
-				  new MemberCollection<MethodCall>(null),
+				  new MemberCollection<string>(),
+				  new MemberCollection<MethodCall>(),
 				  new List<ValueUsage>(),
 				  new List<ValueUsageSummary>())
 		{
@@ -75,7 +75,7 @@ namespace Mindbox.Quokka
 			enumerationResultUsageSummaries.Add(usageSummary);
 		}
 
-		public IModelDefinition ToModelDefinition(ModelDefinitionFactory modelDefinitionFactory, ISemanticErrorListener errorListener)
+		private IModelDefinition ToModelDefinition(ModelDefinitionFactory modelDefinitionFactory, ISemanticErrorListener errorListener)
 		{
 			var type = TypeDefinition.GetResultingTypeForMultipleOccurences(
 				usages,
@@ -157,23 +157,24 @@ namespace Mindbox.Quokka
 		{
 			if (expectedType.IsAssignableTo(actualType))
 			{
-				if (expectedType == TypeDefinition.Composite)
+				if (expectedType.IsAssignableTo(TypeDefinition.Composite))
 				{
 					ValidateAgainstExpectedModelDefinition(
 						(CompositeModelDefinition)expectedModelDefinition,
 						errorListener);
-				}
-				else if (expectedType == TypeDefinition.Array)
-				{
-					if (enumerationResultUsageSummaries.Any())
-					{
-						var mergedCollectionElement = Merge(
-							$"{FullName}[]",
-							enumerationResultUsageSummaries);
 
-						mergedCollectionElement.ValidateAgainstExpectedModelDefinition(
-							((IArrayModelDefinition) expectedModelDefinition).ElementModelDefinition,
-							errorListener);
+					if (expectedType == TypeDefinition.Array)
+					{
+						if (enumerationResultUsageSummaries.Any())
+						{
+							var mergedCollectionElement = Merge(
+								$"{FullName}[]",
+								enumerationResultUsageSummaries);
+
+							mergedCollectionElement.ValidateAgainstExpectedModelDefinition(
+								((IArrayModelDefinition)expectedModelDefinition).ElementModelDefinition,
+								errorListener);
+						}
 					}
 				}
 			}
@@ -238,15 +239,13 @@ namespace Mindbox.Quokka
 				resultFullName,
 				definitions
 					.Select(definition => definition.Fields)
-					.ToList(),
-				StringComparer.OrdinalIgnoreCase);
+					.ToList());
 
 			var methods = MemberCollection<MethodCall>.Merge(
 				resultFullName,
 				definitions
 					.Select(definition => definition.Methods)
-					.ToList(),
-				null);
+					.ToList());
 
 			var usages = definitions.SelectMany(definition => definition.usages);
 			var enumerationResultUsageSummaries = definitions.SelectMany(definition => definition.enumerationResultUsageSummaries);

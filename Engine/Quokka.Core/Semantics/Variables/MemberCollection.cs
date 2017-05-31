@@ -12,11 +12,18 @@ namespace Mindbox.Quokka
 	internal class MemberCollection<TMemberKey>
 		where TMemberKey : IEquatable<TMemberKey>
 	{
+		private static readonly IEqualityComparer<TMemberKey> equalityComparer;
+
+		static MemberCollection()
+		{
+			MemberCollection<string>.equalityComparer = StringComparer.OrdinalIgnoreCase;
+		}
+
 		private readonly Dictionary<TMemberKey, ValueUsageSummary> items;
 
 		public IReadOnlyCollection<KeyValuePair<TMemberKey, ValueUsageSummary>> Items => items;
 
-		public MemberCollection(IEqualityComparer<TMemberKey> equalityComparer)
+		public MemberCollection()
 			: this(new Dictionary<TMemberKey, ValueUsageSummary>(equalityComparer))
 		{
 		}
@@ -52,13 +59,12 @@ namespace Mindbox.Quokka
 
 		public static MemberCollection<TMemberKey> Merge(
 			string ownerFullName, 
-			IEnumerable<MemberCollection<TMemberKey>> collections,
-			IEqualityComparer<TMemberKey> equalityComparer)
+			IEnumerable<MemberCollection<TMemberKey>> collections)
 		{
-			var fields = collections
-				.SelectMany(fieldCollection => fieldCollection.items)
+			var members = collections
+				.SelectMany(collection => collection.items)
 				.GroupBy(
-					field => field.Key,
+					item => item.Key,
 					(name, values) => new
 					{
 						ResultDefinition = ValueUsageSummary.Merge(
@@ -72,7 +78,7 @@ namespace Mindbox.Quokka
 					definition => definition.ResultDefinition,
 					equalityComparer);
 
-			return new MemberCollection<TMemberKey>(fields);
+			return new MemberCollection<TMemberKey>(members);
 		}
 	}
 }
