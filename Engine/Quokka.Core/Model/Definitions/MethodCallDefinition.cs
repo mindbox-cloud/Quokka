@@ -60,6 +60,9 @@ namespace Mindbox.Quokka
 		{
 			return StringComparer.OrdinalIgnoreCase.GetHashCode(Name);
 		}
+
+		public override string ToString() => 
+			$"{Name}({string.Join(", ", Arguments.Select(arg => $"{arg.Type.Name}: {arg.Value}"))})";
 	}
 
 	public interface IMethodArgumentDefinition

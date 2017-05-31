@@ -103,7 +103,8 @@ namespace Mindbox.Quokka
 		}
 
 		protected string DoRender(
-			ICompositeModelValue model, Func<RuntimeVariableScope, FunctionRegistry, RenderContext> renderContextCreator)
+			ICompositeModelValue model,
+			Func<RuntimeVariableScope, FunctionRegistry, RenderContext> renderContextCreator)
 		{
 			try
 			{

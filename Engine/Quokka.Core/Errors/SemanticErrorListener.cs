@@ -106,5 +106,12 @@ namespace Mindbox.Quokka
 				$"Имя переменной \"{definition.FullName}\" конфликтует с другой переменной, объявленной выше или ниже",
 				location));
 		}
+
+		public void AddNonConstantMethodArgumentError(string methodName, int argumentPosition, Location location)
+		{
+			AddError(new SemanticError(
+					$"В метод {methodName} в качестве аргумента под номером {argumentPosition} передано не константное значение",
+					location));
+		}
 	}
 }

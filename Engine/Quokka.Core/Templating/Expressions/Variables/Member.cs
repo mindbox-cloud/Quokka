@@ -8,7 +8,8 @@ namespace Mindbox.Quokka
 {
     internal abstract class Member
     {
-	    public abstract void CompileMemberVariableDefinition(
+	    public abstract void PerformSemanticAnalysis(
+			AnalysisContext analysisContext,
 			ValueUsageSummary ownerValueUsageSummary,
 			TypeDefinition memberType);
 

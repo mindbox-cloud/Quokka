@@ -51,5 +51,10 @@ namespace Mindbox.Quokka
 		void AddVariableDeclarationScopeConflictError(
 			ValueUsageSummary definition,
 			Location location);
+
+		void AddNonConstantMethodArgumentError(
+			string methodName,
+			int argumentPosition,
+			Location location);
 	}
 }

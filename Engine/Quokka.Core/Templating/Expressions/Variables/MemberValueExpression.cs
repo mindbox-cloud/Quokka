@@ -33,7 +33,7 @@ namespace Mindbox.Quokka
 									? expectedExpressionType
 									: TypeDefinition.Composite;
 			    
-			    members[i].CompileMemberVariableDefinition(ownerVariableDefinition, memberType);
+			    members[i].PerformSemanticAnalysis(context, ownerVariableDefinition, memberType);
 
 			    if (!isLastMember)
 				    ownerVariableDefinition = members[i].GetMemberVariableDefinition(ownerVariableDefinition);

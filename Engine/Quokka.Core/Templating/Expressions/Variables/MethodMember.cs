@@ -12,41 +12,47 @@ namespace Mindbox.Quokka
 	    private readonly IReadOnlyList<ArgumentValue> arguments;
 		private readonly Location location;
 
+	    private readonly MethodCall methodCall;
+
 	    public MethodMember(string name, IEnumerable<ArgumentValue> arguments, Location location)
 	    {
 		    this.name = name;
 		    this.arguments = arguments.ToList().AsReadOnly();
 			this.location = location;
+
+		    methodCall = BuildMethodCall();
 	    }
 
-	    public override void CompileMemberVariableDefinition(ValueUsageSummary ownerValueUsageSummary, TypeDefinition memberType)
+	    public override void PerformSemanticAnalysis(AnalysisContext analysisContext, ValueUsageSummary ownerValueUsageSummary, TypeDefinition memberType)
 	    {
+		    for (int i = 0; i < arguments.Count; i++)
+			    if (arguments[i].TryGetStaticValue() == null)
+				    analysisContext.ErrorListener.AddNonConstantMethodArgumentError(name, i + 1, location);
+
 		    ownerValueUsageSummary.Methods
-			    .CreateOrUpdateMember(TryBuildMethodCall(), new ValueUsage(location, memberType));
+			    .CreateOrUpdateMember(methodCall, new ValueUsage(location, memberType));
 	    }
 
 	    public override ValueUsageSummary GetMemberVariableDefinition(ValueUsageSummary ownerValueUsageSummary)
 	    {
-		    return ownerValueUsageSummary.Methods.TryGetMemberUsageSummary(TryBuildMethodCall());
+		    return ownerValueUsageSummary.Methods.TryGetMemberUsageSummary(methodCall);
 	    }
 
 	    public override VariableValueStorage GetMemberValue(VariableValueStorage ownerValueStorage)
 	    {
-		    return ownerValueStorage.GetMethodCallResultValueStorage(TryBuildMethodCall());
+		    return ownerValueStorage.GetMethodCallResultValueStorage(methodCall);
 	    }
 
 	    public override string StringRepresentation => $"{name}()";
 
-	    private MethodCall TryBuildMethodCall()
+	    private MethodCall BuildMethodCall()
 	    {
 		    var argumentValues = arguments
 			    .Select(argument => argument.TryGetStaticValue()?.GetPrimitiveValue())
+				.Where(argumentValue => argumentValue != null)
 			    .ToList();
 
-			if (argumentValues.Any(value => value == null))
-				throw new InvalidOperationException("Incorrect value. Must be static.");
-
-			return new MethodCall(name, argumentValues);
+		    return new MethodCall(name, argumentValues);
 	    }
     }
 }

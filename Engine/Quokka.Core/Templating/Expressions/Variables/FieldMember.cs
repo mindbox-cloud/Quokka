@@ -20,10 +20,9 @@ namespace Mindbox.Quokka
 
 	    public override string StringRepresentation => fieldName;
 
-		public override void CompileMemberVariableDefinition(ValueUsageSummary ownerValueUsageSummary, TypeDefinition memberType)
+		public override void PerformSemanticAnalysis(AnalysisContext analysisContext, ValueUsageSummary ownerValueUsageSummary, TypeDefinition memberType)
 	    {
-		    ownerValueUsageSummary.Fields
-			    .CreateOrUpdateMember(fieldName, new ValueUsage(location, memberType));
+		    ownerValueUsageSummary.Fields.CreateOrUpdateMember(fieldName, new ValueUsage(location, memberType));
 	    }
 
 	    public override ValueUsageSummary GetMemberVariableDefinition(ValueUsageSummary ownerValueUsageSummary)

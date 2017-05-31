@@ -75,11 +75,9 @@ namespace Mindbox.Quokka
 
 			foreach (var requiredMethod in requiredMethods)
 			{
-				string argumentList = string.Join(", ", requiredMethod.Key.Arguments.Select(arg => $"{arg.Type.Name}: {arg.Value}"));
-				var requiredMethodSignature = $"{requiredMethod.Key.Name}({argumentList})";
 				var methodFullName = modelPrefix == null
-										? requiredMethodSignature
-										: $"{modelPrefix}.{requiredMethodSignature}";
+										? requiredMethod.Key.ToString()
+										: $"{modelPrefix}.{requiredMethod.Key}";
 
 				var requiredMethodCall = new MethodCall(
 					requiredMethod.Key.Name,
