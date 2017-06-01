@@ -8,7 +8,7 @@ namespace Mindbox.Quokka
 	{
 		public IList<IModelValue> Elements { get; }
 
-		internal ArrayModelValue(params IModelValue[] elements)
+		public ArrayModelValue(params IModelValue[] elements)
 			: this((IEnumerable<IModelValue>)elements)
 		{
 		}
