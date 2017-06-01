@@ -22,7 +22,7 @@ namespace Mindbox.Quokka.Html
 		public override ITemplateNode VisitInsideAttributeOutputBlock(QuokkaHtml.InsideAttributeOutputBlockContext context)
 		{
 			int offset = context.Start.StartIndex;
-			return parsingContext.PreparsedOutputBlockNodes[offset];
+			return ParsingContext.PreparsedOutputBlockNodes[offset];
 		}
 	}
 }

@@ -1,9 +1,12 @@
 grammar Quokka;
 options { tokenVocab = QuokkaLex; }
 
+// basic template structure
+
 template
 	:
-		templateBlock*
+		templateBlock?
+		EOF
 	;
 
 templateBlock
@@ -25,70 +28,13 @@ constantBlock
 	:
 		Fluff+
 	;
-
-outputBlock
+		
+commentBlock
 	:
-		OutputInstructionStart
-		expression
-		filterChain?
-		InstructionEnd
-	;
-	
-parameterValueExpression
-	:
-		parameterExpression
-		memberAccessExpression?
+		SingleInstructionComment
 	;
 
-parameterExpression
-	:
-		Identifier
-	;
-	
-memberAccessExpression
-	:
-		MemberAccessOperator
-		Identifier
-		memberAccessExpression?
-	;
-	
-filterChain
-	:
-		(
-			Pipe
-			functionCall
-		)+
-	;
-	
-functionCall
-	:
-		(Identifier | If)
-		functionArgumentList
-	;
-
-functionArgumentList
-	:	
-		LeftParen
-		(
-			expression
-			(CommaSeparator expression)*
-		)?		
-		RightParen
-	;
-
-expression
-	:
-		stringConstant
-		| parameterValueExpression 
-		| functionCall
-		| booleanExpression 
-		| arithmeticExpression
-	;
-	
-stringConstant
-	:
-		DoubleQuotedString | SingleQuotedString
-	;
+// Conditional statement
 
 ifStatement
 	:
@@ -146,6 +92,8 @@ endIfInstruction
 		InstructionEnd
 	;
 
+// Loop statement	
+
 forStatement
 	:
 		forInstruction
@@ -159,7 +107,7 @@ forInstruction
 		For	
 		iterationVariable 
 		In 
-		(parameterValueExpression | functionCall)
+		variantValueExpression
 		InstructionEnd
 	;
 	
@@ -175,11 +123,108 @@ endForInstruction
 		InstructionEnd
 	;
 
-commentBlock
+// Output instructions
+
+outputBlock
 	:
-		SingleInstructionComment
+		OutputInstructionStart
+		expression
+		filterChain?
+		InstructionEnd
+	;
+		
+filterChain
+	:
+		(
+			Pipe
+			functionCallExpression
+		)+
+	;	
+
+// Expressions
+
+expression
+	:		
+		variantValueExpression
+		| stringExpression
+		| booleanExpression 
+		| arithmeticExpression
+	;	
+
+variantValueExpression
+	:
+		rootVariantValueExpression 
+		| memberValueExpression		
 	;
 	
+rootVariantValueExpression
+	:
+		variableValueExpression	
+		| functionCallExpression
+	;
+
+variableValueExpression
+	:
+		Identifier
+	;
+	
+memberValueExpression
+	:
+		variableValueExpression
+		(
+			MemberAccessOperator
+			member
+		)+
+	;
+	
+member
+	:
+		field | methodCall
+	;
+	
+field
+	:
+		Identifier
+	;
+
+// Functions and methods
+
+methodCall
+	:
+		Identifier
+		argumentList
+	;
+
+functionCallExpression
+	:
+		(Identifier | If)
+		argumentList
+	;
+
+argumentList
+	:	
+		LeftParen
+		(
+			expression
+			(CommaSeparator expression)*
+		)?		
+		RightParen
+	;
+
+// String expressions
+
+stringExpression
+	:
+		stringConstant
+	;	
+	
+stringConstant
+	:
+		DoubleQuotedString | SingleQuotedString
+	;
+
+// Boolean expressions
+
 booleanExpression
 	:
 		andExpression
@@ -201,28 +246,17 @@ parenthesizedBooleanExpression
 	:
 		LeftParen booleanExpression RightParen	
 	;
-	
-booleanAtom
-	:
-		parameterValueExpression
-		| arithmeticComparisonExpression
-		| nullComparisonExpression
-		| stringComparisonExpression	
-		| notExpression
-		| parenthesizedBooleanExpression
-		| functionCall
-	;
 
 stringComparisonExpression
 	:
-		parameterValueExpression
+		variantValueExpression
 		(Equals | NotEquals)
-		stringConstant
+		stringExpression
 	;
 	
 nullComparisonExpression
 	:
-		parameterValueExpression
+		variantValueExpression
 		(Equals | NotEquals)
 		Null
 	;
@@ -233,6 +267,18 @@ arithmeticComparisonExpression
 		(Equals | NotEquals | LessThan | GreaterThan | LessThanOrEquals | GreaterThanOrEquals)
 		arithmeticExpression
 	;
+	
+booleanAtom
+	:
+		variantValueExpression
+		| notExpression
+		| parenthesizedBooleanExpression
+		| stringComparisonExpression
+		| nullComparisonExpression	
+		| arithmeticComparisonExpression		
+	;
+
+// Arithmetic expressions
 
 arithmeticExpression
 	:
@@ -272,11 +318,15 @@ negationExpression
 		arithmeticAtom
 	;
 	
+parenthesizedArithmeticExpression
+	:
+		LeftParen arithmeticExpression RightParen	
+	;
+	
 arithmeticAtom
 	:
 		Number
-		| parameterValueExpression
+		| variantValueExpression
 		| negationExpression
-		| functionCall
-		| LeftParen arithmeticExpression RightParen	
+		| parenthesizedArithmeticExpression
 	;

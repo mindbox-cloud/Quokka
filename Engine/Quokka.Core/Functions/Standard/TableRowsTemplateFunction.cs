@@ -162,24 +162,40 @@ namespace Mindbox.Quokka
 				: base(name)
 			{
 			}
+			
 
-			internal override void MapArgumentValueToResult(
-				SemanticAnalysisContext context,
-				VariableDefinition resultDefinition,
-				VariableDefinition argumentVariableDefinition)
+			internal override void AnalyzeArgumentValueBasedOnFunctionResultUsages(
+				AnalysisContext context,
+				ValueUsageSummary resultValueUsageSummary,
+				IExpression argumentValueExpression)
 			{
-				var cellsField = resultDefinition
+				ValueUsageSummary argumentValueUsageSummary;
+
+				switch (argumentValueExpression)
+				{
+					case VariableValueExpression variableValueExpression:
+						argumentValueUsageSummary = variableValueExpression.GetVariableDefinition(context);
+						break;
+					case MemberValueExpression memberValueExpression:
+						argumentValueUsageSummary = memberValueExpression.GetLeafMemberVariableDefinition(context);
+						break;
+					default:
+						// No other known expressions that have an Array result type should exist at the moment.
+						return;
+				}
+
+				var cellsField = resultValueUsageSummary
 					.Fields
-					.TryGetVariableDefinition("Cells");
+					.TryGetMemberUsageSummary("Cells");
 
 				if (cellsField != null)
 				{
-					var a = cellsField.CollectionElementVariables
-						.Select(iterator => iterator.Fields.TryGetVariableDefinition("Value"))
+					var cellValueUsages = cellsField.EnumerationResultUsageSummaries
+						.Select(iterator => iterator.Fields.TryGetMemberUsageSummary("Value"))
 						.Where(value => value != null);
 
-					foreach (var cellUsage in a)
-						argumentVariableDefinition.AddCollectionElementVariable(cellUsage);
+					foreach (var cellValueUsage in cellValueUsages)
+						argumentValueUsageSummary.AddEnumerationResultUsageSummary(cellValueUsage);
 				}
 			}
 		}

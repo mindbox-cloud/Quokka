@@ -3,7 +3,7 @@
     <TargetFramework>net462</TargetFramework>
     <NoWarn>1701;1702;1705;3021</NoWarn>
     <Company>Mindbox</Company>
-    <Version>1.1.1</Version>
+    <Version>2.0.0-beta1</Version>
     <Product>Quokka template engine</Product>
     <Description>String templating library</Description>
     <Copyright>Mindbox 2017</Copyright>
@@ -16,9 +16,12 @@
   </PropertyGroup>
   <ItemGroup>
     <None Remove="**\*.nuspec" />
-    <None Remove="Generated\*.tokens" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Antlr4.Runtime.Standard" Version="4.7.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Generated\" />
+    <Folder Include="Html\Generated\" />
   </ItemGroup>
 </Project>

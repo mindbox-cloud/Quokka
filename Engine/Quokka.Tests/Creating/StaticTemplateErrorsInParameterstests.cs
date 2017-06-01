@@ -17,5 +17,17 @@ namespace Mindbox.Quokka.Tests
 				${ A }
 			");
 		}
+		[TestMethod]
+		[ExpectedException(typeof(TemplateContainsErrorsException))]
+		public void CreateTemplate_LoopVariableHidesVariableFromOuterScope_Error()
+		{
+			new Template(@"
+				@{ for a in Array }
+					@{ for a in Array }
+						Nothing
+					@{ end for }
+				@{ end for }
+			");
+		}
 	}
 }

@@ -14,9 +14,9 @@
 
 		internal override TypeDefinition Type => argument.Type;
 
-		internal override ArgumentValueValidationResult ValidateValue(VariableValueStorage value)
+		internal override ArgumentValueValidationResult ValidateConstantValue(VariableValueStorage value)
 		{
-			return argument.ValidateValue(value);
+			return argument.ValidateConstantValue(value);
 		}
 
 		internal TType ConvertValue(VariableValueStorage value)

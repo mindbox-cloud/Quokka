@@ -48,19 +48,19 @@ namespace Mindbox.Quokka
 						syntaxErrorListener,
 						staticBlockVisitorCreator ?? (context => new StaticBlockVisitor(context)));
 
-					compiledTemplateTree = new RootTemplateVisitor(visitingContext).Visit(templateParseTree) 
-						?? TemplateBlock.Empty();
+					compiledTemplateTree = new RootTemplateVisitor(visitingContext).Visit(templateParseTree);
 
 					IsConstant = compiledTemplateTree.IsConstant;
 
-					var analysisContext = new SemanticAnalysisContext
+					var analysisContext = new AnalysisContext
 						(new CompilationVariableScope(),
 						functionRegistry,
 						semanticErrorListener);
-					compiledTemplateTree.CompileVariableDefinitions(analysisContext);
+
+					compiledTemplateTree.PerformSemanticAnalysis(analysisContext);
 					analysisContext.VariableScope.CheckForChildScopesDeclarationConflicts(analysisContext);
-					requiredModelDefinition = analysisContext.VariableScope.Variables.ToModelDefinition(
-						new ModelDefinitionFactory(),
+					requiredModelDefinition = ValueUsageSummary.ConvertCollectionToModelDefinition(
+						analysisContext.VariableScope.Variables,
                         semanticErrorListener);
 				}
 
@@ -102,7 +102,8 @@ namespace Mindbox.Quokka
 		}
 
 		protected string DoRender(
-			ICompositeModelValue model, Func<RuntimeVariableScope, FunctionRegistry, RenderContext> renderContextCreator)
+			ICompositeModelValue model,
+			Func<RuntimeVariableScope, FunctionRegistry, RenderContext> renderContextCreator)
 		{
 			try
 			{
@@ -127,11 +128,6 @@ namespace Mindbox.Quokka
 		protected void CompileGrammarSpecificData(GrammarSpecificDataAnalysisContext context)
 		{
 			compiledTemplateTree.CompileGrammarSpecificData(context);
-		}
-
-		protected virtual RenderContext CreateRenderContext(RuntimeVariableScope scope, FunctionRegistry contextFunctionRegistry)
-		{
-			return new RenderContext(scope, contextFunctionRegistry);
 		}
 
 		private QuokkaParser.TemplateContext ParseTemplateText(string templateText, SyntaxErrorListener syntaxErrorListener)

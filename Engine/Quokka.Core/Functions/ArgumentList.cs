@@ -15,20 +15,21 @@ namespace Mindbox.Quokka
 			Arguments = arguments.ToList();
 		}
 
-		internal void MapArgumentVariableDefinitionsToResult(
-			SemanticAnalysisContext context, 
-			IReadOnlyList<IFunctionArgument> arguments,
-			VariableDefinition resultDefinition)
+		internal void AnalyzeArgumentValuesBasedOnFunctionResultUsages(
+			AnalysisContext context, 
+			IReadOnlyList<ArgumentValue> argumentValues,
+			ValueUsageSummary resultDefinition)
 		{
-			if (arguments.Count != Arguments.Count)
+			if (argumentValues.Count != Arguments.Count)
 				return;
-			for (int i = 0; i < arguments.Count; i++)
-				arguments[i].MapArgumentVariableDefinitionsToResult(context, resultDefinition, Arguments[i]);
+
+			for (int i = 0; i < argumentValues.Count; i++)
+				Arguments[i].AnalyzeArgumentValueBasedOnFunctionResultUsages(context, resultDefinition, argumentValues[i].Expression);
 		}
 
-		internal void CompileVariableDefinitions(
-			SemanticAnalysisContext context, 
-			IReadOnlyList<IFunctionArgument> arguments,
+		internal void PerformSemanticAnalysis(
+			AnalysisContext context, 
+			IReadOnlyList<ArgumentValue> arguments,
 			Location location)
 		{
 			if (!CheckArgumentNumber(arguments))
@@ -44,27 +45,27 @@ namespace Mindbox.Quokka
 				{
 					var requiredType = GetRequiredType(i);
 					CheckArgument(context, arguments, location, i, requiredType);
-					arguments[i].CompileVariableDefinitions(context, requiredType);
+					arguments[i].PerformSemanticAnalysis(context, requiredType);
 				}
 			}
 		}
 
-		internal virtual bool CheckArgumentNumber(IReadOnlyList<IFunctionArgument> arguments)
+		internal virtual bool CheckArgumentNumber(IReadOnlyList<ArgumentValue> arguments)
 		{
 			return Arguments.Count == arguments.Count;
 		}
 
 		private void CheckArgument(
-			SemanticAnalysisContext context,
-			IReadOnlyList<IFunctionArgument> arguments,
+			AnalysisContext context,
+			IReadOnlyList<ArgumentValue> arguments,
 			Location location,
 			int argumentNumber,
 			TypeDefinition requiredType)
 		{
-			var staticArgumentType = arguments[argumentNumber].TryGetStaticType(context);
-			if (staticArgumentType != null)
+			var staticArgumentType = arguments[argumentNumber].GetStaticType(context);
+			if (staticArgumentType != TypeDefinition.Unknown)
 			{
-				if (!staticArgumentType.IsCompatibleWithRequired(requiredType))
+				if (!staticArgumentType.IsAssignableTo(requiredType))
 				{
 					context.ErrorListener.AddInvalidFunctionArgumentTypeError(
 						function.Name,
@@ -75,10 +76,10 @@ namespace Mindbox.Quokka
 				}
 				else
 				{
-					object staticValue;
-					if (arguments[argumentNumber].TryGetStaticValue(out staticValue))
+					var staticValue = arguments[argumentNumber].TryGetStaticValue();
+					if (staticValue != null)
 					{
-						var validationResult = GetArgument(argumentNumber).ValidateValue(new PrimitiveVariableValueStorage(staticValue));
+						var validationResult = GetArgument(argumentNumber).ValidateConstantValue(staticValue);
 						if (!validationResult.IsValid)
 						{
 							context.ErrorListener.AddInvalidFunctionArgumentValueError(

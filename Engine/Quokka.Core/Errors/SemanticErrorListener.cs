@@ -18,13 +18,13 @@ namespace Mindbox.Quokka
 		} 
 
 		public void AddInconsistentVariableTypingError(
-			VariableDefinition definition,
-			VariableOccurence faultyOccurence,
+			ValueUsageSummary definition,
+			ValueUsage faultyOccurence,
 			TypeDefinition correctType)
 		{
 			AddError(new SemanticError(
-				$"Параметр \"{definition.FullName}\" не может использоваться как {faultyOccurence.RequiredType}, " +
-				$"так как в других местах он используется как {correctType}",
+				$"Значение \"{definition.FullName}\" не может использоваться как {faultyOccurence.RequiredType}, " +
+				$"так как в других местах оно используется как {correctType}",
 				faultyOccurence.Location));
 		}
 
@@ -80,7 +80,7 @@ namespace Mindbox.Quokka
 		}
 
 		public void AddActualTypeNotMatchingDeclaredTypeError(
-			VariableDefinition definition,
+			ValueUsageSummary definition,
 			TypeDefinition actualType,
 			TypeDefinition declaredType,
 			Location location)
@@ -92,7 +92,7 @@ namespace Mindbox.Quokka
 		}
 
 		public void AddUnexpectedFieldOnCompositeDeclaredTypeError(
-			VariableDefinition definition,
+			ValueUsageSummary definition,
 			Location location)
 		{
 			AddError(new SemanticError(
@@ -100,11 +100,25 @@ namespace Mindbox.Quokka
 				location));
 		}
 
-		public void AddVariableDeclarationScopeConflictError(VariableDefinition definition, Location location)
+		public void AddVariableDeclarationScopeConflictError(ValueUsageSummary definition, Location location)
 		{
 			AddError(new SemanticError(
 				$"Имя переменной \"{definition.FullName}\" конфликтует с другой переменной, объявленной выше или ниже",
 				location));
+		}
+
+		public void AddFieldAndMethodNameConflictError(ValueUsageSummary definition, Location location)
+		{
+			AddError(new SemanticError(
+				$"Имя поля \"{definition.FullName}\" совпадает с именем метода этого же объекта",
+				location));
+		}
+
+		public void AddNonConstantMethodArgumentError(string methodName, int argumentPosition, Location location)
+		{
+			AddError(new SemanticError(
+					$"В метод {methodName} в качестве аргумента под номером {argumentPosition} передано не константное значение",
+					location));
 		}
 	}
 }

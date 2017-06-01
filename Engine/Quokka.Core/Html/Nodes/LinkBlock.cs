@@ -22,23 +22,23 @@ namespace Mindbox.Quokka.Html
 			uniqueKey = Guid.NewGuid();
 		}
 
-		public override void CompileVariableDefinitions(SemanticAnalysisContext context)
+		public override void PerformSemanticAnalysis(AnalysisContext context)
 		{
 			foreach (var component in hrefValue.TextComponents)
 			{
-				component.CompileVariableDefinitions(context);
+				component.PerformSemanticAnalysis(context);
 			}
 		}
 
-		public override void Render(StringBuilder resultBuilder, RenderContext context)
+		public override void Render(StringBuilder resultBuilder, RenderContext renderContext)
 		{
-			var htmlRenderContext = (HtmlRenderContext)context;
+			var htmlRenderContext = (HtmlRenderContext)renderContext;
 
 			var linkBuilder = new StringBuilder();
 
 			foreach (var component in hrefValue.TextComponents)
 			{
-				component.Render(linkBuilder, context);
+				component.Render(linkBuilder, renderContext);
 			}
 
 			string redirectUrl = linkBuilder.ToString();

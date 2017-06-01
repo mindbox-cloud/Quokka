@@ -8,6 +8,26 @@ namespace Mindbox.Quokka.Tests
 	public class RenderArithmeticOutputTests
 	{
 		[TestMethod]
+		public void Render_ArithmeticOutput_IntegerConstant()
+		{
+			var template = new Template("${ 335 }");
+
+			var result = template.Render(
+				new CompositeModelValue());
+			Assert.AreEqual("335", result);
+		}
+		
+		[TestMethod]
+		public void Render_ArithmeticOutput_DecimalConstant()
+		{
+			var template = new Template("${ 24.05 }");
+
+			var result = template.Render(
+				new CompositeModelValue());
+			Assert.AreEqual("24,05", result);
+		}
+
+		[TestMethod]
 		public void Render_ArithmeticOutput_SimplePlus()
 		{
 			var template = new Template("${ 4 + 7 }");
@@ -58,7 +78,7 @@ namespace Mindbox.Quokka.Tests
 			var result = template.Render(
 				new CompositeModelValue());
 
-			Assert.AreEqual("0,60", result);
+			Assert.AreEqual("0,6", result);
 		}
 
 
@@ -124,6 +144,25 @@ namespace Mindbox.Quokka.Tests
 									new ModelField("Length", 77)))))));
 
 			Assert.AreEqual("-8232,64", result);
+		}
+
+		[TestMethod]
+		public void Render_ArithmeticOutput_ArithmeticMethodResults()
+		{
+			// A smoke test
+			var template = new Template("${ Math.Min(32, 16) + Math.Square(6) + Math.DecimalPart() }");
+
+			var result = template.Render(
+				new CompositeModelValue(
+					new ModelField("Math",
+						new CompositeModelValue(
+							new ModelMethod("Min", new object[] { 32, 16 }, 16),
+							new ModelMethod("Square", new object[] { 6 }, 36),
+							new ModelMethod("DecimalPart", 0.45m)
+							))
+					));
+
+			Assert.AreEqual("52,45", result);
 		}
 	}
 }

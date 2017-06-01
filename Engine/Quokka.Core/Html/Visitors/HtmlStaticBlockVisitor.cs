@@ -19,7 +19,7 @@ namespace Mindbox.Quokka.Html
 		public override StaticBlock VisitStaticBlock(QuokkaParser.StaticBlockContext context)
 		{
 			var outerGrammarStaticChildren = 
-				context.children.Select(child => child.Accept(new StaticPartVisitor(visitingContext, context.Start.StartIndex)))
+				context.children.Select(child => child.Accept(new StaticPartVisitor(VisitingContext, context.Start.StartIndex)))
 				.ToList();
 
 			var blockText = context.Start.InputStream.GetText(
@@ -36,7 +36,7 @@ namespace Mindbox.Quokka.Html
 
 			var htmlBlock = parser.htmlBlock();
 
-			visitingContext.ErrorListener.MoveErrorsFromSubGrammar(
+			VisitingContext.ErrorListener.MoveErrorsFromSubGrammar(
 				htmlSyntaxErrorListener.GetErrors(),
 				context.Start.Line - 1,
 				context.Start.Column);

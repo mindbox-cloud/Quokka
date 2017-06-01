@@ -1,4 +1,7 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using System;
+using System.Collections.Generic;
+
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Mindbox.Quokka.Tests
 {
@@ -22,17 +25,13 @@ namespace Mindbox.Quokka.Tests
 							new PrimitiveModelValue(2),
 							new PrimitiveModelValue(3)))));
 
-			var expected = @"
-				
-					List element
-				
-					List element
-				
-					List element
-				
+			var expected = @"				
+					List element				
+					List element				
+					List element				
 			";
 
-			Assert.AreEqual(expected, result);
+			TemplateAssert.AreOutputsEquivalent(expected, result);
 		}
 
 		[TestMethod]
@@ -52,17 +51,13 @@ namespace Mindbox.Quokka.Tests
 							new PrimitiveModelValue(2),
 							new PrimitiveModelValue(3)))));
 
-			var expected = @"
-				
-					1
-				
-					2
-				
-					3
-				
+			var expected = @"				
+					1				
+					2				
+					3				
 			";
 
-			Assert.AreEqual(expected, result);
+			TemplateAssert.AreOutputsEquivalent(expected, result);
 		}
 
 		[TestMethod]
@@ -85,17 +80,13 @@ namespace Mindbox.Quokka.Tests
 							new CompositeModelValue(
 								new ModelField("Name", "Malcolm"))))));
 
-			var expected = @"
-				
-					List element
-				
-					List element
-				
-					List element
-				
+			var expected = @"				
+					List element				
+					List element				
+					List element				
 			";
 
-			Assert.AreEqual(expected, result);
+			TemplateAssert.AreOutputsEquivalent(expected, result);
 		}
 
 		[TestMethod]
@@ -118,17 +109,13 @@ namespace Mindbox.Quokka.Tests
 							new CompositeModelValue(
 								new ModelField("Name", "Malcolm"))))));
 
-			var expected = @"
-				
-					Carl
-				
-					Ashley
-				
-					Malcolm
-				
+			var expected = @"				
+					Carl				
+					Ashley				
+					Malcolm				
 			";
 
-			Assert.AreEqual(expected, result);
+			TemplateAssert.AreOutputsEquivalent(expected, result);
 		}
 
 		[TestMethod]
@@ -173,17 +160,13 @@ namespace Mindbox.Quokka.Tests
 											new PrimitiveModelValue(2),
 											new PrimitiveModelValue(3)))))))));
 
-			var expected = @"
-				
-					1
-				
-					2
-				
-					3
-				
+			var expected = @"				
+					1				
+					2				
+					3				
 			";
 
-			Assert.AreEqual(expected, result);
+			TemplateAssert.AreOutputsEquivalent(expected, result);
 		}
 
 		[TestMethod]
@@ -206,149 +189,11 @@ namespace Mindbox.Quokka.Tests
 							new PrimitiveModelValue(3)))));
 
 			var expected = @"
-				
-					
 						1
-					
-				
-					
-				
-					
 						3
-					
-				
 			";
 
-			Assert.AreEqual(expected, result);
-		}
-
-		[TestMethod]
-		public void Render_ForBlock_NestedForOnDifferentCollection()
-		{
-			var template = new Template(@"
-				@{ for coef in Coefficients }
-					@{ for value in Values }
-						${ coef * value }
-					@{ end for }
-				@{ end for }
-			");
-
-			var result = template.Render(
-				new CompositeModelValue(
-					new ModelField("Coefficients",
-						new ArrayModelValue(
-							new PrimitiveModelValue(2),
-							new PrimitiveModelValue(3))),
-					new ModelField("Values",
-						new ArrayModelValue(
-							new PrimitiveModelValue(5),
-							new PrimitiveModelValue(6)))));
-
-			var expected = @"
-				
-					
-						10
-					
-						12
-					
-				
-					
-						15
-					
-						18
-					
-				
-			";
-
-			Assert.AreEqual(expected, result);
-		}
-
-		[TestMethod]
-		public void Render_ForBlock_NestedForOnElementField()
-		{
-			var template = new Template(@"
-				@{ for value in Values }
-					@{ for coef in value.Coefficients }
-						${ coef * value.Number }
-					@{ end for }
-				@{ end for }
-			");
-
-			var result = template.Render(
-				new CompositeModelValue(
-					new ModelField("Values",
-						new ArrayModelValue(
-							new CompositeModelValue(
-								new ModelField("Number", 2),
-								new ModelField("Coefficients",
-									new ArrayModelValue(
-										new PrimitiveModelValue(5),
-										new PrimitiveModelValue(6)))),
-							new CompositeModelValue(
-								new ModelField("Number", 3),
-								new ModelField("Coefficients",
-									new ArrayModelValue(
-										new PrimitiveModelValue(5),
-										new PrimitiveModelValue(6))))))));
-
-			var expected = @"
-				
-					
-						10
-					
-						12
-					
-				
-					
-						15
-					
-						18
-					
-				
-			";
-
-			Assert.AreEqual(expected, result);
-		}
-
-		[TestMethod]
-		public void Render_ForBlock_NestedForOnElementItself()
-		{
-			var template = new Template(@"
-				@{ for array in Arrays }
-					@{ for number in array }
-						${ number }
-					@{ end for }
-				@{ end for }
-			");
-
-			var result = template.Render(
-				new CompositeModelValue(
-					new ModelField("Arrays",
-						new ArrayModelValue(
-							new ArrayModelValue(
-								new PrimitiveModelValue(22),
-								new PrimitiveModelValue(24)),
-							new ArrayModelValue(
-								new PrimitiveModelValue(52),
-								new PrimitiveModelValue(54))))));
-
-			var expected = @"
-				
-					
-						22
-					
-						24
-					
-				
-					
-						52
-					
-						54
-					
-				
-			";
-
-			Assert.AreEqual(expected, result);
+			TemplateAssert.AreOutputsEquivalent(expected, result);
 		}
 
 		[TestMethod]
@@ -371,24 +216,16 @@ namespace Mindbox.Quokka.Tests
 							new PrimitiveModelValue(2),
 							new PrimitiveModelValue(3)))));
 
-			var expected = @"
-				
-					1
-				
-					2
-				
+			var expected = @"				
+					1				
+					2				
 					3
-				
-				
-					1
-				
-					2
-				
-					3
-				
+					1				
+					2				
+					3				
 			";
 
-			Assert.AreEqual(expected, result);
+			TemplateAssert.AreOutputsEquivalent(expected, result);
 		}
 
 		[TestMethod]
@@ -408,17 +245,13 @@ namespace Mindbox.Quokka.Tests
 							new PrimitiveModelValue(2),
 							new PrimitiveModelValue(3)))));
 
-			var expected = @"
-				
-					List element
-				
-					List element
-				
-					List element
-				
+			var expected = @"				
+					List element				
+					List element				
+					List element				
 			";
 
-			Assert.AreEqual(expected, result);
+			TemplateAssert.AreOutputsEquivalent(expected, result);
 		}
 
 		[TestMethod]
@@ -437,6 +270,63 @@ namespace Mindbox.Quokka.Tests
 			var expected = @"";
 
 			Assert.AreEqual(expected, result);
+		}
+
+
+
+		[TestMethod]
+		public void Render_ForBlock_IterationOverArrayWithMethods()
+		{
+			var template = new Template(@"
+				@{ for item in Collection }
+					${ item }
+				@{ end for }
+
+				@{ for item in Collection.Take(1) }
+					${ item.Key }
+				@{ end for }
+
+				@{ for item in Collection.ConvertToIntegers() }
+					${ item + 5 }
+				@{ end for }
+			");
+
+			var result = template.Render(
+				new CompositeModelValue(
+					new ModelField(
+						"Collection",
+						new ArrayModelValue(
+							methods: new List<IModelMethod>
+							{
+								new ModelMethod(
+									"Take",
+									new object[] { 1 },
+									new ArrayModelValue(
+										new CompositeModelValue(new ModelField("Key", "One")))),
+								new ModelMethod(
+									"ConvertToIntegers",
+									Array.Empty<object>(),
+									new ArrayModelValue(
+										new PrimitiveModelValue(1),
+										new PrimitiveModelValue(2)))
+							},
+							elements: new List<IModelValue>
+							{
+								new PrimitiveModelValue("One"),
+								new PrimitiveModelValue("Two")
+							}))));
+
+			var expected = @"
+				One
+				Two
+	
+				One
+
+				6
+				7
+			";
+
+			TemplateAssert.AreOutputsEquivalent(expected, result);
 		}
 	}
 }

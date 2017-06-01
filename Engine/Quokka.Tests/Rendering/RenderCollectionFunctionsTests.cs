@@ -220,26 +220,6 @@ namespace Mindbox.Quokka.Tests
 		}
 
 		[TestMethod]
-		[ExpectedException(typeof(UnrenderableTemplateModelException))]
-		public void Render_ForBlockTableRows_AccessingNullCellValue_Error()
-		{
-			var template = new Template(@"
-				@{ for row in tableRows(Collection, 3) }
-					@{ for cell in row.Cells }
-						${ cell.Value }
-					@{ end for }
-				@{ end for }
-			");
-
-			template.Render(
-				new CompositeModelValue(
-					new ModelField("Collection",
-						new ArrayModelValue(
-							Enumerable.Range(1, 1)
-								.Select(x => new PrimitiveModelValue(x))))));
-		}
-
-		[TestMethod]
 		public void Render_ForBlockTableRows_SingleRow_IsFirst_IsLast()
 		{
 			var template = new Template(@"
@@ -542,7 +522,7 @@ namespace Mindbox.Quokka.Tests
 
 			try
 			{
-				var result = template.Render(
+				template.Render(
 					new CompositeModelValue(
 						new ModelField(
 							"Collection",
@@ -552,9 +532,9 @@ namespace Mindbox.Quokka.Tests
 			}
 			catch (UnrenderableTemplateModelException exception)
 			{
-				Assert.AreEqual("An attempt to use the value for variable cell.Value " +
-								"which happens to be null",
-								exception.Message);
+				Assert.AreEqual(
+					"An attempt to use the value of \"cell.Value\" expression which happens to be null",
+					exception.Message);
 				return;
 			}
 
@@ -562,25 +542,73 @@ namespace Mindbox.Quokka.Tests
 		}
 
 		[TestMethod]
-		public void Render_ForBlockTableRows_PropagatingCellValueNullChecking()
+		public void Render_ForBlockTableRows_NullPropagation_CheckingForNull_Valid()
 		{
 			var template = new Template(@"
-				@{ for row in tableRows(Collection, 10) }
+				@{ for row in tableRows(Collection, 2) }
 					@{ for cell in row.Cells }
-						@{ if cell.Value.Name != null  }
-							ok
+						@{ if cell.Value.Level1.Level2.Leaf = null }
+							${ cell.index } is null
 						@{ end if }
 					@{ end for }					
 				@{ end for }
 			");
 
-			template.Render(
+
+			var result = template.Render(
 				new CompositeModelValue(
 					new ModelField(
 						"Collection",
 						new ArrayModelValue(
 							new CompositeModelValue(
-								new ModelField("Name", new PrimitiveModelValue(null)))))));
+								new ModelField(
+									"Level1",
+									new CompositeModelValue(
+										new ModelField(
+											"Level2",
+											new CompositeModelValue(
+												new ModelField("Leaf", "leaf1"))))))))));
+
+			var expected = @"
+				2 is null
+			";
+
+			TemplateAssert.AreOutputsEquivalent(expected, result);
+		}
+
+		[TestMethod]
+		public void Render_ForBlockTableRows_NullPropagation_CheckingForNotNull_Valid()
+		{
+			var template = new Template(@"
+				@{ for row in tableRows(Collection, 2) }
+					@{ for cell in row.Cells }
+						@{ if cell.Value.Level1.Level2.Leaf != null }
+							${ cell.index } is not null
+						@{ end if }
+					@{ end for }					
+				@{ end for }
+			");
+
+
+			var result = template.Render(
+				new CompositeModelValue(
+					new ModelField(
+						"Collection",
+						new ArrayModelValue(
+							new CompositeModelValue(
+								new ModelField(
+									"Level1",
+									new CompositeModelValue(
+										new ModelField(
+											"Level2",
+											new CompositeModelValue(
+												new ModelField("Leaf", "leaf1"))))))))));
+
+			var expected = @"
+				1 is not null
+			";
+
+			TemplateAssert.AreOutputsEquivalent(expected, result);
 		}
 	}
 }

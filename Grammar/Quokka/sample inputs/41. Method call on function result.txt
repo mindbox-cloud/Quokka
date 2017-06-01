@@ -1,0 +1,2 @@
+${ Max(A, B).Floor() }
+${ Max(A, B).ToPercentage().ToString("N2") }

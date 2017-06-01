@@ -1,4 +1,6 @@
-﻿using Mindbox.Quokka.Generated;
+﻿using System;
+
+using Mindbox.Quokka.Generated;
 
 namespace Mindbox.Quokka
 {
@@ -23,14 +25,15 @@ namespace Mindbox.Quokka
 
 		public override IStaticBlockPart VisitOutputBlock(QuokkaParser.OutputBlockContext context)
 		{
-			var outputBlock = context.filterChain() != null
-				? new FunctionCallOutputBlock(context.Accept(new FilterChainVisitor(visitingContext)))
-				: context.Accept(new OutputVisitor(visitingContext));
+			var outputExpression =
+				context.filterChain() != null
+					? context.Accept(new FilterChainVisitor(VisitingContext))
+					: context.expression().Accept(new ExpressionVisitor(VisitingContext));
 
 			var startIndex = context.OutputInstructionStart().Symbol.StartIndex;
 			var length = context.InstructionEnd().Symbol.StopIndex - startIndex + 1;
 
-			return new OutputInstructionBlock(outputBlock, GetRelativePartOffset(startIndex), length);
+			return new OutputInstructionBlock(outputExpression, GetRelativePartOffset(startIndex), length);
 		}
 
 		private int GetRelativePartOffset(int absoluteOffset)

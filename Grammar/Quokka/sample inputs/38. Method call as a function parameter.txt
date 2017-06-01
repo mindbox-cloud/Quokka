@@ -1,0 +1,1 @@
+${ GetFirst(Recipient.GetSegments()) }

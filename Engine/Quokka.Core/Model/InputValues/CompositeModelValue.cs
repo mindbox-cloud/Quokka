@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -5,20 +6,37 @@ namespace Mindbox.Quokka
 {
 	public class CompositeModelValue : ICompositeModelValue
 	{
-		public IReadOnlyList<IModelField> Fields { get; }
+		public IEnumerable<IModelField> Fields { get; }
+		public IEnumerable<IModelMethod> Methods { get; }
 
-		public CompositeModelValue(params IModelField[] fields)
+		internal CompositeModelValue()
+			: this(Enumerable.Empty<IModelField>(), Enumerable.Empty<IModelMethod>())
 		{
-			Fields = fields
-				.ToList()
-				.AsReadOnly();
 		}
 
-		public CompositeModelValue(IEnumerable<ModelField> fields)
+		internal CompositeModelValue(params IModelField[] fields)
+			: this((IEnumerable<IModelField>)fields)
 		{
-			Fields = fields
-				.ToList()
-				.AsReadOnly();
+		}
+
+		internal CompositeModelValue(params IModelMethod[] methods)
+			: this((IEnumerable<IModelMethod>)methods)
+		{
+		}
+
+		internal CompositeModelValue(IEnumerable<IModelField> fields)
+			: this(fields, Enumerable.Empty<IModelMethod>())
+		{
+		}
+		internal CompositeModelValue(IEnumerable<IModelMethod> methods)
+			: this(Enumerable.Empty<IModelField>(), methods)
+		{
+		}
+
+		public CompositeModelValue(IEnumerable<IModelField> fields, IEnumerable<IModelMethod> methods)
+		{
+			Fields = fields?.ToArray() ?? Array.Empty<IModelField>();
+			Methods = methods?.ToArray() ?? Array.Empty<IModelMethod>();
 		}
 	}
 }

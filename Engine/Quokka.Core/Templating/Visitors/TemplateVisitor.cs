@@ -21,42 +21,12 @@ namespace Mindbox.Quokka
 
 		public override ITemplateNode VisitStaticBlock(QuokkaParser.StaticBlockContext context)
 		{
-			return context.Accept(visitingContext.CreateStaticBlockVisitor());
-		}
-		
-		public override ITemplateNode VisitIfStatement(QuokkaParser.IfStatementContext context)
-		{
-			var conditionsVisitor = new ConditionsVisitor(visitingContext);
-			var conditions = new List<ConditionBlock>
-			{
-				context.ifCondition().Accept(conditionsVisitor)
-			};
-			conditions.AddRange(context.elseIfCondition()
-				.Select(elseIf => elseIf.Accept(conditionsVisitor)));
-			if (context.elseCondition() != null)
-				conditions.Add(context.elseCondition().Accept(conditionsVisitor));
-
-			return new IfBlock(conditions);
-		}
-		
-		public override ITemplateNode VisitForStatement(QuokkaParser.ForStatementContext context)
-		{
-			var forInstruction = context.forInstruction();
-
-			var iterationVariableIdentifier = forInstruction.iterationVariable().Identifier();
-
-			return new ForBlock(
-				context.templateBlock()?.Accept(this),
-				new VariableDeclaration(
-					iterationVariableIdentifier.GetText(),
-					GetLocationFromToken(iterationVariableIdentifier.Symbol),
-					TypeDefinition.Unknown),
-				forInstruction.Accept(new EnumerableElementVisitor(visitingContext)));
+			return context.Accept(VisitingContext.CreateStaticBlockVisitor());
 		}
 
-		public override ITemplateNode VisitCommentBlock(QuokkaParser.CommentBlockContext context)
+		public override ITemplateNode VisitDynamicBlock(QuokkaParser.DynamicBlockContext context)
 		{
-			return null;
+			return context.Accept(new DynamicBlockVisitor(VisitingContext));
 		}
 	}
 }

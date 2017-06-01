@@ -4,6 +4,8 @@ namespace Mindbox.Quokka
 {
 	public interface ICompositeModelValue : IModelValue
 	{
-		IReadOnlyList<IModelField> Fields { get; }
+		IEnumerable<IModelField> Fields { get; }
+
+		IEnumerable<IModelMethod> Methods { get; }
 	}
 }

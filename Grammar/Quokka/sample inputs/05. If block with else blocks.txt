@@ -1,0 +1,5 @@
+@{ if IsTodayRecipientsBirthday}
+	Happy birthday, man
+@{ else}
+	Hello, man
+@{ end if}

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -22,6 +23,12 @@ namespace Mindbox.Quokka.Tests
 
 			Assert.IsNotNull(actual);
 
+			AreFieldCollectionsEquivalent(expected, actual);
+			AreMethodCollectionsEquivalent(expected, actual);
+		}
+
+		private static void AreFieldCollectionsEquivalent(ICompositeModelDefinition expected, ICompositeModelDefinition actual)
+		{
 			var expectedFieldList = expected.Fields.OrderBy(kvp => kvp.Key).ToList();
 			var actualFieldList = actual.Fields.OrderBy(kvp => kvp.Key).ToList();
 
@@ -34,12 +41,26 @@ namespace Mindbox.Quokka.Tests
 
 				Assert.AreEqual(expectedDefinition.Key, actualDefinition.Key);
 
-				AreModelDefinitionsEqual(expectedDefinition.Value, actualDefinition.Value);
+				AreModelDefinitionsEquivalent(expectedDefinition.Value, actualDefinition.Value);
+			}
+		}
+
+		private static void AreMethodCollectionsEquivalent(ICompositeModelDefinition expected, ICompositeModelDefinition actual)
+		{
+			var expectedMethodList = expected.Methods.ToList();
+
+			Assert.AreEqual(expectedMethodList.Count, actual.Methods.Count);
+
+			foreach (var expectedMethod in expectedMethodList) {
+				if (!actual.Methods.TryGetValue(expectedMethod.Key, out IModelDefinition actualDefinition))
+					Assert.Fail($"No method call found with expected definition {expectedMethod.Key}");
+				
+				AreModelDefinitionsEquivalent(expectedMethod.Value, actualDefinition);
 			}
 		}
 
 		/// <summary>
-		/// Asserts that two outputs are equivalent disregarding empty rows and whitespace at the ends of rows.
+		/// Asserts that two outputs are equivalent disregarding empty rows and whitespace at the row beginnings and ends.
 		/// </summary>
 		/// <param name="expected">Expected output</param>
 		/// <param name="actual">Actual output</param>
@@ -60,34 +81,31 @@ namespace Mindbox.Quokka.Tests
 					output.Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries).Select(str => str.Trim()));
 		}
 
-		private static void AreModelDefinitionsEqual(
+		private static void AreModelDefinitionsEquivalent(
 			IModelDefinition expected,
 			IModelDefinition actual)
 		{
-			if (expected is IPrimitiveModelDefinition)
+			if (expected is IPrimitiveModelDefinition expectedPrimitiveDefinition)
 			{
-				var expectedPrimitiveDefinition = (IPrimitiveModelDefinition)expected;
 				Assert.IsInstanceOfType(actual, typeof(IPrimitiveModelDefinition));
 				var actualPrimitiveDefinition = (IPrimitiveModelDefinition)actual;
 
 				Assert.AreEqual(expectedPrimitiveDefinition.Type, actualPrimitiveDefinition.Type);
 			}
-			else if (expected is ICompositeModelDefinition)
+			else if (expected is ICompositeModelDefinition expectedCompositeDefinition)
 			{
-				var expectedCompositeDefinition = (ICompositeModelDefinition)expected;
 				Assert.IsInstanceOfType(actual, typeof(ICompositeModelDefinition));
 				var actualCompositeDefinition = (ICompositeModelDefinition)actual;
 
 				AreCompositeModelDefinitionsEqual(expectedCompositeDefinition, actualCompositeDefinition);
 			}
-			else if (expected is IArrayModelDefinition)
+			else if (expected is IArrayModelDefinition expectedArrayDefinition)
 			{
-				var expectedArrayDefinition = (IArrayModelDefinition)expected;
 				Assert.IsInstanceOfType(actual, typeof(IArrayModelDefinition));
 				var actualArrayDefinition = (IArrayModelDefinition)actual;
 
 				Assert.IsNotNull(actualArrayDefinition.ElementModelDefinition);
-				AreModelDefinitionsEqual(
+				AreModelDefinitionsEquivalent(
 					expectedArrayDefinition.ElementModelDefinition,
 					actualArrayDefinition.ElementModelDefinition);
 			}

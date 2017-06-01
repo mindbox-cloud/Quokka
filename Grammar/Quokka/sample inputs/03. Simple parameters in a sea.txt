@@ -1,0 +1,2 @@
+Hello, ${ RecipientFirstName }, nice to see you.
+Say to hello to ${ AnotherName } as well.

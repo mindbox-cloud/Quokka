@@ -1,0 +1,9 @@
+@{ if IsTodayRecipientsBirthday}
+	Happy birthday, man
+@{ else if IsTodayWeddingAnniversary}
+	Happy anniversary, man
+@{ else if IsCEO}
+	Happy life, man
+@{ else }
+	Go away.
+@{ end if }

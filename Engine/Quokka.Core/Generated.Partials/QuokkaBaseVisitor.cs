@@ -1,10 +1,13 @@
-﻿using Antlr4.Runtime;
+﻿using System;
+
+using Antlr4.Runtime;
+using Antlr4.Runtime.Tree;
 
 namespace Mindbox.Quokka.Generated
 {
 	internal partial class QuokkaBaseVisitor<Result>
 	{
-		protected readonly VisitingContext visitingContext;
+		protected VisitingContext VisitingContext { get; }
 
 		protected Location GetLocationFromToken(IToken token)
 		{
@@ -13,7 +16,7 @@ namespace Mindbox.Quokka.Generated
 
 		protected QuokkaBaseVisitor(VisitingContext visitingContext)
 		{
-			this.visitingContext = visitingContext;
+			VisitingContext = visitingContext;
 		}
 	}
 }

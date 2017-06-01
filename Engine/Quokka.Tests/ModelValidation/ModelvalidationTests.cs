@@ -190,5 +190,36 @@ namespace Mindbox.Quokka.Tests
 				new CompositeModelValue(
 					new ModelField("A", null)));
 		}
+
+		[TestMethod]
+		[ExpectedException(typeof(InvalidTemplateModelException))]
+		public void ModelValidation_MethodCall_NoMethodWithCorrectSignatureProvided()
+		{
+			var template = new Template(@"
+				${ Root.GetValue('main', 7) }
+			");
+
+			template.Render(
+				new CompositeModelValue(
+					new ModelField(
+						"Root",
+						new CompositeModelValue(
+							new ModelMethod("GetValue", new object[] { "main", 6 }, 44)))));
+		}
+
+		[TestMethod]
+		public void ModelValidation_MethodCall_MethodCallStringArgument_CaseInsensitivity_Valid()
+		{
+			var template = new Template(@"
+				${ Root.GetValue('main') }
+			");
+
+			template.Render(
+				new CompositeModelValue(
+					new ModelField(
+						"Root",
+						new CompositeModelValue(
+							new ModelMethod("GetValue", new object[] { "MAiN" }, 44)))));
+		}
 	}
 }

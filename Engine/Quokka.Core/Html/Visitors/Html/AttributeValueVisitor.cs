@@ -33,7 +33,7 @@ namespace Mindbox.Quokka.Html
 			int offsetLeft,
 			int offsetRight)
 		{
-			var partsVisitor = new AttributeValuePartsVisitor(parsingContext);
+			var partsVisitor = new AttributeValuePartsVisitor(ParsingContext);
 			var blockChildren = ruleContext.children
 				.Select(child => child.Accept(partsVisitor))
 				.Where(block => block != null)

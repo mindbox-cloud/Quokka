@@ -14,7 +14,7 @@ namespace Mindbox.Quokka
 			this.valueValidator = valueValidator;
 		}
 
-		internal override ArgumentValueValidationResult ValidateValue(VariableValueStorage value)
+		internal override ArgumentValueValidationResult ValidateConstantValue(VariableValueStorage value)
 		{
 			return valueValidator != null 
 				? valueValidator(ConvertValue(value)) 

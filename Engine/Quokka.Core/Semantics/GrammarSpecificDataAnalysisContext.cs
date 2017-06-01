@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Mindbox.Quokka
 {
-	public class GrammarSpecificDataAnalysisContext
+	internal abstract class GrammarSpecificDataAnalysisContext
 	{
 	}
 }

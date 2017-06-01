@@ -1,0 +1,5 @@
+@{ if Recipient.HasContacts() }
+	Has contacts
+@{ else if Recipient.GetAddressPart("City").IsFilled() }
+	City is filled
+@{ end if }
