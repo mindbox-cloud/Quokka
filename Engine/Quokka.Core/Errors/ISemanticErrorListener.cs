@@ -52,6 +52,10 @@ namespace Mindbox.Quokka
 			ValueUsageSummary definition,
 			Location location);
 
+		void AddFieldAndMethodNameConflictError(
+			ValueUsageSummary definition,
+			Location location);
+
 		void AddNonConstantMethodArgumentError(
 			string methodName,
 			int argumentPosition,

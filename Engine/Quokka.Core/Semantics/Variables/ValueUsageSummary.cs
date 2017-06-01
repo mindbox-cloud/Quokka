@@ -75,7 +75,7 @@ namespace Mindbox.Quokka
 			enumerationResultUsageSummaries.Add(usageSummary);
 		}
 
-		private IModelDefinition ToModelDefinition(ModelDefinitionFactory modelDefinitionFactory, ISemanticErrorListener errorListener)
+		private IModelDefinition ToModelDefinition(ISemanticErrorListener errorListener)
 		{
 			var type = TypeDefinition.GetResultingTypeForMultipleOccurences(
 				usages,
@@ -91,14 +91,16 @@ namespace Mindbox.Quokka
 					Fields.Items
 						.ToDictionary(
 							kvp => kvp.Key,
-							kvp => kvp.Value.ToModelDefinition(modelDefinitionFactory, errorListener),
+							kvp => kvp.Value.ToModelDefinition(errorListener),
 							StringComparer.InvariantCultureIgnoreCase));
 
 				var methods = new ReadOnlyDictionary<IMethodCallDefinition, IModelDefinition>(
 					Methods.Items
 						.ToDictionary(
 							kvp => kvp.Key.ToMethodCallDefinition(),
-							kvp => kvp.Value.ToModelDefinition(modelDefinitionFactory, errorListener)));
+							kvp => kvp.Value.ToModelDefinition(errorListener)));
+
+				CheckForFieldsAndMethodsNameConflicts(errorListener);
 
 				if (type == TypeDefinition.Array)
 				{
@@ -108,18 +110,18 @@ namespace Mindbox.Quokka
 						collectionElementDefinition = Merge(
 								$"{FullName}[]",
 								enumerationResultUsageSummaries)
-							.ToModelDefinition(modelDefinitionFactory, errorListener);
+							.ToModelDefinition(errorListener);
 					}
 					else
 					{
 						collectionElementDefinition = new PrimitiveModelDefinition(TypeDefinition.Unknown);
 					}
 
-					return modelDefinitionFactory.CreateArray(collectionElementDefinition, fields, methods);
+					return new ArrayModelDefinition(collectionElementDefinition, fields, methods);
 				}
 				else if (type == TypeDefinition.Composite)
 				{
-					return modelDefinitionFactory.CreateComposite(fields, methods);
+					return new CompositeModelDefinition(fields, methods);
 				}
 				else
 				{
@@ -127,7 +129,23 @@ namespace Mindbox.Quokka
 				}
 			}
 			else
-				return modelDefinitionFactory.CreatePrimitive(type);
+			{
+				return new PrimitiveModelDefinition(type);
+			}
+		}
+
+		private void CheckForFieldsAndMethodsNameConflicts(ISemanticErrorListener errorListener)
+		{
+			var methodNames = new HashSet<string>(
+				Methods.Items.Select(item => item.Key.Name),
+				StringComparer.OrdinalIgnoreCase);
+
+			var conflictingFields = Fields.Items
+				.Where(field => methodNames.Contains(field.Key))
+				.Select(kvp => kvp.Value);
+
+			foreach (var field in conflictingFields)
+				errorListener.AddFieldAndMethodNameConflictError(field, field.GetFirstLocation());
 		}
 
 		public void ValidateAgainstExpectedModelDefinition(IModelDefinition expectedModelDefinition, ISemanticErrorListener errorListener)
@@ -218,15 +236,14 @@ namespace Mindbox.Quokka
 		
 		public static ICompositeModelDefinition ConvertCollectionToModelDefinition(
 			MemberCollection<string> fields,
-			ModelDefinitionFactory modelDefinitionFactory,
 			ISemanticErrorListener errorListener)
 		{
-			return modelDefinitionFactory.CreateComposite(
+			return new CompositeModelDefinition(
 				new ReadOnlyDictionary<string, IModelDefinition>(
 					fields.Items
 						.ToDictionary(
 							kvp => kvp.Key,
-							kvp => kvp.Value.ToModelDefinition(modelDefinitionFactory, errorListener),
+							kvp => kvp.Value.ToModelDefinition(errorListener),
 							StringComparer.InvariantCultureIgnoreCase)),
 				null);
 		}

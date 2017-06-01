@@ -61,7 +61,6 @@ namespace Mindbox.Quokka
 					analysisContext.VariableScope.CheckForChildScopesDeclarationConflicts(analysisContext);
 					requiredModelDefinition = ValueUsageSummary.ConvertCollectionToModelDefinition(
 						analysisContext.VariableScope.Variables,
-						new ModelDefinitionFactory(),
                         semanticErrorListener);
 				}
 

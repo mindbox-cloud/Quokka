@@ -107,6 +107,13 @@ namespace Mindbox.Quokka
 				location));
 		}
 
+		public void AddFieldAndMethodNameConflictError(ValueUsageSummary definition, Location location)
+		{
+			AddError(new SemanticError(
+				$"Имя поля \"{definition.FullName}\" совпадает с именем метода этого же объекта",
+				location));
+		}
+
 		public void AddNonConstantMethodArgumentError(string methodName, int argumentPosition, Location location)
 		{
 			AddError(new SemanticError(

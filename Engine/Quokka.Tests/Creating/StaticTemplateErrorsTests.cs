@@ -20,6 +20,19 @@ namespace Mindbox.Quokka
 				    out IList<ITemplateError> errors);
 
 		    Assert.AreEqual(1, errors.Count);
+		}
+
+	    [TestMethod]
+	    public void CreateTemplate_FieldAndMethodNameConflict_SemanticError()
+	    {
+		    new DefaultTemplateFactory()
+			    .TryCreateTemplate(@"
+					${ Root.Property }
+					${ Root.Property('5') }
+				",
+				out IList<ITemplateError> errors);
+
+		    Assert.AreEqual(1, errors.Count);
 	    }
 	}
 }
