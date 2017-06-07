@@ -14,6 +14,10 @@
     <AssemblyName>Mindbox.Quokka</AssemblyName>
     <Authors>Mindbox</Authors>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DebugType>full</DebugType>
+    <DebugSymbols>True</DebugSymbols>
+  </PropertyGroup>
   <ItemGroup>
     <None Remove="**\*.nuspec" />
   </ItemGroup>
