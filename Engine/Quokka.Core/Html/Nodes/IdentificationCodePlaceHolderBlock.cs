@@ -9,7 +9,7 @@ namespace Mindbox.Quokka.Html
 	internal class IdentificationCodePlaceHolderBlock : TemplateNodeBase, IStaticBlockPart
 	{
 		public int Offset { get; }
-		public int Length { get; } = 0;
+		public int Length => 0;
 
 		public IdentificationCodePlaceHolderBlock(int offset)
 		{

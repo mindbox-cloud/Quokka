@@ -39,7 +39,7 @@ namespace Mindbox.Quokka
 			var value = NormalizeValue(GetValue(renderContext));
 
 			if (value is decimal decimalValue)
-				return Math.Round(decimalValue, 2).ToString();
+				return Math.Round(decimalValue, 2).ToString(CultureInfo.CurrentCulture);
 			else if (value is int intValue)
 				return intValue.ToString();
 			else

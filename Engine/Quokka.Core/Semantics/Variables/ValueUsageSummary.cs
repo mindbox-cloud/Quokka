@@ -264,15 +264,17 @@ namespace Mindbox.Quokka
 					.Select(definition => definition.Methods)
 					.ToList());
 
-			var usages = definitions.SelectMany(definition => definition.usages);
-			var enumerationResultUsageSummaries = definitions.SelectMany(definition => definition.enumerationResultUsageSummaries);
+			var mergesUsages = definitions
+				.SelectMany(definition => definition.usages);
+			var mergedEnumerationResultUsageSummaries = definitions
+				.SelectMany(definition => definition.enumerationResultUsageSummaries);
 
 			return new ValueUsageSummary(
 				resultFullName,
 				fields,
 				methods, 
-				usages.ToList(),
-				enumerationResultUsageSummaries.ToList());
+				mergesUsages.ToList(),
+				mergedEnumerationResultUsageSummaries.ToList());
 		}
 	}
 }

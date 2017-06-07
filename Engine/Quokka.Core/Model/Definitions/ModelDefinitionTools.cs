@@ -76,13 +76,29 @@ namespace Mindbox.Quokka
 			List<IModelDefinition> allValues,
 			ModelDefinitionErrorListener errorListener)
 		{
-			if (allValues.Count == 1)
-				return allValues[0];
-
 			var firstValue = allValues[0];
 
+			if (allValues.Count == 1)
+				return firstValue;
+			
 			if (firstValue is ICompositeModelDefinition)
 			{
+				if (firstValue is IArrayModelDefinition)
+				{
+					var arrayValues = allValues.OfType<IArrayModelDefinition>().ToList();
+					if (arrayValues.Count != allValues.Count)
+					{
+						errorListener.AddInconsistenDefinitionTypesError(fieldName);
+						return null;
+					}
+
+					return
+						new ArrayModelDefinition(
+							CombineModelDefinition(fieldName + "[].",
+								arrayValues.Select(av => av.ElementModelDefinition).ToList(),
+								errorListener));
+				}
+
 				var compositeValues = allValues.OfType<ICompositeModelDefinition>().ToList();
 				if (compositeValues.Count != allValues.Count)
 				{
@@ -107,22 +123,6 @@ namespace Mindbox.Quokka
 					primitiveValue => primitiveValue.Type,
 					(primitiveValue, correctType) => errorListener.AddInconsistenDefinitionTypesError(fieldName));
 				return new PrimitiveModelDefinition(resultingType);
-			}
-
-			if (firstValue is IArrayModelDefinition)
-			{
-				var arrayValues = allValues.OfType<IArrayModelDefinition>().ToList();
-				if (arrayValues.Count != allValues.Count)
-				{
-					errorListener.AddInconsistenDefinitionTypesError(fieldName);
-					return null;
-				}
-
-				return
-					new ArrayModelDefinition(
-						CombineModelDefinition(fieldName + "[].",
-							arrayValues.Select(av => av.ElementModelDefinition).ToList(),
-							errorListener));
 			}
 
 			throw new InvalidOperationException("Unknown model definition type");

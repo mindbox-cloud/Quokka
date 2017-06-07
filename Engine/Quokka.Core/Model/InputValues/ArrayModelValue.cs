@@ -12,12 +12,7 @@ namespace Mindbox.Quokka
 			: this((IEnumerable<IModelValue>)elements)
 		{
 		}
-
-		public ArrayModelValue(IEnumerable<IModelValue> elements)
-			: this(elements, Enumerable.Empty<IModelField>(), Enumerable.Empty<IModelMethod>())
-		{
-		}
-
+		
 		public ArrayModelValue(
 			IEnumerable<IModelValue> elements,
 			IEnumerable<IModelField> fields = null,

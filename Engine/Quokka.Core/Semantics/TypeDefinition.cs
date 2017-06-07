@@ -58,7 +58,7 @@ namespace Mindbox.Quokka
 			TimeSpan = new PrimitiveTypeDefinition<TimeSpan>("TimeSpan", Primitive, 15);
 
 			primitiveTypeMap = new ReadOnlyDictionary<Type, TypeDefinition>(
-				new[]
+				new []
 				{
 					Boolean,
 					Decimal,
