@@ -14,5 +14,10 @@ namespace Mindbox.Quokka
 			: base(message)
 		{
 		}
+
+		public UnrenderableTemplateModelException(string message, Exception inner)
+			: base(message, inner)
+		{
+		}
 	}
 }

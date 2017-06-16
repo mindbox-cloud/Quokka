@@ -41,8 +41,17 @@ namespace Mindbox.Quokka
 		    if (function == null)
 			    throw new InvalidOperationException($"Function {FunctionName} not found");
 
-		    return function.Invoke(argumentValues.Select(arg => arg.GetValue(renderContext)).ToList());
-		}
+		    try
+		    {
+			    return function.Invoke(argumentValues.Select(arg => arg.GetValue(renderContext)).ToList());
+		    }
+		    catch (Exception ex)
+		    {
+			    throw new UnrenderableTemplateModelException(
+					$"Function {FunctionName} invocation resulted in error",
+					ex);
+		    }
+	    }
 
 	    public override void RegisterIterationOverExpressionResult(AnalysisContext context, ValueUsageSummary iterationVariable)
 	    {
