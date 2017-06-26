@@ -187,7 +187,6 @@ namespace Mindbox.Quokka.Tests
 				}
 			});
 
-
 			var combinedDefinition = new DefaultTemplateFactory().CombineModelDefinition(new[] { definition1, definition2 });
 
 			TemplateAssert.AreCompositeModelDefinitionsEqual(
@@ -247,6 +246,162 @@ namespace Mindbox.Quokka.Tests
 				{
 					{ "Primitive1", new PrimitiveModelDefinition(TypeDefinition.Integer) }
 				}),
+				combinedDefinition);
+		}
+
+		[TestMethod]
+		public void DefinitionCombining_TwoNonIntersecting_CompositeWithMethods()
+		{
+			var definition1 = new CompositeModelDefinition(new Dictionary<string, IModelDefinition>
+			{
+				{
+					"Composite", new CompositeModelDefinition(methods: new Dictionary<IMethodCallDefinition, IModelDefinition>
+					{
+						{
+							new MethodCallDefinition("MultiplyBy", new IMethodArgumentDefinition[]
+							{
+								new MethodArgumentDefinition(TypeDefinition.Integer, 4)
+							}),
+							new PrimitiveModelDefinition(TypeDefinition.Integer)
+						}
+					})
+				}
+			});
+
+			var definition2 = new CompositeModelDefinition(new Dictionary<string, IModelDefinition>
+			{
+				{
+					"Composite", new CompositeModelDefinition(methods: new Dictionary<IMethodCallDefinition, IModelDefinition>
+					{
+						{
+							new MethodCallDefinition("DivideBy", new IMethodArgumentDefinition[]
+							{
+								new MethodArgumentDefinition(TypeDefinition.Integer, 7)
+							}),
+							new PrimitiveModelDefinition(TypeDefinition.Integer)
+						}
+					})
+				}
+			});
+
+			var combinedDefinition = new DefaultTemplateFactory().CombineModelDefinition(new[] { definition1, definition2 });
+
+			TemplateAssert.AreCompositeModelDefinitionsEqual(
+				new CompositeModelDefinition(
+					new Dictionary<string, IModelDefinition>
+					{
+						{
+							"Composite", new CompositeModelDefinition(
+								methods: new Dictionary<IMethodCallDefinition, IModelDefinition>
+
+								{
+									{
+										new MethodCallDefinition(
+											"MultiplyBy",
+											new IMethodArgumentDefinition[]
+											{
+												new MethodArgumentDefinition(TypeDefinition.Integer, 4)
+											}),
+										new PrimitiveModelDefinition(TypeDefinition.Integer)
+									},
+									{
+										new MethodCallDefinition(
+											"DivideBy",
+											new IMethodArgumentDefinition[]
+											{
+												new MethodArgumentDefinition(TypeDefinition.Integer, 7)
+											}),
+										new PrimitiveModelDefinition(TypeDefinition.Integer)
+									}
+								}
+							)
+						}
+					}),
+				combinedDefinition);
+		}
+
+		[TestMethod]
+		public void DefinitionCombining_TwoIntersecting_CompositeWithMethods()
+		{
+			var definition1 = new CompositeModelDefinition(
+				new Dictionary<string, IModelDefinition>
+				{
+					{
+						"Composite", new CompositeModelDefinition(
+							methods: new Dictionary<IMethodCallDefinition, IModelDefinition>
+							{
+								{
+									new MethodCallDefinition(
+										"Take",
+										new IMethodArgumentDefinition[]
+										{
+											new MethodArgumentDefinition(TypeDefinition.Integer, 3)
+										}),
+									new CompositeModelDefinition(
+										new Dictionary<string, IModelDefinition>
+										{
+											{ "A", new PrimitiveModelDefinition(TypeDefinition.Boolean) },
+											{ "B", new PrimitiveModelDefinition(TypeDefinition.Decimal) }
+										})
+								}
+							})
+					}
+				});
+
+			var definition2 = new CompositeModelDefinition(new Dictionary<string, IModelDefinition>
+			{
+				{
+					"Composite", new CompositeModelDefinition(methods: new Dictionary<IMethodCallDefinition, IModelDefinition>
+					{
+						{
+							new MethodCallDefinition(
+								"Take",
+								new IMethodArgumentDefinition[]
+								{
+									new MethodArgumentDefinition(TypeDefinition.Integer, 3)
+								}),
+							new CompositeModelDefinition(
+								new Dictionary<string, IModelDefinition>
+								{
+									{ "C", new PrimitiveModelDefinition(TypeDefinition.DateTime) },
+									{ "D", new PrimitiveModelDefinition(TypeDefinition.Integer) }
+								})
+						}
+					})
+				}
+			});
+
+			var combinedDefinition = new DefaultTemplateFactory().CombineModelDefinition(new[] { definition1, definition2 });
+
+			TemplateAssert.AreCompositeModelDefinitionsEqual(
+				new CompositeModelDefinition(
+					new Dictionary<string, IModelDefinition>
+					{
+						{
+							"Composite", new CompositeModelDefinition(
+								methods: new Dictionary<IMethodCallDefinition, IModelDefinition>
+
+								{
+									{
+										new MethodCallDefinition(
+											"Take",
+											new IMethodArgumentDefinition[]
+											{
+												new MethodArgumentDefinition(TypeDefinition.Integer, 3)
+											}),
+										new CompositeModelDefinition(
+											new Dictionary<string, IModelDefinition>
+											{
+												{ "A", new PrimitiveModelDefinition(TypeDefinition.Boolean) },
+												{ "B", new PrimitiveModelDefinition(TypeDefinition.Decimal) },
+												{ "C", new PrimitiveModelDefinition(TypeDefinition.DateTime) },
+												{ "D", new PrimitiveModelDefinition(TypeDefinition.Integer) }
+											})
+									}
+								}
+							)
+						}
+					}),
 				combinedDefinition);
 		}
 	}

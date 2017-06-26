@@ -68,7 +68,14 @@ namespace Mindbox.Quokka
 				})
 				.ToDictionary(item => item.Name, item => item.SubDefinition, StringComparer.InvariantCultureIgnoreCase);
 
-			return new CompositeModelDefinition(fieldsFromAllDefinitions);
+			var methodsFromAllDefinitions = definitions
+				.SelectMany(d => d.Methods)
+				.GroupBy(d => d.Key, d => d.Value)
+				.ToDictionary(
+					grouping => grouping.Key,
+					grouping => CombineModelDefinition(grouping.Key.ToString(), grouping.ToList(), errorListener));
+
+			return new CompositeModelDefinition(fieldsFromAllDefinitions, methodsFromAllDefinitions);
 		}
 
 		private static IModelDefinition CombineModelDefinition(
