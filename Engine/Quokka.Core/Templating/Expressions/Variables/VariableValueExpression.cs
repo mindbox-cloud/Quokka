@@ -53,7 +53,8 @@ namespace Mindbox.Quokka
 			var valueStorage = TryGetValueStorage(renderContext);
 			if (valueStorage == null || valueStorage.CheckIfValueIsNull())
 				throw new UnrenderableTemplateModelException(
-					$"An attempt to use the value of variable \"{variableName}\" which happens to be null");
+					$"An attempt to use the value of variable \"{variableName}\" which happens to be null",
+					variableLocation);
 
 			return valueStorage;
 		}

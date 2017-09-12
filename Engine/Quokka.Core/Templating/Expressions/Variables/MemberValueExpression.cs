@@ -70,7 +70,8 @@ namespace Mindbox.Quokka
 			    value = members[i].GetMemberValue(value);
 
 			    if (value == null || value.CheckIfValueIsNull())
-			    {
+				{
+					var location = members[i].Location;
 				    var memberChainStringRepresentation =
 					    string.Join(
 						    ".",
@@ -80,9 +81,10 @@ namespace Mindbox.Quokka
 									    .Select(m => m.StringRepresentation)
 									    .Take(i + 1)));
 
-				    throw new UnrenderableTemplateModelException(
-					    $"An attempt to use the value of \"{memberChainStringRepresentation}\" expression which happens to be null");
-			    }
+					throw new UnrenderableTemplateModelException(
+						$"An attempt to use the value of \"{memberChainStringRepresentation}\" expression which happens to be null",
+						location);
+				}
 		    }
 
 		    return value;

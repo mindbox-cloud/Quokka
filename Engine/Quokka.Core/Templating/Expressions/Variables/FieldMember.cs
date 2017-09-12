@@ -1,28 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Mindbox.Quokka
+﻿namespace Mindbox.Quokka
 {
     internal class FieldMember : Member
     {
 	    private readonly string fieldName;
 
-	    private readonly Location location;
-
 	    public FieldMember(string fieldName, Location location)
+			: base(location)
 	    {
 		    this.fieldName = fieldName;
-		    this.location = location;
 	    }
 
 	    public override string StringRepresentation => fieldName;
 
 		public override void PerformSemanticAnalysis(AnalysisContext analysisContext, ValueUsageSummary ownerValueUsageSummary, TypeDefinition memberType)
 	    {
-		    ownerValueUsageSummary.Fields.CreateOrUpdateMember(fieldName, new ValueUsage(location, memberType));
+		    ownerValueUsageSummary.Fields.CreateOrUpdateMember(fieldName, new ValueUsage(Location, memberType));
 	    }
 
 	    public override ValueUsageSummary GetMemberVariableDefinition(ValueUsageSummary ownerValueUsageSummary)

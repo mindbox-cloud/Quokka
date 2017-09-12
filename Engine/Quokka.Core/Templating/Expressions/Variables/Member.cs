@@ -8,6 +8,11 @@ namespace Mindbox.Quokka
 {
     internal abstract class Member
     {
+		protected Member(Location location)
+		{
+			Location = location;
+		}
+
 	    public abstract void PerformSemanticAnalysis(
 			AnalysisContext analysisContext,
 			ValueUsageSummary ownerValueUsageSummary,
@@ -18,5 +23,7 @@ namespace Mindbox.Quokka
 	    public abstract VariableValueStorage GetMemberValue(VariableValueStorage ownerValueStorage);
 
 		public abstract string StringRepresentation { get; }
+
+		public Location Location { get; }
     }
 }

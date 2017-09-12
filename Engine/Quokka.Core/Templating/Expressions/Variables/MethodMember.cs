@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Mindbox.Quokka
 {
@@ -10,15 +7,14 @@ namespace Mindbox.Quokka
     {
 	    private readonly string name;
 	    private readonly IReadOnlyList<ArgumentValue> arguments;
-		private readonly Location location;
 
 	    private readonly MethodCall methodCall;
 
 	    public MethodMember(string name, IEnumerable<ArgumentValue> arguments, Location location)
+			: base(location)
 	    {
 		    this.name = name;
 		    this.arguments = arguments.ToList().AsReadOnly();
-			this.location = location;
 
 		    methodCall = BuildMethodCall();
 	    }
@@ -27,10 +23,10 @@ namespace Mindbox.Quokka
 	    {
 		    for (int i = 0; i < arguments.Count; i++)
 			    if (arguments[i].TryGetStaticValue() == null)
-				    analysisContext.ErrorListener.AddNonConstantMethodArgumentError(name, i + 1, location);
+				    analysisContext.ErrorListener.AddNonConstantMethodArgumentError(name, i + 1, Location);
 
 		    ownerValueUsageSummary.Methods
-			    .CreateOrUpdateMember(methodCall, new ValueUsage(location, memberType));
+			    .CreateOrUpdateMember(methodCall, new ValueUsage(Location, memberType));
 	    }
 
 	    public override ValueUsageSummary GetMemberVariableDefinition(ValueUsageSummary ownerValueUsageSummary)

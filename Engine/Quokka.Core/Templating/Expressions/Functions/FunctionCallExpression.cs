@@ -49,7 +49,8 @@ namespace Mindbox.Quokka
 		    {
 			    throw new UnrenderableTemplateModelException(
 					$"Function {FunctionName} invocation resulted in error",
-					ex);
+					ex,
+					Location);
 		    }
 	    }
 
