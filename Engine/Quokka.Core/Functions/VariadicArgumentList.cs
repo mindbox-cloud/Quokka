@@ -20,7 +20,7 @@ namespace Mindbox.Quokka
 			return arguments.Count >= Arguments.Count + variadicArgument.MinimumOccurrences;
 		}
 
-		protected override TemplateFunctionArgument GetArgument(int argumentNumber)
+		internal override TemplateFunctionArgument GetArgument(int argumentNumber)
 		{
 			return argumentNumber < Arguments.Count ? Arguments[argumentNumber] : variadicArgument;
 		}

@@ -9,7 +9,7 @@ namespace Mindbox.Quokka
 			: base(
 				  "formatDecimal",
 				  new DecimalFunctionArgument("number"), 
-				  new StringFunctionArgument("format", ValidateFormat))
+				  new StringFunctionArgument("format", valueValidator: ValidateFormat))
 		{
 		}
 

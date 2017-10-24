@@ -27,5 +27,10 @@ namespace Mindbox.Quokka
 		{
 			return new PrimitiveVariableValueStorage(stringValue);
 		}
+
+		public override bool CheckIfExpressionIsNull(RenderContext renderContext)
+		{
+			return false;
+		}
 	}
 }

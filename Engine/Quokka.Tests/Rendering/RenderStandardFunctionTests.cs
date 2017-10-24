@@ -261,6 +261,18 @@ namespace Mindbox.Quokka.Tests
 		}
 
 		[TestMethod]
+		public void Render_IsEmptyAndIfCombination_WorksWithNullValue()
+		{
+			var template = new Template("${ if( isEmpty(productionFlag), \"test.example.com\", \"example.com\") }");
+
+			var result = template.Render(
+				new CompositeModelValue(
+					new ModelField("productionFlag", new PrimitiveModelValue(null))));
+
+			Assert.AreEqual("test.example.com", result);
+		}
+
+		[TestMethod]
 		public void Render_IfDecimalNull_Works()
 		{
 			var template = new Template("${ if( Price != NULL, formatDecimal(Price, \".00\"), \"Unknown price\") }");

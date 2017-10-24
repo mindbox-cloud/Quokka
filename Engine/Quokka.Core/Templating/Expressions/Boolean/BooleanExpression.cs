@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Mindbox.Quokka
+﻿namespace Mindbox.Quokka
 {
 	internal abstract class BooleanExpression : Expression
 	{

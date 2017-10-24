@@ -26,5 +26,10 @@ namespace Mindbox.Quokka
 	    {
 		    variantValueExpression.PerformSemanticAnalysis(context, TypeDefinition.Boolean);
 	    }
-    }
+
+		public override bool CheckIfExpressionIsNull(RenderContext renderContext)
+		{
+			return variantValueExpression.CheckIfExpressionIsNull(renderContext);
+		}
+	}
 }

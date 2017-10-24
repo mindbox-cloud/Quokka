@@ -8,7 +8,7 @@ namespace Mindbox.Quokka
 			: base(
 				  "formatTime",
 				  new TimeSpanFunctionArgument("time"),
-				  new StringFunctionArgument("format", ValidateFormat))
+				  new StringFunctionArgument("format", valueValidator: ValidateFormat))
 		{
 		}
 

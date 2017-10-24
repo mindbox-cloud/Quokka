@@ -1,5 +1,4 @@
 using System;
-using System.Linq;
 
 namespace Mindbox.Quokka
 {
@@ -8,12 +7,15 @@ namespace Mindbox.Quokka
 		public string Name { get; }
 		internal abstract TypeDefinition Type { get; }
 
-		protected TemplateFunctionArgument(string name)
+		internal bool AllowsNull { get; }
+
+		protected TemplateFunctionArgument(string name, bool allowsNull = false)
 		{
 			if (string.IsNullOrWhiteSpace(name))
 				throw new ArgumentException("Argument name should not be null or blank", nameof(name));
 
 			Name = name;
+			AllowsNull = allowsNull;
 		}
 
 		internal abstract ArgumentValueValidationResult ValidateConstantValue(VariableValueStorage value);

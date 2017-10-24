@@ -22,8 +22,10 @@
 			return Expression.GetResultType(context);
 		}
 
-		public VariableValueStorage GetValue(RenderContext renderContext)
+		public VariableValueStorage GetValue(RenderContext renderContext, TemplateFunctionArgument templateFunctionArgument)
 		{
+			if (templateFunctionArgument.AllowsNull && Expression.CheckIfExpressionIsNull(renderContext))
+				return new PrimitiveVariableValueStorage(new PrimitiveModelValue(null));
 			return Expression.Evaluate(renderContext);
 		}
 

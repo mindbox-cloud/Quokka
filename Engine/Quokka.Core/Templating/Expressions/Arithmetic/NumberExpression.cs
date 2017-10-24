@@ -18,6 +18,11 @@ namespace Mindbox.Quokka
 						: TypeDefinition.Decimal;
 		}
 
+		public override bool CheckIfExpressionIsNull(RenderContext renderContext)
+		{
+			return false;
+		}
+
 		public override double GetValue(RenderContext renderContext)
 		{
 			return number;

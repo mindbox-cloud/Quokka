@@ -30,5 +30,10 @@ namespace Mindbox.Quokka
 			foreach (var operand in operands)
 				operand.Expression.PerformSemanticAnalysis(context);
 		}
+
+		public override bool CheckIfExpressionIsNull(RenderContext renderContext)
+		{
+			return operands.Any(operand => operand.Expression.CheckIfExpressionIsNull(renderContext));
+		}
 	}
 }

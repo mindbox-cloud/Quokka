@@ -11,5 +11,10 @@
 		{
 			// This node is constant and therefore can't affect semantic analysis context.
 		}
+
+		public override bool CheckIfExpressionIsNull(RenderContext renderContext)
+		{
+			return false;
+		}
 	}
 }

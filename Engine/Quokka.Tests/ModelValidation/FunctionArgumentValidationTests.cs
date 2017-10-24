@@ -9,7 +9,7 @@ namespace Mindbox.Quokka.Tests
 		{
 			public TestFunction() 
 				: base("validate",
-					  new DecimalFunctionArgument("value", Validate))
+					  new DecimalFunctionArgument("value", valueValidator: Validate))
 			{
 			}
 

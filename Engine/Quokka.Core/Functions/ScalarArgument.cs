@@ -8,8 +8,8 @@ namespace Mindbox.Quokka
 
 		private readonly Func<TType, ArgumentValueValidationResult> valueValidator;
 
-		protected ScalarArgument(string name, Func<TType, ArgumentValueValidationResult> valueValidator = null) 
-			:base(name)
+		protected ScalarArgument(string name, bool allowsNull = false, Func<TType, ArgumentValueValidationResult> valueValidator = null) 
+			:base(name, allowsNull)
 		{
 			this.valueValidator = valueValidator;
 		}
@@ -29,8 +29,8 @@ namespace Mindbox.Quokka
 
 	public sealed class DecimalFunctionArgument : ScalarArgument<decimal>
 	{
-		public DecimalFunctionArgument(string name, Func<decimal, ArgumentValueValidationResult> valueValidator = null)
-			: base(name, valueValidator)
+		public DecimalFunctionArgument(string name, bool allowsNull = false, Func<decimal, ArgumentValueValidationResult> valueValidator = null)
+			: base(name, allowsNull, valueValidator)
 		{
 		}
 
@@ -45,32 +45,32 @@ namespace Mindbox.Quokka
 
 	public sealed class StringFunctionArgument : ScalarArgument<string>
 	{
-		public StringFunctionArgument(string name, Func<string, ArgumentValueValidationResult> valueValidator = null)
-			: base(name, valueValidator)
+		public StringFunctionArgument(string name, bool allowsNull = false, Func<string, ArgumentValueValidationResult> valueValidator = null)
+			: base(name, allowsNull, valueValidator)
 		{
 		}
 	}
 
 	public sealed class DateTimeFunctionArgument : ScalarArgument<DateTime>
 	{
-		public DateTimeFunctionArgument(string name, Func<DateTime, ArgumentValueValidationResult> valueValidator = null)
-			: base(name, valueValidator)
+		public DateTimeFunctionArgument(string name, bool allowsNull = false, Func<DateTime, ArgumentValueValidationResult> valueValidator = null)
+			: base(name, allowsNull, valueValidator)
 		{
 		}
 	}
 
 	public sealed class BoolFunctionArgument : ScalarArgument<bool>
 	{
-		public BoolFunctionArgument(string name, Func<bool, ArgumentValueValidationResult> valueValidator = null)
-			: base(name, valueValidator)
+		public BoolFunctionArgument(string name, bool allowsNull = false, Func<bool, ArgumentValueValidationResult> valueValidator = null)
+			: base(name, allowsNull, valueValidator)
 		{
 		}
 	}
 
 	public sealed class IntegerFunctionArgument : ScalarArgument<int>
 	{
-		public IntegerFunctionArgument(string name, Func<int, ArgumentValueValidationResult> valueValidator = null)
-			: base(name, valueValidator)
+		public IntegerFunctionArgument(string name, bool allowsNull = false, Func<int, ArgumentValueValidationResult> valueValidator = null)
+			: base(name, allowsNull, valueValidator)
 		{
 		}
 
@@ -85,8 +85,8 @@ namespace Mindbox.Quokka
 
 	public sealed class TimeSpanFunctionArgument : ScalarArgument<TimeSpan>
 	{
-		public TimeSpanFunctionArgument(string name, Func<TimeSpan, ArgumentValueValidationResult> valueValidator = null)
-			: base(name, valueValidator)
+		public TimeSpanFunctionArgument(string name, bool allowsNull = false, Func<TimeSpan, ArgumentValueValidationResult> valueValidator = null)
+			: base(name, allowsNull, valueValidator)
 		{
 		}
 	}

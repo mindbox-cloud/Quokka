@@ -5,7 +5,7 @@
 		public IsEmptyTemplateFunction()
 			: base(
 				  "isEmpty",
-				  new StringFunctionArgument("string"))
+				  new StringFunctionArgument("string", allowsNull: true))
 		{
 		}
 
