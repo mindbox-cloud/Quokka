@@ -377,5 +377,49 @@ namespace Mindbox.Quokka.Tests
 
 			template.Render(new CompositeModelValue());
 		}
+
+		[TestMethod]
+		public void Floor_NoDecimalPlaces()
+		{
+			var template = new Template(@"${ floor(value)}");
+
+			var result = template.Render(
+				new CompositeModelValue(new ModelField("value", 10m)));
+
+			Assert.AreEqual("10", result);
+		}
+
+		[TestMethod]
+		public void Floor_WithDecimalPlaces()
+		{
+			var template = new Template(@"${ floor(value)}");
+
+			var result = template.Render(
+				new CompositeModelValue(new ModelField("value", 10.99m)));
+
+			Assert.AreEqual("10", result);
+		}
+
+		[TestMethod]
+		public void Ceiling_NoDecimalPlaces()
+		{
+			var template = new Template(@"${ ceiling(value)}");
+
+			var result = template.Render(
+				new CompositeModelValue(new ModelField("value", 10m)));
+
+			Assert.AreEqual("10", result);
+		}
+
+		[TestMethod]
+		public void Ceiling_WithDecimalPlaces()
+		{
+			var template = new Template(@"${ ceiling(value)}");
+
+			var result = template.Render(
+				new CompositeModelValue(new ModelField("value", 10.99m)));
+
+			Assert.AreEqual("11", result);
+		}
 	}
 }
