@@ -156,6 +156,8 @@ namespace Mindbox.Quokka
 			yield return new CountTemplateFunction();
 			yield return new AddDaysTemplateFunction();
 			yield return new ChooseRandomTextFunction();
+			yield return new FloorTemplateFunction();
+			yield return new CeilingTemplateFunction();
 		}
 	}
 }
