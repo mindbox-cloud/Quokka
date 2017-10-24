@@ -271,6 +271,29 @@ namespace Mindbox.Quokka.Tests
 
 			Assert.AreEqual("test.example.com", result);
 		}
+		
+		[TestMethod]
+		public void Render_IsEmptyAndIfBlock_WorksWithNonStringPrimitive()
+		{
+			var template = new Template(@"
+				@{ if isEmpty(Price) }
+					empty
+				@{ else }
+					formatDecimal(Price, "".00"")
+				@{ end if }
+			");
+
+			var result = template.Render(
+				new CompositeModelValue(
+					new ModelField("Price", new PrimitiveModelValue(null))));
+
+			var expected = @"
+				
+					empty
+				
+			";
+			Assert.AreEqual(expected, result);
+		}
 
 		[TestMethod]
 		public void Render_IfDecimalNull_Works()
