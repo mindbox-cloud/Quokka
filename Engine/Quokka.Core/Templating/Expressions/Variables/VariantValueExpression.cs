@@ -9,9 +9,7 @@ namespace Mindbox.Quokka
 		public abstract void RegisterIterationOverExpressionResult(AnalysisContext context, ValueUsageSummary iterationVariable);
 
 		public abstract IModelDefinition GetExpressionResultModelDefinition(AnalysisContext context);
-
-		public abstract bool CheckIfExpressionIsNull(RenderContext renderContext);
-
+		
 		public sealed override VariableValueStorage TryGetStaticEvaluationResult()
 		{
 			return null;

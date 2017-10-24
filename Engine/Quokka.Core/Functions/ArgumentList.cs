@@ -93,7 +93,7 @@ namespace Mindbox.Quokka
 			}
 		}
 
-		protected virtual TemplateFunctionArgument GetArgument(int argumentNumber)
+		internal virtual TemplateFunctionArgument GetArgument(int argumentNumber)
 		{
 			return Arguments[argumentNumber];
 		}

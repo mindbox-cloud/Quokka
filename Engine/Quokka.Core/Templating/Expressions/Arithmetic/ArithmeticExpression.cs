@@ -45,7 +45,7 @@ namespace Mindbox.Quokka
 			else
 				throw new InvalidOperationException($"The expression result is of unexpected type {value.GetType().Name}");
 		}
-
+		
 		private static object NormalizeValue(double value)
 		{
 			const double Epsilon = 1e-8;

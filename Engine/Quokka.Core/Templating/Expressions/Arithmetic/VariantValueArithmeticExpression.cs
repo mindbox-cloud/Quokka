@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Mindbox.Quokka
 {
-    internal class VariantValueArithmeticExpression : ArithmeticExpression
+	internal class VariantValueArithmeticExpression : ArithmeticExpression
     {
 	    private readonly VariantValueExpression variantValueExpression;
 
@@ -32,5 +28,10 @@ namespace Mindbox.Quokka
 	    {
 		    variantValueExpression.PerformSemanticAnalysis(context, TypeDefinition.Decimal);
 	    }
-    }
+
+		public override bool CheckIfExpressionIsNull(RenderContext renderContext)
+		{
+			return variantValueExpression.CheckIfExpressionIsNull(renderContext);
+		}
+	}
 }

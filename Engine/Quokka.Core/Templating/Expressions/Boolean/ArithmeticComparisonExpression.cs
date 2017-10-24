@@ -51,5 +51,10 @@ namespace Mindbox.Quokka
 			left.PerformSemanticAnalysis(context);
 			right.PerformSemanticAnalysis(context);
 		}
+
+		public override bool CheckIfExpressionIsNull(RenderContext renderContext)
+		{
+			return left.CheckIfExpressionIsNull(renderContext) || right.CheckIfExpressionIsNull(renderContext);
+		}
 	}
 }

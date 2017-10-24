@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Mindbox.Quokka
+﻿namespace Mindbox.Quokka
 {
 	internal interface IExpression
 	{
@@ -17,5 +11,7 @@ namespace Mindbox.Quokka
 		void PerformSemanticAnalysis(AnalysisContext context, TypeDefinition expectedExpressionType);
 
 		string GetOutputValue(RenderContext context);
+
+		bool CheckIfExpressionIsNull(RenderContext renderContext);
 	}
 }

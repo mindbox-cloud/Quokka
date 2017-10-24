@@ -23,5 +23,10 @@
 		{
 			innerExpression.PerformSemanticAnalysis(context);
 		}
+
+		public override bool CheckIfExpressionIsNull(RenderContext renderContext)
+		{
+			return innerExpression.CheckIfExpressionIsNull(renderContext);
+		}
 	}
 }

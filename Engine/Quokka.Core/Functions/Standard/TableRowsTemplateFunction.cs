@@ -67,7 +67,7 @@ namespace Mindbox.Quokka
 				  "tableRows",
 				  resultModelDefinition,
 				  new TableValuesCollectionArgument("list"),
-				  new IntegerFunctionArgument("rowSize", ValidateGroupSize))
+				  new IntegerFunctionArgument("rowSize", valueValidator: ValidateGroupSize))
 		{
 		}
 

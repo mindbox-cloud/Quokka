@@ -26,5 +26,10 @@ namespace Mindbox.Quokka
 			foreach (var subExpression in subExpressions)
 				subExpression.PerformSemanticAnalysis(context);
 		}
+
+		public override bool CheckIfExpressionIsNull(RenderContext renderContext)
+		{
+			return subExpressions.Any(expression => expression.CheckIfExpressionIsNull(renderContext));
+		}
 	}
 }

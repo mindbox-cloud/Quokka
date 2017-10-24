@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Mindbox.Quokka
 {
-    internal class FunctionCallExpression : VariantValueExpression
+	internal class FunctionCallExpression : VariantValueExpression
     {
 		public string FunctionName { get; }
 
@@ -43,7 +41,11 @@ namespace Mindbox.Quokka
 
 		    try
 		    {
-			    return function.Invoke(argumentValues.Select(arg => arg.GetValue(renderContext)).ToList());
+			    return function.Invoke(
+					argumentValues
+						.Select((argumentValue, argumentNumber) => 
+							argumentValue.GetValue(renderContext, function.Arguments.GetArgument(argumentNumber)))
+						.ToList());
 		    }
 		    catch (Exception ex)
 		    {
