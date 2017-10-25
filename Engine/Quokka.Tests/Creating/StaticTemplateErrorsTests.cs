@@ -34,5 +34,11 @@ namespace Mindbox.Quokka
 
 		    Assert.AreEqual(1, errors.Count);
 	    }
+
+		[TestMethod]
+		public void CreateTemplate_ErrorCharacterIsAUnicodeCodePoint_CorrectException()
+		{
+			Assert.ThrowsException<TemplateContainsErrorsException>(() => new Template(@"@{if💝"));
+		}
 	}
 }

@@ -24,7 +24,7 @@ namespace Mindbox.Quokka.Html
 
 			var blockText = context.Start.InputStream.GetText(
 				new Interval(context.Start.StartIndex, context.Stop.StopIndex));
-			var inputStream = new AntlrInputStream(blockText);
+			var inputStream = new CodePointCharStream(blockText);
 			var lexer = new QuokkaHtmlLex(inputStream);
 			lexer.RemoveErrorListeners();
 			var commonTokenStream = new CommonTokenStream(lexer);

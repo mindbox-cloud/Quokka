@@ -132,7 +132,7 @@ namespace Mindbox.Quokka
 
 		private QuokkaParser.TemplateContext ParseTemplateText(string templateText, SyntaxErrorListener syntaxErrorListener)
 		{
-			var inputStream = new AntlrInputStream(templateText);
+			var inputStream = new CodePointCharStream(templateText);
 			var commonTokenStream = new CommonTokenStream(new QuokkaLex(inputStream));
 
 			var parser = new QuokkaParser(commonTokenStream);
