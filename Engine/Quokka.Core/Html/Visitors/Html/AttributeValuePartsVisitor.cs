@@ -16,7 +16,7 @@ namespace Mindbox.Quokka.Html
 		{
 			var text = context.GetText();
 			var decodedText = WebUtility.HtmlDecode(text);
-			return new ConstantBlock(decodedText, context.Start.StartIndex, text.Length);
+			return new ConstantBlock(decodedText, context.Start.StartIndex, context.GetContextLength());
 		}
 
 		public override ITemplateNode VisitInsideAttributeOutputBlock(QuokkaHtml.InsideAttributeOutputBlockContext context)

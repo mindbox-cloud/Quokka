@@ -42,7 +42,7 @@ namespace Mindbox.Quokka.Html
 			if (blockChildren.Any())
 			{
 				var offset = ruleContext.Start.StartIndex + offsetLeft;
-				var length = ruleContext.Stop.StopIndex - offset - offsetRight + 1;
+				var length = ruleContext.GetContextLength() - offsetLeft - offsetRight;
 				string text = ruleContext.GetText();
 				var quotedText = text.Substring(offsetLeft, text.Length - offsetRight - offsetLeft);
 				var decodedValue = WebUtility.HtmlDecode(quotedText);
