@@ -20,7 +20,7 @@ namespace Mindbox.Quokka
 			return new ConstantBlock(
 				text, 
 				GetRelativePartOffset(context.Start.StartIndex),
-				text.Length);
+				context.GetContextLength());
 		}
 
 		public override IStaticBlockPart VisitOutputBlock(QuokkaParser.OutputBlockContext context)
@@ -30,8 +30,8 @@ namespace Mindbox.Quokka
 					? context.Accept(new FilterChainVisitor(VisitingContext))
 					: context.expression().Accept(new ExpressionVisitor(VisitingContext));
 
-			var startIndex = context.OutputInstructionStart().Symbol.StartIndex;
-			var length = context.InstructionEnd().Symbol.StopIndex - startIndex + 1;
+			var startIndex = context.Start.StartIndex;
+			var length = context.GetContextLength();
 
 			return new OutputInstructionBlock(outputExpression, GetRelativePartOffset(startIndex), length);
 		}
