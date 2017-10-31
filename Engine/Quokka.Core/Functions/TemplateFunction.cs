@@ -32,5 +32,11 @@ namespace Mindbox.Quokka
 		}
 
 		internal abstract VariableValueStorage Invoke(IList<VariableValueStorage> argumentsValues);
+
+		internal bool Accepts(IReadOnlyList<ArgumentValue> arguments)
+		{
+			// only overload by arguments count is currently supported
+			return Arguments.CheckArgumentNumber(arguments);
+		}
 	}
 }

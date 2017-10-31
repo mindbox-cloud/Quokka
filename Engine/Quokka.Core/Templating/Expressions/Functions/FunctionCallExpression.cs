@@ -35,7 +35,7 @@ namespace Mindbox.Quokka
 		
 	    public override VariableValueStorage Evaluate(RenderContext renderContext)
 	    {
-			var function = renderContext.Functions.TryGetFunction(FunctionName);
+			var function = renderContext.Functions.TryGetFunction(FunctionName, argumentValues);
 		    if (function == null)
 			    throw new InvalidOperationException($"Function {FunctionName} not found");
 
@@ -82,7 +82,7 @@ namespace Mindbox.Quokka
 		
 	    private TemplateFunction TryGetFunctionForSemanticAnalysis(AnalysisContext context)
 	    {
-		    var function = context.Functions.TryGetFunction(FunctionName);
+		    var function = context.Functions.TryGetFunction(FunctionName, argumentValues);
 		    if (function == null)
 			    context.ErrorListener.AddUndefinedFunctionError(FunctionName, Location);
 

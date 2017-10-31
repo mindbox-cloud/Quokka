@@ -421,5 +421,37 @@ namespace Mindbox.Quokka.Tests
 
 			Assert.AreEqual("11", result);
 		}
+
+		[TestMethod]
+		public void SubstringWithIndex()
+		{
+			var template = new Template(@"${ substring(value, 2)}");
+
+			var result = template.Render(
+				new CompositeModelValue(new ModelField("value", "testValue")));
+
+			Assert.AreEqual("estValue", result);
+		}
+
+		[TestMethod]
+		public void SubstringWithIndexAndLength()
+		{
+			var template = new Template(@"${ substring(value, 2, 3)}");
+
+			var result = template.Render(
+				new CompositeModelValue(new ModelField("value", "testValue")));
+
+			Assert.AreEqual("est", result);
+		}
+
+		[TestMethod]
+		[ExpectedException(typeof(TemplateContainsErrorsException))]
+		public void SubstringWithWrongArgumentsCount()
+		{
+			var template = new Template(@"${ substring(value, 2, 3, 4)}");
+
+			var result = template.Render(
+				new CompositeModelValue(new ModelField("value", "testValue")));
+		}
 	}
 }
