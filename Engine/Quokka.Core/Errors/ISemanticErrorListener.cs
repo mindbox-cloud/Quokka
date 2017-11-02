@@ -34,7 +34,7 @@ namespace Mindbox.Quokka
 
 		void AddInvalidFunctionArgumentCountError(
 			string functionName,
-			int requiredArgumentCount,
+			int[] supportedArgumentCounts,
 			int passedArgumentCount,
 			Location location);
 

@@ -29,8 +29,7 @@ namespace Mindbox.Quokka
 				    resultType,
 				    Location);
 
-			var function = TryGetFunctionForSemanticAnalysis(context);
-		    function?.Arguments.PerformSemanticAnalysis(context, argumentValues, Location);
+			context.Functions.PerformSemanticAnalysis(context, FunctionName, argumentValues, Location);
 		}
 		
 	    public override VariableValueStorage Evaluate(RenderContext renderContext)
@@ -58,7 +57,7 @@ namespace Mindbox.Quokka
 
 	    public override void RegisterIterationOverExpressionResult(AnalysisContext context, ValueUsageSummary iterationVariable)
 	    {
-		    var function = TryGetFunctionForSemanticAnalysis(context);
+		    var function = context.Functions.TryGetFunction(FunctionName, argumentValues);
 
 		    // We only do this if the template is semantically valid. If not, semantic errors are already handled
 		    // earlier in the workflow.
@@ -66,9 +65,9 @@ namespace Mindbox.Quokka
 		}
 
 	    public override IModelDefinition GetExpressionResultModelDefinition(AnalysisContext context)
-	    {
-			var function = TryGetFunctionForSemanticAnalysis(context);
-		    if (function == null)
+		{
+			var function = context.Functions.TryGetFunction(FunctionName, argumentValues);
+			if (function == null)
 			    return new PrimitiveModelDefinition(TypeDefinition.Unknown);
 
 		    return function.ReturnValueDefinition;
@@ -78,15 +77,6 @@ namespace Mindbox.Quokka
 	    {
 		    var evaluationResult = Evaluate(renderContext);
 		    return evaluationResult.CheckIfValueIsNull();
-	    }
-		
-	    private TemplateFunction TryGetFunctionForSemanticAnalysis(AnalysisContext context)
-	    {
-		    var function = context.Functions.TryGetFunction(FunctionName, argumentValues);
-		    if (function == null)
-			    context.ErrorListener.AddUndefinedFunctionError(FunctionName, Location);
-
-		    return function;
 	    }
 	}
 }

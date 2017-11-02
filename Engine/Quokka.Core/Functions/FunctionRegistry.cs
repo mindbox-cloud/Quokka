@@ -25,5 +25,34 @@ namespace Mindbox.Quokka
 			functions.TryGetValue(functionName, out var overloadedFunctions);
 			return overloadedFunctions?.FirstOrDefault(function => function.Accepts(arguments));
 		}
+
+		public void PerformSemanticAnalysis(
+			AnalysisContext context, 
+			string functionName, 
+			IReadOnlyList<ArgumentValue> arguments, 
+			Location location)
+		{
+			functions.TryGetValue(functionName, out var overloadedFunctions);
+			if (overloadedFunctions != null)
+			{
+				var suitableFunction = overloadedFunctions.FirstOrDefault(function => function.Accepts(arguments));
+				if (suitableFunction == null)
+				{
+					context.ErrorListener.AddInvalidFunctionArgumentCountError(
+						functionName,
+						overloadedFunctions.Select(function => function.Arguments.Arguments.Count).ToArray(),
+						arguments.Count,
+						location);
+				}
+				else
+				{
+					suitableFunction.Arguments.PerformSemanticAnalysis(context, arguments, location);
+				}
+			}
+			else
+			{
+				context.ErrorListener.AddUndefinedFunctionError(functionName, location);
+			}
+		}
 	}
 }

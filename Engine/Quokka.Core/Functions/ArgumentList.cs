@@ -7,7 +7,7 @@ namespace Mindbox.Quokka
 	{
 		private readonly TemplateFunction function;
 
-		protected IList<TemplateFunctionArgument> Arguments { get; }
+		internal IList<TemplateFunctionArgument> Arguments { get; }
 
 		public ArgumentList(TemplateFunction function, IEnumerable<TemplateFunctionArgument> arguments)
 		{
@@ -35,7 +35,7 @@ namespace Mindbox.Quokka
 			if (!CheckArgumentNumber(arguments))
 			{
 				context.ErrorListener.AddInvalidFunctionArgumentCountError(function.Name,
-					Arguments.Count,
+					new []{Arguments.Count},
 					arguments.Count,
 					location);
 			}
