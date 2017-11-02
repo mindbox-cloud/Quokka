@@ -60,12 +60,12 @@ namespace Mindbox.Quokka
 
 		public void AddInvalidFunctionArgumentCountError(
 			string functionName,
-			int requiredArgumentCount,
+			int[] supportedArgumentCounts,
 			int passedArgumentCount,
 			Location location)
 		{
 			AddError(new SemanticError(
-				$"Функции \"{functionName}\" вместо ожидаемого количества аргументов ({requiredArgumentCount}) передано {passedArgumentCount}",
+				$"Функции \"{functionName}\" вместо ожидаемого количества аргументов ({string.Join(", ", supportedArgumentCounts)}) передано {passedArgumentCount}",
 				location));
 		}
 

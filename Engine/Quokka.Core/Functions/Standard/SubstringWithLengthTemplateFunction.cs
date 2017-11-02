@@ -9,7 +9,10 @@
 					valueValidator: value => value >= 1
 						? ArgumentValueValidationResult.Valid
 						: new ArgumentValueValidationResult(false, "Индекс начала подстроки должен быть не меньше 1")),
-				new IntegerFunctionArgument("length"))
+				new IntegerFunctionArgument("length",
+					valueValidator: value => value >= 1
+						? ArgumentValueValidationResult.Valid
+						: new ArgumentValueValidationResult(false, "Нельзя получить подстроку из менее чем 1 символа")))
 		{
 		}
 
