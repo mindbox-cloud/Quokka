@@ -215,12 +215,22 @@ argumentList
 
 stringExpression
 	:
-		stringConstant
+		stringConstant | stringConcatenation
 	;	
 	
 stringConstant
 	:
 		DoubleQuotedString | SingleQuotedString
+	;
+
+stringConcatenation
+	:
+		stringAtom Ampersand expression
+	;
+	
+stringAtom
+	:
+		variantValueExpression | stringConstant
 	;
 
 // Boolean expressions

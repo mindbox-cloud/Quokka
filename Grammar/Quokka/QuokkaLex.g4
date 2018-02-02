@@ -182,6 +182,11 @@ SingleQuotedString
 		'\'' ~'\''* '\''
 	;
 	
+Ampersand
+	:
+		'&'
+	;
+	
 Identifier
     :
         [_a-zA-Z] [_a-zA-Z0-9]*

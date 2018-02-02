@@ -225,6 +225,18 @@ internal interface IQuokkaVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <return>The visitor result.</return>
 	Result VisitStringConstant([NotNull] QuokkaParser.StringConstantContext context);
 	/// <summary>
+	/// Visit a parse tree produced by <see cref="QuokkaParser.stringConcatenation"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitStringConcatenation([NotNull] QuokkaParser.StringConcatenationContext context);
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="QuokkaParser.stringAtom"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitStringAtom([NotNull] QuokkaParser.StringAtomContext context);
+	/// <summary>
 	/// Visit a parse tree produced by <see cref="QuokkaParser.booleanExpression"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
