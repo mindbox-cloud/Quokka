@@ -4,11 +4,6 @@ namespace Mindbox.Quokka
 	{
 		private readonly string stringValue;
 
-		public override TypeDefinition GetResultType(AnalysisContext context)
-		{
-			return TypeDefinition.String;
-		}
-
 		public StringConstantExpression(string stringValue)
 		{
 			this.stringValue = stringValue;

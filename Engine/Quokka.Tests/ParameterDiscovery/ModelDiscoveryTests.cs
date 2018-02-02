@@ -775,6 +775,28 @@ namespace Mindbox.Quokka.Tests
 		}
 
 		[TestMethod]
+		public void ModelDiscovery_StringConcatenation()
+		{
+			var model = new Template(@"${ composite.PropertyA & variableB & ""constant"" }")
+				.GetModelDefinition();
+
+			TemplateAssert.AreCompositeModelDefinitionsEqual(
+				new CompositeModelDefinition(new Dictionary<string, IModelDefinition>
+				{
+					{
+						"composite", new CompositeModelDefinition(new Dictionary<string, IModelDefinition>
+						{
+							{ "PropertyA", new PrimitiveModelDefinition(TypeDefinition.Primitive) }
+						})
+					},
+					{
+						"variableB", new PrimitiveModelDefinition(TypeDefinition.Primitive)
+					}
+				}),
+				model);
+		}
+
+		[TestMethod]
 		public void ModelDiscovery_ForLoop_CollectionElementWithoutUsages()
 		{
 			var model = new Template(@"
