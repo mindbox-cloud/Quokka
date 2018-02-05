@@ -111,6 +111,11 @@ Not
 	:
 		[Nn][Oo][Tt]
 	;
+	
+Set
+	:
+		[Ss][Ee][Tt]
+	;	
 
 Equals
 	:

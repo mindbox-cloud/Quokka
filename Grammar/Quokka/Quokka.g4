@@ -21,7 +21,7 @@ staticBlock
 
 dynamicBlock
 	:
-		ifStatement | forStatement  | commentBlock
+		ifStatement | forStatement  | assignmentBlock | commentBlock
 	;
 
 constantBlock
@@ -120,6 +120,18 @@ endForInstruction
 	:
 		ControlInstructionStart
 		EndFor
+		InstructionEnd
+	;
+
+// Assignment
+
+assignmentBlock
+	:
+		ControlInstructionStart
+		Set
+		Identifier
+		Equals
+		expression
 		InstructionEnd
 	;
 
