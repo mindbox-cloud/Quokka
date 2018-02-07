@@ -55,25 +55,6 @@ namespace Mindbox.Quokka.Tests
 			TemplateAssert.AreOutputsEquivalent("70", result);
 		}
 
-		[TestMethod]
-		public void Render_AssignmentBlock_()
-		{
-			var template = new DefaultTemplateFactory(new[] { new FaultyFunction() })
-				.CreateTemplate(@"
-					@{ set a = b + c }
-					${ a.Name }");
-
-			var result = template.Render(
-				new CompositeModelValue(
-					new ModelField("Recipient",
-						new CompositeModelValue(
-							new ModelField("Name",
-								new PrimitiveModelValue("Roma"))))));
-
-
-			TemplateAssert.AreOutputsEquivalent("Roma", result);
-		}
-
 		private class FaultyFunction : ScalarTemplateFunction
 		{
 			public FaultyFunction()

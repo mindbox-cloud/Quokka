@@ -818,6 +818,21 @@ namespace Mindbox.Quokka.Tests
 		}
 
 		[TestMethod]
+		public void ModelDiscovery_VariableTypeDiscovery()
+		{
+			var model = new Template(
+				"@{ set a = Recipient } @{ set b = 3 } ${ a + b }")
+				.GetModelDefinition();
+
+			TemplateAssert.AreCompositeModelDefinitionsEqual(
+				new CompositeModelDefinition(new Dictionary<string, IModelDefinition>
+				{
+					{ "Recipient", new PrimitiveModelDefinition(TypeDefinition.Decimal) },
+				}),
+				model);
+		}
+
+		[TestMethod]
 		public void ModelDiscovery_ForLoop_ArrayContainsFieldsAndMethods()
 		{
 			var model = new Template(@"
