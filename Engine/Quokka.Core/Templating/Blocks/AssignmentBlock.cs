@@ -21,7 +21,7 @@ namespace Mindbox.Quokka
 
 		public override void PerformSemanticAnalysis(AnalysisContext context)
 		{
-			value.PerformSemanticAnalysis(context, TypeDefinition.Unknown);
+			value.PerformSemanticAnalysis(context, TypeDefinition.Primitive);
 
 			context.VariableScope.RegisterVariableValueUsage(
 				variableName, new ValueUsage(location, value.GetResultType(context), VariableUsageIntention.Write));

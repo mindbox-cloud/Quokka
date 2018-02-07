@@ -18,5 +18,14 @@ namespace Mindbox.Quokka.Tests
 				${ a }
 				@{ set a = 2 }");
 		}
+		
+		[TestMethod]
+		[ExpectedException(typeof(TemplateContainsErrorsException))]
+		public void Static_AssignmentBlock_InconsistentVariableUsages()
+		{
+			new Template(@"
+					@{ set a = 5 }
+					@{ set a = 'string' }");
+		}
 	}
 }

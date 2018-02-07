@@ -124,7 +124,7 @@ namespace Mindbox.Quokka
 		public void AddVariableUsageBeforeAssignmentError(ValueUsageSummary definition, Location location)
 		{
 			AddError(new SemanticError(
-				$"Переменной \"{definition.FullName}\" используется до присваивания значения.",
+				$"Переменная \"{definition.FullName}\" используется до присваивания значения.",
 				location));
 		}
 	}

@@ -48,7 +48,7 @@ namespace Mindbox.Quokka
 			scope.RegisterVariableValueUsageIgnoringParentScopes(name, valueUsage);
 		}
 
-		public void CheckForVariableUsageConflicts(AnalysisContext context)
+		public void Compile(AnalysisContext context)
 		{
 			if (parentScope != null)
 			{
@@ -60,10 +60,10 @@ namespace Mindbox.Quokka
 			}
 
 			foreach (var item in Variables.Items)
-				item.Value.Validate(context.ErrorListener);
+				item.Value.Compile(context.ErrorListener);
 
 			foreach (var childScope in childScopes)
-				childScope.CheckForVariableUsageConflicts(context);
+				childScope.Compile(context);
 		} 
 
 		private void RegisterVariableValueUsageIgnoringParentScopes(string name, ValueUsage valueUsage)

@@ -16,6 +16,7 @@ namespace Mindbox.Quokka
 	internal class ValueUsageSummary
 	{
 		private readonly IList<ValueUsage> usages;
+		private TypeDefinition compiledType;
 
 		/// <summary>
 		/// Usage summaries for all the values that were created by iterating over this value (if it's a collection).
@@ -49,11 +50,19 @@ namespace Mindbox.Quokka
 			}
 		}
 
-		public void Validate(ISemanticErrorListener errorListener)
+		public void Compile(ISemanticErrorListener errorListener)
 		{
-			if(usages.First().Intention == VariableUsageIntention.Read
+			if (usages.First().Intention == VariableUsageIntention.Read
 					&& usages.Any(u => u.Intention == VariableUsageIntention.Write))
 				errorListener.AddVariableUsageBeforeAssignmentError(this, usages.First().Location);
+
+			compiledType = TypeDefinition.GetResultingTypeForMultipleOccurences(
+				usages,
+				occurence => occurence.RequiredType,
+				(occurence, correctType) => errorListener.AddInconsistentVariableTypingError(
+					this,
+					occurence,
+					correctType));
 		}
 
 		public ValueUsageSummary(string fullName)
@@ -92,15 +101,7 @@ namespace Mindbox.Quokka
 
 		private IModelDefinition ToModelDefinition(ISemanticErrorListener errorListener)
 		{
-			var type = TypeDefinition.GetResultingTypeForMultipleOccurences(
-				usages,
-				occurence => occurence.RequiredType,
-				(occurence, correctType) => errorListener.AddInconsistentVariableTypingError(
-					this,
-					occurence,
-					correctType));
-
-			if (type.IsAssignableTo(TypeDefinition.Composite))
+			if (compiledType.IsAssignableTo(TypeDefinition.Composite))
 			{
 				var fields = new ReadOnlyDictionary<string, IModelDefinition>(
 					Fields.Items
@@ -117,7 +118,7 @@ namespace Mindbox.Quokka
 
 				CheckForFieldsAndMethodsNameConflicts(errorListener);
 
-				if (type == TypeDefinition.Array)
+				if (compiledType == TypeDefinition.Array)
 				{
 					IModelDefinition collectionElementDefinition;
 					if (enumerationResultUsageSummaries.Any())
@@ -134,18 +135,18 @@ namespace Mindbox.Quokka
 
 					return new ArrayModelDefinition(collectionElementDefinition, fields, methods);
 				}
-				else if (type == TypeDefinition.Composite)
+				else if (compiledType == TypeDefinition.Composite)
 				{
 					return new CompositeModelDefinition(fields, methods);
 				}
 				else
 				{
-					throw new InvalidOperationException($"Unexpected type {type}");
+					throw new InvalidOperationException($"Unexpected type {compiledType}");
 				}
 			}
 			else
 			{
-				return new PrimitiveModelDefinition(type);
+				return new PrimitiveModelDefinition(compiledType);
 			}
 		}
 

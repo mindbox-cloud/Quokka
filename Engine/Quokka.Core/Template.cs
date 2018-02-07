@@ -58,7 +58,7 @@ namespace Mindbox.Quokka
 						semanticErrorListener);
 
 					compiledTemplateTree.PerformSemanticAnalysis(analysisContext);
-					analysisContext.VariableScope.CheckForVariableUsageConflicts(analysisContext);
+					analysisContext.VariableScope.Compile(analysisContext);
 					requiredModelDefinition = ValueUsageSummary.ConvertCollectionToModelDefinition(
 						analysisContext.VariableScope.Variables,
 						semanticErrorListener);

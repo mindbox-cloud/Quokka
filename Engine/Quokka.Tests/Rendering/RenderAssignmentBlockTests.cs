@@ -32,5 +32,59 @@ namespace Mindbox.Quokka.Tests
 				new CompositeModelValue());
 			TemplateAssert.AreOutputsEquivalent("2", result);
 		}
+
+		[TestMethod]
+		public void Render_AssignmentBlock_OutOfScopeAssignments()
+		{
+			var template = new Template(@"
+				@{ set a = 55 }
+				@{ for p in ps }
+					@{ set a = a + 5 }
+				@{ end for }
+				${ a }");
+
+			var result = template.Render(
+				new CompositeModelValue(
+					new ModelField("ps",
+						new ArrayModelValue(
+							new PrimitiveModelValue(1),
+							new PrimitiveModelValue(2),
+							new PrimitiveModelValue(3)))));
+
+
+			TemplateAssert.AreOutputsEquivalent("70", result);
+		}
+
+		[TestMethod]
+		public void Render_AssignmentBlock_()
+		{
+			var template = new DefaultTemplateFactory(new[] { new FaultyFunction() })
+				.CreateTemplate(@"
+					@{ set a = b + c }
+					${ a.Name }");
+
+			var result = template.Render(
+				new CompositeModelValue(
+					new ModelField("Recipient",
+						new CompositeModelValue(
+							new ModelField("Name",
+								new PrimitiveModelValue("Roma"))))));
+
+
+			TemplateAssert.AreOutputsEquivalent("Roma", result);
+		}
+
+		private class FaultyFunction : ScalarTemplateFunction
+		{
+			public FaultyFunction()
+				: base("fail", typeof(int))
+			{
+			}
+
+			internal override object GetScalarInvocationResult(IList<VariableValueStorage> argumentsValues)
+			{
+				throw new Exception("Error");
+			}
+		}
 	}
 }
