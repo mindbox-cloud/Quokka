@@ -120,5 +120,12 @@ namespace Mindbox.Quokka
 					$"В метод {methodName} в качестве аргумента под номером {argumentPosition} передано не константное значение",
 					location));
 		}
+
+		public void AddVariableUsageBeforeAssignmentError(ValueUsageSummary definition, Location location)
+		{
+			AddError(new SemanticError(
+				$"Переменной \"{definition.FullName}\" используется до присваивания значения.",
+				location));
+		}
 	}
 }

@@ -8,7 +8,7 @@ namespace Mindbox.Quokka
 {
 	internal class VariableValueExpression : VariantValueExpression
 	{
-	    private readonly string variableName;
+		private readonly string variableName;
 
 		private readonly Location variableLocation;
 

@@ -41,6 +41,21 @@ namespace Mindbox.Quokka
 		/// <remarks>Only relevant for composite values.</remarks>
 		public MemberCollection<MethodCall> Methods { get; }
 
+		public bool IsReadOnly
+		{
+			get
+			{
+				return usages.All(u => u.Intention == VariableUsageIntention.Read);
+			}
+		}
+
+		public void Validate(ISemanticErrorListener errorListener)
+		{
+			if(usages.First().Intention == VariableUsageIntention.Read
+					&& usages.Any(u => u.Intention == VariableUsageIntention.Write))
+				errorListener.AddVariableUsageBeforeAssignmentError(this, usages.First().Location);
+		}
+
 		public ValueUsageSummary(string fullName)
 			: this(
 				  fullName,
@@ -241,6 +256,7 @@ namespace Mindbox.Quokka
 			return new CompositeModelDefinition(
 				new ReadOnlyDictionary<string, IModelDefinition>(
 					fields.Items
+						.Where(s => s.Value.IsReadOnly)
 						.ToDictionary(
 							kvp => kvp.Key,
 							kvp => kvp.Value.ToModelDefinition(errorListener),

@@ -48,6 +48,10 @@ namespace Mindbox.Quokka
 			ValueUsageSummary definition,
 			Location location);
 
+		void AddVariableUsageBeforeAssignmentError(
+			ValueUsageSummary definition,
+			Location location);
+
 		void AddVariableDeclarationScopeConflictError(
 			ValueUsageSummary definition,
 			Location location);

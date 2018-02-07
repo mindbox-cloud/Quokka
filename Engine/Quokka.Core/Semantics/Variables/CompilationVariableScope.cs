@@ -44,10 +44,11 @@ namespace Mindbox.Quokka
 		public void RegisterVariableValueUsage(string name, ValueUsage valueUsage)
 		{
 			var scope = GetExistingScopeForVariable(name) ?? GetRootScope();
+
 			scope.RegisterVariableValueUsageIgnoringParentScopes(name, valueUsage);
 		}
 
-		public void CheckForChildScopesDeclarationConflicts(AnalysisContext context)
+		public void CheckForVariableUsageConflicts(AnalysisContext context)
 		{
 			if (parentScope != null)
 			{
@@ -58,8 +59,11 @@ namespace Mindbox.Quokka
 				}
 			}
 
+			foreach (var item in Variables.Items)
+				item.Value.Validate(context.ErrorListener);
+
 			foreach (var childScope in childScopes)
-				childScope.CheckForChildScopesDeclarationConflicts(context);
+				childScope.CheckForVariableUsageConflicts(context);
 		} 
 
 		private void RegisterVariableValueUsageIgnoringParentScopes(string name, ValueUsage valueUsage)

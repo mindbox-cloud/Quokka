@@ -45,7 +45,12 @@ namespace Mindbox.Quokka
 				{ fieldName, fieldValueStorage }
 			};
 		}
-		
+
+		public void SetFieldValueStorage(string variableName, VariableValueStorage value)
+		{
+			fields[variableName] = value;
+		}
+
 		public bool ContainsValueForVariable(string variableName)
 		{
 			return fields.ContainsKey(variableName);
