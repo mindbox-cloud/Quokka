@@ -24,9 +24,14 @@ namespace Mindbox.Quokka
 		/// </summary>
 		/// <remarks>Only relevant for collection variables.</remarks>
 		private readonly IList<ValueUsageSummary> enumerationResultUsageSummaries;
-		
+
+		private List<ValueUsageSummary> assignedVariables = new List<ValueUsageSummary>();
+
 		public IReadOnlyList<ValueUsageSummary> EnumerationResultUsageSummaries => 
 			enumerationResultUsageSummaries.ToList().AsReadOnly();
+
+		public IReadOnlyList<ValueUsageSummary> AssignedVariables =>
+			assignedVariables.ToList().AsReadOnly();
 
 		public string FullName { get; }
 
@@ -56,13 +61,38 @@ namespace Mindbox.Quokka
 					&& usages.Any(u => u.Intention == VariableUsageIntention.Write))
 				errorListener.AddVariableUsageBeforeAssignmentError(this, usages.First().Location);
 
+			Fields.Items.ToList().ForEach(f =>
+			{
+				f.Value.Compile(errorListener);
+			});
+
+			Methods.Items.ToList().ForEach(f =>
+			{
+				f.Value.Compile(errorListener);
+			});
+
 			compiledType = TypeDefinition.GetResultingTypeForMultipleOccurences(
-				usages,
+				usages.Concat(assignedVariables.SelectMany(v => v.GetAllUsagesExcept(this))).ToList(),
 				occurence => occurence.RequiredType,
 				(occurence, correctType) => errorListener.AddInconsistentVariableTypingError(
 					this,
 					occurence,
 					correctType));
+		}
+
+		private IEnumerable<ValueUsage> GetAllUsagesExcept(ValueUsageSummary variable)
+		{
+			return GetAllUsagesExcept(new HashSet<ValueUsageSummary> { variable });
+		}
+
+		private IEnumerable<ValueUsage> GetAllUsagesExcept(HashSet<ValueUsageSummary> variables)
+		{
+			if (variables.Contains(this))
+				return Enumerable.Empty<ValueUsage>();
+
+			variables.Add(this);
+
+			return assignedVariables.SelectMany(v => v.GetAllUsagesExcept(variables)).Concat(usages);
 		}
 
 		public ValueUsageSummary(string fullName)
@@ -87,6 +117,11 @@ namespace Mindbox.Quokka
 			Methods = methods;
 			this.usages = usages;
 			this.enumerationResultUsageSummaries = enumerationResultUsageSummaries;
+		}
+
+		internal void RegisterAssignmentToVariable(ValueUsageSummary destinationVariable)
+		{
+			assignedVariables.Add(destinationVariable);
 		}
 
 		public void AddUsage(ValueUsage occurence)

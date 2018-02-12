@@ -833,6 +833,73 @@ namespace Mindbox.Quokka.Tests
 		}
 
 		[TestMethod]
+		public void ModelDiscovery_RecursiveVariableDefinition()
+		{
+			var model = new Template(
+				@"
+					@{ set b = Recipient } 
+					@{ set c = Recipient } 
+					@{ set a = b } 
+					@{ set b = c } 
+					@{ set c = a } 
+					${ c + a }")
+				.GetModelDefinition();
+
+			TemplateAssert.AreCompositeModelDefinitionsEqual(
+				new CompositeModelDefinition(new Dictionary<string, IModelDefinition>
+				{
+					{ "Recipient", new PrimitiveModelDefinition(TypeDefinition.Decimal) },
+				}),
+				model);
+		}
+
+		[TestMethod]
+		public void ModelDiscovery_MemberValueAssignment()
+		{
+			var model = new Template(
+				@"
+					@{ set b = Recipient.Age } 
+					${ b + 5 }")
+				.GetModelDefinition();
+
+			TemplateAssert.AreCompositeModelDefinitionsEqual(
+				new CompositeModelDefinition(new Dictionary<string, IModelDefinition>
+				{
+					{ "Recipient",
+						new CompositeModelDefinition(new Dictionary<string, IModelDefinition>
+						{
+							{ "Age", new PrimitiveModelDefinition(TypeDefinition.Decimal) }
+						})
+					}
+				}),
+				model);
+		}
+
+		[TestMethod]
+		public void ModelDiscovery_MethodResultAssignment()
+		{
+			var model = new Template(
+				@"
+					@{ set b = Recipient.GetAge() } 
+					${ b + 5 }")
+				.GetModelDefinition();
+
+			TemplateAssert.AreCompositeModelDefinitionsEqual(
+				new CompositeModelDefinition(new Dictionary<string, IModelDefinition>
+				{
+					{ "Recipient",
+						new CompositeModelDefinition(
+							new Dictionary<string, IModelDefinition> { },
+							new Dictionary<IMethodCallDefinition, IModelDefinition>
+								{ { new MethodCallDefinition("GetAge", new List<MethodArgumentDefinition>()),
+									new PrimitiveModelDefinition(TypeDefinition.Decimal) } }
+						)
+					}
+				}),
+				model);
+		}
+
+		[TestMethod]
 		public void ModelDiscovery_ForLoop_ArrayContainsFieldsAndMethods()
 		{
 			var model = new Template(@"

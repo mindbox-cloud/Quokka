@@ -69,5 +69,15 @@ namespace Mindbox.Quokka
 		{
 			return renderContext.VariableScope.TryGetValueStorageForVariable(variableName);
 		}
+
+
+		public sealed override void RegisterAssignmentToVariable(
+			AnalysisContext context, 
+			ValueUsageSummary destinationVariable)
+		{
+			var sourceVariable = context.VariableScope.TryGetVariableDefinition(variableName);
+
+			sourceVariable.RegisterAssignmentToVariable(destinationVariable);
+		}
 	}
 }

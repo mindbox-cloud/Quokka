@@ -12,5 +12,12 @@ namespace Mindbox.Quokka
 		{
 			return TypeDefinition.String;
 		}
+
+		public sealed override void RegisterAssignmentToVariable(
+			AnalysisContext context, 
+			ValueUsageSummary destinationVariable)
+		{
+			// do nothing
+		}
 	}
 }
