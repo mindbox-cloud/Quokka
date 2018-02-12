@@ -61,15 +61,11 @@ namespace Mindbox.Quokka
 					&& usages.Any(u => u.Intention == VariableUsageIntention.Write))
 				errorListener.AddVariableUsageBeforeAssignmentError(this, usages.First().Location);
 
-			Fields.Items.ToList().ForEach(f =>
-			{
-				f.Value.Compile(errorListener);
-			});
+			Fields.Items.ToList().ForEach(f => f.Value.Compile(errorListener));
 
-			Methods.Items.ToList().ForEach(f =>
-			{
-				f.Value.Compile(errorListener);
-			});
+			Methods.Items.ToList().ForEach(f => f.Value.Compile(errorListener));
+
+			EnumerationResultUsageSummaries?.ToList().ForEach(f => f.Compile(errorListener));
 
 			compiledType = TypeDefinition.GetResultingTypeForMultipleOccurences(
 				usages.Concat(assignedVariables.SelectMany(v => v.GetAllUsagesExcept(this))).ToList(),
@@ -78,6 +74,14 @@ namespace Mindbox.Quokka
 					this,
 					occurence,
 					correctType));
+		}
+
+		private ValueUsageSummary EnsureCompiled(ISemanticErrorListener errorListener)
+		{
+			if (compiledType == null)
+				Compile(errorListener);
+
+			return this;
 		}
 
 		private IEnumerable<ValueUsage> GetAllUsagesExcept(ValueUsageSummary variable)
@@ -136,6 +140,8 @@ namespace Mindbox.Quokka
 
 		private IModelDefinition ToModelDefinition(ISemanticErrorListener errorListener)
 		{
+			EnsureCompiled(errorListener);
+
 			if (compiledType.IsAssignableTo(TypeDefinition.Composite))
 			{
 				var fields = new ReadOnlyDictionary<string, IModelDefinition>(
