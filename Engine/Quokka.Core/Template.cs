@@ -25,7 +25,7 @@ namespace Mindbox.Quokka
 		internal Template(
 			string templateText,
 			FunctionRegistry functionRegistry,
-            bool throwIfErrorsEncountered = true,
+			bool throwIfErrorsEncountered = true,
 			Func<VisitingContext, IQuokkaVisitor<StaticBlock>> staticBlockVisitorCreator = null)
 		{
 			if (templateText == null)
@@ -58,10 +58,10 @@ namespace Mindbox.Quokka
 						semanticErrorListener);
 
 					compiledTemplateTree.PerformSemanticAnalysis(analysisContext);
-					analysisContext.VariableScope.CheckForChildScopesDeclarationConflicts(analysisContext);
+					analysisContext.VariableScope.Compile(analysisContext);
 					requiredModelDefinition = ValueUsageSummary.ConvertCollectionToModelDefinition(
 						analysisContext.VariableScope.Variables,
-                        semanticErrorListener);
+						semanticErrorListener);
 				}
 
 				Errors =

@@ -111,6 +111,11 @@ Not
 	:
 		[Nn][Oo][Tt]
 	;
+	
+Set
+	:
+		[Ss][Ee][Tt]
+	;	
 
 Equals
 	:
@@ -180,6 +185,11 @@ DoubleQuotedString
 SingleQuotedString
 	:
 		'\'' ~'\''* '\''
+	;
+	
+Ampersand
+	:
+		'&'
 	;
 	
 Identifier

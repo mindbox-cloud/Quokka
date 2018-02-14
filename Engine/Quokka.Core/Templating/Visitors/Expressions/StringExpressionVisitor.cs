@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using Antlr4.Runtime.Misc;
 using Mindbox.Quokka.Generated;
 
 namespace Mindbox.Quokka
@@ -23,5 +23,17 @@ namespace Mindbox.Quokka
 
 		    return new StringConstantExpression(stringValue);
 		}
-    }
+
+		public override StringExpression VisitStringConcatenation(QuokkaParser.StringConcatenationContext context)
+		{
+			var firstOperand = 
+				context.stringAtom().variantValueExpression()?.Accept(new ExpressionVisitor(VisitingContext))
+					?? context.stringAtom().stringConstant().Accept(this);
+
+			return new StringConcatenationExpression(
+					firstOperand,
+					context.expression().Accept(new ExpressionVisitor(VisitingContext))
+				);
+		}
+	}
 }

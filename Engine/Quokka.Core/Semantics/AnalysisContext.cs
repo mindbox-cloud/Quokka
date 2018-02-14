@@ -1,4 +1,6 @@
-﻿namespace Mindbox.Quokka
+﻿using System;
+
+namespace Mindbox.Quokka
 {
 	internal class AnalysisContext
 	{

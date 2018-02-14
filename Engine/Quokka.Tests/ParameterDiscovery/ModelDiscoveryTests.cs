@@ -775,6 +775,28 @@ namespace Mindbox.Quokka.Tests
 		}
 
 		[TestMethod]
+		public void ModelDiscovery_StringConcatenation()
+		{
+			var model = new Template(@"${ composite.PropertyA & variableB & ""constant"" }")
+				.GetModelDefinition();
+
+			TemplateAssert.AreCompositeModelDefinitionsEqual(
+				new CompositeModelDefinition(new Dictionary<string, IModelDefinition>
+				{
+					{
+						"composite", new CompositeModelDefinition(new Dictionary<string, IModelDefinition>
+						{
+							{ "PropertyA", new PrimitiveModelDefinition(TypeDefinition.Primitive) }
+						})
+					},
+					{
+						"variableB", new PrimitiveModelDefinition(TypeDefinition.Primitive)
+					}
+				}),
+				model);
+		}
+
+		[TestMethod]
 		public void ModelDiscovery_ForLoop_CollectionElementWithoutUsages()
 		{
 			var model = new Template(@"
@@ -790,6 +812,88 @@ namespace Mindbox.Quokka.Tests
 					{
 						"Offers", new ArrayModelDefinition(
 							new PrimitiveModelDefinition(TypeDefinition.Unknown))
+					}
+				}),
+				model);
+		}
+
+		[TestMethod]
+		public void ModelDiscovery_VariableTypeDiscovery()
+		{
+			var model = new Template(
+				"@{ set a = Recipient } @{ set b = 3 } ${ a + b }")
+				.GetModelDefinition();
+
+			TemplateAssert.AreCompositeModelDefinitionsEqual(
+				new CompositeModelDefinition(new Dictionary<string, IModelDefinition>
+				{
+					{ "Recipient", new PrimitiveModelDefinition(TypeDefinition.Decimal) },
+				}),
+				model);
+		}
+
+		[TestMethod]
+		public void ModelDiscovery_RecursiveVariableDefinition()
+		{
+			var model = new Template(
+				@"
+					@{ set b = Recipient } 
+					@{ set c = Recipient } 
+					@{ set a = b } 
+					@{ set b = c } 
+					@{ set c = a } 
+					${ c + a }")
+				.GetModelDefinition();
+
+			TemplateAssert.AreCompositeModelDefinitionsEqual(
+				new CompositeModelDefinition(new Dictionary<string, IModelDefinition>
+				{
+					{ "Recipient", new PrimitiveModelDefinition(TypeDefinition.Decimal) },
+				}),
+				model);
+		}
+
+		[TestMethod]
+		public void ModelDiscovery_MemberValueAssignment()
+		{
+			var model = new Template(
+				@"
+					@{ set b = Recipient.Age } 
+					${ b + 5 }")
+				.GetModelDefinition();
+
+			TemplateAssert.AreCompositeModelDefinitionsEqual(
+				new CompositeModelDefinition(new Dictionary<string, IModelDefinition>
+				{
+					{ "Recipient",
+						new CompositeModelDefinition(new Dictionary<string, IModelDefinition>
+						{
+							{ "Age", new PrimitiveModelDefinition(TypeDefinition.Decimal) }
+						})
+					}
+				}),
+				model);
+		}
+
+		[TestMethod]
+		public void ModelDiscovery_MethodResultAssignment()
+		{
+			var model = new Template(
+				@"
+					@{ set b = Recipient.GetAge() } 
+					${ b + 5 }")
+				.GetModelDefinition();
+
+			TemplateAssert.AreCompositeModelDefinitionsEqual(
+				new CompositeModelDefinition(new Dictionary<string, IModelDefinition>
+				{
+					{ "Recipient",
+						new CompositeModelDefinition(
+							new Dictionary<string, IModelDefinition> { },
+							new Dictionary<IMethodCallDefinition, IModelDefinition>
+								{ { new MethodCallDefinition("GetAge", new List<MethodArgumentDefinition>()),
+									new PrimitiveModelDefinition(TypeDefinition.Decimal) } }
+						)
 					}
 				}),
 				model);

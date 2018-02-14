@@ -106,5 +106,12 @@ namespace Mindbox.Quokka
 
 			return false;
 		}
-    }
+
+		public sealed override void RegisterAssignmentToVariable(
+			AnalysisContext context,
+			ValueUsageSummary destinationVariable)
+		{
+			GetLeafMemberVariableDefinition(context).RegisterAssignmentToVariable(destinationVariable);
+		}
+	}
 }

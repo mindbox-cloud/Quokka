@@ -34,5 +34,20 @@ namespace Mindbox.Quokka
 
 			return parentScope.TryGetValueStorageForVariable(variableName);
 		}
+
+		public void TrySetValueStorageForVariable(string variableName, VariableValueStorage value)
+		{
+			var scope = TryGetScopeForVariable(variableName) ?? this;
+
+			scope.valueStorage.SetFieldValueStorage(variableName, value);
+		}
+
+		private RuntimeVariableScope TryGetScopeForVariable(string variableName)
+		{
+			if (valueStorage.ContainsValueForVariable(variableName))
+				return this;
+
+			return parentScope?.TryGetScopeForVariable(variableName);
+		}
 	}
 }

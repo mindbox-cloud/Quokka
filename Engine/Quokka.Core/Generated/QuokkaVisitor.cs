@@ -141,6 +141,12 @@ internal interface IQuokkaVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <return>The visitor result.</return>
 	Result VisitEndForInstruction([NotNull] QuokkaParser.EndForInstructionContext context);
 	/// <summary>
+	/// Visit a parse tree produced by <see cref="QuokkaParser.assignmentBlock"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitAssignmentBlock([NotNull] QuokkaParser.AssignmentBlockContext context);
+	/// <summary>
 	/// Visit a parse tree produced by <see cref="QuokkaParser.outputBlock"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
@@ -224,6 +230,18 @@ internal interface IQuokkaVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
 	Result VisitStringConstant([NotNull] QuokkaParser.StringConstantContext context);
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="QuokkaParser.stringConcatenation"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitStringConcatenation([NotNull] QuokkaParser.StringConcatenationContext context);
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="QuokkaParser.stringAtom"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitStringAtom([NotNull] QuokkaParser.StringAtomContext context);
 	/// <summary>
 	/// Visit a parse tree produced by <see cref="QuokkaParser.booleanExpression"/>.
 	/// </summary>

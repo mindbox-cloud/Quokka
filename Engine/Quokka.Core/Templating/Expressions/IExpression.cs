@@ -10,6 +10,10 @@
 
 		void PerformSemanticAnalysis(AnalysisContext context, TypeDefinition expectedExpressionType);
 
+		void RegisterAssignmentToVariable(
+			AnalysisContext context, 
+			ValueUsageSummary destinationVariable);
+
 		string GetOutputValue(RenderContext context);
 
 		bool CheckIfExpressionIsNull(RenderContext renderContext);

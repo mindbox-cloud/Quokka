@@ -16,6 +16,7 @@ namespace Mindbox.Quokka
 	internal class ValueUsageSummary
 	{
 		private readonly IList<ValueUsage> usages;
+		private TypeDefinition compiledType;
 
 		/// <summary>
 		/// Usage summaries for all the values that were created by iterating over this value (if it's a collection).
@@ -23,9 +24,14 @@ namespace Mindbox.Quokka
 		/// </summary>
 		/// <remarks>Only relevant for collection variables.</remarks>
 		private readonly IList<ValueUsageSummary> enumerationResultUsageSummaries;
-		
+
+		private List<ValueUsageSummary> assignedVariables = new List<ValueUsageSummary>();
+
 		public IReadOnlyList<ValueUsageSummary> EnumerationResultUsageSummaries => 
 			enumerationResultUsageSummaries.ToList().AsReadOnly();
+
+		public IReadOnlyList<ValueUsageSummary> AssignedVariables =>
+			assignedVariables.ToList().AsReadOnly();
 
 		public string FullName { get; }
 
@@ -40,6 +46,58 @@ namespace Mindbox.Quokka
 		/// </summary>
 		/// <remarks>Only relevant for composite values.</remarks>
 		public MemberCollection<MethodCall> Methods { get; }
+
+		public bool IsReadOnly
+		{
+			get
+			{
+				return usages.All(u => u.Intention == VariableUsageIntention.Read);
+			}
+		}
+
+		public void Compile(ISemanticErrorListener errorListener)
+		{
+			if (usages.First().Intention == VariableUsageIntention.Read
+					&& usages.Any(u => u.Intention == VariableUsageIntention.Write))
+				errorListener.AddVariableUsageBeforeAssignmentError(this, usages.First().Location);
+
+			Fields.Items.ToList().ForEach(f => f.Value.Compile(errorListener));
+
+			Methods.Items.ToList().ForEach(f => f.Value.Compile(errorListener));
+
+			EnumerationResultUsageSummaries?.ToList().ForEach(f => f.Compile(errorListener));
+
+			compiledType = TypeDefinition.GetResultingTypeForMultipleOccurences(
+				usages.Concat(assignedVariables.SelectMany(v => v.GetAllUsagesExcept(this))).ToList(),
+				occurence => occurence.RequiredType,
+				(occurence, correctType) => errorListener.AddInconsistentVariableTypingError(
+					this,
+					occurence,
+					correctType));
+		}
+
+		private ValueUsageSummary EnsureCompiled(ISemanticErrorListener errorListener)
+		{
+			if (compiledType == null)
+				Compile(errorListener);
+
+			return this;
+		}
+
+		private IEnumerable<ValueUsage> GetAllUsagesExcept(ValueUsageSummary variable)
+		{
+			return GetAllUsagesExcept(new HashSet<ValueUsageSummary> { variable });
+		}
+
+		private IEnumerable<ValueUsage> GetAllUsagesExcept(HashSet<ValueUsageSummary> variables)
+		{
+			if (variables.Contains(this))
+				return Enumerable.Empty<ValueUsage>();
+
+			variables.Add(this);
+
+			return assignedVariables.SelectMany(v => v.GetAllUsagesExcept(variables)).Concat(usages);
+		}
 
 		public ValueUsageSummary(string fullName)
 			: this(
@@ -65,6 +123,11 @@ namespace Mindbox.Quokka
 			this.enumerationResultUsageSummaries = enumerationResultUsageSummaries;
 		}
 
+		internal void RegisterAssignmentToVariable(ValueUsageSummary destinationVariable)
+		{
+			assignedVariables.Add(destinationVariable);
+		}
+
 		public void AddUsage(ValueUsage occurence)
 		{
 			usages.Add(occurence);
@@ -77,15 +140,9 @@ namespace Mindbox.Quokka
 
 		private IModelDefinition ToModelDefinition(ISemanticErrorListener errorListener)
 		{
-			var type = TypeDefinition.GetResultingTypeForMultipleOccurences(
-				usages,
-				occurence => occurence.RequiredType,
-				(occurence, correctType) => errorListener.AddInconsistentVariableTypingError(
-					this,
-					occurence,
-					correctType));
+			EnsureCompiled(errorListener);
 
-			if (type.IsAssignableTo(TypeDefinition.Composite))
+			if (compiledType.IsAssignableTo(TypeDefinition.Composite))
 			{
 				var fields = new ReadOnlyDictionary<string, IModelDefinition>(
 					Fields.Items
@@ -102,7 +159,7 @@ namespace Mindbox.Quokka
 
 				CheckForFieldsAndMethodsNameConflicts(errorListener);
 
-				if (type == TypeDefinition.Array)
+				if (compiledType == TypeDefinition.Array)
 				{
 					IModelDefinition collectionElementDefinition;
 					if (enumerationResultUsageSummaries.Any())
@@ -119,18 +176,18 @@ namespace Mindbox.Quokka
 
 					return new ArrayModelDefinition(collectionElementDefinition, fields, methods);
 				}
-				else if (type == TypeDefinition.Composite)
+				else if (compiledType == TypeDefinition.Composite)
 				{
 					return new CompositeModelDefinition(fields, methods);
 				}
 				else
 				{
-					throw new InvalidOperationException($"Unexpected type {type}");
+					throw new InvalidOperationException($"Unexpected type {compiledType}");
 				}
 			}
 			else
 			{
-				return new PrimitiveModelDefinition(type);
+				return new PrimitiveModelDefinition(compiledType);
 			}
 		}
 
@@ -241,6 +298,7 @@ namespace Mindbox.Quokka
 			return new CompositeModelDefinition(
 				new ReadOnlyDictionary<string, IModelDefinition>(
 					fields.Items
+						.Where(s => s.Value.IsReadOnly)
 						.ToDictionary(
 							kvp => kvp.Key,
 							kvp => kvp.Value.ToModelDefinition(errorListener),

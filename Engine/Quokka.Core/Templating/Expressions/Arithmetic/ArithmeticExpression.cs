@@ -45,7 +45,14 @@ namespace Mindbox.Quokka
 			else
 				throw new InvalidOperationException($"The expression result is of unexpected type {value.GetType().Name}");
 		}
-		
+
+		public sealed override void RegisterAssignmentToVariable(
+			AnalysisContext context,
+			ValueUsageSummary destinationVariable)
+		{
+			// do nothing
+		}
+
 		private static object NormalizeValue(double value)
 		{
 			const double Epsilon = 1e-8;

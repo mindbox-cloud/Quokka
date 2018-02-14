@@ -78,5 +78,12 @@ namespace Mindbox.Quokka
 		    var evaluationResult = Evaluate(renderContext);
 		    return evaluationResult.CheckIfValueIsNull();
 	    }
+
+		public sealed override void RegisterAssignmentToVariable(
+			AnalysisContext context,
+			ValueUsageSummary destinationVariable)
+		{
+			// do nothing
+		}
 	}
 }

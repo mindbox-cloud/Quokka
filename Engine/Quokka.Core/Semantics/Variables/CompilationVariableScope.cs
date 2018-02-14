@@ -41,13 +41,14 @@ namespace Mindbox.Quokka
 			return Variables.CreateOrUpdateMember(name, valueUsage);
 		}
 		
-		public void RegisterVariableValueUsage(string name, ValueUsage valueUsage)
+		public ValueUsageSummary RegisterVariableValueUsage(string name, ValueUsage valueUsage)
 		{
 			var scope = GetExistingScopeForVariable(name) ?? GetRootScope();
-			scope.RegisterVariableValueUsageIgnoringParentScopes(name, valueUsage);
+
+			return scope.RegisterVariableValueUsageIgnoringParentScopes(name, valueUsage);
 		}
 
-		public void CheckForChildScopesDeclarationConflicts(AnalysisContext context)
+		public void Compile(AnalysisContext context)
 		{
 			if (parentScope != null)
 			{
@@ -58,13 +59,16 @@ namespace Mindbox.Quokka
 				}
 			}
 
+			foreach (var item in Variables.Items)
+				item.Value.Compile(context.ErrorListener);
+
 			foreach (var childScope in childScopes)
-				childScope.CheckForChildScopesDeclarationConflicts(context);
+				childScope.Compile(context);
 		} 
 
-		private void RegisterVariableValueUsageIgnoringParentScopes(string name, ValueUsage valueUsage)
+		private ValueUsageSummary RegisterVariableValueUsageIgnoringParentScopes(string name, ValueUsage valueUsage)
 		{
-			Variables.CreateOrUpdateMember(name, valueUsage);
+			return Variables.CreateOrUpdateMember(name, valueUsage);
 		}
 
 		public ValueUsageSummary TryGetVariableDefinition(string variableName)

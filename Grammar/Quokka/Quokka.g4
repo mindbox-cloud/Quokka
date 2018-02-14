@@ -21,7 +21,7 @@ staticBlock
 
 dynamicBlock
 	:
-		ifStatement | forStatement  | commentBlock
+		ifStatement | forStatement  | assignmentBlock | commentBlock
 	;
 
 constantBlock
@@ -123,6 +123,18 @@ endForInstruction
 		InstructionEnd
 	;
 
+// Assignment
+
+assignmentBlock
+	:
+		ControlInstructionStart
+		Set
+		Identifier
+		Equals
+		expression
+		InstructionEnd
+	;
+
 // Output instructions
 
 outputBlock
@@ -215,12 +227,22 @@ argumentList
 
 stringExpression
 	:
-		stringConstant
+		stringConstant | stringConcatenation
 	;	
 	
 stringConstant
 	:
 		DoubleQuotedString | SingleQuotedString
+	;
+
+stringConcatenation
+	:
+		stringAtom Ampersand expression
+	;
+	
+stringAtom
+	:
+		variantValueExpression | stringConstant
 	;
 
 // Boolean expressions
