@@ -25,7 +25,7 @@ namespace Mindbox.Quokka
 		/// <remarks>Only relevant for collection variables.</remarks>
 		private readonly IList<ValueUsageSummary> enumerationResultUsageSummaries;
 
-		private List<ValueUsageSummary> assignedVariables = new List<ValueUsageSummary>();
+		private readonly List<ValueUsageSummary> assignedVariables = new List<ValueUsageSummary>();
 
 		public IReadOnlyList<ValueUsageSummary> EnumerationResultUsageSummaries => 
 			enumerationResultUsageSummaries.ToList().AsReadOnly();

@@ -8,8 +8,8 @@ namespace Mindbox.Quokka
 {
 	internal class StringConcatenationExpression : StringExpression
 	{
-		private IExpression firstOperand;
-		private IExpression secondOperand;
+		private readonly IExpression firstOperand;
+		private readonly IExpression secondOperand;
 
 		public StringConcatenationExpression(
 			IExpression firstOperand, 
