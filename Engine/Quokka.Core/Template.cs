@@ -160,6 +160,7 @@ namespace Mindbox.Quokka
 			yield return new CeilingTemplateFunction();
 			yield return new SubstringTemplateFunction();
 			yield return new SubstringWithLengthTemplateFunction();
+			yield return new LengthTemplateFunction();
 		}
 	}
 }

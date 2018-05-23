@@ -453,5 +453,15 @@ namespace Mindbox.Quokka.Tests
 			var result = template.Render(
 				new CompositeModelValue(new ModelField("value", "testValue")));
 		}
+
+		[TestMethod]
+		public void Length()
+		{
+			var template = new Template(@"${ length('abcd ') }");
+
+			var result = template.Render(new CompositeModelValue());
+
+			Assert.AreEqual("5", result);
+		}
 	}
 }
