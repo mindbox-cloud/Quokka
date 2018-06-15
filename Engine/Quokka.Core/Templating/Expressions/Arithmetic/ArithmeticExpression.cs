@@ -36,14 +36,21 @@ namespace Mindbox.Quokka
 
 		public override string GetOutputValue(RenderContext renderContext)
 		{
-			var value = NormalizeValue(GetValue(renderContext));
+			try
+			{
+				var value = NormalizeValue(GetValue(renderContext));
 
-			if (value is decimal decimalValue)
-				return Math.Round(decimalValue, 2).ToString(CultureInfo.CurrentCulture);
-			else if (value is int intValue)
-				return intValue.ToString();
-			else
-				throw new InvalidOperationException($"The expression result is of unexpected type {value.GetType().Name}");
+				if (value is decimal decimalValue)
+					return Math.Round(decimalValue, 2).ToString(CultureInfo.CurrentCulture);
+				else if (value is int intValue)
+					return intValue.ToString();
+				else
+					throw new InvalidOperationException($"The expression result is of unexpected type {value.GetType().Name}");
+			}
+			catch (OverflowException ex)
+			{
+				throw new UnrenderableTemplateModelException("Arithmetic operation result could not be evaluated", ex, null);
+			}
 		}
 
 		public sealed override void RegisterAssignmentToVariable(

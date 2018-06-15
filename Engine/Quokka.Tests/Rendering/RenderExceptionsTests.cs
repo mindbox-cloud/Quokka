@@ -20,6 +20,15 @@ namespace Mindbox.Quokka
 
 			template.Render(new CompositeModelValue());
 		}
+		[TestMethod]
+		[ExpectedException(typeof(UnrenderableTemplateModelException))]
+		public void Render_DivisionByZero_UnrendereableException()
+		{
+			var template = new DefaultTemplateFactory(new[] { new FaultyFunction() })
+				.CreateTemplate("${ 5 / 0 }");
+
+			template.Render(new CompositeModelValue());
+		}
 
 	    private class FaultyFunction : ScalarTemplateFunction
 	    {
