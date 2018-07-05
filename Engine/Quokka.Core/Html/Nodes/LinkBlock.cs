@@ -26,7 +26,8 @@ namespace Mindbox.Quokka.Html
 		{
 			if (!hrefValue.IsQuoted)
 			{
-				context.ErrorListener.AddHrefAttributeMustBeQuotedError(hrefValue.Location);
+				var htmlErrorSubListener = context.ErrorListener.GetRegisteredSubListener<HtmlSemanticErrorSubListener>();
+				htmlErrorSubListener.AddHrefAttributeMustBeQuotedError(hrefValue.Location);
 			}
 
 			foreach (var component in hrefValue.TextComponents)

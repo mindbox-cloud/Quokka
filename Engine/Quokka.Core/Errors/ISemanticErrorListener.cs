@@ -4,6 +4,9 @@ namespace Mindbox.Quokka
 {
 	internal interface ISemanticErrorListener : IErrorListener
 	{
+		TSemanticErrorSubListener GetRegisteredSubListener<TSemanticErrorSubListener>()
+			where TSemanticErrorSubListener : SemanticErrorSubListenerBase;
+
 		void AddInconsistentVariableTypingError(
 			ValueUsageSummary definition,
 			ValueUsage faultyOccurence,
@@ -63,9 +66,6 @@ namespace Mindbox.Quokka
 		void AddNonConstantMethodArgumentError(
 			string methodName,
 			int argumentPosition,
-			Location location);
-
-		void AddHrefAttributeMustBeQuotedError(
 			Location location);
 	}
 }

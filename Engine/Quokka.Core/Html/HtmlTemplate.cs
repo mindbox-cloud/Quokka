@@ -9,22 +9,23 @@ namespace Mindbox.Quokka.Html
 		internal HtmlTemplate(
 			string templateText,
 			FunctionRegistry functionRegistry,
-            bool throwIfErrorsEncountered = true)
+			bool throwIfErrorsEncountered = true)
 			: base(
-				  templateText,
-				  functionRegistry,
-				  throwIfErrorsEncountered,
-				  context => new HtmlStaticBlockVisitor(context))
+				templateText,
+				functionRegistry,
+				throwIfErrorsEncountered,
+				context => new HtmlStaticBlockVisitor(context),
+				new[] { new HtmlSemanticErrorSubListener() })
 		{
 		}
 
 		public HtmlTemplate(string templateText)
 			: this(
-				  templateText,
-				  new FunctionRegistry(GetStandardFunctions()))
+				templateText,
+				new FunctionRegistry(GetStandardFunctions()))
 		{
 		}
-		
+
 		/// <summary>
 		/// Get a collection of external references (links) ordered from top to bottom.
 		/// </summary>
@@ -41,7 +42,8 @@ namespace Mindbox.Quokka.Html
 
 		public override string Render(ICompositeModelValue model)
 		{
-			return DoRender(model,
+			return DoRender(
+				model,
 				(scope, functionRegistry) => new HtmlRenderContext(
 					scope,
 					functionRegistry,
@@ -57,7 +59,8 @@ namespace Mindbox.Quokka.Html
 			if (model == null)
 				throw new ArgumentNullException(nameof(model));
 
-			return DoRender(model,
+			return DoRender(
+				model,
 				(scope, functionRegistry) => new HtmlRenderContext(
 					scope,
 					functionRegistry,
