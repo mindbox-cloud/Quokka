@@ -64,5 +64,8 @@ namespace Mindbox.Quokka
 			string methodName,
 			int argumentPosition,
 			Location location);
+
+		void AddHrefAttributeMustBeQuotedError(
+			Location location);
 	}
 }

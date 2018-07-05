@@ -121,6 +121,13 @@ namespace Mindbox.Quokka
 					location));
 		}
 
+		public void AddHrefAttributeMustBeQuotedError(Location location)
+		{
+			AddError(new SemanticError(
+				$"Вы должны использовать кавычки при использовании атрибута href",
+				location));
+		}
+
 		public void AddVariableUsageBeforeAssignmentError(ValueUsageSummary definition, Location location)
 		{
 			AddError(new SemanticError(

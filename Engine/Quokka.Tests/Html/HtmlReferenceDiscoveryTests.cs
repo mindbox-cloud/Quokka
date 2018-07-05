@@ -53,15 +53,37 @@ namespace Mindbox.Quokka.Tests.Html
 		[TestMethod]
 		public void Html_ReferenceDiscovery_AHref_UnQuoted()
 		{
-			var template = new HtmlTemplate("<a href=http://example.com>Test</a>");
-			var references = template.GetReferences();
+			var exception = Assert.ThrowsException<TemplateContainsErrorsException>(
+				() => new HtmlTemplate("<a href=http://example.com>Test</a>"));
 
-			ReferencesAssert.AreCollectionsEquivalent(
-				new[]
-				{
-					new Reference("http://example.com", null, Guid.NewGuid(), true),
-				},
-				references);
+			Assert.AreEqual(1, exception.Errors.Count);
+			var error = exception.Errors.Single();
+
+			Assert.AreEqual("Вы должны использовать кавычки при использовании атрибута href", error.Message);
+		}
+
+		[TestMethod]
+		public void Html_ReferenceDiscovery_AreaHref_OnlyClosingDoubleQuote()
+		{
+			var exception = Assert.ThrowsException<TemplateContainsErrorsException>(
+				() => new HtmlTemplate("<area href=http://example.com\">"));
+
+			Assert.AreEqual(1, exception.Errors.Count);
+			var error = exception.Errors.Single();
+
+			Assert.AreEqual("Вы должны использовать кавычки при использовании атрибута href", error.Message);
+		}
+
+		[TestMethod]
+		public void Html_ReferenceDiscovery_AreaHref_OnlyClosingSingleQuote()
+		{
+			var exception = Assert.ThrowsException<TemplateContainsErrorsException>(
+				() => new HtmlTemplate("<area href=http://example.com'>"));
+
+			Assert.AreEqual(1, exception.Errors.Count);
+			var error = exception.Errors.Single();
+
+			Assert.AreEqual("Вы должны использовать кавычки при использовании атрибута href", error.Message);
 		}
 
 		[TestMethod]
@@ -141,7 +163,19 @@ namespace Mindbox.Quokka.Tests.Html
 		[TestMethod]
 		public void Html_ReferenceDiscovery_AHref_UnQuoted_ParameterOutput()
 		{
-			var template = new HtmlTemplate("<a href=${ Link }>Test</a>");
+			var exception = Assert.ThrowsException<TemplateContainsErrorsException>(
+				() => new HtmlTemplate("<a href=${ Link }>Test</a>"));
+
+			Assert.AreEqual(1, exception.Errors.Count);
+			var error = exception.Errors.Single();
+
+			Assert.AreEqual("Вы должны использовать кавычки при использовании атрибута href", error.Message);
+		}
+
+		[TestMethod]
+		public void Html_ReferenceDiscovery_AHref_DoubleQuoted_ParameterOutput()
+		{
+			var template = new HtmlTemplate("<a href=\"${ Link }\">Test</a>");
 			var references = template.GetReferences();
 
 			ReferencesAssert.AreCollectionsEquivalent(
