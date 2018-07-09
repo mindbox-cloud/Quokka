@@ -26,7 +26,8 @@ namespace Mindbox.Quokka
 			string templateText,
 			FunctionRegistry functionRegistry,
 			bool throwIfErrorsEncountered = true,
-			Func<VisitingContext, IQuokkaVisitor<StaticBlock>> staticBlockVisitorCreator = null)
+			Func<VisitingContext, IQuokkaVisitor<StaticBlock>> staticBlockVisitorCreator = null,
+			IEnumerable<SemanticErrorSubListenerBase> semanticErrorSubListeners = null)
 		{
 			if (templateText == null)
 				throw new ArgumentNullException(nameof(templateText));
@@ -39,6 +40,13 @@ namespace Mindbox.Quokka
 			{
 				var syntaxErrorListener = new SyntaxErrorListener();
 				var semanticErrorListener = new SemanticErrorListener();
+				if (semanticErrorSubListeners != null)
+				{
+					foreach (var subListener in semanticErrorSubListeners)
+					{
+						semanticErrorListener.RegisterSubListener(subListener);
+					}
+				}
 
 				var templateParseTree = ParseTemplateText(templateText, syntaxErrorListener);
 

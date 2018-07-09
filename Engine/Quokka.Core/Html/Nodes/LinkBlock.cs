@@ -24,6 +24,12 @@ namespace Mindbox.Quokka.Html
 
 		public override void PerformSemanticAnalysis(AnalysisContext context)
 		{
+			if (!hrefValue.IsQuoted)
+			{
+				var htmlErrorSubListener = context.ErrorListener.GetRegisteredSubListener<HtmlSemanticErrorSubListener>();
+				htmlErrorSubListener.AddHrefAttributeMustBeQuotedError(hrefValue.Location);
+			}
+
 			foreach (var component in hrefValue.TextComponents)
 			{
 				component.PerformSemanticAnalysis(context);
@@ -56,6 +62,7 @@ namespace Mindbox.Quokka.Html
 		public override void CompileGrammarSpecificData(GrammarSpecificDataAnalysisContext context)
 		{
 			var htmlContext = (HtmlDataAnalysisContext)context;
+
 			htmlContext.AddReference(
 				new Reference(
 					hrefValue.Text,

@@ -5,7 +5,36 @@ namespace Mindbox.Quokka
 {
 	internal class SemanticErrorListener : ISemanticErrorListener
 	{
+		private readonly Dictionary<Type, SemanticErrorSubListenerBase> registeredSubListeners = 
+			new Dictionary<Type, SemanticErrorSubListenerBase>();
+
 		private readonly List<SemanticError> errors = new List<SemanticError>();
+
+		public TSemanticErrorSubListener GetRegisteredSubListener<TSemanticErrorSubListener>()
+			where TSemanticErrorSubListener : SemanticErrorSubListenerBase
+		{
+			var requestedSubListenerType = typeof(TSemanticErrorSubListener);
+
+			if (!registeredSubListeners.ContainsKey(requestedSubListenerType))
+				throw new InvalidOperationException($"{requestedSubListenerType} is not registered sublistener");
+
+			var subListenerBase = registeredSubListeners[requestedSubListenerType];
+			var subListener = subListenerBase as TSemanticErrorSubListener;
+			if (subListener == null)
+				throw new InvalidOperationException($"{subListenerBase.GetType()} is not {requestedSubListenerType}");
+
+			return subListener;
+		}
+
+		public void RegisterSubListener(SemanticErrorSubListenerBase subListener)
+		{
+			var subListenerType = subListener.GetType();
+			if (registeredSubListeners.ContainsKey(subListenerType))
+				throw new InvalidOperationException($"SubListener of type {subListenerType} is already registered");
+
+			registeredSubListeners[subListenerType] = subListener;
+			subListener.Register(error => AddError(error));
+		}
 
 		protected void AddError(SemanticError error)
 		{
