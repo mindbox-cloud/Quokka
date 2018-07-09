@@ -3,7 +3,7 @@
     <TargetFramework>net47</TargetFramework>
     <NoWarn>1701;1702;1705;3021</NoWarn>
     <Company>Mindbox</Company>
-    <Version>3.1.1</Version>
+    <Version>3.1.2</Version>
     <Product>Quokka template engine</Product>
     <Description>String templating library</Description>
     <Copyright>Mindbox 2017</Copyright>
