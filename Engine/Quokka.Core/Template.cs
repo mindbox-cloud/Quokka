@@ -169,6 +169,9 @@ namespace Mindbox.Quokka
 			yield return new SubstringTemplateFunction();
 			yield return new SubstringWithLengthTemplateFunction();
 			yield return new LengthTemplateFunction();
+			yield return new GetDayTemplateFunction();
+			yield return new GetMonthTemplateFunction();
+			yield return new GetYearTemplateFunction();
 		}
 	}
 }

@@ -463,5 +463,49 @@ namespace Mindbox.Quokka.Tests
 
 			Assert.AreEqual("5", result);
 		}
+
+		[TestMethod]
+		public void GetDay()
+		{
+			var template = new Template(@"${ GetDay(value)}");
+
+			var result = template.Render(
+				new CompositeModelValue(new ModelField("value", new DateTime(2018, 11, 15))));
+
+			Assert.AreEqual("15", result);
+		}
+
+		[TestMethod]
+		public void GetMonth()
+		{
+			var template = new Template(@"${ GetMonth(value)}");
+
+			var result = template.Render(
+				new CompositeModelValue(new ModelField("value", new DateTime(2018, 11, 15))));
+
+			Assert.AreEqual("11", result);
+		}
+
+		[TestMethod]
+		public void GetYear()
+		{
+			var template = new Template(@"${ GetYear(value)}");
+
+			var result = template.Render(
+				new CompositeModelValue(new ModelField("value", new DateTime(2018, 11, 15))));
+
+			Assert.AreEqual("2018", result);
+		}
+
+		[TestMethod]
+		public void GetDay_GetMonth_GetYear_Arithmetic()
+		{
+			var template = new Template(@"${GetDay(value) + GetMonth(value) + GetYear(value)}");
+
+			var result = template.Render(
+				new CompositeModelValue(new ModelField("value", new DateTime(2018, 11, 15))));
+
+			Assert.AreEqual("2044", result);
+		}
 	}
 }
