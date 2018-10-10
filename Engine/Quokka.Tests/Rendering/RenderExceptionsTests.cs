@@ -30,7 +30,25 @@ namespace Mindbox.Quokka
 			template.Render(new CompositeModelValue());
 		}
 
-	    private class FaultyFunction : ScalarTemplateFunction
+
+		[TestMethod]
+		[ExpectedException(typeof(UnrenderableTemplateModelException))]
+		public void Render_AssignmentBlock_AssignmentInsideEmptyLoop()
+		{
+			var template = new Template(@"
+				@{ for p in ps }
+					@{ set a = 5 }
+				@{ end for }
+
+				${ a }");
+
+			var result = template.Render(
+				new CompositeModelValue(
+					new ModelField("ps",
+						new ArrayModelValue())));
+		}
+
+		private class FaultyFunction : ScalarTemplateFunction
 	    {
 		    public FaultyFunction() 
 				: base("fail", typeof(int))
