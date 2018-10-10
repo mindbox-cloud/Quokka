@@ -26,13 +26,9 @@ namespace Mindbox.Quokka
 		
 		public VariableValueStorage TryGetValueStorageForVariable(string variableName)
 		{
-			if (valueStorage.ContainsValueForVariable(variableName))
-				return valueStorage.GetFieldValueStorage(variableName);
-
-			if (parentScope == null)
-				throw new InvalidOperationException($"Value for variable {variableName} not found");
-
-			return parentScope.TryGetValueStorageForVariable(variableName);
+			return valueStorage.ContainsValueForVariable(variableName) 
+						? valueStorage.GetFieldValueStorage(variableName) 
+						: parentScope?.TryGetValueStorageForVariable(variableName);
 		}
 
 		public void TrySetValueStorageForVariable(string variableName, VariableValueStorage value)

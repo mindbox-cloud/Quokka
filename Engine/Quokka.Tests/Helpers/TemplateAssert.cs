@@ -92,13 +92,6 @@ namespace Mindbox.Quokka.Tests
 
 				Assert.AreEqual(expectedPrimitiveDefinition.Type, actualPrimitiveDefinition.Type);
 			}
-			else if (expected is ICompositeModelDefinition expectedCompositeDefinition)
-			{
-				Assert.IsInstanceOfType(actual, typeof(ICompositeModelDefinition));
-				var actualCompositeDefinition = (ICompositeModelDefinition)actual;
-
-				AreCompositeModelDefinitionsEqual(expectedCompositeDefinition, actualCompositeDefinition);
-			}
 			else if (expected is IArrayModelDefinition expectedArrayDefinition)
 			{
 				Assert.IsInstanceOfType(actual, typeof(IArrayModelDefinition));
@@ -108,6 +101,13 @@ namespace Mindbox.Quokka.Tests
 				AreModelDefinitionsEquivalent(
 					expectedArrayDefinition.ElementModelDefinition,
 					actualArrayDefinition.ElementModelDefinition);
+			}
+			else if (expected is ICompositeModelDefinition expectedCompositeDefinition)
+			{
+				Assert.IsInstanceOfType(actual, typeof(ICompositeModelDefinition));
+				var actualCompositeDefinition = (ICompositeModelDefinition)actual;
+
+				AreCompositeModelDefinitionsEqual(expectedCompositeDefinition, actualCompositeDefinition);
 			}
 			else
 			{

@@ -67,7 +67,10 @@ namespace Mindbox.Quokka
 		
 		public VariableValueStorage TryGetValueStorage(RenderContext renderContext)
 		{
-			return renderContext.VariableScope.TryGetValueStorageForVariable(variableName);
+			return renderContext.VariableScope.TryGetValueStorageForVariable(variableName) ??
+					throw new UnrenderableTemplateModelException(
+						$"Value for variable {variableName} not found",
+						variableLocation);
 		}
 
 
