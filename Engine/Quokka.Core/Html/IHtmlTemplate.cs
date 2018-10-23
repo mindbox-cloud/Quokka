@@ -16,10 +16,12 @@ namespace Mindbox.Quokka.Html
 		/// <param name="model">Model for parameters</param>
 		/// <param name="redirectLinkProcessor">Action that will be applied to each link url</param>
 		/// <param name="identificationCode">Html code that will be rendered at the end of the document (if specified)</param>
+		/// <param name="callContextContainer">Container of call context values that can be used in functions with context</param>
 		/// <returns>Rendered Html message</returns>
 		string Render(
 			ICompositeModelValue model, 
 			Func<Guid, string, string> redirectLinkProcessor,
-			string identificationCode);
+			string identificationCode, 
+			CallContextContainer callContextContainer = null);
 	}
 }

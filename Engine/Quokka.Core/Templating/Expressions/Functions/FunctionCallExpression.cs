@@ -41,6 +41,7 @@ namespace Mindbox.Quokka
 		    try
 		    {
 			    return function.Invoke(
+					renderContext,
 					argumentValues
 						.Select((argumentValue, argumentNumber) => 
 							argumentValue.GetValue(renderContext, function.Arguments.GetArgument(argumentNumber)))

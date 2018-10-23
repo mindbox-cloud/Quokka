@@ -99,14 +99,19 @@ namespace Mindbox.Quokka
 			return requiredModelDefinition;
 		}
 
-		public virtual string Render(ICompositeModelValue model)
+		public virtual string Render(ICompositeModelValue model, CallContextContainer callContextContainer = null)
 		{
 			if (model == null)
 				throw new ArgumentNullException(nameof(model));
 			if (Errors.Any())
 				throw new TemplateContainsErrorsException(Errors);
 
-			return DoRender(model, (scope, contextFunctionRegistry) => new RenderContext(scope, contextFunctionRegistry));
+			var effectiveCallContextContainer = callContextContainer ?? CallContextContainer.Empty;
+
+			return DoRender(
+				model, 
+				(scope, contextFunctionRegistry) => new RenderContext(
+					scope, contextFunctionRegistry, effectiveCallContextContainer));
 		}
 
 		protected string DoRender(

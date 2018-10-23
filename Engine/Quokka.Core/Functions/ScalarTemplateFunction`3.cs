@@ -23,7 +23,9 @@ namespace Mindbox.Quokka
 
 		public abstract TResult Invoke(TArgument1 value1, TArgument2 value2, TArgument3 value3);
 
-		internal override object GetScalarInvocationResult(IList<VariableValueStorage> argumentsValues)
+		internal override object GetScalarInvocationResult(
+			RenderContext renderContext,
+			IList<VariableValueStorage> argumentsValues)
 		{
 			if (argumentsValues.Count != 3)
 				throw new InvalidOperationException($"Function that expects 3 arguments was passed {argumentsValues.Count}");

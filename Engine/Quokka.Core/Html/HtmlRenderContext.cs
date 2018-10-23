@@ -15,11 +15,23 @@ namespace Mindbox.Quokka.Html
 
 		public HtmlRenderContext(
 			RuntimeVariableScope variableScope,
-			FunctionRegistry functions, Func<Guid,
-			string, string> redirectLinkProcessor,
+			FunctionRegistry functions, 
+			Func<Guid, string, string> redirectLinkProcessor,
 			string identificationCode,
-			HtmlRenderContext parentRenderContext = null)
-			: base(variableScope, functions)
+			CallContextContainer callContextContainer)
+			: this(variableScope, functions, redirectLinkProcessor, identificationCode, callContextContainer, null)
+		{
+			// empty
+		}
+
+		private HtmlRenderContext(
+			RuntimeVariableScope variableScope,
+			FunctionRegistry functions, 
+			Func<Guid, string, string> redirectLinkProcessor,
+			string identificationCode,
+			CallContextContainer callContextContainer,
+			HtmlRenderContext parentRenderContext)
+			: base(variableScope, functions, callContextContainer)
 		{
 			RedirectLinkProcessor = redirectLinkProcessor;
 			IdentificationCode = identificationCode;
@@ -28,7 +40,8 @@ namespace Mindbox.Quokka.Html
 
 		public override RenderContext CreateInnerContext(RuntimeVariableScope variableScope)
 		{
-			return new HtmlRenderContext(variableScope, Functions, RedirectLinkProcessor, IdentificationCode, this)
+			return new HtmlRenderContext(
+				variableScope, Functions, RedirectLinkProcessor, IdentificationCode, CallContextContainer, this)
 			{
 				HasIdentificationCodeBeenRendered = HasIdentificationCodeBeenRendered
 			};
