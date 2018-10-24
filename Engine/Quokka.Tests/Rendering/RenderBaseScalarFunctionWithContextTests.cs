@@ -52,7 +52,7 @@ namespace Mindbox.Quokka.Tests
 				}));
 
 			var exception = Assert.ThrowsException<UnrenderableTemplateModelException>(
-				() => template.Render(new CompositeModelValue(), CallContextContainer.WithValue(new AnotherTestContext())));
+				() => template.Render(new CompositeModelValue(), CallContextContainer.Create(new AnotherTestContext())));
 
 			var innerException = exception.InnerException as InvalidOperationException;
 			Assert.IsNotNull(innerException);
@@ -84,7 +84,7 @@ namespace Mindbox.Quokka.Tests
 
 			var result = template.Render(
 				new CompositeModelValue(),
-				CallContextContainer.WithValue(
+				CallContextContainer.Create(
 					new TestContext
 					{
 						TestInt = 10
@@ -113,7 +113,7 @@ namespace Mindbox.Quokka.Tests
 
 			var result = template.Render(
 				new CompositeModelValue(),
-				CallContextContainer.WithValue(
+				CallContextContainer.Create(
 					new ChildTestContext
 					{
 						TestInt = 10

@@ -6,7 +6,7 @@ namespace Mindbox.Quokka
 	{
 		public static CallContextContainer Empty { get; } = new CallContextContainer();
 
-		public static CallContextContainer WithValue<TCallContext>(TCallContext callContext)
+		public static CallContextContainer Create<TCallContext>(TCallContext callContext)
 			where TCallContext : class
 		{
 			return new CallContextContainer(callContext);
