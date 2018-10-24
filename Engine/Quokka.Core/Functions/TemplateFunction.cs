@@ -31,7 +31,7 @@ namespace Mindbox.Quokka
 		{
 		}
 
-		internal abstract VariableValueStorage Invoke(IList<VariableValueStorage> argumentsValues);
+		internal abstract VariableValueStorage Invoke(RenderContext renderContext, IList<VariableValueStorage> argumentsValues);
 
 		internal bool Accepts(IReadOnlyList<ArgumentValue> arguments)
 		{

@@ -29,11 +29,13 @@ namespace Mindbox.Quokka
 		{
 		}
 
-		internal abstract object GetScalarInvocationResult(IList<VariableValueStorage> argumentsValues);
+		internal abstract object GetScalarInvocationResult(
+			RenderContext renderContext,
+			IList<VariableValueStorage> argumentsValues);
 
-		internal override VariableValueStorage Invoke(IList<VariableValueStorage> argumentsValues)
+		internal sealed override VariableValueStorage Invoke(RenderContext renderContext, IList<VariableValueStorage> argumentsValues)
 		{
-			return new PrimitiveVariableValueStorage(GetScalarInvocationResult(argumentsValues));
+			return new PrimitiveVariableValueStorage(GetScalarInvocationResult(renderContext, argumentsValues));
 		}
 	}
 }

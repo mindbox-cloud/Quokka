@@ -15,7 +15,9 @@ namespace Mindbox.Quokka
 		{
 		}
 
-		internal override object GetScalarInvocationResult(IList<VariableValueStorage> argumentsValues)
+		internal override object GetScalarInvocationResult(
+			RenderContext renderContext,
+			IList<VariableValueStorage> argumentsValues)
 		{
 			var next = random.Next(0, argumentsValues.Count - 1);
 			return VariadicArgument.ConvertValue(argumentsValues[next]);

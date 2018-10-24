@@ -14,6 +14,6 @@ namespace Mindbox.Quokka
 
 		ICompositeModelDefinition GetModelDefinition();
 
-		string Render(ICompositeModelValue model);
+		string Render(ICompositeModelValue model, CallContextContainer callContextContainer = null);
 	}
 }

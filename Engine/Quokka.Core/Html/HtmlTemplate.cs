@@ -40,24 +40,30 @@ namespace Mindbox.Quokka.Html
 			return htmlContext.GetReferences();
 		}
 
-		public override string Render(ICompositeModelValue model)
+		public override string Render(ICompositeModelValue model, CallContextContainer callContextContainer = null)
 		{
+			var effectiveCallContextContainer = callContextContainer ?? CallContextContainer.Empty;
+
 			return DoRender(
 				model,
 				(scope, functionRegistry) => new HtmlRenderContext(
 					scope,
 					functionRegistry,
 					null,
-					null));
+					null,
+					effectiveCallContextContainer));
 		}
 
 		public string Render(
 			ICompositeModelValue model,
 			Func<Guid, string, string> redirectLinkProcessor,
-			string identificationCode = null)
+			string identificationCode = null,
+			CallContextContainer callContextContainer = null)
 		{
 			if (model == null)
 				throw new ArgumentNullException(nameof(model));
+
+			var effectiveCallContextContainer = callContextContainer ?? CallContextContainer.Empty;
 
 			return DoRender(
 				model,
@@ -65,7 +71,8 @@ namespace Mindbox.Quokka.Html
 					scope,
 					functionRegistry,
 					redirectLinkProcessor,
-					identificationCode));
+					identificationCode,
+					effectiveCallContextContainer));
 		}
 	}
 }
