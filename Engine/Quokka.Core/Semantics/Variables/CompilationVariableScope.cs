@@ -48,6 +48,12 @@ namespace Mindbox.Quokka
 			return scope.RegisterVariableValueUsageIgnoringParentScopes(name, valueUsage);
 		}
 
+		public ValueUsageSummary RegisterScopedVariableValueUsage(string name, ValueUsage valueUsage)
+		{
+			var scope = GetExistingScopeForVariable(name) ?? this;
+			return scope.RegisterVariableValueUsageIgnoringParentScopes(name, valueUsage);
+		}
+
 		public void Compile(AnalysisContext context)
 		{
 			if (parentScope != null)

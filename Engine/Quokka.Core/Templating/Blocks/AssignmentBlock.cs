@@ -23,7 +23,7 @@ namespace Mindbox.Quokka
 		{
 			value.PerformSemanticAnalysis(context, TypeDefinition.Primitive);
 
-			var destinationVariable = context.VariableScope.RegisterVariableValueUsage(
+			var destinationVariable = context.VariableScope.RegisterScopedVariableValueUsage(
 				variableName, new ValueUsage(location, value.GetResultType(context), VariableUsageIntention.Write));
 
 			value.RegisterAssignmentToVariable(context, destinationVariable);
