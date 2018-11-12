@@ -20,25 +20,24 @@ namespace Mindbox.Quokka
 
 			template.Render(new CompositeModelValue());
 		}
+
 		[TestMethod]
 		[ExpectedException(typeof(UnrenderableTemplateModelException))]
 		public void Render_DivisionByZero_UnrendereableException()
 		{
 			var template = new DefaultTemplateFactory(new[] { new FaultyFunction() })
 				.CreateTemplate("${ 5 / 0 }");
-
 			template.Render(new CompositeModelValue());
 		}
 
-
 		[TestMethod]
 		[ExpectedException(typeof(UnrenderableTemplateModelException))]
-		public void Render_AssignmentBlock_AssignmentInsideEmptyLoop()
+		public void Render_AssignmentBlock_AssignmentInsideFalseBranch()
 		{
 			var template = new Template(@"
-				@{ for p in ps }
+				@{ if 1 < 0 }
 					@{ set a = 5 }
-				@{ end for }
+				@{ end if }
 
 				${ a }");
 

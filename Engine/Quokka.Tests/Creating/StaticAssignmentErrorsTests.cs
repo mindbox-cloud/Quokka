@@ -27,5 +27,17 @@ namespace Mindbox.Quokka.Tests
 					@{ set a = 5 }
 					@{ set a = 'string' }");
 		}
+
+		[TestMethod]
+		[ExpectedException(typeof(TemplateContainsErrorsException))]
+		public void Static_AssignmentBlock_OutOfScopeVariableUsage()
+		{
+			new Template(@"
+				@{ for x in items }
+					@{ set a = 5 }
+				@{ end for }
+
+				${ a }");
+		}
 	}
 }
