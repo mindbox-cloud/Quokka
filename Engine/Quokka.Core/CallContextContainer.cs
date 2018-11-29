@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
 
 namespace Mindbox.Quokka
 {
@@ -9,39 +12,55 @@ namespace Mindbox.Quokka
 		public static CallContextContainer Create<TCallContext>(TCallContext callContext)
 			where TCallContext : class
 		{
-			return new CallContextContainer(callContext);
+			return new CallContextContainer(typeof(TCallContext), callContext);
 		}
-
-		private readonly object callContext;
+		
+		private readonly ReadOnlyDictionary<Type, object> callContextsByType;
 
 		private CallContextContainer()
+			: this(new Dictionary<Type, object>())
 		{
-			
 		}
 
-		private CallContextContainer(object callContext) : this()
+		private CallContextContainer(Type callContextType, object callContext)
+			: this(
+				new Dictionary<Type, object>
+				{
+					{ callContextType, callContext }
+				})
 		{
-			if (callContext == null) 
-				throw new ArgumentNullException(nameof(callContext));
-
-			this.callContext = callContext;
 		}
 
-		public bool IsEmpty() => callContext == null;
+		internal CallContextContainer(IDictionary<Type, object> callContextsByType)
+		{
+			this.callContextsByType = new ReadOnlyDictionary<Type, object>(callContextsByType);
+		}
+
+		public bool IsEmpty() => !callContextsByType.Any();
 
 		public TCallContext GetCallContext<TCallContext>()
 			where TCallContext : class 
 		{
-			if (IsEmpty())
-				throw new InvalidOperationException($"Can't get call context from empty {nameof(CallContextContainer)}");
+			if(!callContextsByType.TryGetValue(typeof(TCallContext), out object callContext))
+				throw new InvalidOperationException($"Call context of type {typeof(TCallContext).FullName} wasn't registered");
 
-			var requestedCallContext = callContext as TCallContext;
-			if (requestedCallContext == null)
-				throw new InvalidOperationException(
-					$"Call context contains object of type {callContext.GetType()}, " +
-					$"which is not compatible with requested type {typeof(TCallContext)}");
+			return (TCallContext)callContext;
+		}
+	}
 
-			return requestedCallContext;
+	public class CallContextContainerBuilder
+	{
+		private readonly Dictionary<Type, object> callContextsByType = new Dictionary<Type, object>();
+
+		public CallContextContainerBuilder WithCallContext<TCallContext>(TCallContext callContext)
+		{
+			callContextsByType.Add(typeof(TCallContext), callContext);
+			return this;
+		}
+
+		public CallContextContainer Build()
+		{
+			return new CallContextContainer(callContextsByType);
 		}
 	}
 }
