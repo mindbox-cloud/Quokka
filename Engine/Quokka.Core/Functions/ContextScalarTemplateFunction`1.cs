@@ -14,9 +14,9 @@ namespace Mindbox.Quokka
 			this.argument = argument;
 		}
 
-		public abstract TResult Invoke(TContext context, TArgument value);
+		protected abstract TResult Invoke(TContext context, TArgument value);
 
-		internal override object GetContextScalarInvocationResult(TContext context, IList<VariableValueStorage> argumentsValues)
+		internal sealed override object GetContextScalarInvocationResult(TContext context, IList<VariableValueStorage> argumentsValues)
 		{
 			if (argumentsValues.Count != 1)
 				throw new InvalidOperationException($"Function that expects 1 argument was passed {argumentsValues.Count}");
