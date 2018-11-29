@@ -29,7 +29,7 @@ namespace Mindbox.Quokka.Tests
 			var innerException = exception.InnerException as InvalidOperationException;
 			Assert.IsNotNull(innerException);
 
-			Assert.AreEqual($"Can't get call context from empty {nameof(CallContextContainer)}", innerException.Message);
+			Assert.AreEqual($"Call context of type {typeof(TestContext).FullName} wasn't registered", innerException.Message);
 
 			Assert.IsFalse(wasFunctionCalled);
 		}
@@ -58,8 +58,7 @@ namespace Mindbox.Quokka.Tests
 			Assert.IsNotNull(innerException);
 
 			Assert.AreEqual(
-				$"Call context contains object of type {typeof(AnotherTestContext)}, " +
-					$"which is not compatible with requested type {typeof(TestContext)}",
+				$"Call context of type {typeof(TestContext).FullName} wasn't registered",
 				innerException.Message);
 
 			Assert.IsFalse(wasFunctionCalled);
@@ -113,7 +112,7 @@ namespace Mindbox.Quokka.Tests
 
 			var result = template.Render(
 				new CompositeModelValue(),
-				CallContextContainer.Create(
+				CallContextContainer.Create<TestContext>(
 					new ChildTestContext
 					{
 						TestInt = 10
@@ -121,6 +120,27 @@ namespace Mindbox.Quokka.Tests
 
 			Assert.AreEqual($"[10][Venus]", result);
 			Assert.IsTrue(wasFunctionCalled);
+		}
+		
+		[TestMethod]
+		public void Render_ScalarFunctionWithContext_2Arguments_Success()
+		{
+			var template = new Template(
+				"${ Concat2('Venus', 'Mars') }",
+				new FunctionRegistry(new[]
+				{
+					new TestFunc2(),
+				}));
+
+			var result = template.Render(
+				new CompositeModelValue(),
+				CallContextContainer.Create<TestContext>(
+					new ChildTestContext
+					{
+						TestInt = 10
+					}));
+
+			Assert.AreEqual($"[10][Venus][Mars]", result);
 		}
 
 		private class TestFunc1 : ContextScalarTemplateFunction<TestContext, string, string>
@@ -139,6 +159,22 @@ namespace Mindbox.Quokka.Tests
 			{
 				callBack();
 				return $"[{context.TestInt}][{value1}]";
+			}
+		}
+
+		private class TestFunc2 : ContextScalarTemplateFunction<TestContext, string, string, string>
+		{
+			public TestFunc2()
+				: base(
+					"Concat2",
+					new StringFunctionArgument("arg1"), 
+					new StringFunctionArgument("arg2"))
+			{
+			}
+
+			protected override string Invoke(TestContext context, string value1, string value2)
+			{
+				return $"[{context.TestInt}][{value1}][{value2}]";
 			}
 		}
 
