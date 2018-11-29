@@ -135,7 +135,7 @@ namespace Mindbox.Quokka.Tests
 				this.callBack = callBack;
 			}
 
-			public override string Invoke(TestContext context, string value1)
+			protected override string Invoke(TestContext context, string value1)
 			{
 				callBack();
 				return $"[{context.TestInt}][{value1}]";
