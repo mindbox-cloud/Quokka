@@ -36,21 +36,14 @@ namespace Mindbox.Quokka
 
 		public override string GetOutputValue(RenderContext renderContext)
 		{
-			try
-			{
-				var value = NormalizeValue(GetValue(renderContext));
+			var value = NormalizeValue(GetValue(renderContext));
 
-				if (value is decimal decimalValue)
-					return Math.Round(decimalValue, 2).ToString(CultureInfo.CurrentCulture);
-				else if (value is int intValue)
-					return intValue.ToString();
-				else
-					throw new InvalidOperationException($"The expression result is of unexpected type {value.GetType().Name}");
-			}
-			catch (OverflowException ex)
-			{
-				throw new UnrenderableTemplateModelException("Arithmetic operation result could not be evaluated", ex, null);
-			}
+			if (value is decimal decimalValue)
+				return Math.Round(decimalValue, 2).ToString(CultureInfo.CurrentCulture);
+			else if (value is int intValue)
+				return intValue.ToString();
+			else
+				throw new InvalidOperationException($"The expression result is of unexpected type {value.GetType().Name}");
 		}
 
 		public sealed override void RegisterAssignmentToVariable(
@@ -62,14 +55,21 @@ namespace Mindbox.Quokka
 
 		private static object NormalizeValue(double value)
 		{
-			const double Epsilon = 1e-8;
+			try
+			{
+				const double Epsilon = 1e-8;
 
-			int intValue = (int)value;
+				int intValue = (int)value;
 
-			if (Math.Abs(value - (int)value) < Epsilon)
-				return intValue;
-			else
-				return (decimal)value;
+				if (Math.Abs(value - (int)value) < Epsilon)
+					return intValue;
+				else
+					return (decimal)value;
+			}
+			catch (OverflowException ex)
+			{
+				throw new UnrenderableTemplateModelException("Arithmetic operation result could not be evaluated", ex, null);
+			}
 		}
 	}
 }
