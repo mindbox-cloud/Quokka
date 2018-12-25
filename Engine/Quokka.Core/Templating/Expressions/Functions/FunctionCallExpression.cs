@@ -5,80 +5,80 @@ using System.Linq;
 namespace Mindbox.Quokka
 {
 	internal class FunctionCallExpression : VariantValueExpression
-    {
+	{
 		public string FunctionName { get; }
 
-	    public Location Location { get; }
+		public Location Location { get; }
 
-	    private readonly IReadOnlyList<ArgumentValue> argumentValues;
+		private readonly IReadOnlyList<ArgumentValue> argumentValues;
 
 		public FunctionCallExpression(string functionName, IEnumerable<ArgumentValue> argumentValues, Location location)
-	    {
+		{
 			FunctionName = functionName;
-		    this.argumentValues = argumentValues.ToList().AsReadOnly();
+			this.argumentValues = argumentValues.ToList().AsReadOnly();
 			Location = location;
 		}
 
-	    public override void PerformSemanticAnalysis(AnalysisContext context, TypeDefinition expectedExpressionType)
-	    {
-		    var resultType = GetResultType(context);
-		    if (!resultType.IsAssignableTo(expectedExpressionType))
-			    context.ErrorListener.AddInvalidFunctionResultTypeError(
-				    FunctionName,
-				    expectedExpressionType,
-				    resultType,
-				    Location);
+		public override void PerformSemanticAnalysis(AnalysisContext context, TypeDefinition expectedExpressionType)
+		{
+			var resultType = GetResultType(context);
+			if (!resultType.IsAssignableTo(expectedExpressionType))
+				context.ErrorListener.AddInvalidFunctionResultTypeError(
+					FunctionName,
+					expectedExpressionType,
+					resultType,
+					Location);
 
 			context.Functions.PerformSemanticAnalysis(context, FunctionName, argumentValues, Location);
 		}
 		
-	    public override VariableValueStorage Evaluate(RenderContext renderContext)
-	    {
+		public override VariableValueStorage Evaluate(RenderContext renderContext)
+		{
 			var function = renderContext.Functions.TryGetFunction(FunctionName, argumentValues);
-		    if (function == null)
-			    throw new InvalidOperationException($"Function {FunctionName} not found");
+			if (function == null)
+				throw new InvalidOperationException($"Function {FunctionName} not found");
 
-		    try
-		    {
-			    return function.Invoke(
+			try
+			{
+				return function.Invoke(
 					renderContext,
 					argumentValues
 						.Select((argumentValue, argumentNumber) => 
 							argumentValue.GetValue(renderContext, function.Arguments.GetArgument(argumentNumber)))
 						.ToList());
-		    }
-		    catch (Exception ex)
-		    {
-			    throw new UnrenderableTemplateModelException(
+			}
+			catch (Exception ex) when (!(ex is UnrenderableTemplateModelException))
+			{
+				throw new UnrenderableTemplateModelException(
 					$"Function {FunctionName} invocation resulted in error",
 					ex,
 					Location);
-		    }
-	    }
-
-	    public override void RegisterIterationOverExpressionResult(AnalysisContext context, ValueUsageSummary iterationVariable)
-	    {
-		    var function = context.Functions.TryGetFunction(FunctionName, argumentValues);
-
-		    // We only do this if the template is semantically valid. If not, semantic errors are already handled
-		    // earlier in the workflow.
-		    function?.Arguments.AnalyzeArgumentValuesBasedOnFunctionResultUsages(context, argumentValues, iterationVariable);
+			}
 		}
 
-	    public override IModelDefinition GetExpressionResultModelDefinition(AnalysisContext context)
+		public override void RegisterIterationOverExpressionResult(AnalysisContext context, ValueUsageSummary iterationVariable)
+		{
+			var function = context.Functions.TryGetFunction(FunctionName, argumentValues);
+
+			// We only do this if the template is semantically valid. If not, semantic errors are already handled
+			// earlier in the workflow.
+			function?.Arguments.AnalyzeArgumentValuesBasedOnFunctionResultUsages(context, argumentValues, iterationVariable);
+		}
+
+		public override IModelDefinition GetExpressionResultModelDefinition(AnalysisContext context)
 		{
 			var function = context.Functions.TryGetFunction(FunctionName, argumentValues);
 			if (function == null)
-			    return new PrimitiveModelDefinition(TypeDefinition.Unknown);
+				return new PrimitiveModelDefinition(TypeDefinition.Unknown);
 
-		    return function.ReturnValueDefinition;
-	    }
+			return function.ReturnValueDefinition;
+		}
 
-	    public override bool CheckIfExpressionIsNull(RenderContext renderContext)
-	    {
-		    var evaluationResult = Evaluate(renderContext);
-		    return evaluationResult.CheckIfValueIsNull();
-	    }
+		public override bool CheckIfExpressionIsNull(RenderContext renderContext)
+		{
+			var evaluationResult = Evaluate(renderContext);
+			return evaluationResult.CheckIfValueIsNull();
+		}
 
 		public sealed override void RegisterAssignmentToVariable(
 			AnalysisContext context,
