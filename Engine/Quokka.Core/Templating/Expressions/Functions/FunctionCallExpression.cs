@@ -47,11 +47,11 @@ namespace Mindbox.Quokka
 							argumentValue.GetValue(renderContext, function.Arguments.GetArgument(argumentNumber)))
 						.ToList());
 			}
-			catch (UnrenderableTemplateModelException utme) when (utme.Location == null)
+			catch (FunctionCallRuntimeException targetException)
 			{
-				throw new UnrenderableTemplateModelException(utme.Message, utme.InnerException, Location);
+				throw new UnrenderableTemplateModelException(targetException.Message, targetException.InnerException, Location);
 			}
-			catch (Exception ex) when (!(ex is UnrenderableTemplateModelException))
+			catch (Exception ex) when (!(ex is FunctionCallRuntimeException))
 			{
 				throw new UnrenderableTemplateModelException(
 					$"Function {FunctionName} invocation resulted in error",
