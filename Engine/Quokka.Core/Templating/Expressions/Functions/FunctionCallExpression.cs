@@ -49,9 +49,9 @@ namespace Mindbox.Quokka
 			}
 			catch (FunctionCallRuntimeException targetException)
 			{
-				throw new UnrenderableTemplateModelException(targetException.Message, targetException.InnerException, Location);
+				throw new UnrenderableTemplateModelException(targetException.Message, targetException, Location);
 			}
-			catch (Exception ex) when (!(ex is FunctionCallRuntimeException))
+			catch (Exception ex)
 			{
 				throw new UnrenderableTemplateModelException(
 					$"Function {FunctionName} invocation resulted in error",
