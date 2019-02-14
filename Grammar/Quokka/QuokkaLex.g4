@@ -202,3 +202,26 @@ WhiteSpace
 	:
 		(' ' | '\t' | '\r' | '\n') -> skip
 	;
+	
+StringInterpolationStart
+	:
+		'$"' -> pushMode(InsideDoubleQuotedString)
+	;	
+
+mode InsideDoubleQuotedString;
+
+DoubleQuotedStringEnd
+	:
+		'"' -> popMode
+	;
+
+StringFluff
+	:
+		 ~["{]+ 
+	;
+	
+StringParameterStart
+	:
+		'{' -> pushMode(Instruction)
+	;	
+

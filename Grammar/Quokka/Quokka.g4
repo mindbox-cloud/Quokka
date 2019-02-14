@@ -227,12 +227,26 @@ argumentList
 
 stringExpression
 	:
-		stringConstant | stringConcatenation
+		stringLiteral | stringConcatenation
 	;	
 	
 stringConstant
 	:
 		DoubleQuotedString | SingleQuotedString
+	;
+	
+stringLiteral
+	:
+		StringInterpolationStart
+		
+		(
+			StringFluff*
+			StringParameterStart
+			expression
+			InstructionEnd
+						
+		)*
+		DoubleQuotedStringEnd
 	;
 
 stringConcatenation
