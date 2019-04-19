@@ -25,9 +25,9 @@ namespace Mindbox.Quokka
 		/// <remarks>Only relevant for collection variables.</remarks>
 		private readonly IList<ValueUsageSummary> enumerationResultUsageSummaries;
 
-		private readonly List<ValueUsageSummary> assignedVariables = new List<ValueUsageSummary>();
+		private readonly IList<ValueUsageSummary> assignedVariables = new List<ValueUsageSummary>();
 
-		public IReadOnlyList<ValueUsageSummary> EnumerationResultUsageSummaries => 
+		public IReadOnlyList<ValueUsageSummary> EnumerationResultUsageSummaries =>
 			enumerationResultUsageSummaries.ToList().AsReadOnly();
 
 		public IReadOnlyList<ValueUsageSummary> AssignedVariables =>
@@ -101,11 +101,12 @@ namespace Mindbox.Quokka
 
 		public ValueUsageSummary(string fullName)
 			: this(
-				  fullName,
-				  new MemberCollection<string>(),
-				  new MemberCollection<MethodCall>(),
-				  new List<ValueUsage>(),
-				  new List<ValueUsageSummary>())
+				fullName,
+				new MemberCollection<string>(),
+				new MemberCollection<MethodCall>(),
+				new List<ValueUsage>(),
+				new List<ValueUsageSummary>(),
+				new List<ValueUsageSummary>())
 		{
 		}
 
@@ -114,13 +115,15 @@ namespace Mindbox.Quokka
 			MemberCollection<string> fields,
 			MemberCollection<MethodCall> methods,
 			IList<ValueUsage> usages,
-			IList<ValueUsageSummary> enumerationResultUsageSummaries)
+			IList<ValueUsageSummary> enumerationResultUsageSummaries,
+			IList<ValueUsageSummary> assignedVariables)
 		{
 			FullName = fullName;
 			Fields = fields;
 			Methods = methods;
 			this.usages = usages;
 			this.enumerationResultUsageSummaries = enumerationResultUsageSummaries;
+			this.assignedVariables = assignedVariables;
 		}
 
 		internal void RegisterAssignmentToVariable(ValueUsageSummary destinationVariable)
@@ -290,7 +293,7 @@ namespace Mindbox.Quokka
 		{
 			return usages.First().Location;
 		}
-		
+
 		public static ICompositeModelDefinition ConvertCollectionToModelDefinition(
 			MemberCollection<string> fields,
 			ISemanticErrorListener errorListener)
@@ -326,13 +329,16 @@ namespace Mindbox.Quokka
 				.SelectMany(definition => definition.usages);
 			var mergedEnumerationResultUsageSummaries = definitions
 				.SelectMany(definition => definition.enumerationResultUsageSummaries);
+			var mergedAssignedVariables = definitions
+				.SelectMany(definition => definition.AssignedVariables);
 
 			return new ValueUsageSummary(
 				resultFullName,
 				fields,
-				methods, 
+				methods,
 				mergesUsages.ToList(),
-				mergedEnumerationResultUsageSummaries.ToList());
+				mergedEnumerationResultUsageSummaries.ToList(),
+				mergedAssignedVariables.ToList());
 		}
 	}
 }
