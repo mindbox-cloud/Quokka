@@ -34,6 +34,27 @@ namespace Mindbox.Quokka.Tests
 		}
 
 		[TestMethod]
+		[ExpectedException(typeof(InvalidTemplateModelException))]
+		public void Render_AssignmentOfArrayElementProperty_IncompatibleTypes_Throws()
+		{
+			var template = new Template(@"
+				@{ set maxprice = 0 }
+				@{ for item in SomeArray}
+					@{ if 1 > maxprice }
+						@{ set maxprice = item.SomeOtherParameter }
+					@{ end if }
+				@{ end for }
+				${ maxprice }");
+
+			template.Render(
+				new CompositeModelValue(
+					new ModelField("SomeArray", new ArrayModelValue(
+						new CompositeModelValue(
+							new ModelField("SomeParameter", new PrimitiveModelValue("TEST")))))
+					));
+		}
+
+		[TestMethod]
 		public void Render_AssignmentBlock_OutOfScopeAssignments()
 		{
 			var template = new Template(@"
