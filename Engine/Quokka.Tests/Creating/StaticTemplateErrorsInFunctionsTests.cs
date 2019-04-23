@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -86,6 +87,21 @@ namespace Mindbox.Quokka.Tests
 				})
 				.TryCreateTemplate(
 					"${ IntegerIdentity(IntegerIdentity(6)) }",
+					out IList<ITemplateError> errors);
+
+			Assert.AreEqual(0, errors.Count);
+		}
+
+		[TestMethod]
+		public void CreateTemplate_PassingVariableWithIntValueToIntParameter_NoError()
+		{
+			new DefaultTemplateFactory(new TemplateFunction[]
+				{
+					new IntegerIdentityFunction(),
+				})
+				.TryCreateTemplate(
+					@"@{ set someValue = 6 }
+					${ IntegerIdentity(someValue) }",
 					out IList<ITemplateError> errors);
 
 			Assert.AreEqual(0, errors.Count);

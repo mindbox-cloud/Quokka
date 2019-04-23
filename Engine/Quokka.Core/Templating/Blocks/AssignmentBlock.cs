@@ -24,9 +24,18 @@ namespace Mindbox.Quokka
 			value.PerformSemanticAnalysis(context, TypeDefinition.Primitive);
 
 			var destinationVariable = context.VariableScope.RegisterScopedVariableValueUsage(
-				variableName, new ValueUsage(location, value.GetResultType(context), VariableUsageIntention.Write));
+				variableName, new ValueUsage(location, GetEffectiveValueUsageType(context), VariableUsageIntention.Write));
 
 			value.RegisterAssignmentToVariable(context, destinationVariable);
+		}
+
+		private TypeDefinition GetEffectiveValueUsageType(AnalysisContext context)
+		{
+			var valueUsageType = value.GetResultType(context);
+			if (valueUsageType != TypeDefinition.Integer)
+				return valueUsageType;
+
+			return TypeDefinition.Decimal;
 		}
 
 		public override void Render(StringBuilder resultBuilder, RenderContext renderContext)

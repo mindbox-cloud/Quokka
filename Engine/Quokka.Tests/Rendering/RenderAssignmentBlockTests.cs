@@ -55,6 +55,24 @@ namespace Mindbox.Quokka.Tests
 		}
 
 		[TestMethod]
+		public void Render_AssignmentOfArrayElementProperty_UsageOfDecimalParameterWithIntInitializedVariable()
+		{
+			var template = new Template(@"
+				@{ set maxprice = 0 }
+				@{ if 1 > maxprice }
+					@{ set maxprice = SomeParameter }
+				@{ end if }
+				${ maxprice }");
+
+			var result = template.Render(
+				new CompositeModelValue(
+					new ModelField("SomeParameter", new PrimitiveModelValue(1.1m)))
+				);
+
+			TemplateAssert.AreOutputsEquivalent("1,1", result);
+		}
+
+		[TestMethod]
 		public void Render_AssignmentBlock_OutOfScopeAssignments()
 		{
 			var template = new Template(@"
@@ -71,7 +89,6 @@ namespace Mindbox.Quokka.Tests
 							new PrimitiveModelValue(1),
 							new PrimitiveModelValue(2),
 							new PrimitiveModelValue(3)))));
-
 
 			TemplateAssert.AreOutputsEquivalent("70", result);
 		}
