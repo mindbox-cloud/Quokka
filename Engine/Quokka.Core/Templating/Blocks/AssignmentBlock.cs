@@ -24,9 +24,21 @@ namespace Mindbox.Quokka
 			value.PerformSemanticAnalysis(context, TypeDefinition.Primitive);
 
 			var destinationVariable = context.VariableScope.RegisterScopedVariableValueUsage(
-				variableName, new ValueUsage(location, value.GetResultType(context), VariableUsageIntention.Write));
+				variableName, new ValueUsage(location, GetEffectiveValueUsageType(context), VariableUsageIntention.Write));
 
 			value.RegisterAssignmentToVariable(context, destinationVariable);
+		}
+
+		// We want situations where a variable is initialized with an integer value and than assigned with a decimal value
+		// to be valid and compile successfully. This hack allows such behavior, but it should be rewritten in more comprehensive
+		// and generic way in future.
+		private TypeDefinition GetEffectiveValueUsageType(AnalysisContext context)
+		{
+			var valueUsageType = value.GetResultType(context);
+			if (valueUsageType != TypeDefinition.Integer)
+				return valueUsageType;
+
+			return TypeDefinition.Decimal;
 		}
 
 		public override void Render(StringBuilder resultBuilder, RenderContext renderContext)
