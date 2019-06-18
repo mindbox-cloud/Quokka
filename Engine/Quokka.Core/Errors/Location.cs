@@ -20,5 +20,8 @@
 			Line = line;
 			Column = column;
 		}
+
+		public override string ToString()
+			=> $"{Line}:{Column}";
 	}
 }
