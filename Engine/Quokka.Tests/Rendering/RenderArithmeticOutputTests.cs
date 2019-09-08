@@ -24,7 +24,7 @@ namespace Mindbox.Quokka.Tests
 
 			var result = template.Render(
 				new CompositeModelValue());
-			Assert.AreEqual("24,05", result);
+			Assert.AreEqual("24.05", result);
 		}
 
 		[TestMethod]
@@ -78,7 +78,7 @@ namespace Mindbox.Quokka.Tests
 			var result = template.Render(
 				new CompositeModelValue());
 
-			Assert.AreEqual("0,6", result);
+			Assert.AreEqual("0.6", result);
 		}
 
 
@@ -112,7 +112,7 @@ namespace Mindbox.Quokka.Tests
 			var result = template.Render(
 				new CompositeModelValue());
 
-			Assert.AreEqual("0,33", result);
+			Assert.AreEqual("0.33", result);
 		}
 
 		[TestMethod]
@@ -143,7 +143,7 @@ namespace Mindbox.Quokka.Tests
 								new CompositeModelValue(
 									new ModelField("Length", 77)))))));
 
-			Assert.AreEqual("-8232,64", result);
+			Assert.AreEqual("-8232.64", result);
 		}
 
 		[TestMethod]
@@ -162,7 +162,7 @@ namespace Mindbox.Quokka.Tests
 							))
 					));
 
-			Assert.AreEqual("52,45", result);
+			Assert.AreEqual("52.45", result);
 		}
 	}
 }

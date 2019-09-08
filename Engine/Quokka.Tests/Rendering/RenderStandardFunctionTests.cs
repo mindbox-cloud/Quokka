@@ -91,7 +91,7 @@ namespace Mindbox.Quokka.Tests
 				new CompositeModelValue(
 					new ModelField("Value", 2.53511m)));
 
-			Assert.AreEqual("2,54", result);
+			Assert.AreEqual("2.54", result);
 		}
 		
 
@@ -104,7 +104,7 @@ namespace Mindbox.Quokka.Tests
 				new CompositeModelValue(
 					new ModelField("Value", 2.53511m)));
 
-			Assert.AreEqual("2,53511", result);
+			Assert.AreEqual("2.53511", result);
 		}
 
 		[TestMethod]
@@ -304,7 +304,7 @@ namespace Mindbox.Quokka.Tests
 				new CompositeModelValue(
 					new ModelField("Price", new PrimitiveModelValue(45345.5m))));
 
-			Assert.AreEqual("45345,50", result);
+			Assert.AreEqual("45345.50", result);
 		}
 
 		[TestMethod]
