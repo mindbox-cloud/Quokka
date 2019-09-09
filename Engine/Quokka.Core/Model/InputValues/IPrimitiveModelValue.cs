@@ -2,6 +2,6 @@
 {
 	public interface IPrimitiveModelValue : IModelValue
 	{
-		object Value { get; }
+		object? Value { get; }
 	}
 }

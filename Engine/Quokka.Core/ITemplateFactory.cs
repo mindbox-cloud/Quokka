@@ -8,10 +8,10 @@ namespace Mindbox.Quokka
 	{
 		ITemplate CreateTemplate(string templateText);
 
-		ITemplate TryCreateTemplate(string templateText, out IList<ITemplateError> errors);
+		ITemplate? TryCreateTemplate(string templateText, out IList<ITemplateError> errors);
 
 		IHtmlTemplate CreateHtmlTemplate(string templateText);
 
-		IHtmlTemplate TryCreateHtmlTemplate(string templateText, out IList<ITemplateError> errors);
+		IHtmlTemplate? TryCreateHtmlTemplate(string templateText, out IList<ITemplateError> errors);
 	}
 }

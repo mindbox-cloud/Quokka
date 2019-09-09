@@ -2,7 +2,7 @@
 {
 	public interface ITemplateError
 	{
-		Location Location { get; }
+		Location? Location { get; }
 		string Message { get; }
 	}
 }

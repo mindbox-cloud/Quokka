@@ -20,7 +20,7 @@ namespace Mindbox.Quokka
 					StringComparer.InvariantCultureIgnoreCase));
 		}
 
-		public TemplateFunction TryGetFunction(string functionName, IReadOnlyList<ArgumentValue> arguments)
+		public TemplateFunction? TryGetFunction(string functionName, IReadOnlyList<ArgumentValue> arguments)
 		{
 			functions.TryGetValue(functionName, out var overloadedFunctions);
 			return overloadedFunctions?.FirstOrDefault(function => function.Accepts(arguments));

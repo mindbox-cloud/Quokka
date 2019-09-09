@@ -53,6 +53,7 @@ namespace Mindbox.Quokka
 		private readonly Dictionary<Type, object> callContextsByType = new Dictionary<Type, object>();
 
 		public CallContextContainerBuilder WithCallContext<TCallContext>(TCallContext callContext)
+			where TCallContext : class
 		{
 			callContextsByType.Add(typeof(TCallContext), callContext);
 			return this;

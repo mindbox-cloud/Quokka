@@ -18,7 +18,8 @@ namespace Mindbox.Quokka
 			var templateVisitor = new TemplateVisitor(VisitingContext);
 			return new TemplateBlock(context.children
 				.Select(child => child.Accept(templateVisitor))
-				.Where(x => x != null));
+				.Where(x => x != null)
+				.Select(x => x!));
 		}
 
 		public override TemplateBlock VisitTerminal(ITerminalNode node)

@@ -6,7 +6,7 @@ namespace Mindbox.Quokka
 	{
 		internal override TypeDefinition Type => TypeDefinition.GetTypeDefinitionByRuntimeType(typeof(TType));
 
-		private readonly Func<TType, ArgumentValueValidationResult> valueValidator;
+		private readonly Func<TType, ArgumentValueValidationResult>? valueValidator;
 
 		protected ScalarArgument(string name, bool allowsNull = false, Func<TType, ArgumentValueValidationResult>? valueValidator = null) 
 			:base(name, allowsNull)

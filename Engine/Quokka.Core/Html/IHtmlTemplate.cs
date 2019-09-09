@@ -22,6 +22,6 @@ namespace Mindbox.Quokka.Html
 			ICompositeModelValue model, 
 			Func<Guid, string, string> redirectLinkProcessor,
 			string identificationCode, 
-			CallContextContainer callContextContainer = null);
+			CallContextContainer? callContextContainer = null);
 	}
 }

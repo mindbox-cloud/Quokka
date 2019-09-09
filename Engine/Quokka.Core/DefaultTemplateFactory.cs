@@ -44,7 +44,7 @@ namespace Mindbox.Quokka
 			return errors.Any() ? null : template;
 		}
 
-		public ICompositeModelDefinition TryCombineModelDefinition(
+		public ICompositeModelDefinition? TryCombineModelDefinition(
 			IEnumerable<ICompositeModelDefinition> definitions,
 			out IList<ITemplateError> errors)
 		{

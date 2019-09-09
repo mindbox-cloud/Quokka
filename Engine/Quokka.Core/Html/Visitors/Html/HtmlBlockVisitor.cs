@@ -12,7 +12,7 @@ namespace Mindbox.Quokka.Html
 		{
 		}
 
-		public override IStaticBlockPart VisitOpeningTag(QuokkaHtml.OpeningTagContext context)
+		public override IStaticBlockPart? VisitOpeningTag(QuokkaHtml.OpeningTagContext context)
 		{
 			string tagName = context.TAG_NAME().GetText();
 			var attributes = context.attribute();
@@ -25,7 +25,7 @@ namespace Mindbox.Quokka.Html
 			return null;
 		}
 
-		public override IStaticBlockPart VisitSelfClosingTag(QuokkaHtml.SelfClosingTagContext context)
+		public override IStaticBlockPart? VisitSelfClosingTag(QuokkaHtml.SelfClosingTagContext context)
 		{
 			string tagName = context.TAG_NAME().GetText();
 			var attributes = context.attribute();
@@ -45,7 +45,7 @@ namespace Mindbox.Quokka.Html
 			return null;
 		}
 
-		private IStaticBlockPart TryGetLinkNodeFromTagAttributes(IEnumerable<QuokkaHtml.AttributeContext> attributes)
+		private IStaticBlockPart? TryGetLinkNodeFromTagAttributes(IEnumerable<QuokkaHtml.AttributeContext> attributes)
 		{
 			var hrefAttributeValueVisitor = new AttributeValueVisitor(ParsingContext);
 

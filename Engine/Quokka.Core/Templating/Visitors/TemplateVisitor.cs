@@ -16,7 +16,8 @@ namespace Mindbox.Quokka
 			return new TemplateBlock(
 				context.children
 					.Select(child => child.Accept(this))
-					.Where(x => x != null));
+					.Where(x => x != null)
+					.Select(x => x!));
 		}
 
 		public override ITemplateNode VisitStaticBlock(QuokkaParser.StaticBlockContext context)

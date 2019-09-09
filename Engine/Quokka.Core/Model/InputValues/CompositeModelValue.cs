@@ -33,7 +33,7 @@ namespace Mindbox.Quokka
 		{
 		}
 
-		public CompositeModelValue(IEnumerable<IModelField> fields, IEnumerable<IModelMethod> methods)
+		public CompositeModelValue(IEnumerable<IModelField>? fields, IEnumerable<IModelMethod>? methods)
 		{
 			Fields = fields?.ToArray() ?? Array.Empty<IModelField>();
 			Methods = methods?.ToArray() ?? Array.Empty<IModelMethod>();

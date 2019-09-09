@@ -7,7 +7,7 @@ namespace Mindbox.Quokka
 	{
 		public abstract IModelValue ModelValue { get; }
 
-		public virtual object GetPrimitiveValue()
+		public virtual object? GetPrimitiveValue()
 		{
 			throw new InvalidOperationException("This storage can't provide values of this type");
 		}

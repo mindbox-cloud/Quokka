@@ -33,24 +33,6 @@ namespace Mindbox.Quokka
 					method => method.Value != null ? CreateStorageForValue(method.Value) : null);
 		}
 
-		public CompositeVariableValueStorage(string fieldName, VariableValueStorage fieldValueStorage)
-			: this(
-				new Dictionary<string, VariableValueStorage?>(StringComparer.InvariantCultureIgnoreCase)
-				{
-					{ fieldName, fieldValueStorage }
-				},
-				new Dictionary<MethodCall, VariableValueStorage?>())
-		{
-		}
-
-		private CompositeVariableValueStorage(
-			IDictionary<string, VariableValueStorage?> fields,
-			IDictionary<MethodCall, VariableValueStorage?> methods)
-		{
-			this.fields = fields;
-			this.methods = methods;
-		}
-
 		public void SetFieldValueStorage(string variableName, VariableValueStorage value)
 		{
 			fields[variableName] = value;

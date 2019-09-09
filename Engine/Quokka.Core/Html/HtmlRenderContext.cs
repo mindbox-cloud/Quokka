@@ -5,19 +5,19 @@ namespace Mindbox.Quokka.Html
 {
 	internal class HtmlRenderContext : RenderContext
 	{
-		private readonly HtmlRenderContext parentRenderContext;
+		private readonly HtmlRenderContext? parentRenderContext;
 
 		public bool HasIdentificationCodeBeenRendered { get; private set; }
 
-		public Func<Guid, string, string> RedirectLinkProcessor { get; } 
+		public Func<Guid, string, string>? RedirectLinkProcessor { get; } 
 
-		public string IdentificationCode { get; } 
+		public string? IdentificationCode { get; } 
 
 		public HtmlRenderContext(
 			RuntimeVariableScope variableScope,
 			FunctionRegistry functions, 
-			Func<Guid, string, string> redirectLinkProcessor,
-			string identificationCode,
+			Func<Guid, string, string>? redirectLinkProcessor,
+			string? identificationCode,
 			CallContextContainer callContextContainer)
 			: this(variableScope, functions, redirectLinkProcessor, identificationCode, callContextContainer, null)
 		{
@@ -27,10 +27,10 @@ namespace Mindbox.Quokka.Html
 		private HtmlRenderContext(
 			RuntimeVariableScope variableScope,
 			FunctionRegistry functions, 
-			Func<Guid, string, string> redirectLinkProcessor,
-			string identificationCode,
+			Func<Guid, string, string>? redirectLinkProcessor,
+			string? identificationCode,
 			CallContextContainer callContextContainer,
-			HtmlRenderContext parentRenderContext)
+			HtmlRenderContext? parentRenderContext)
 			: base(variableScope, functions, callContextContainer)
 		{
 			RedirectLinkProcessor = redirectLinkProcessor;

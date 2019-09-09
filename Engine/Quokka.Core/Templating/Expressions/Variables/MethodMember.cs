@@ -29,7 +29,7 @@ namespace Mindbox.Quokka
 			    .CreateOrUpdateMember(methodCall, new ValueUsage(Location, memberType));
 	    }
 
-	    public override ValueUsageSummary? GetMemberVariableDefinition(ValueUsageSummary ownerValueUsageSummary)
+	    public override ValueUsageSummary GetMemberVariableDefinition(ValueUsageSummary ownerValueUsageSummary)
 	    {
 		    return ownerValueUsageSummary.Methods.TryGetMemberUsageSummary(methodCall);
 	    }
@@ -46,6 +46,7 @@ namespace Mindbox.Quokka
 		    var argumentValues = arguments
 			    .Select(argument => argument.TryGetStaticValue()?.GetPrimitiveValue())
 				.Where(argumentValue => argumentValue != null)
+				.Select(argumentValue => argumentValue!)
 			    .ToList();
 
 		    return new MethodCall(name, argumentValues);

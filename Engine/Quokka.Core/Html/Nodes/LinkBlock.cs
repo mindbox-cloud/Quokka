@@ -11,11 +11,11 @@ namespace Mindbox.Quokka.Html
 		public int Length => hrefValue.Length;
 
 		private readonly AttributeValue hrefValue;
-		private readonly AttributeValue nameValue;
+		private readonly AttributeValue? nameValue;
 
 		private readonly Guid uniqueKey;
 
-		public LinkBlock(AttributeValue hrefValue, AttributeValue nameValue)
+		public LinkBlock(AttributeValue hrefValue, AttributeValue? nameValue)
 		{
 			this.hrefValue = hrefValue;
 			this.nameValue = nameValue;

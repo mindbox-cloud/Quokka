@@ -15,8 +15,8 @@ namespace Mindbox.Quokka
 		
 		public ArrayModelValue(
 			IEnumerable<IModelValue> elements,
-			IEnumerable<IModelField> fields = null,
-			IEnumerable<IModelMethod> methods = null)
+			IEnumerable<IModelField>? fields = null,
+			IEnumerable<IModelMethod>? methods = null)
 			: base(fields, methods)
 		{
 			if (elements == null)

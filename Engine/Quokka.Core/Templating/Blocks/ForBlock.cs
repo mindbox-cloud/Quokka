@@ -54,7 +54,12 @@ namespace Mindbox.Quokka
 			{
 				var innerScope =
 					renderContext.VariableScope.CreateChildScope(
-						new CompositeVariableValueStorage(iterationVariableName, collectionElement));
+						new CompositeVariableValueStorage(
+							new CompositeModelValue(
+								new [] 
+								{ 
+									new ModelField(iterationVariableName, collectionElement) 
+								})));
 
 				block.Render(resultBuilder, renderContext.CreateInnerContext(innerScope));
 			}

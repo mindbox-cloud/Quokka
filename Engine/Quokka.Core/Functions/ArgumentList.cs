@@ -85,7 +85,7 @@ namespace Mindbox.Quokka
 							context.ErrorListener.AddInvalidFunctionArgumentValueError(
 								function.Name,
 								GetArgument(argumentNumber).Name,
-								validationResult.ErrorMessage,
+								validationResult.ErrorMessage ?? "Unknown error",
 								location);
 						}
 					}

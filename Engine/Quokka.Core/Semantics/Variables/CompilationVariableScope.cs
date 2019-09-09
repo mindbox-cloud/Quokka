@@ -14,7 +14,7 @@ namespace Mindbox.Quokka
 	/// </remarks>
 	internal class CompilationVariableScope
 	{
-		private readonly CompilationVariableScope parentScope;
+		private readonly CompilationVariableScope? parentScope;
 		private readonly List<CompilationVariableScope> childScopes = new List<CompilationVariableScope>(); 
 
 		public MemberCollection<string> Variables { get; } = new MemberCollection<string>();
@@ -24,7 +24,7 @@ namespace Mindbox.Quokka
 		{
 		}
 
-		private CompilationVariableScope(CompilationVariableScope parentScope)
+		private CompilationVariableScope(CompilationVariableScope? parentScope)
 		{
 			this.parentScope = parentScope;
 		}

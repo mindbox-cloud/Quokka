@@ -19,7 +19,7 @@ namespace Mindbox.Quokka
 		{
 		}
 
-		public override object GetPrimitiveValue()
+		public override object? GetPrimitiveValue()
 		{
 			return primitiveModel.Value;
 		}

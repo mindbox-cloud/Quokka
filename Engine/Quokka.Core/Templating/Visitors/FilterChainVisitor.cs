@@ -17,7 +17,7 @@ namespace Mindbox.Quokka
 				context.expression().Accept(new ExpressionVisitor(VisitingContext)),
 				GetLocationFromToken(context.expression().Start));
 			
-			FunctionCallExpression latestFilterFunctionCall = null;
+			FunctionCallExpression? latestFilterFunctionCall = null;
 
 			foreach (var filter in context.filterChain().functionCallExpression())
 			{
@@ -25,6 +25,9 @@ namespace Mindbox.Quokka
 				implicitlyPassedArgument = new ArgumentValue(latestFilterFunctionCall, latestFilterFunctionCall.Location);
 			}
 			
+			if (latestFilterFunctionCall == null)
+				throw new InvalidOperationException("No function call found in the filter chain");
+
 			return latestFilterFunctionCall;
 		}
 	}

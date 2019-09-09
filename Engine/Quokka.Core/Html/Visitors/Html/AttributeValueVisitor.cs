@@ -6,29 +6,29 @@ using Mindbox.Quokka.Generated;
 
 namespace Mindbox.Quokka.Html
 {
-	internal class AttributeValueVisitor : QuokkaHtmlBaseVisitor<AttributeValue>
+	internal class AttributeValueVisitor : QuokkaHtmlBaseVisitor<AttributeValue?>
 	{
 		public AttributeValueVisitor(HtmlBlockParsingContext parsingContext)
 			: base(parsingContext)
 		{
 		}
 
-		public override AttributeValue VisitDoubleQuotedValue(QuokkaHtml.DoubleQuotedValueContext context)
+		public override AttributeValue? VisitDoubleQuotedValue(QuokkaHtml.DoubleQuotedValueContext context)
 		{
 			return CreateAttributeValue(context, 1, 1, true);
 		}
 
-		public override AttributeValue VisitSingleQuotedValue(QuokkaHtml.SingleQuotedValueContext context)
+		public override AttributeValue? VisitSingleQuotedValue(QuokkaHtml.SingleQuotedValueContext context)
 		{
 			return CreateAttributeValue(context, 1, 1, true);
 		}
 
-		public override AttributeValue VisitUnquotedValue(QuokkaHtml.UnquotedValueContext context)
+		public override AttributeValue? VisitUnquotedValue(QuokkaHtml.UnquotedValueContext context)
 		{
 			return CreateAttributeValue(context, 0, 0, false);
 		}
 
-		private AttributeValue CreateAttributeValue(
+		private AttributeValue? CreateAttributeValue(
 			ParserRuleContext ruleContext,
 			int offsetLeft,
 			int offsetRight,

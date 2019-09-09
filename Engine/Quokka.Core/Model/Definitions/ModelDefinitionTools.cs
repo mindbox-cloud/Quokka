@@ -8,7 +8,7 @@ namespace Mindbox.Quokka
 {
 	internal static class ModelDefinitionTools
 	{
-		public static ICompositeModelDefinition TryCombineModelDefinitions(
+		public static ICompositeModelDefinition? TryCombineModelDefinitions(
 			IEnumerable<ICompositeModelDefinition> definitions,
 			out IList<ITemplateError> errors)
 		{
@@ -41,7 +41,7 @@ namespace Mindbox.Quokka
 			IList<ITemplateError> errors;
 			var result = TryCombineModelDefinitions(definitions, out errors);
 
-			if (errors.Any())
+			if (result == null)
 				throw new TemplateException("Inconsistent model definitions");
 
 			return result;
