@@ -8,8 +8,8 @@ namespace Mindbox.Quokka
 
 		public ArrayModelDefinition(
 			IModelDefinition elementModelDefinition,
-			IReadOnlyDictionary<string, IModelDefinition> fields = null,
-			IReadOnlyDictionary<IMethodCallDefinition, IModelDefinition> methods = null)
+			IReadOnlyDictionary<string, IModelDefinition>? fields = null,
+			IReadOnlyDictionary<IMethodCallDefinition, IModelDefinition>? methods = null)
 			:base(fields, methods)
 		{
 			ElementModelDefinition = elementModelDefinition;

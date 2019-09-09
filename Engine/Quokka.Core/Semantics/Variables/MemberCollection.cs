@@ -50,7 +50,7 @@ namespace Mindbox.Quokka
 			return definition;
 		}
 
-		public ValueUsageSummary TryGetMemberUsageSummary(TMemberKey key)
+		public ValueUsageSummary? TryGetMemberUsageSummary(TMemberKey key)
 		{
 			return items.TryGetValue(key, out ValueUsageSummary usageSummary) 
 				? usageSummary 

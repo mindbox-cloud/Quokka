@@ -7,8 +7,8 @@ namespace Mindbox.Quokka
 {
 	internal class CompositeVariableValueStorage : VariableValueStorage
 	{
-		private readonly IDictionary<string, VariableValueStorage> fields;
-		private readonly IDictionary<MethodCall, VariableValueStorage> methods;
+		private readonly IDictionary<string, VariableValueStorage?> fields;
+		private readonly IDictionary<MethodCall, VariableValueStorage?> methods;
 
 		public override IModelValue ModelValue { get; }
 
@@ -34,16 +34,21 @@ namespace Mindbox.Quokka
 		}
 
 		public CompositeVariableValueStorage(string fieldName, VariableValueStorage fieldValueStorage)
+			: this(
+				new Dictionary<string, VariableValueStorage?>(StringComparer.InvariantCultureIgnoreCase)
+				{
+					{ fieldName, fieldValueStorage }
+				},
+				new Dictionary<MethodCall, VariableValueStorage?>())
 		{
-			if (fieldName == null)
-				throw new ArgumentNullException(nameof(fieldName));
-			if (fieldValueStorage == null)
-				throw new ArgumentNullException(nameof(fieldValueStorage));
+		}
 
-			fields = new Dictionary<string, VariableValueStorage>(StringComparer.InvariantCultureIgnoreCase)
-			{
-				{ fieldName, fieldValueStorage }
-			};
+		private CompositeVariableValueStorage(
+			IDictionary<string, VariableValueStorage?> fields,
+			IDictionary<MethodCall, VariableValueStorage?> methods)
+		{
+			this.fields = fields;
+			this.methods = methods;
 		}
 
 		public void SetFieldValueStorage(string variableName, VariableValueStorage value)
@@ -56,17 +61,17 @@ namespace Mindbox.Quokka
 			return fields.ContainsKey(variableName);
 		}
 
-		public override VariableValueStorage GetFieldValueStorage(string memberName)
+		public override VariableValueStorage? GetFieldValueStorage(string memberName)
 		{
-			if (fields.TryGetValue(memberName, out VariableValueStorage fieldValue))
+			if (fields.TryGetValue(memberName, out VariableValueStorage? fieldValue))
 				return fieldValue;
 			else
 				throw new InvalidOperationException($"Member {memberName} not found");
 		}
 
-		public override VariableValueStorage GetMethodCallResultValueStorage(MethodCall methodCall)
+		public override VariableValueStorage? GetMethodCallResultValueStorage(MethodCall methodCall)
 		{
-			if (methods.TryGetValue(methodCall, out VariableValueStorage methodValue))
+			if (methods.TryGetValue(methodCall, out VariableValueStorage? methodValue))
 				return methodValue;
 			else
 				throw new InvalidOperationException($"Method call result for {methodCall.Name} not found");

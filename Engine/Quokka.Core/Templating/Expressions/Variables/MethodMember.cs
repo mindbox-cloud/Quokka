@@ -29,7 +29,7 @@ namespace Mindbox.Quokka
 			    .CreateOrUpdateMember(methodCall, new ValueUsage(Location, memberType));
 	    }
 
-	    public override ValueUsageSummary GetMemberVariableDefinition(ValueUsageSummary ownerValueUsageSummary)
+	    public override ValueUsageSummary? GetMemberVariableDefinition(ValueUsageSummary ownerValueUsageSummary)
 	    {
 		    return ownerValueUsageSummary.Methods.TryGetMemberUsageSummary(methodCall);
 	    }

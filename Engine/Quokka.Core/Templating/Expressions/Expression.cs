@@ -2,7 +2,7 @@
 {
 	internal abstract class Expression : IExpression
 	{
-		public abstract VariableValueStorage TryGetStaticEvaluationResult();
+		public abstract VariableValueStorage? TryGetStaticEvaluationResult();
 
 		public abstract VariableValueStorage Evaluate(RenderContext renderContext);
 

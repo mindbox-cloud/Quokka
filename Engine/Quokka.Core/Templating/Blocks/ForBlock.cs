@@ -5,13 +5,13 @@ namespace Mindbox.Quokka
 {
 	internal class ForBlock : TemplateNodeBase
 	{
-		private readonly ITemplateNode block;
+		private readonly ITemplateNode? block;
 		private readonly string iterationVariableName;
 		private readonly Location iterationVariableLocation;
 		private readonly VariantValueExpression enumerableExpression;
 
 		public ForBlock(
-			ITemplateNode block,
+			ITemplateNode? block,
 			string iterationVariableName, 
 			Location iterationVariableLocation,
 			VariantValueExpression enumerableExpression)

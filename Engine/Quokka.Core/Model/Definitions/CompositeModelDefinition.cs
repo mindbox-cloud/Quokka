@@ -16,8 +16,8 @@ namespace Mindbox.Quokka
 		public IReadOnlyDictionary<IMethodCallDefinition, IModelDefinition> Methods { get; }
 
 		public CompositeModelDefinition(
-			IReadOnlyDictionary<string, IModelDefinition> fields = null,
-			IReadOnlyDictionary<IMethodCallDefinition, IModelDefinition> methods = null)
+			IReadOnlyDictionary<string, IModelDefinition>? fields = null,
+			IReadOnlyDictionary<IMethodCallDefinition, IModelDefinition>? methods = null)
 		{
 			Fields = fields ?? new Dictionary<string, IModelDefinition>();
 			Methods = methods ?? new Dictionary<IMethodCallDefinition, IModelDefinition>();

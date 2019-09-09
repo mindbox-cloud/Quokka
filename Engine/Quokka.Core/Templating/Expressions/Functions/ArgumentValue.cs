@@ -29,7 +29,7 @@
 			return Expression.Evaluate(renderContext);
 		}
 
-		public VariableValueStorage TryGetStaticValue()
+		public VariableValueStorage? TryGetStaticValue()
 		{
 			return Expression.TryGetStaticEvaluationResult();
 		}

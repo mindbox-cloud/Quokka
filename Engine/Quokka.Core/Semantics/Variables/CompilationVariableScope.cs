@@ -43,14 +43,14 @@ namespace Mindbox.Quokka
 		
 		public ValueUsageSummary RegisterVariableValueUsage(string name, ValueUsage valueUsage)
 		{
-			var scope = GetExistingScopeForVariable(name) ?? GetRootScope();
+			var scope = TryGetExistingScopeForVariable(name) ?? GetRootScope();
 
 			return scope.RegisterVariableValueUsageIgnoringParentScopes(name, valueUsage);
 		}
 
 		public ValueUsageSummary RegisterScopedVariableValueUsage(string name, ValueUsage valueUsage)
 		{
-			var scope = GetExistingScopeForVariable(name) ?? this;
+			var scope = TryGetExistingScopeForVariable(name) ?? this;
 			return scope.RegisterVariableValueUsageIgnoringParentScopes(name, valueUsage);
 		}
 
@@ -60,7 +60,7 @@ namespace Mindbox.Quokka
 			{
 				foreach (var item in Variables.Items)
 				{
-					if (parentScope.GetExistingScopeForVariable(item.Key) != null)
+					if (parentScope.TryGetExistingScopeForVariable(item.Key) != null)
 						context.ErrorListener.AddVariableDeclarationScopeConflictError(item.Value, item.Value.GetFirstLocation());
 				}
 			}
@@ -77,7 +77,7 @@ namespace Mindbox.Quokka
 			return Variables.CreateOrUpdateMember(name, valueUsage);
 		}
 
-		public ValueUsageSummary TryGetVariableDefinition(string variableName)
+		public ValueUsageSummary? TryGetVariableDefinition(string variableName)
 		{
 			return Variables.TryGetMemberUsageSummary(variableName)
 					?? parentScope?.TryGetVariableDefinition(variableName);
@@ -88,11 +88,11 @@ namespace Mindbox.Quokka
 			return parentScope == null ? this : parentScope.GetRootScope();
 		}
 
-		private CompilationVariableScope GetExistingScopeForVariable(string variableName)
+		private CompilationVariableScope? TryGetExistingScopeForVariable(string variableName)
 		{
 			return Variables.CheckIfMemberExists(variableName) 
 				? this 
-				: parentScope?.GetExistingScopeForVariable(variableName);
+				: parentScope?.TryGetExistingScopeForVariable(variableName);
 		}
 	}
 }

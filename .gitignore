@@ -255,6 +255,9 @@ paket-files/
 # CodeRush
 .cr/
 
+# VS Code Extensions
+.ionide/
+
 TestResults
 Grammar/.metadata/
 Grammar/Quokka/.metadata/

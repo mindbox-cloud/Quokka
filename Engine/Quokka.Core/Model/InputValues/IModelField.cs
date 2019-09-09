@@ -3,6 +3,6 @@
 	public interface IModelField
 	{
 		string Name { get; }
-		IModelValue Value { get; }
+		IModelValue? Value { get; }
 	}
 }

@@ -2,9 +2,9 @@
 {
 	public class PrimitiveModelValue : IPrimitiveModelValue
 	{
-		public object Value { get; }
+		public object? Value { get; }
 
-		public PrimitiveModelValue(object value)
+		public PrimitiveModelValue(object? value)
 		{
 			Value = value;
 		}

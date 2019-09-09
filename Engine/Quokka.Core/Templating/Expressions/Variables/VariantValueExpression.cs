@@ -10,7 +10,7 @@ namespace Mindbox.Quokka
 
 		public abstract IModelDefinition GetExpressionResultModelDefinition(AnalysisContext context);
 		
-		public sealed override VariableValueStorage TryGetStaticEvaluationResult()
+		public sealed override VariableValueStorage? TryGetStaticEvaluationResult()
 		{
 			return null;
 		}

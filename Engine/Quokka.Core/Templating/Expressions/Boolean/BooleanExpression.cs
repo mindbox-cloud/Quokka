@@ -21,7 +21,7 @@
 
 		public abstract void PerformSemanticAnalysis(AnalysisContext context);
 
-		public override VariableValueStorage TryGetStaticEvaluationResult()
+		public override VariableValueStorage? TryGetStaticEvaluationResult()
 		{
 			return null;
 		}

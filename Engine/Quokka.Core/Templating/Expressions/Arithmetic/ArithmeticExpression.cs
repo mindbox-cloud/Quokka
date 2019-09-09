@@ -27,7 +27,7 @@ namespace Mindbox.Quokka
 			return new PrimitiveVariableValueStorage(NormalizeValue(GetValue(renderContext)));
 		}
 
-		public override VariableValueStorage TryGetStaticEvaluationResult()
+		public override VariableValueStorage? TryGetStaticEvaluationResult()
 		{
 			return TryGetStaticValue(out double numberValue) 
 				? new PrimitiveVariableValueStorage(NormalizeValue(numberValue))

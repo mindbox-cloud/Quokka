@@ -8,7 +8,7 @@ using Mindbox.Quokka.Generated;
 
 namespace Mindbox.Quokka
 {
-	internal class DynamicBlockVisitor : QuokkaBaseVisitor<ITemplateNode>
+	internal class DynamicBlockVisitor : QuokkaBaseVisitor<ITemplateNode?>
 	{
 		public DynamicBlockVisitor(VisitingContext visitingContext) 
 			: base(visitingContext)
@@ -37,13 +37,13 @@ namespace Mindbox.Quokka
 			var iterationVariableIdentifier = forInstruction.iterationVariable().Identifier();
 
 			return new ForBlock(
-				context.templateBlock()?.Accept(new TemplateVisitor(VisitingContext)),
+				context!.templateBlock()?.Accept(new TemplateVisitor(VisitingContext)),
 				iterationVariableIdentifier.GetText(),
 				GetLocationFromToken(iterationVariableIdentifier.Symbol),
 				forInstruction.variantValueExpression().Accept(new VariantValueExpressionVisitor(VisitingContext)));
 		}
 
-		public override ITemplateNode VisitCommentBlock(QuokkaParser.CommentBlockContext context)
+		public override ITemplateNode? VisitCommentBlock(QuokkaParser.CommentBlockContext context)
 		{
 			return null;
 		}

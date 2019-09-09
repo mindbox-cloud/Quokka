@@ -78,7 +78,7 @@ namespace Mindbox.Quokka
 			return new CompositeModelDefinition(fieldsFromAllDefinitions, methodsFromAllDefinitions);
 		}
 
-		private static IModelDefinition CombineModelDefinition(
+		private static IModelDefinition? CombineModelDefinition(
 			string fieldName,
 			List<IModelDefinition> allValues,
 			ModelDefinitionErrorListener errorListener)

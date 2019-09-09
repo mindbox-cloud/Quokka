@@ -26,7 +26,7 @@ namespace Mindbox.Quokka
 		private static readonly IReadOnlyDictionary<Type, TypeDefinition> primitiveTypeMap;
 
 		public string Name { get; }
-		internal TypeDefinition BaseType { get; }
+		internal TypeDefinition? BaseType { get; }
 		internal int Priority { get; }
 
 		public static TypeDefinition Unknown { get; }
@@ -72,7 +72,7 @@ namespace Mindbox.Quokka
 
 		}
 
-		internal TypeDefinition(string name, TypeDefinition baseType, int priority)
+		internal TypeDefinition(string name, TypeDefinition? baseType, int priority)
 		{
 			Name = name;
 			BaseType = baseType;
@@ -127,7 +127,7 @@ namespace Mindbox.Quokka
 		internal static TypeDefinition GetResultingTypeForMultipleOccurences<TTypedObject>(
 			IList<TTypedObject> occurences,
 			Func<TTypedObject, TypeDefinition> typeSelector,
-			Action<TTypedObject, TypeDefinition> inconsistentTypeErrorHandler = null)
+			Action<TTypedObject, TypeDefinition>? inconsistentTypeErrorHandler = null)
 		{
 			if (!occurences.Any())
 				throw new InvalidOperationException("No occurences");
@@ -138,7 +138,7 @@ namespace Mindbox.Quokka
 			var occurencesByTypePriority = occurences
 				.OrderByDescending(oc => typeSelector(oc).Priority);
 
-			TypeDefinition resultingType = null;
+			TypeDefinition? resultingType = null;
 
 			foreach (var occurence in occurencesByTypePriority)
 			{

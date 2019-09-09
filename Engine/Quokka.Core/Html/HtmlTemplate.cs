@@ -40,7 +40,7 @@ namespace Mindbox.Quokka.Html
 			return htmlContext.GetReferences();
 		}
 
-		public override string Render(ICompositeModelValue model, CallContextContainer callContextContainer = null)
+		public override string Render(ICompositeModelValue model, CallContextContainer? callContextContainer = null)
 		{
 			var effectiveCallContextContainer = callContextContainer ?? CallContextContainer.Empty;
 
@@ -57,8 +57,8 @@ namespace Mindbox.Quokka.Html
 		public string Render(
 			ICompositeModelValue model,
 			Func<Guid, string, string> redirectLinkProcessor,
-			string identificationCode = null,
-			CallContextContainer callContextContainer = null)
+			string? identificationCode = null,
+			CallContextContainer? callContextContainer = null)
 		{
 			if (model == null)
 				throw new ArgumentNullException(nameof(model));

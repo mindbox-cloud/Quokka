@@ -4,7 +4,7 @@ using Mindbox.Quokka.Generated;
 
 namespace Mindbox.Quokka
 {
-	internal class TemplateVisitor : QuokkaBaseVisitor<ITemplateNode>
+	internal class TemplateVisitor : QuokkaBaseVisitor<ITemplateNode?>
 	{
 		public TemplateVisitor(VisitingContext visitingContext)
 			: base(visitingContext)
@@ -24,7 +24,7 @@ namespace Mindbox.Quokka
 			return context.Accept(VisitingContext.CreateStaticBlockVisitor());
 		}
 
-		public override ITemplateNode VisitDynamicBlock(QuokkaParser.DynamicBlockContext context)
+		public override ITemplateNode? VisitDynamicBlock(QuokkaParser.DynamicBlockContext context)
 		{
 			return context.Accept(new DynamicBlockVisitor(VisitingContext));
 		}

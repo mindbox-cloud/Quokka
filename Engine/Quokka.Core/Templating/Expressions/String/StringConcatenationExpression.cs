@@ -42,7 +42,7 @@ namespace Mindbox.Quokka
 			secondOperand.PerformSemanticAnalysis(context, TypeDefinition.Primitive);
 		}
 
-		public override VariableValueStorage TryGetStaticEvaluationResult()
+		public override VariableValueStorage? TryGetStaticEvaluationResult()
 		{
 			return null;
 		}

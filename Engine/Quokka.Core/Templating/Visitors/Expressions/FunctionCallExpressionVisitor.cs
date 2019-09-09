@@ -11,11 +11,11 @@ namespace Mindbox.Quokka
 		/// First function argument that is passed to the function implicitly (used when functions are invoked
 		/// via filter chain).
 		/// </summary>
-		private readonly ArgumentValue implicitlyPassedArgumentValue;
+		private readonly ArgumentValue? implicitlyPassedArgumentValue;
 
 		public FunctionCallExpressionVisitor(
 			VisitingContext visitingContext,
-			ArgumentValue implicitlyPassedArgumentValue = null)
+			ArgumentValue? implicitlyPassedArgumentValue = null)
 			: base(visitingContext)
 		{
 			this.implicitlyPassedArgumentValue = implicitlyPassedArgumentValue;

@@ -7,10 +7,10 @@ namespace Mindbox.Quokka.Html
 	{
 		public Guid UniqueKey { get; }
 		public string RedirectUrl { get; }
-		public string Name { get; }
+		public string? Name { get; }
 		public bool IsConstant { get; }
 
-		public Reference(string redirectUrl, string name, Guid uniqueKey, bool isConstant)
+		public Reference(string redirectUrl, string? name, Guid uniqueKey, bool isConstant)
 		{
 			RedirectUrl = redirectUrl;
 			Name = name;

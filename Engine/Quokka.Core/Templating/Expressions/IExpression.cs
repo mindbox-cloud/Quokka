@@ -2,7 +2,7 @@
 {
 	internal interface IExpression
 	{
-		VariableValueStorage TryGetStaticEvaluationResult();
+		VariableValueStorage? TryGetStaticEvaluationResult();
 
 		VariableValueStorage Evaluate(RenderContext renderContext);
 

@@ -10,15 +10,15 @@ namespace Mindbox.Quokka
 	[Serializable]
 	public class UnrenderableTemplateModelException : TemplateException
 	{
-		public Location Location { get; }
+		public Location? Location { get; }
 
-		public UnrenderableTemplateModelException(string message, Location location)
+		public UnrenderableTemplateModelException(string message, Location? location)
 			: base(message)
 		{
 			Location = location;
 		}
 
-		public UnrenderableTemplateModelException(string message, Exception inner, Location location)
+		public UnrenderableTemplateModelException(string message, Exception inner, Location? location)
 			: base(message, inner)
 		{
 			Location = location;

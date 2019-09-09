@@ -79,6 +79,8 @@ namespace Mindbox.Quokka
 			ValueUsageSummary destinationVariable)
 		{
 			var sourceVariable = context.VariableScope.TryGetVariableDefinition(variableName);
+			if (sourceVariable == null)
+				throw new InvalidOperationException($"Could not obtain Variable definition for {variableName} but the variable is being assigned a value");
 
 			sourceVariable.RegisterAssignmentToVariable(destinationVariable);
 		}

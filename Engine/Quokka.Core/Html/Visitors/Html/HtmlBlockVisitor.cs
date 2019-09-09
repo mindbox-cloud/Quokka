@@ -5,7 +5,7 @@ using Mindbox.Quokka.Generated;
 
 namespace Mindbox.Quokka.Html
 {
-	internal class HtmlBlockVisitor : QuokkaHtmlBaseVisitor<IStaticBlockPart>
+	internal class HtmlBlockVisitor : QuokkaHtmlBaseVisitor<IStaticBlockPart?>
 	{
 		public HtmlBlockVisitor(HtmlBlockParsingContext parsingContext)
 			: base(parsingContext)
@@ -35,12 +35,13 @@ namespace Mindbox.Quokka.Html
 			return null;
 		}
 
-		public override IStaticBlockPart VisitClosingTag(QuokkaHtml.ClosingTagContext context)
+		public override IStaticBlockPart? VisitClosingTag(QuokkaHtml.ClosingTagContext context)
 		{
 			string tagName = context.TAG_NAME().GetText();
 
 			if (StringComparer.InvariantCultureIgnoreCase.Equals(tagName, "body"))
 				return new IdentificationCodePlaceHolderBlock(context.LeftAngularBracket().Symbol.StartIndex);
+
 			return null;
 		}
 
@@ -48,8 +49,8 @@ namespace Mindbox.Quokka.Html
 		{
 			var hrefAttributeValueVisitor = new AttributeValueVisitor(ParsingContext);
 
-			AttributeValue hrefValue = null;
-			AttributeValue nameValue = null;
+			AttributeValue? hrefValue = null;
+			AttributeValue? nameValue = null;
 
 			foreach (var attribute in attributes)
 			{

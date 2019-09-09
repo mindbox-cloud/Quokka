@@ -4,7 +4,7 @@ namespace Mindbox.Quokka
 {
 	internal abstract class SemanticErrorSubListenerBase
 	{
-		private Action<SemanticError> addError;
+		private Action<SemanticError>? addError;
 
 		public void Register(Action<SemanticError> addError)
 		{

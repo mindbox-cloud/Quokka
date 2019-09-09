@@ -23,7 +23,7 @@ namespace Mindbox.Quokka
 			return new Template(templateText, functionRegistry,  true);
 		}
 
-		public ITemplate TryCreateTemplate(string templateText, out IList<ITemplateError> errors)
+		public ITemplate? TryCreateTemplate(string templateText, out IList<ITemplateError> errors)
 		{
 			var template = new Template(templateText, functionRegistry, false);
 			errors = template.Errors;
@@ -36,7 +36,7 @@ namespace Mindbox.Quokka
 			return new HtmlTemplate(templateText, functionRegistry, true);
 		}
 
-		public IHtmlTemplate TryCreateHtmlTemplate(string templateText, out IList<ITemplateError> errors)
+		public IHtmlTemplate? TryCreateHtmlTemplate(string templateText, out IList<ITemplateError> errors)
 		{
 			var template = new HtmlTemplate(templateText, functionRegistry, false);
 			errors = template.Errors;

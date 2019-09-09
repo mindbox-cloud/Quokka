@@ -3,9 +3,9 @@
 	public class ModelField : IModelField
 	{
 		public string Name { get; }
-		public IModelValue Value { get; }
+		public IModelValue? Value { get; }
 
-		public ModelField(string name, IModelValue value)
+		public ModelField(string name, IModelValue? value)
 		{
 			Name = name;
 			Value = value;

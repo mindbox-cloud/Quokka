@@ -16,7 +16,7 @@ namespace Mindbox.Quokka
 	internal class ValueUsageSummary
 	{
 		private readonly IList<ValueUsage> usages;
-		private TypeDefinition compiledType;
+		private TypeDefinition? compiledType;
 
 		/// <summary>
 		/// Usage summaries for all the values that were created by iterating over this value (if it's a collection).

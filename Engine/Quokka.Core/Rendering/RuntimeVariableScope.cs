@@ -5,7 +5,7 @@ namespace Mindbox.Quokka
 {
 	internal class RuntimeVariableScope
 	{
-		private readonly RuntimeVariableScope parentScope;
+		private readonly RuntimeVariableScope? parentScope;
 		private readonly CompositeVariableValueStorage valueStorage;
 
 		public RuntimeVariableScope(CompositeVariableValueStorage valueStorage)
@@ -13,7 +13,7 @@ namespace Mindbox.Quokka
 		{
 		}
 
-		private RuntimeVariableScope(CompositeVariableValueStorage valueStorage, RuntimeVariableScope parentScope)
+		private RuntimeVariableScope(CompositeVariableValueStorage valueStorage, RuntimeVariableScope? parentScope)
 		{
 			this.valueStorage = valueStorage;
 			this.parentScope = parentScope;
@@ -24,7 +24,7 @@ namespace Mindbox.Quokka
 			return new RuntimeVariableScope(childScopeValueStorage, this);
 		}
 		
-		public VariableValueStorage TryGetValueStorageForVariable(string variableName)
+		public VariableValueStorage? TryGetValueStorageForVariable(string variableName)
 		{
 			return valueStorage.ContainsValueForVariable(variableName) 
 						? valueStorage.GetFieldValueStorage(variableName) 
@@ -38,7 +38,7 @@ namespace Mindbox.Quokka
 			scope.valueStorage.SetFieldValueStorage(variableName, value);
 		}
 
-		private RuntimeVariableScope TryGetScopeForVariable(string variableName)
+		private RuntimeVariableScope? TryGetScopeForVariable(string variableName)
 		{
 			if (valueStorage.ContainsValueForVariable(variableName))
 				return this;
