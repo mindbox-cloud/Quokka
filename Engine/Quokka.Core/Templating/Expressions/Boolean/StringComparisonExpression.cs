@@ -23,8 +23,8 @@ namespace Mindbox.Quokka
 
 		public override bool GetBooleanValue(RenderContext renderContext)
 		{
-			var variableValue = (string)variantValueExpression.Evaluate(renderContext).GetPrimitiveValue();
-			var stringValue = (string)stringExpression.Evaluate(renderContext).GetPrimitiveValue();
+			var variableValue = (string?)variantValueExpression.Evaluate(renderContext).GetPrimitiveValue();
+			var stringValue = (string?)stringExpression.Evaluate(renderContext).GetPrimitiveValue();
 
 			bool areStringsEqual = string.Equals(
 				variableValue,
