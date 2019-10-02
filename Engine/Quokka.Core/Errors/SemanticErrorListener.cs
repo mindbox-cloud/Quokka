@@ -129,6 +129,15 @@ namespace Mindbox.Quokka
 				location));
 		}
 
+		public void AddUnexpectedMethodOnCompositeDeclaredTypeError(
+			ValueUsageSummary definition,
+			Location location)
+		{
+			AddError(new SemanticError(
+				$"Неизвестный метод \"{definition.FullName}\"",
+				location));
+		}
+
 		public void AddVariableDeclarationScopeConflictError(ValueUsageSummary definition, Location location)
 		{
 			AddError(new SemanticError(

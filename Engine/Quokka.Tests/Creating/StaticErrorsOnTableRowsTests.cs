@@ -49,6 +49,17 @@ namespace Mindbox.Quokka.Tests
 
 		[TestMethod]
 		[ExpectedException(typeof(TemplateContainsErrorsException))]
+		public void CreateTemplate_TableRows_UndefinedMethodOnRow_Error()
+		{
+			new Template(@"
+				@{ for row in tableRows(Collection, 3) }
+					${ row.DoSomething() }
+				@{ end for }
+			");
+		}
+
+		[TestMethod]
+		[ExpectedException(typeof(TemplateContainsErrorsException))]
 		public void CreateTemplate_TableRows_TreatingCellsAsPrimitive_Error()
 		{
 			new Template(@"
