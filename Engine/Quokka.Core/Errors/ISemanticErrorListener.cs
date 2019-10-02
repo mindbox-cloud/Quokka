@@ -67,5 +67,9 @@ namespace Mindbox.Quokka
 			string methodName,
 			int argumentPosition,
 			Location location);
+
+		void AddUnexpectedMethodOnCompositeDeclaredTypeError(
+			ValueUsageSummary definition,
+			Location location);
 	}
 }

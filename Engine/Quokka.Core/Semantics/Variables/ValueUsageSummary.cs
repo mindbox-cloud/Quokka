@@ -272,10 +272,23 @@ namespace Mindbox.Quokka
 
 			foreach (var actualItem in Fields.Items)
 			{
-				IModelDefinition fieldExpectedDefinition;
-				if (expectedModelDefinition.Fields.TryGetValue(actualItem.Key, out fieldExpectedDefinition))
+				if (expectedModelDefinition.Fields.TryGetValue(actualItem.Key, out var fieldExpectedDefinition))
 				{
 					actualItem.Value.ValidateAgainstExpectedModelDefinition(fieldExpectedDefinition, errorListener);
+				}
+				else
+				{
+					errorListener.AddUnexpectedFieldOnCompositeDeclaredTypeError(
+						actualItem.Value,
+						actualItem.Value.GetFirstLocation());
+				}
+			}
+
+			foreach (var actualItem in Methods.Items)
+			{
+				if (expectedModelDefinition.Methods.TryGetValue(actualItem.Key.ToMethodCallDefinition(), out var methodExpectedDefinition))
+				{
+					actualItem.Value.ValidateAgainstExpectedModelDefinition(methodExpectedDefinition, errorListener);
 				}
 				else
 				{
