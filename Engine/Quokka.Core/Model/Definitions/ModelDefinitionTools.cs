@@ -38,8 +38,7 @@ namespace Mindbox.Quokka
 
 		public static ICompositeModelDefinition CombineModelDefinitions(IEnumerable<ICompositeModelDefinition> definitions)
 		{
-			IList<ITemplateError> errors;
-			var result = TryCombineModelDefinitions(definitions, out errors);
+			var result = TryCombineModelDefinitions(definitions, out var errors);
 
 			if (errors.Any())
 				throw new TemplateException("Inconsistent model definitions");
@@ -83,17 +82,43 @@ namespace Mindbox.Quokka
 			List<IModelDefinition> allValues,
 			ModelDefinitionErrorListener errorListener)
 		{
-			var firstValue = allValues[0];
+			if (!allValues.Any())
+				throw new ArgumentException("allValues list must not be empty", nameof(allValues));
 
-			if (allValues.Count == 1)
+			// Unknown types are unfortunately just primitive types with TypeDefinition = Unknown.
+			// They are compatible with composite types unlike any other primitive type.
+
+			// It's easier to just filter out the Unknown as they don't affect the resulting definition in any way
+			// (unless all values are of Unknown type, in which case the result is also Unknown).
+
+			// This needs to be rewrited in a more obvious manner, probably when the type system is reimplemented.
+
+			var meaningfulValues = allValues.Where(
+					value =>
+					{
+						if (!(value is IPrimitiveModelDefinition primitiveValue))
+							return true;
+
+						return primitiveValue.Type != TypeDefinition.Unknown;
+					})
+				.ToList();
+
+			if (!meaningfulValues.Any())
+				return new PrimitiveModelDefinition(TypeDefinition.Unknown);
+
+			var firstValue = meaningfulValues[0];
+
+			if (meaningfulValues.Count == 1)
 				return firstValue;
 			
+
 			if (firstValue is ICompositeModelDefinition)
 			{
+
 				if (firstValue is IArrayModelDefinition)
 				{
-					var arrayValues = allValues.OfType<IArrayModelDefinition>().ToList();
-					if (arrayValues.Count != allValues.Count)
+					var arrayValues = meaningfulValues.OfType<IArrayModelDefinition>().ToList();
+					if (arrayValues.Count != meaningfulValues.Count)
 					{
 						errorListener.AddInconsistenDefinitionTypesError(fieldName);
 						return null;
@@ -106,8 +131,8 @@ namespace Mindbox.Quokka
 								errorListener));
 				}
 
-				var compositeValues = allValues.OfType<ICompositeModelDefinition>().ToList();
-				if (compositeValues.Count != allValues.Count)
+				var compositeValues = meaningfulValues.OfType<ICompositeModelDefinition>().ToList();
+				if (compositeValues.Count != meaningfulValues.Count)
 				{
 					errorListener.AddInconsistenDefinitionTypesError(fieldName);
 					return null;
@@ -115,11 +140,10 @@ namespace Mindbox.Quokka
 
 				return CombineCompositeModelDefinitions(compositeValues, fieldName + ".", errorListener);
 			}
-
-			if (firstValue is IPrimitiveModelDefinition)
+			else if (firstValue is IPrimitiveModelDefinition)
 			{
-				var primitiveValues = allValues.OfType<IPrimitiveModelDefinition>().ToList();
-				if (primitiveValues.Count != allValues.Count)
+				var primitiveValues = meaningfulValues.OfType<IPrimitiveModelDefinition>().ToList();
+				if (primitiveValues.Count != meaningfulValues.Count)
 				{
 					errorListener.AddInconsistenDefinitionTypesError(fieldName);
 					return null;

@@ -404,5 +404,130 @@ namespace Mindbox.Quokka.Tests
 					}),
 				combinedDefinition);
 		}
+
+		[TestMethod]
+		public void DefinitionCombining_ArrayOfUnknowns_MergeWithArrayOfComposites()
+		{
+			var definition1 = new CompositeModelDefinition(
+				new Dictionary<string, IModelDefinition>
+				{
+					{
+						"Array",
+						new ArrayModelDefinition(new PrimitiveModelDefinition(TypeDefinition.Unknown))
+					}
+				});
+
+			var definition2 = new CompositeModelDefinition(
+				new Dictionary<string, IModelDefinition>
+				{
+					{
+						"Array",
+						new ArrayModelDefinition(
+							new CompositeModelDefinition(
+								new Dictionary<string, IModelDefinition>
+								{
+									{ "Name", new PrimitiveModelDefinition(TypeDefinition.String) }
+								}))
+					}
+				});
+
+			var combinedDefinition = new DefaultTemplateFactory().CombineModelDefinition(new[] { definition1, definition2 });
+
+			TemplateAssert.AreCompositeModelDefinitionsEqual(
+				new CompositeModelDefinition(
+					new Dictionary<string, IModelDefinition>
+					{
+						{
+							"Array",
+							new ArrayModelDefinition(
+								new CompositeModelDefinition(
+									new Dictionary<string, IModelDefinition>
+									{
+										{ "Name", new PrimitiveModelDefinition(TypeDefinition.String) }
+									}))
+						}
+					}),
+				combinedDefinition);
+		}
+		
+		[TestMethod]
+		public void DefinitionCombining_ArrayOfComposites_MergeWithArrayOfUnknowns()
+		{
+			var definition1 = new CompositeModelDefinition(
+				new Dictionary<string, IModelDefinition>
+				{
+					{
+						"Array",
+						new ArrayModelDefinition(
+							new CompositeModelDefinition(
+								new Dictionary<string, IModelDefinition>
+								{
+									{ "Name", new PrimitiveModelDefinition(TypeDefinition.String) }
+								}))
+					}
+				});
+
+			var definition2 = new CompositeModelDefinition(
+				new Dictionary<string, IModelDefinition>
+				{
+					{
+						"Array",
+						new ArrayModelDefinition(new PrimitiveModelDefinition(TypeDefinition.Unknown))
+					}
+				});
+
+			var combinedDefinition = new DefaultTemplateFactory().CombineModelDefinition(new[] { definition1, definition2 });
+
+			TemplateAssert.AreCompositeModelDefinitionsEqual(
+				new CompositeModelDefinition(
+					new Dictionary<string, IModelDefinition>
+					{
+						{
+							"Array",
+							new ArrayModelDefinition(
+								new CompositeModelDefinition(
+									new Dictionary<string, IModelDefinition>
+									{
+										{ "Name", new PrimitiveModelDefinition(TypeDefinition.String) }
+									}))
+						}
+					}),
+				combinedDefinition);
+		}
+
+		[TestMethod]
+		public void DefinitionCombining_Unknown_MergingWithUnknown()
+		{
+			var definition1 = new CompositeModelDefinition(
+				new Dictionary<string, IModelDefinition>
+				{
+					{
+						"Thing",
+						new PrimitiveModelDefinition(TypeDefinition.Unknown)
+					}
+				});
+
+			var definition2 = new CompositeModelDefinition(
+				new Dictionary<string, IModelDefinition>
+				{
+					{
+						"Thing",
+						new PrimitiveModelDefinition(TypeDefinition.Unknown)
+					}
+				});
+
+			var combinedDefinition = new DefaultTemplateFactory().CombineModelDefinition(new[] { definition1, definition2 });
+
+			TemplateAssert.AreCompositeModelDefinitionsEqual(
+				new CompositeModelDefinition(
+					new Dictionary<string, IModelDefinition>
+					{
+						{
+							"Thing",
+							new PrimitiveModelDefinition(TypeDefinition.Unknown)
+						}
+					}),
+			combinedDefinition);
+		}
 	}
 }
