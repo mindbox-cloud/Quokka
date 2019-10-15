@@ -19,7 +19,7 @@ namespace Mindbox.Quokka
 			RenderContext renderContext,
 			IList<VariableValueStorage> argumentsValues)
 		{
-			var next = random.Next(0, argumentsValues.Count - 1);
+			var next = random.Next(0, argumentsValues.Count);
 			return VariadicArgument.ConvertValue(argumentsValues[next]);
 		}
 	}
