@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Text;
 
 namespace Mindbox.Quokka.Html
@@ -16,12 +17,12 @@ namespace Mindbox.Quokka.Html
 			Offset = offset;
 		}
 
-		public override void Render(StringBuilder resultBuilder, RenderContext renderContext)
+		public override void Render(TextWriter resultWriter, RenderContext renderContext)
 		{
 			var htmlRenderContext = (HtmlRenderContext)renderContext;
 			if (htmlRenderContext.IdentificationCode != null && !htmlRenderContext.HasIdentificationCodeBeenRendered)
 			{
-				resultBuilder.Append(htmlRenderContext.IdentificationCode);
+				resultWriter.Write(htmlRenderContext.IdentificationCode);
 				htmlRenderContext.LogIdentificationCodeRendering();
 			}
 		}

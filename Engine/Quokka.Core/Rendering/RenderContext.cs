@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Text;
 
 namespace Mindbox.Quokka
@@ -25,7 +26,7 @@ namespace Mindbox.Quokka
 			return new RenderContext(variableScope, Functions, CallContextContainer);
 		}
 
-		public virtual void OnRenderingEnd(StringBuilder resultBuilder)
+		public virtual void OnRenderingEnd(TextWriter resultWriter)
 		{
 		}
 

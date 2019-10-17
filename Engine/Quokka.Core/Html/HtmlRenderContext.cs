@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Text;
 
 namespace Mindbox.Quokka.Html
@@ -47,10 +48,10 @@ namespace Mindbox.Quokka.Html
 			};
 		}
 
-		public override void OnRenderingEnd(StringBuilder resultBuilder)
+		public override void OnRenderingEnd(TextWriter resultWriter)
 		{
 			if (IdentificationCode != null && !HasIdentificationCodeBeenRendered)
-				resultBuilder.Append(IdentificationCode);
+				resultWriter.Write(IdentificationCode);
 		}
 
 		public void LogIdentificationCodeRendering()

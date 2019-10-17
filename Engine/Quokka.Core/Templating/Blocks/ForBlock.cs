@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Text;
 
 namespace Mindbox.Quokka
@@ -43,7 +44,7 @@ namespace Mindbox.Quokka
 				context.ErrorListener);
 		}
 
-		public override void Render(StringBuilder resultBuilder, RenderContext renderContext)
+		public override void Render(TextWriter resultWriter, RenderContext renderContext)
 		{
 			if (block == null)
 				return;
@@ -56,7 +57,7 @@ namespace Mindbox.Quokka
 					renderContext.VariableScope.CreateChildScope(
 						new CompositeVariableValueStorage(iterationVariableName, collectionElement));
 
-				block.Render(resultBuilder, renderContext.CreateInnerContext(innerScope));
+				block.Render(resultWriter, renderContext.CreateInnerContext(innerScope));
 			}
 		}
 
