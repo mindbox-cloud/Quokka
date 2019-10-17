@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.IO;
 
 namespace Mindbox.Quokka
 {
@@ -29,7 +25,7 @@ namespace Mindbox.Quokka
 			value.RegisterAssignmentToVariable(context, destinationVariable);
 		}
 
-		public override void Render(StringBuilder resultBuilder, RenderContext renderContext)
+		public override void Render(TextWriter resultWriter, RenderContext renderContext)
 		{
 			var valueStorage = value.Evaluate(renderContext);
 

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 
@@ -31,10 +32,10 @@ namespace Mindbox.Quokka
 				child.PerformSemanticAnalysis(context);
 		}
 
-		public override void Render(StringBuilder resultBuilder, RenderContext renderContext)
+		public override void Render(TextWriter resultWriter, RenderContext renderContext)
 		{
 			foreach (var child in children)
-				child.Render(resultBuilder, renderContext);
+				child.Render(resultWriter, renderContext);
 		}
 
 		public override void CompileGrammarSpecificData(GrammarSpecificDataAnalysisContext context)

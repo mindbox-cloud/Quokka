@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System.IO;
+using System.Text;
 
 namespace Mindbox.Quokka
 {
@@ -10,7 +11,7 @@ namespace Mindbox.Quokka
 		{
 		}
 
-		public abstract void Render(StringBuilder resultBuilder, RenderContext renderContext);
+		public abstract void Render(TextWriter resultWriter, RenderContext renderContext);
 
 		public virtual void CompileGrammarSpecificData(GrammarSpecificDataAnalysisContext context)
 		{

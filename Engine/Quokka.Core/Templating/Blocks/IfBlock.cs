@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.IO;
 using System.Linq;
-using System.Text;
 
 namespace Mindbox.Quokka
 {
@@ -19,13 +19,13 @@ namespace Mindbox.Quokka
 				condition.PerformSemanticAnalysis(context);
 		}
 
-		public override void Render(StringBuilder resultBuilder, RenderContext renderContext)
+		public override void Render(TextWriter resultWriter, RenderContext renderContext)
 		{
 			foreach (var condition in conditions)
 			{
 				if (condition.ShouldRender(renderContext))
 				{
-					condition.Render(resultBuilder, renderContext);
+					condition.Render(resultWriter, renderContext);
 					break;
 				}
 			}

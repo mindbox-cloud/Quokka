@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 
@@ -36,26 +37,28 @@ namespace Mindbox.Quokka.Html
 			}
 		}
 
-		public override void Render(StringBuilder resultBuilder, RenderContext renderContext)
+		public override void Render(TextWriter resultWriter, RenderContext renderContext)
 		{
 			var htmlRenderContext = (HtmlRenderContext)renderContext;
 
 			var linkBuilder = new StringBuilder();
-
-			foreach (var component in hrefValue.TextComponents)
+			using (var linkWriter = new StringWriter(linkBuilder))
 			{
-				component.Render(linkBuilder, renderContext);
+				foreach (var component in hrefValue.TextComponents)
+				{
+					component.Render(linkWriter, renderContext);
+				}
 			}
 
 			string redirectUrl = linkBuilder.ToString();
 			if (htmlRenderContext.RedirectLinkProcessor != null)
 			{
 				string processedRedirectUrl = htmlRenderContext.RedirectLinkProcessor(uniqueKey, redirectUrl);
-				resultBuilder.Append(processedRedirectUrl);
+				resultWriter.Write(processedRedirectUrl);
 			}
 			else
 			{
-				resultBuilder.Append(redirectUrl);
+				resultWriter.Write(redirectUrl);
 			}
 		}
 

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Text;
 
 namespace Mindbox.Quokka
@@ -22,9 +23,9 @@ namespace Mindbox.Quokka
 			expression.PerformSemanticAnalysis(context, TypeDefinition.Primitive);
 		}
 
-		public override void Render(StringBuilder resultBuilder, RenderContext renderContext)
+		public override void Render(TextWriter resultWriter, RenderContext renderContext)
 		{
-			resultBuilder.Append(expression.GetOutputValue(renderContext));
+			resultWriter.Write(expression.GetOutputValue(renderContext));
 		}
 	}
 }
