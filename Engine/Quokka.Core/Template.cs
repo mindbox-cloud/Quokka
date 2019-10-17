@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using Antlr4.Runtime;
@@ -108,13 +109,41 @@ namespace Mindbox.Quokka
 
 			var effectiveCallContextContainer = callContextContainer ?? CallContextContainer.Empty;
 
-			return DoRender(
-				model, 
+			var stringBuilder = new StringBuilder();
+			using (var stringWriter = new StringWriter(stringBuilder))
+			{
+				DoRender(
+					stringWriter,
+					model,
+					(scope, contextFunctionRegistry) => new RenderContext(
+						scope,
+						contextFunctionRegistry,
+						effectiveCallContextContainer));
+			}
+
+			return stringBuilder.ToString();
+		}
+
+		public virtual void Render(TextWriter textWriter, ICompositeModelValue model, CallContextContainer callContextContainer = null)
+		{
+			if (textWriter == null) 
+				throw new ArgumentNullException(nameof(textWriter));
+			if (model == null)
+				throw new ArgumentNullException(nameof(model));
+			if (Errors.Any())
+				throw new TemplateContainsErrorsException(Errors);
+			
+			var effectiveCallContextContainer = callContextContainer ?? CallContextContainer.Empty;
+
+			DoRender(
+				textWriter,
+				model,
 				(scope, contextFunctionRegistry) => new RenderContext(
 					scope, contextFunctionRegistry, effectiveCallContextContainer));
 		}
 
-		protected string DoRender(
+		protected void DoRender(
+			TextWriter textWriter,
 			ICompositeModelValue model,
 			Func<RuntimeVariableScope, FunctionRegistry, RenderContext> renderContextCreator)
 		{
@@ -123,11 +152,10 @@ namespace Mindbox.Quokka
 				new ModelValidator().ValidateModel(model, requiredModelDefinition);
 
 				var valueStorage = new CompositeVariableValueStorage(model);
-				var builder = new StringBuilder();
+				
 				var context = renderContextCreator(new RuntimeVariableScope(valueStorage), functionRegistry);
-				compiledTemplateTree.Render(builder, context);
-				context.OnRenderingEnd(builder);
-				return builder.ToString();
+				compiledTemplateTree.Render(textWriter, context);
+				context.OnRenderingEnd(textWriter);
 			}
 			catch (Exception ex)
 			{

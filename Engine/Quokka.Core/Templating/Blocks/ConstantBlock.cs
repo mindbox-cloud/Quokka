@@ -1,4 +1,4 @@
-﻿using System.Text;
+﻿using System.IO;
 
 namespace Mindbox.Quokka
 {
@@ -17,9 +17,9 @@ namespace Mindbox.Quokka
 			Length = length;
 		}
 
-		public override void Render(StringBuilder resultBuilder, RenderContext renderContext)
+		public override void Render(TextWriter resultWriter, RenderContext renderContext)
 		{
-			resultBuilder.Append(Text);
+			resultWriter.Write(Text);
 		}
 	}
 }

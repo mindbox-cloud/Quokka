@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Text;
 
 namespace Mindbox.Quokka.Html
 {
@@ -44,14 +46,21 @@ namespace Mindbox.Quokka.Html
 		{
 			var effectiveCallContextContainer = callContextContainer ?? CallContextContainer.Empty;
 
-			return DoRender(
-				model,
-				(scope, functionRegistry) => new HtmlRenderContext(
-					scope,
-					functionRegistry,
-					null,
-					null,
-					effectiveCallContextContainer));
+			var stringBuilder = new StringBuilder();
+			using (var stringWriter = new StringWriter(stringBuilder))
+			{
+				DoRender(
+					stringWriter,
+					model,
+					(scope, functionRegistry) => new HtmlRenderContext(
+						scope,
+						functionRegistry,
+						null,
+						null,
+						effectiveCallContextContainer));
+			}
+
+			return stringBuilder.ToString();
 		}
 
 		public string Render(
@@ -65,7 +74,52 @@ namespace Mindbox.Quokka.Html
 
 			var effectiveCallContextContainer = callContextContainer ?? CallContextContainer.Empty;
 
-			return DoRender(
+			var stringBuilder = new StringBuilder();
+			using (var stringWriter = new StringWriter(stringBuilder))
+			{
+				DoRender(
+					stringWriter,
+					model,
+					(scope, functionRegistry) => new HtmlRenderContext(
+						scope,
+						functionRegistry,
+						redirectLinkProcessor,
+						identificationCode,
+						effectiveCallContextContainer));
+			}
+
+			return stringBuilder.ToString();
+		}
+
+		public override void Render(TextWriter textWriter, ICompositeModelValue model, CallContextContainer callContextContainer = null)
+		{
+			var effectiveCallContextContainer = callContextContainer ?? CallContextContainer.Empty;
+
+			DoRender(
+				textWriter,
+					model,
+					(scope, functionRegistry) => new HtmlRenderContext(
+						scope,
+						functionRegistry,
+						null,
+						null,
+						effectiveCallContextContainer));
+		}
+
+		public void Render(
+			TextWriter textWriter,
+			ICompositeModelValue model,
+			Func<Guid, string, string> redirectLinkProcessor,
+			string identificationCode = null,
+			CallContextContainer callContextContainer = null)
+		{
+			if (model == null)
+				throw new ArgumentNullException(nameof(model));
+
+			var effectiveCallContextContainer = callContextContainer ?? CallContextContainer.Empty;
+
+			DoRender(
+				textWriter,
 				model,
 				(scope, functionRegistry) => new HtmlRenderContext(
 					scope,

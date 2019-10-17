@@ -1,4 +1,4 @@
-﻿using System.Text;
+﻿using System.IO;
 
 namespace Mindbox.Quokka
 {
@@ -19,9 +19,9 @@ namespace Mindbox.Quokka
 			block?.PerformSemanticAnalysis(context);
 		}
 
-		public override void Render(StringBuilder resultBuilder, RenderContext renderContext)
+		public override void Render(TextWriter resultWriter, RenderContext renderContext)
 		{
-			block?.Render(resultBuilder, renderContext);
+			block?.Render(resultWriter, renderContext);
 		}
 
 		public override void CompileGrammarSpecificData(GrammarSpecificDataAnalysisContext context)
