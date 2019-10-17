@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 
 namespace Mindbox.Quokka.Html
 {
@@ -22,6 +23,13 @@ namespace Mindbox.Quokka.Html
 			ICompositeModelValue model, 
 			Func<Guid, string, string> redirectLinkProcessor,
 			string identificationCode, 
+			CallContextContainer callContextContainer = null);
+
+		void Render(
+			TextWriter textWriter,
+			ICompositeModelValue model,
+			Func<Guid, string, string> redirectLinkProcessor,
+			string identificationCode = null,
 			CallContextContainer callContextContainer = null);
 	}
 }
