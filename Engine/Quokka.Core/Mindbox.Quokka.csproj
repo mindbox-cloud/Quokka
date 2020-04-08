@@ -26,6 +26,6 @@
     <Folder Include="Html\Generated\" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Antlr4.Runtime.Standard" Version="4.7.1.1" />
+    <PackageReference Include="Antlr4.Runtime.Standard" Version="4.8.0" />
   </ItemGroup>
 </Project>
