@@ -1,0 +1,29 @@
+name: Pull Request
+
+on: pull_request
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Dump GitHub context
+      env:
+        GITHUB_CONTEXT: ${{ toJson(github) }}
+      run: echo "$GITHUB_CONTEXT"
+      
+    - name: Checkout
+      uses: actions/checkout@v1
+      
+    - name: Setup .NET Core 3.0
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 3.1.100
+        
+    - name: Build
+      run: dotnet build Engine/Quokka.sln --configuration Release
+      
+    - name: Test
+      run: dotnet test Engine/Quokka.sln --no-build --configuration Release
