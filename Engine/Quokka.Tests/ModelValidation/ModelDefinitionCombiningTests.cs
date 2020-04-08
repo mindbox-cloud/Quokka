@@ -450,6 +450,102 @@ namespace Mindbox.Quokka.Tests
 				combinedDefinition);
 		}
 		
+				
+		[TestMethod]
+		public void DefinitionCombining_ArrayOfComposites_MergeWithComposite()
+		{
+			var definition1 = new CompositeModelDefinition(
+				new Dictionary<string, IModelDefinition>
+				{
+					{
+						"Array",
+						new ArrayModelDefinition(
+							new CompositeModelDefinition(
+								new Dictionary<string, IModelDefinition>
+								{
+									{ "Name", new PrimitiveModelDefinition(TypeDefinition.String) }
+								}))
+					}
+				});
+
+			var definition2 = new CompositeModelDefinition(
+				new Dictionary<string, IModelDefinition>
+				{
+					{
+						"Array",
+						new CompositeModelDefinition(
+							new Dictionary<string, IModelDefinition>
+							{
+								{ "CompositeField", new PrimitiveModelDefinition(TypeDefinition.String) }
+							},
+							new Dictionary<IMethodCallDefinition, IModelDefinition>
+							{
+								{
+									new MethodCallDefinition(
+										"Take",
+										new IMethodArgumentDefinition[]
+										{
+											new MethodArgumentDefinition(TypeDefinition.Integer, 3)
+										}),
+									new CompositeModelDefinition(
+										new Dictionary<string, IModelDefinition>
+										{
+											{ "A", new PrimitiveModelDefinition(TypeDefinition.Boolean) },
+											{ "B", new PrimitiveModelDefinition(TypeDefinition.Decimal) }
+										})
+								}
+							})
+					}
+				});
+
+			var combinedDefinition = new DefaultTemplateFactory().CombineModelDefinition(new[] { definition1, definition2 });
+
+			TemplateAssert.AreCompositeModelDefinitionsEqual(
+				new CompositeModelDefinition(
+					new Dictionary<string, IModelDefinition>
+					{
+						{
+							"Array",
+							new ArrayModelDefinition(
+								new CompositeModelDefinition(
+									new Dictionary<string, IModelDefinition>
+									{
+										{ "Name", new PrimitiveModelDefinition(TypeDefinition.String) }
+									}),
+								new Dictionary<string, IModelDefinition>
+								{
+									{
+										"Array",
+										new CompositeModelDefinition(
+											new Dictionary<string, IModelDefinition>
+											{
+												{ "CompositeField", new PrimitiveModelDefinition(TypeDefinition.String) }
+											})
+									}
+								},
+								new Dictionary<IMethodCallDefinition, IModelDefinition>
+								{
+									{
+										new MethodCallDefinition(
+											"Take",
+											new IMethodArgumentDefinition[]
+											{
+												new MethodArgumentDefinition(TypeDefinition.Integer, 3)
+											}),
+										new CompositeModelDefinition(
+											new Dictionary<string, IModelDefinition>
+											{
+												{ "A", new PrimitiveModelDefinition(TypeDefinition.Boolean) },
+												{ "B", new PrimitiveModelDefinition(TypeDefinition.Decimal) }
+											})
+									}
+								})
+						}
+					}),
+				combinedDefinition);
+		}
+
+		
 		[TestMethod]
 		public void DefinitionCombining_ArrayOfComposites_MergeWithArrayOfUnknowns()
 		{

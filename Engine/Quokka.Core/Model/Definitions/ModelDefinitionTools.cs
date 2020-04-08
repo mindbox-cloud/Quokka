@@ -111,52 +111,50 @@ namespace Mindbox.Quokka
 			if (meaningfulValues.Count == 1)
 				return firstValue;
 			
-
-			if (firstValue is ICompositeModelDefinition)
+			switch (firstValue)
 			{
-
-				if (firstValue is IArrayModelDefinition)
+				case ICompositeModelDefinition _:
 				{
-					var arrayValues = meaningfulValues.OfType<IArrayModelDefinition>().ToList();
-					if (arrayValues.Count != meaningfulValues.Count)
+					var compositeValues = meaningfulValues.OfType<ICompositeModelDefinition>().ToList();
+					var arrayValues= meaningfulValues.OfType<IArrayModelDefinition>().ToList();
+				
+					if (compositeValues.Count != meaningfulValues.Count)
 					{
 						errorListener.AddInconsistenDefinitionTypesError(fieldName);
 						return null;
 					}
 
-					return
-						new ArrayModelDefinition(
-							CombineModelDefinition(fieldName + "[].",
-								arrayValues.Select(av => av.ElementModelDefinition).ToList(),
-								errorListener));
-				}
+					var combinedCompositeDefinition =
+						CombineCompositeModelDefinitions(compositeValues, fieldName + ".", errorListener);
 
-				var compositeValues = meaningfulValues.OfType<ICompositeModelDefinition>().ToList();
-				if (compositeValues.Count != meaningfulValues.Count)
+					return arrayValues.Any()
+								? new ArrayModelDefinition(
+									CombineModelDefinition(
+										fieldName + "[].",
+										arrayValues.Select(av => av.ElementModelDefinition).ToList(),
+										errorListener),
+									combinedCompositeDefinition.Fields,
+									combinedCompositeDefinition.Methods)
+								: combinedCompositeDefinition;
+				}
+				case IPrimitiveModelDefinition _:
 				{
-					errorListener.AddInconsistenDefinitionTypesError(fieldName);
-					return null;
+					var primitiveValues = meaningfulValues.OfType<IPrimitiveModelDefinition>().ToList();
+					if (primitiveValues.Count != meaningfulValues.Count)
+					{
+						errorListener.AddInconsistenDefinitionTypesError(fieldName);
+						return null;
+					}
+
+					var resultingType = TypeDefinition.GetResultingTypeForMultipleOccurences(
+						primitiveValues,
+						primitiveValue => primitiveValue.Type,
+						(primitiveValue, correctType) => errorListener.AddInconsistenDefinitionTypesError(fieldName));
+					return new PrimitiveModelDefinition(resultingType);
 				}
-
-				return CombineCompositeModelDefinitions(compositeValues, fieldName + ".", errorListener);
+				default:
+					throw new InvalidOperationException("Unknown model definition type");
 			}
-			else if (firstValue is IPrimitiveModelDefinition)
-			{
-				var primitiveValues = meaningfulValues.OfType<IPrimitiveModelDefinition>().ToList();
-				if (primitiveValues.Count != meaningfulValues.Count)
-				{
-					errorListener.AddInconsistenDefinitionTypesError(fieldName);
-					return null;
-				}
-
-				var resultingType = TypeDefinition.GetResultingTypeForMultipleOccurences(
-					primitiveValues,
-					primitiveValue => primitiveValue.Type,
-					(primitiveValue, correctType) => errorListener.AddInconsistenDefinitionTypesError(fieldName));
-				return new PrimitiveModelDefinition(resultingType);
-			}
-
-			throw new InvalidOperationException("Unknown model definition type");
 		}
 	}
 }
