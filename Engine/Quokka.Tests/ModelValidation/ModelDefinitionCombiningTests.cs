@@ -625,5 +625,86 @@ namespace Mindbox.Quokka.Tests
 					}),
 			combinedDefinition);
 		}
+		
+		[TestMethod]
+		public void DefinitionCombining_TwoIntersectingMethodsByCaseInsensitiveArgs()
+		{
+			var definition1 = new CompositeModelDefinition(
+				new Dictionary<string, IModelDefinition>
+				{
+					{
+						"Composite", new CompositeModelDefinition(
+							methods: new Dictionary<IMethodCallDefinition, IModelDefinition>
+							{
+								{
+									new MethodCallDefinition(
+										"Call",
+										new IMethodArgumentDefinition[]
+										{
+											new MethodArgumentDefinition(TypeDefinition.String, "CASEINSENSITIVE")
+										}),
+									new CompositeModelDefinition(
+										new Dictionary<string, IModelDefinition>
+										{
+											{ "A", new PrimitiveModelDefinition(TypeDefinition.Boolean) }
+										})
+								}
+							})
+					}
+				});
+
+			var definition2 = new CompositeModelDefinition(new Dictionary<string, IModelDefinition>
+			{
+				{
+					"Composite", new CompositeModelDefinition(methods: new Dictionary<IMethodCallDefinition, IModelDefinition>
+					{
+						{
+							new MethodCallDefinition(
+								"Call",
+								new IMethodArgumentDefinition[]
+								{
+									new MethodArgumentDefinition(TypeDefinition.String, "caseinsensitive")
+								}),
+							new CompositeModelDefinition(
+								new Dictionary<string, IModelDefinition>
+								{
+									{ "C", new PrimitiveModelDefinition(TypeDefinition.DateTime) }
+								})
+						}
+					})
+				}
+			});
+
+			var combinedDefinition = new DefaultTemplateFactory().CombineModelDefinition(new[] { definition1, definition2 });
+
+			TemplateAssert.AreCompositeModelDefinitionsEqual(
+				new CompositeModelDefinition(
+					new Dictionary<string, IModelDefinition>
+					{
+						{
+							"Composite", new CompositeModelDefinition(
+								methods: new Dictionary<IMethodCallDefinition, IModelDefinition>
+
+								{
+									{
+										new MethodCallDefinition(
+											"Call",
+											new IMethodArgumentDefinition[]
+											{
+												new MethodArgumentDefinition(TypeDefinition.String, "CASEINSENSITIVE")
+											}),
+										new CompositeModelDefinition(
+											new Dictionary<string, IModelDefinition>
+											{
+												{ "A", new PrimitiveModelDefinition(TypeDefinition.Boolean) },
+												{ "C", new PrimitiveModelDefinition(TypeDefinition.DateTime) }
+											})
+									}
+								}
+							)
+						}
+					}),
+				combinedDefinition);
+		}
 	}
 }

@@ -51,11 +51,11 @@ namespace Mindbox.Quokka.Tests
 
 			Assert.AreEqual(expectedMethodList.Count, actual.Methods.Count);
 
-			foreach (var expectedMethod in expectedMethodList) {
-				if (!actual.Methods.TryGetValue(expectedMethod.Key, out IModelDefinition actualDefinition))
-					Assert.Fail($"No method call found with expected definition {expectedMethod.Key}");
+			foreach (var (methodCallDefinition, modelDefinition) in expectedMethodList) {
+				if (!actual.Methods.TryGetValue(methodCallDefinition, out var actualDefinition))
+					Assert.Fail($"No method call found with expected definition {methodCallDefinition}");
 				
-				AreModelDefinitionsEquivalent(expectedMethod.Value, actualDefinition);
+				AreModelDefinitionsEquivalent(modelDefinition, actualDefinition);
 			}
 		}
 

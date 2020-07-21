@@ -39,7 +39,14 @@ namespace Mindbox.Quokka
 			{
 				if (Arguments[i].Type != other.Arguments[i].Type)
 					return false;
-				if (!Arguments[i].Value.Equals(other.Arguments[i].Value))
+				
+				// Messy, probably should rework this logic
+				if (Arguments[i].Value is string thisStringValue && other.Arguments[i].Value is string otherStringValue)
+				{
+					if (!StringComparer.OrdinalIgnoreCase.Equals(thisStringValue, otherStringValue))
+						return false;
+				}
+				else if (!Arguments[i].Value.Equals(other.Arguments[i].Value))
 					return false;
 			}
 
