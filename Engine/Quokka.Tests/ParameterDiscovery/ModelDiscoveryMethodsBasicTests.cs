@@ -366,7 +366,7 @@ namespace Mindbox.Quokka
 	    {
 		    var modelDefinition = new Template(@"
 					${ Items.GetByIndex(5).Value }
-					${ Items.GetByIndex(5).Key }
+					${ Items.GetByIndex(6).Key }
 				")
 			    .GetModelDefinition();
 
@@ -387,10 +387,21 @@ namespace Mindbox.Quokka
 										    }),
 									    new CompositeModelDefinition(new Dictionary<string, IModelDefinition>
 									    {
-										    { "Value", new PrimitiveModelDefinition(TypeDefinition.Primitive) },
-										    { "Key", new PrimitiveModelDefinition(TypeDefinition.Primitive) }
-									    })
-								    }
+										    { "Value", new PrimitiveModelDefinition(TypeDefinition.Primitive) }
+										})
+									},
+									{
+										new MethodCallDefinition(
+											"GetByIndex",
+											new[]
+											{
+												new MethodArgumentDefinition(TypeDefinition.Integer, 6)
+											}),
+										new CompositeModelDefinition(new Dictionary<string, IModelDefinition>
+										{
+											{ "Key", new PrimitiveModelDefinition(TypeDefinition.Primitive) }
+										})
+									}
 							    })
 					    }
 				    }),
