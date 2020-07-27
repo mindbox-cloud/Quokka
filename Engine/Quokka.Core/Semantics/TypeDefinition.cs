@@ -100,9 +100,7 @@ namespace Mindbox.Quokka
 		
 		internal static TypeDefinition GetTypeDefinitionByRuntimeType(Type runtimeType)
 		{
-			TypeDefinition result;
-
-			if (!primitiveTypeMap.TryGetValue(runtimeType, out result))
+			if (!primitiveTypeMap.TryGetValue(runtimeType, out var result))
 				throw new InvalidOperationException(
 					$"Runtime type {runtimeType.Name} doesn't have a corresponding template variable type");
 
@@ -118,29 +116,29 @@ namespace Mindbox.Quokka
 				return Array;
 			else if (modelDefinition is ICompositeModelDefinition)
 				return Composite;
-			else if (modelDefinition is IPrimitiveModelDefinition)
-				return ((IPrimitiveModelDefinition)modelDefinition).Type;
+			else if (modelDefinition is IPrimitiveModelDefinition primitiveDefinition)
+				return primitiveDefinition.Type;
 			else
 				throw new InvalidOperationException("Unsupported model definition");
 		}
 
-		internal static TypeDefinition GetResultingTypeForMultipleOccurences<TTypedObject>(
-			IList<TTypedObject> occurences,
+		internal static TypeDefinition GetResultingTypeForMultipleOccurrences<TTypedObject>(
+			IList<TTypedObject> occurrences,
 			Func<TTypedObject, TypeDefinition> typeSelector,
 			Action<TTypedObject, TypeDefinition> inconsistentTypeErrorHandler = null)
 		{
-			if (!occurences.Any())
-				throw new InvalidOperationException("No occurences");
+			if (!occurrences.Any())
+				throw new InvalidOperationException("No occurrences");
 
-			if (occurences.Count == 1)
-				return typeSelector(occurences.Single());
+			if (occurrences.Count == 1)
+				return typeSelector(occurrences.Single());
 
-			var occurencesByTypePriority = occurences
+			var occurrencesByTypePriority = occurrences
 				.OrderByDescending(oc => typeSelector(oc).Priority);
 
 			TypeDefinition resultingType = null;
 
-			foreach (var occurence in occurencesByTypePriority)
+			foreach (var occurence in occurrencesByTypePriority)
 			{
 				var occurenceType = typeSelector(occurence);
 

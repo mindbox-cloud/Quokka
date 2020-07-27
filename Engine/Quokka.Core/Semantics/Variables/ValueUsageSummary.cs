@@ -67,7 +67,7 @@ namespace Mindbox.Quokka
 
 			EnumerationResultUsageSummaries?.ToList().ForEach(f => f.Compile(errorListener));
 
-			compiledType = TypeDefinition.GetResultingTypeForMultipleOccurences(
+			compiledType = TypeDefinition.GetResultingTypeForMultipleOccurrences(
 				usages.Concat(assignedVariables.SelectMany(v => v.GetAllUsagesExcept(this))).ToList(),
 				occurence => occurence.RequiredType,
 				(occurence, correctType) => errorListener.AddInconsistentVariableTypingError(
@@ -214,7 +214,7 @@ namespace Mindbox.Quokka
 			if (expectedType == TypeDefinition.Unknown)
 				return;
 
-			var actualType = TypeDefinition.GetResultingTypeForMultipleOccurences(
+			var actualType = TypeDefinition.GetResultingTypeForMultipleOccurrences(
 				usages,
 				occurence => occurence.RequiredType);
 
