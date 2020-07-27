@@ -146,7 +146,7 @@ namespace Mindbox.Quokka
 						return null;
 					}
 
-					var resultingType = TypeDefinition.GetResultingTypeForMultipleOccurences(
+					var resultingType = TypeDefinition.GetResultingTypeForMultipleOccurrences(
 						primitiveValues,
 						primitiveValue => primitiveValue.Type,
 						(primitiveValue, correctType) => errorListener.AddInconsistenDefinitionTypesError(fieldName));
