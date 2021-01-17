@@ -14,7 +14,7 @@ namespace Mindbox.Quokka
 		private readonly TemplateBlock compiledTemplateTree;
 		private readonly ICompositeModelDefinition requiredModelDefinition;
 		private readonly FunctionRegistry functionRegistry;
-		
+
 		public IList<ITemplateError> Errors { get; }
 
 		/// <summary>
@@ -34,7 +34,7 @@ namespace Mindbox.Quokka
 				throw new ArgumentNullException(nameof(templateText));
 			if (functionRegistry == null)
 				throw new ArgumentNullException(nameof(functionRegistry));
-			
+
 			this.functionRegistry = functionRegistry;
 
 			try
@@ -89,7 +89,7 @@ namespace Mindbox.Quokka
 				throw new TemplateException("Unexpected errors occured during template creation", ex);
 			}
 		}
-		
+
 		public Template(string templateText)
 			: this(templateText, new FunctionRegistry(GetStandardFunctions()), true)
 		{
@@ -126,13 +126,13 @@ namespace Mindbox.Quokka
 
 		public virtual void Render(TextWriter textWriter, ICompositeModelValue model, CallContextContainer callContextContainer = null)
 		{
-			if (textWriter == null) 
+			if (textWriter == null)
 				throw new ArgumentNullException(nameof(textWriter));
 			if (model == null)
 				throw new ArgumentNullException(nameof(model));
 			if (Errors.Any())
 				throw new TemplateContainsErrorsException(Errors);
-			
+
 			var effectiveCallContextContainer = callContextContainer ?? CallContextContainer.Empty;
 
 			DoRender(
@@ -152,7 +152,7 @@ namespace Mindbox.Quokka
 				new ModelValidator().ValidateModel(model, requiredModelDefinition);
 
 				var valueStorage = new CompositeVariableValueStorage(model);
-				
+
 				var context = renderContextCreator(new RuntimeVariableScope(valueStorage), functionRegistry);
 				compiledTemplateTree.Render(textWriter, context);
 				context.OnRenderingEnd(textWriter);
@@ -202,6 +202,9 @@ namespace Mindbox.Quokka
 			yield return new SubstringTemplateFunction();
 			yield return new SubstringWithLengthTemplateFunction();
 			yield return new LengthTemplateFunction();
+			yield return new Md5HashFunction();
+			yield return new Sha256HashFunction();
+			yield return new Sha512HashFunction();
 			yield return new GetDayTemplateFunction();
 			yield return new GetMonthTemplateFunction();
 			yield return new GetYearTemplateFunction();
