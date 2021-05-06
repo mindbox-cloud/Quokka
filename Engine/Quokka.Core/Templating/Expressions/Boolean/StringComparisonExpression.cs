@@ -45,6 +45,7 @@ namespace Mindbox.Quokka
 		public override void PerformSemanticAnalysis(AnalysisContext context)
 		{
 			variantValueExpression.PerformSemanticAnalysis(context, TypeDefinition.String);
+			stringExpression.PerformSemanticAnalysis(context, TypeDefinition.String);
 		}
 
 		public override bool CheckIfExpressionIsNull(RenderContext renderContext)

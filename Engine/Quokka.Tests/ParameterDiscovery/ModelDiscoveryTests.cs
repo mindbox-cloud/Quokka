@@ -245,6 +245,25 @@ namespace Mindbox.Quokka.Tests
 		}
 
 		[TestMethod]
+		public void ModelDiscovery_IfCondition_StringComparisonWithVariable()
+		{
+			var model = new Template(@"
+				@{ if Product1 = Product2 & ""String"" }
+					Test
+				@{ end if }
+				")
+				.GetModelDefinition();
+			
+			TemplateAssert.AreCompositeModelDefinitionsEqual(
+				new CompositeModelDefinition(new Dictionary<string, IModelDefinition>
+				{
+					{ "Product1", new PrimitiveModelDefinition(TypeDefinition.String) },
+					{ "Product2", new PrimitiveModelDefinition(TypeDefinition.Primitive) }
+				}),
+				model);
+		}
+
+		[TestMethod]
 		public void ModelDiscovery_IfCondition_NullCheck()
 		{
 			var model = new Template(@"
