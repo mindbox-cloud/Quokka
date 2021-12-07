@@ -203,6 +203,7 @@ namespace Mindbox.Quokka
 			yield return new SubstringWithLengthTemplateFunction();
 			yield return new LengthTemplateFunction();
 			yield return new Md5HashFunction();
+			yield return new Sha1HashFunction();
 			yield return new Sha256HashFunction();
 			yield return new Sha512HashFunction();
 			yield return new ToHexTemplateFunction();
