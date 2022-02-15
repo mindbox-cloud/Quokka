@@ -206,6 +206,7 @@ namespace Mindbox.Quokka
 			yield return new Sha1HashFunction();
 			yield return new Sha256HashFunction();
 			yield return new Sha512HashFunction();
+			yield return new ToBase64TemplateFunction();
 			yield return new ToHexTemplateFunction();
 			yield return new GetDayTemplateFunction();
 			yield return new GetMonthTemplateFunction();
