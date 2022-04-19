@@ -71,7 +71,7 @@ namespace Mindbox.Quokka
 			Location location)
 		{
 			AddError(new SemanticError(
-				$"Argument \"{argumentName}\" of a function \"{functionName}\" is incorrect: " +
+				$"Type of an argument \"{argumentName}\" of a function \"{functionName}\" is incorrect: " +
 				$"Expected {expectedType.Name}, but got {realType.Name}",
 				location));
 		}
@@ -157,7 +157,7 @@ namespace Mindbox.Quokka
 		public void AddNonConstantMethodArgumentError(string methodName, int argumentPosition, Location location)
 		{
 			AddError(new SemanticError(
-				$"Method {methodName} got non constant value in an argument with position {argumentPosition}",
+				$"Method {methodName} got non constant value as an argument with position {argumentPosition}",
 				location));
 		}
 
