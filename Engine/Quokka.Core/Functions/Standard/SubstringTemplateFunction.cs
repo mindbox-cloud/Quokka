@@ -8,7 +8,7 @@
 				  new IntegerFunctionArgument("startIndex", 
 					  valueValidator: value => value >= 1 
 						? ArgumentValueValidationResult.Valid
-						: new ArgumentValueValidationResult(false, "Индекс начала подстроки должен быть не меньше 1")))
+						: new ArgumentValueValidationResult(false, "Substring start index can't be less than 1")))
 		{
 		}
 

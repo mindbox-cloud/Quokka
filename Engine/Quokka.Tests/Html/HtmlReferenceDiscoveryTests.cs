@@ -59,7 +59,7 @@ namespace Mindbox.Quokka.Tests.Html
 			Assert.AreEqual(1, exception.Errors.Count);
 			var error = exception.Errors.Single();
 
-			Assert.AreEqual("Вы должны использовать кавычки при использовании атрибута href", error.Message);
+			Assert.AreEqual("You have to use quotes with href attribute", error.Message);
 		}
 
 		[TestMethod]
@@ -71,7 +71,7 @@ namespace Mindbox.Quokka.Tests.Html
 			Assert.AreEqual(1, exception.Errors.Count);
 			var error = exception.Errors.Single();
 
-			Assert.AreEqual("Вы должны использовать кавычки при использовании атрибута href", error.Message);
+			Assert.AreEqual("You have to use quotes with href attribute", error.Message);
 		}
 
 		[TestMethod]
@@ -83,7 +83,7 @@ namespace Mindbox.Quokka.Tests.Html
 			Assert.AreEqual(1, exception.Errors.Count);
 			var error = exception.Errors.Single();
 
-			Assert.AreEqual("Вы должны использовать кавычки при использовании атрибута href", error.Message);
+			Assert.AreEqual("You have to use quotes with href attribute", error.Message);
 		}
 
 		[TestMethod]

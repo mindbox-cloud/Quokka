@@ -7,7 +7,7 @@ namespace Mindbox.Quokka
 		public void AddHrefAttributeMustBeQuotedError(Location location)
 		{
 			AddError(new SemanticError(
-				$"Вы должны использовать кавычки при использовании атрибута href",
+				$"You have to use quotes with href attribute",
 				location));
 		}
 	}

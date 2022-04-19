@@ -52,15 +52,15 @@ namespace Mindbox.Quokka
 			TypeDefinition correctType)
 		{
 			AddError(new SemanticError(
-				$"Значение \"{definition.FullName}\" не может использоваться как {faultyOccurence.RequiredType}, " +
-				$"так как в других местах оно используется как {correctType}",
+				$"Value of \"{definition.FullName}\" can't be used as a value of type {faultyOccurence.RequiredType}, " +
+				$"due to usages as {correctType}",
 				faultyOccurence.Location));
 		}
 
 		public void AddUndefinedFunctionError(string functionName, Location location)
 		{
 			AddError(new SemanticError(
-				$"Неизвестная функция \"{functionName}\"",
+				$"Unknown function \"{functionName}\"",
 				location));
 		}
 
@@ -71,8 +71,8 @@ namespace Mindbox.Quokka
 			Location location)
 		{
 			AddError(new SemanticError(
-				$"Недопустимый тип аргумента \"{argumentName}\" функции \"{functionName}\": " +
-				$"Ожидался {expectedType.Name}, а передан {realType.Name}",
+				$"Argument \"{argumentName}\" of a function \"{functionName}\" is incorrect: " +
+				$"Expected {expectedType.Name}, but got {realType.Name}",
 				location));
 		}
 
@@ -83,7 +83,7 @@ namespace Mindbox.Quokka
 			Location location)
 		{
 			AddError(new SemanticError(
-				$"Недопустимое значение аргумента \"{argumentName}\" функции \"{functionName}\": {message}",
+				$"Argument \"{argumentName}\" of a function \"{functionName}\" has incorrect value: {message}",
 				location));
 		}
 
@@ -93,8 +93,10 @@ namespace Mindbox.Quokka
 			int passedArgumentCount,
 			Location location)
 		{
+			var supportedArgumentString = string.Join(", ", supportedArgumentCounts) ;
+			
 			AddError(new SemanticError(
-				$"Функции \"{functionName}\" вместо ожидаемого количества аргументов ({string.Join(", ", supportedArgumentCounts)}) передано {passedArgumentCount}",
+				$"Function \"{functionName}\" should be called with ({supportedArgumentString}) arguments, but got {passedArgumentCount}",
 				location));
 		}
 
@@ -104,7 +106,7 @@ namespace Mindbox.Quokka
 			Location location)
 		{
 			AddError(new SemanticError(
-				$"Недопустимый тип результата функции {functionName}. Ожидался {expectedType.Name}, а она возвращает {realType.Name}",
+				$"Function {functionName} has incorrect result type. Expected {expectedType.Name}, but got {realType.Name}",
 				location));
 		}
 
@@ -115,8 +117,8 @@ namespace Mindbox.Quokka
 			Location location)
 		{
 			AddError(new SemanticError(
-				$"Параметр \"{definition.FullName}\" не может использоваться как {actualType}, " +
-				$"так как в других местах он используется как {declaredType}",
+				$"Value of \"{definition.FullName}\" can't be used as a type {actualType}, " +
+				$"due to usages as {declaredType}",
 				location));
 		}
 
@@ -125,7 +127,7 @@ namespace Mindbox.Quokka
 			Location location)
 		{
 			AddError(new SemanticError(
-				$"Неизвестный параметр \"{definition.FullName}\"",
+				$"Unknown parameter \"{definition.FullName}\"",
 				location));
 		}
 
@@ -134,35 +136,35 @@ namespace Mindbox.Quokka
 			Location location)
 		{
 			AddError(new SemanticError(
-				$"Неизвестный метод \"{definition.FullName}\"",
+				$"Unknown function \"{definition.FullName}\"",
 				location));
 		}
 
 		public void AddVariableDeclarationScopeConflictError(ValueUsageSummary definition, Location location)
 		{
 			AddError(new SemanticError(
-				$"Имя переменной \"{definition.FullName}\" конфликтует с другой переменной, объявленной выше или ниже",
+				$"Variable name \"{definition.FullName}\" has the same name as an already declared variable",
 				location));
 		}
 
 		public void AddFieldAndMethodNameConflictError(ValueUsageSummary definition, Location location)
 		{
 			AddError(new SemanticError(
-				$"Имя поля \"{definition.FullName}\" совпадает с именем метода этого же объекта",
+				$"Field \"{definition.FullName}\" has a name conflict with a function in the same object",
 				location));
 		}
 
 		public void AddNonConstantMethodArgumentError(string methodName, int argumentPosition, Location location)
 		{
 			AddError(new SemanticError(
-					$"В метод {methodName} в качестве аргумента под номером {argumentPosition} передано не константное значение",
-					location));
+				$"Method {methodName} got non constant value in an argument with position {argumentPosition}",
+				location));
 		}
 
 		public void AddVariableUsageBeforeAssignmentError(ValueUsageSummary definition, Location location)
 		{
 			AddError(new SemanticError(
-				$"Переменная \"{definition.FullName}\" используется до присваивания значения.",
+				$"Value of a variable \"{definition.FullName}\" is used before variable assignment",
 				location));
 		}
 	}
