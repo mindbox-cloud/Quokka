@@ -15,7 +15,7 @@ namespace Mindbox.Quokka.Html
 			string msg,
 			RecognitionException e)
 		{
-			Errors.Add(new SyntaxError("Некорректная HTML-разметка", new Location(line, charPositionInLine)));
+			Errors.Add(new SyntaxError("Incorrect html markup", new Location(line, charPositionInLine)));
 		}
 	}
 }

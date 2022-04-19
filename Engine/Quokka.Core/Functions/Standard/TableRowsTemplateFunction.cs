@@ -153,7 +153,7 @@ namespace Mindbox.Quokka
 
 			return new ArgumentValueValidationResult(
 				false,
-				$"Количество элементов в группе должно быть не меньше {MinimumAllowedGroupSize}");
+				$"Group size can't be less than {MinimumAllowedGroupSize}");
 		}
 
 		private class TableValuesCollectionArgument : CollectionArgument

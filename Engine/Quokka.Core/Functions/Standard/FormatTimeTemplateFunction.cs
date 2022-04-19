@@ -26,7 +26,7 @@ namespace Mindbox.Quokka
 			}
 			catch (FormatException)
 			{
-				return new ArgumentValueValidationResult(false, "Строка формата имеет неверный формат");
+				return new ArgumentValueValidationResult(false, "Format string is invalid");
 			}
 		}
 	}

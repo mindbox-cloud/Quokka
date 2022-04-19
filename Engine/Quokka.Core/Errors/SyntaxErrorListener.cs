@@ -23,7 +23,7 @@ namespace Mindbox.Quokka
 			string msg,
 			RecognitionException e)
 		{
-			Errors.Add(new SyntaxError("Недопустимый символ", new Location(line, charPositionInLine)));
+			Errors.Add(new SyntaxError("Invalid symbol", new Location(line, charPositionInLine)));
 		}
 
 		/// <summary>

@@ -23,7 +23,7 @@ namespace Mindbox.Quokka.Errors
 		public void AddInconsistenDefinitionTypesError(string fieldName)
 		{
 			AddError(new SemanticError(
-				$"Поле {fieldName} используется по-разному в разных контекстах", null));
+				$"Field {fieldName} inferred to different types", null));
 		}
 	}
 }

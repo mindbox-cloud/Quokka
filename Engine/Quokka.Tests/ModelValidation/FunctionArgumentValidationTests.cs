@@ -58,7 +58,7 @@ namespace Mindbox.Quokka.Tests
 			", new FunctionRegistry(Template.GetStandardFunctions()), false);
 
 			Assert.AreEqual(1, template.Errors.Count);
-			Assert.AreEqual("Недопустимый тип результата функции toUpper. Ожидался Boolean, а она возвращает String",
+			Assert.AreEqual("Function toUpper has incorrect result type. Expected Boolean, but got String",
 				((SemanticError)template.Errors[0]).Message);
 		}
 	}
