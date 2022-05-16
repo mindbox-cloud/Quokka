@@ -211,6 +211,11 @@ namespace Mindbox.Quokka
 			yield return new GetDayTemplateFunction();
 			yield return new GetMonthTemplateFunction();
 			yield return new GetYearTemplateFunction();
+			yield return new AppendFormsTemplateFunction();
+			yield return new CapitalizeAllWordsTemplateFunction();
+			yield return new CapitalizeTemplateFunction();
+			yield return new FormsTemplateFunction();
+			yield return new TruncateTemplateFunction();
 		}
 	}
 }
