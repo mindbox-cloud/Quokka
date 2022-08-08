@@ -5,9 +5,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using Mindbox.Quokka.Abstractions;
+
 namespace Mindbox.Quokka
 {
-	public interface ITemplate
+	public interface ITemplate : IRenderWithParameters
 	{
 		bool IsConstant { get; }
 
