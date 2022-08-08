@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+
 using Antlr4.Runtime;
 
-using Mindbox.Quokka.Abstractions;
 using Mindbox.Quokka.Generated;
 
 namespace Mindbox.Quokka
 {
-	internal class Template : ITemplate, IRenderWithParameters
+	internal class Template : ITemplate
 	{
 		private readonly TemplateBlock compiledTemplateTree;
 		private readonly ICompositeModelDefinition requiredModelDefinition;
