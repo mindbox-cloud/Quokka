@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mindbox.Quokka", "Quokka.Co
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mindbox.Quokka.Tests", "Quokka.Tests\Mindbox.Quokka.Tests.csproj", "{EAF6CD98-FB9B-4F33-8FEE-92778FF994D8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mindbox.Quokka.Abstractions", "Mindbox.Quokka.Abstractions\Mindbox.Quokka.Abstractions.csproj", "{3175470F-1C82-4521-BF34-A655C7E93A07}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{EAF6CD98-FB9B-4F33-8FEE-92778FF994D8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EAF6CD98-FB9B-4F33-8FEE-92778FF994D8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EAF6CD98-FB9B-4F33-8FEE-92778FF994D8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3175470F-1C82-4521-BF34-A655C7E93A07}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3175470F-1C82-4521-BF34-A655C7E93A07}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3175470F-1C82-4521-BF34-A655C7E93A07}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3175470F-1C82-4521-BF34-A655C7E93A07}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -5,11 +5,12 @@ using System.Linq;
 using System.Text;
 using Antlr4.Runtime;
 
+using Mindbox.Quokka.Abstractions;
 using Mindbox.Quokka.Generated;
 
 namespace Mindbox.Quokka
 {
-	internal class Template : ITemplate
+	internal class Template : ITemplate, IRenderWithParameters
 	{
 		private readonly TemplateBlock compiledTemplateTree;
 		private readonly ICompositeModelDefinition requiredModelDefinition;
@@ -122,6 +123,11 @@ namespace Mindbox.Quokka
 			}
 
 			return stringBuilder.ToString();
+		}
+
+		public string Render(Dictionary<string, Func<string>> parameters)
+		{
+			return Render(parameters.ToCompositeModelValue());
 		}
 
 		public virtual void Render(TextWriter textWriter, ICompositeModelValue model, CallContextContainer callContextContainer = null)

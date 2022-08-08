@@ -3,7 +3,6 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <NoWarn>1701;1702;1705;3021</NoWarn>
     <Company>Mindbox</Company>
-    <Version>4.8.0</Version>
     <Product>Quokka template engine</Product>
     <Description>String templating library</Description>
     <Copyright>Mindbox 2019</Copyright>
@@ -27,5 +26,8 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Antlr4.Runtime.Standard" Version="4.8.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Mindbox.Quokka.Abstractions\Mindbox.Quokka.Abstractions.csproj" />
   </ItemGroup>
 </Project>
