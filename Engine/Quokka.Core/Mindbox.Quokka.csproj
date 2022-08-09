@@ -12,6 +12,7 @@
     <RootNamespace>Mindbox.Quokka</RootNamespace>
     <AssemblyName>Mindbox.Quokka</AssemblyName>
     <Authors>Mindbox</Authors>
+    <IsPackable>true</IsPackable>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DebugType>full</DebugType>
