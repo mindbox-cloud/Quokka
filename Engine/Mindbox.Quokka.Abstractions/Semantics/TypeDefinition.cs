@@ -4,8 +4,6 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
 
-[assembly: InternalsVisibleTo("Mindbox.Quokka")]
-
 namespace Mindbox.Quokka
 {
 	public class TypeDefinition
