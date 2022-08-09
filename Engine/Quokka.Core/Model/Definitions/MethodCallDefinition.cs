@@ -1,17 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Mindbox.Quokka
 {
-	public interface IMethodCallDefinition
-	{
-		string Name { get; }
-		IReadOnlyList<IMethodArgumentDefinition> Arguments { get; }
-	}
-
 	public class MethodCallDefinition : IMethodCallDefinition, IEquatable<IMethodCallDefinition>
 	{
 		public string Name { get; }
@@ -72,11 +64,6 @@ namespace Mindbox.Quokka
 			$"{Name}({string.Join(", ", Arguments.Select(arg => $"{arg.Type.Name}: {arg.Value}"))})";
 	}
 
-	public interface IMethodArgumentDefinition
-	{
-		TypeDefinition Type { get; }
-		object Value { get; }
-	}
 
 	public class MethodArgumentDefinition : IMethodArgumentDefinition
 	{

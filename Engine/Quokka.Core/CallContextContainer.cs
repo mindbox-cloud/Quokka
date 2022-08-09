@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace Mindbox.Quokka
 {
-	public class CallContextContainer
+	public class CallContextContainer : ICallContextContainer
 	{
 		public static CallContextContainer Empty { get; } = new CallContextContainer();
 

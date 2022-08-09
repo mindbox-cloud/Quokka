@@ -2,25 +2,10 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 
 namespace Mindbox.Quokka
 {
-	interface IPrimitiveTypeDefinition
-	{
-		 Type RuntimeType { get; }
-	}
-
-	internal class PrimitiveTypeDefinition<TRuntimeType> : TypeDefinition, IPrimitiveTypeDefinition
-	{
-		public Type RuntimeType => typeof(TRuntimeType);
-
-		public PrimitiveTypeDefinition(string name, TypeDefinition baseType, int priority)
-			: base(name, baseType, priority)
-		{
-			
-		}
-	}
-
 	public class TypeDefinition
 	{
 		private static readonly IReadOnlyDictionary<Type, TypeDefinition> primitiveTypeMap;

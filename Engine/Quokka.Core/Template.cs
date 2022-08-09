@@ -101,7 +101,7 @@ namespace Mindbox.Quokka
 			return requiredModelDefinition;
 		}
 
-		public virtual string Render(ICompositeModelValue model, CallContextContainer callContextContainer = null)
+		public virtual string Render(ICompositeModelValue model, ICallContextContainer callContextContainer = null)
 		{
 			if (model == null)
 				throw new ArgumentNullException(nameof(model));
@@ -125,12 +125,7 @@ namespace Mindbox.Quokka
 			return stringBuilder.ToString();
 		}
 
-		public string Render(Dictionary<string, Func<string>> parameters)
-		{
-			return Render(parameters.ToCompositeModelValue());
-		}
-
-		public virtual void Render(TextWriter textWriter, ICompositeModelValue model, CallContextContainer callContextContainer = null)
+		public virtual void Render(TextWriter textWriter, ICompositeModelValue model, ICallContextContainer callContextContainer = null)
 		{
 			if (textWriter == null)
 				throw new ArgumentNullException(nameof(textWriter));

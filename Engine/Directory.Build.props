@@ -1,5 +1,9 @@
 <Project>
     <PropertyGroup>
-        <VersionPrefix>4.9.0</VersionPrefix>
+        <LangVersion>latest</LangVersion>
+    </PropertyGroup>
+
+    <PropertyGroup>
+        <VersionPrefix>4.10.0</VersionPrefix>
     </PropertyGroup>
 </Project>
