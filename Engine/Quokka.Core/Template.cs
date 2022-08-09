@@ -125,11 +125,6 @@ namespace Mindbox.Quokka
 			return stringBuilder.ToString();
 		}
 
-		public string Render(Dictionary<string, Func<string>> parameters)
-		{
-			return Render(parameters.ToCompositeModelValue());
-		}
-
 		public virtual void Render(TextWriter textWriter, ICompositeModelValue model, ICallContextContainer callContextContainer = null)
 		{
 			if (textWriter == null)
