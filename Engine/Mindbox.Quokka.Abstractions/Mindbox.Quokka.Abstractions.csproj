@@ -11,8 +11,4 @@
         <AssemblyName>Mindbox.Quokka.Abstractions</AssemblyName>
         <IsPackable>true</IsPackable>
     </PropertyGroup>
-    
-    <ItemGroup>
-        <InternalsVisibleTo Include="Mindbox.Quokka" />
-    </ItemGroup>
 </Project>
