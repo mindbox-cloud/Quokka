@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
+
+[assembly: InternalsVisibleTo("Mindbox.Quokka")]
 
 namespace Mindbox.Quokka
 {
@@ -66,7 +69,7 @@ namespace Mindbox.Quokka
 		/// <summary>
 		/// Checks if the type can be assigned to the required type and is therefore compatible to it.
 		/// </summary>
-		public bool IsAssignableTo(TypeDefinition requiredType)
+		internal bool IsAssignableTo(TypeDefinition requiredType)
 		{
 			if (this == requiredType)
 				return true;
@@ -82,7 +85,7 @@ namespace Mindbox.Quokka
 			return Name;
 		}
 		
-		public static TypeDefinition GetTypeDefinitionByRuntimeType(Type runtimeType)
+		internal static TypeDefinition GetTypeDefinitionByRuntimeType(Type runtimeType)
 		{
 			if (!primitiveTypeMap.TryGetValue(runtimeType, out var result))
 				throw new InvalidOperationException(
@@ -91,7 +94,7 @@ namespace Mindbox.Quokka
 			return result;
 		}
 
-		public static TypeDefinition GetTypeDefinitionFromModelDefinition(IModelDefinition modelDefinition)
+		internal static TypeDefinition GetTypeDefinitionFromModelDefinition(IModelDefinition modelDefinition)
 		{
 			if (modelDefinition == null)
 				throw new ArgumentNullException(nameof(modelDefinition));
@@ -106,7 +109,7 @@ namespace Mindbox.Quokka
 				throw new InvalidOperationException("Unsupported model definition");
 		}
 
-		public static TypeDefinition GetResultingTypeForMultipleOccurrences<TTypedObject>(
+		internal static TypeDefinition GetResultingTypeForMultipleOccurrences<TTypedObject>(
 			IList<TTypedObject> occurrences,
 			Func<TTypedObject, TypeDefinition> typeSelector,
 			Action<TTypedObject, TypeDefinition> inconsistentTypeErrorHandler = null)
