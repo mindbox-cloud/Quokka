@@ -1,8 +1,9 @@
 using System;
 
-namespace Mindbox.Quokka;
-
-interface IPrimitiveTypeDefinition
+namespace Mindbox.Quokka
 {
-    Type RuntimeType { get; }
+    interface IPrimitiveTypeDefinition
+    {
+        Type RuntimeType { get; }
+    }
 }

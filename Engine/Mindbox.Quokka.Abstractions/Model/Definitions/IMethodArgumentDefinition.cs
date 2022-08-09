@@ -1,7 +1,8 @@
-namespace Mindbox.Quokka;
-
-public interface IMethodArgumentDefinition
+namespace Mindbox.Quokka
 {
-    TypeDefinition Type { get; }
-    object Value { get; }
+    public interface IMethodArgumentDefinition
+    {
+        TypeDefinition Type { get; }
+        object Value { get; }
+    }
 }

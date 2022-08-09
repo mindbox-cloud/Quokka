@@ -1,9 +1,10 @@
 using System.Collections.Generic;
 
-namespace Mindbox.Quokka;
-
-public interface IMethodCallDefinition
+namespace Mindbox.Quokka
 {
-    string Name { get; }
-    IReadOnlyList<IMethodArgumentDefinition> Arguments { get; }
+    public interface IMethodCallDefinition
+    {
+        string Name { get; }
+        IReadOnlyList<IMethodArgumentDefinition> Arguments { get; }
+    }
 }
