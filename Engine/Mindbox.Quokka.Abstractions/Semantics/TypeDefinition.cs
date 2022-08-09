@@ -5,22 +5,6 @@ using System.Linq;
 
 namespace Mindbox.Quokka
 {
-	interface IPrimitiveTypeDefinition
-	{
-		 Type RuntimeType { get; }
-	}
-
-	internal class PrimitiveTypeDefinition<TRuntimeType> : TypeDefinition, IPrimitiveTypeDefinition
-	{
-		public Type RuntimeType => typeof(TRuntimeType);
-
-		public PrimitiveTypeDefinition(string name, TypeDefinition baseType, int priority)
-			: base(name, baseType, priority)
-		{
-			
-		}
-	}
-
 	public class TypeDefinition
 	{
 		private static readonly IReadOnlyDictionary<Type, TypeDefinition> primitiveTypeMap;
@@ -82,7 +66,7 @@ namespace Mindbox.Quokka
 		/// <summary>
 		/// Checks if the type can be assigned to the required type and is therefore compatible to it.
 		/// </summary>
-		internal bool IsAssignableTo(TypeDefinition requiredType)
+		public bool IsAssignableTo(TypeDefinition requiredType)
 		{
 			if (this == requiredType)
 				return true;
@@ -98,7 +82,7 @@ namespace Mindbox.Quokka
 			return Name;
 		}
 		
-		internal static TypeDefinition GetTypeDefinitionByRuntimeType(Type runtimeType)
+		public static TypeDefinition GetTypeDefinitionByRuntimeType(Type runtimeType)
 		{
 			if (!primitiveTypeMap.TryGetValue(runtimeType, out var result))
 				throw new InvalidOperationException(
@@ -107,7 +91,7 @@ namespace Mindbox.Quokka
 			return result;
 		}
 
-		internal static TypeDefinition GetTypeDefinitionFromModelDefinition(IModelDefinition modelDefinition)
+		public static TypeDefinition GetTypeDefinitionFromModelDefinition(IModelDefinition modelDefinition)
 		{
 			if (modelDefinition == null)
 				throw new ArgumentNullException(nameof(modelDefinition));
@@ -122,7 +106,7 @@ namespace Mindbox.Quokka
 				throw new InvalidOperationException("Unsupported model definition");
 		}
 
-		internal static TypeDefinition GetResultingTypeForMultipleOccurrences<TTypedObject>(
+		public static TypeDefinition GetResultingTypeForMultipleOccurrences<TTypedObject>(
 			IList<TTypedObject> occurrences,
 			Func<TTypedObject, TypeDefinition> typeSelector,
 			Action<TTypedObject, TypeDefinition> inconsistentTypeErrorHandler = null)

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.IO;
-using System.Text;
 
 namespace Mindbox.Quokka
 {
@@ -8,10 +7,10 @@ namespace Mindbox.Quokka
 	{
 		public RuntimeVariableScope VariableScope { get; }
 		public FunctionRegistry Functions { get; }
-		public CallContextContainer CallContextContainer { get; }
+		public ICallContextContainer CallContextContainer { get; }
 
 		public RenderContext(
-			RuntimeVariableScope variableScope, FunctionRegistry functions, CallContextContainer callContextContainer)
+			RuntimeVariableScope variableScope, FunctionRegistry functions, ICallContextContainer callContextContainer)
 		{
 			if (callContextContainer == null) 
 				throw new ArgumentNullException(nameof(callContextContainer));

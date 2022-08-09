@@ -23,13 +23,13 @@ namespace Mindbox.Quokka.Html
 			ICompositeModelValue model, 
 			Func<Guid, string, string> redirectLinkProcessor,
 			string identificationCode, 
-			CallContextContainer callContextContainer = null);
+			ICallContextContainer callContextContainer = null);
 
 		void Render(
 			TextWriter textWriter,
 			ICompositeModelValue model,
 			Func<Guid, string, string> redirectLinkProcessor,
 			string identificationCode = null,
-			CallContextContainer callContextContainer = null);
+			ICallContextContainer callContextContainer = null);
 	}
 }

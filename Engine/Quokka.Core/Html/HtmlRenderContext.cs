@@ -1,6 +1,5 @@
 ﻿using System;
 using System.IO;
-using System.Text;
 
 namespace Mindbox.Quokka.Html
 {
@@ -19,7 +18,7 @@ namespace Mindbox.Quokka.Html
 			FunctionRegistry functions, 
 			Func<Guid, string, string> redirectLinkProcessor,
 			string identificationCode,
-			CallContextContainer callContextContainer)
+			ICallContextContainer callContextContainer)
 			: this(variableScope, functions, redirectLinkProcessor, identificationCode, callContextContainer, null)
 		{
 			// empty
@@ -30,7 +29,7 @@ namespace Mindbox.Quokka.Html
 			FunctionRegistry functions, 
 			Func<Guid, string, string> redirectLinkProcessor,
 			string identificationCode,
-			CallContextContainer callContextContainer,
+			ICallContextContainer callContextContainer,
 			HtmlRenderContext parentRenderContext)
 			: base(variableScope, functions, callContextContainer)
 		{
