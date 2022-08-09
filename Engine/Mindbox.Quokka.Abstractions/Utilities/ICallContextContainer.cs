@@ -1,6 +1,7 @@
-namespace Mindbox.Quokka;
-
-public interface ICallContextContainer
+namespace Mindbox.Quokka
 {
-    public TCallContext GetCallContext<TCallContext>() where TCallContext : class;
+    public interface ICallContextContainer
+    {
+        public TCallContext GetCallContext<TCallContext>() where TCallContext : class;
+    }
 }
