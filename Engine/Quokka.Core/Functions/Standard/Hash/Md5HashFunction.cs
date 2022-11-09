@@ -22,6 +22,6 @@ namespace Mindbox.Quokka
 		{
 		}
 
-		protected override HashAlgorithm CreateHashAlgorithm() => MD5CryptoServiceProvider.Create();
+		protected override HashAlgorithm CreateHashAlgorithm() => MD5.Create();
 	}
 }
