@@ -33,6 +33,8 @@
 // Ambiguous reference in cref attribute
 #pragma warning disable 419
 
+#pragma warning disable CS0108 // Member hides inherited member; missing new keyword
+
 namespace Mindbox.Quokka.Generated {
 using System;
 using System.IO;
@@ -53,9 +55,9 @@ internal partial class QuokkaParser : Parser {
 	public const int
 		SingleInstructionComment=1, OutputInstructionStart=2, ControlInstructionStart=3, 
 		Fluff=4, InstructionEnd=5, If=6, EndIf=7, End=8, Else=9, ElseIf=10, For=11, 
-		In=12, EndFor=13, Null=14, MemberAccessOperator=15, Pipe=16, CommaSeparator=17, 
-		LeftParen=18, RightParen=19, And=20, Or=21, Not=22, Set=23, Equals=24, 
-		NotEquals=25, GreaterThan=26, LessThan=27, GreaterThanOrEquals=28, LessThanOrEquals=29, 
+		In=12, EndFor=13, Null=14, MemberAccessOperator=15, Pipe=16, CommaSeparator=17,
+		LeftParen =18, RightParen=19, And=20, Or=21, Not=22, Set=23, Equals=24,
+		NotEquals =25, GreaterThan=26, LessThan=27, GreaterThanOrEquals=28, LessThanOrEquals=29, 
 		Plus=30, Minus=31, Multiply=32, Divide=33, Number=34, Digit=35, DoubleQuotedString=36, 
 		SingleQuotedString=37, Ampersand=38, Identifier=39, WhiteSpace=40;
 	public const int

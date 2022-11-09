@@ -1,9 +1,9 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
         <Company>Mindbox</Company>
         <Product>Quokka template engine abstractions</Product>
         <Description>String templating library</Description>
-        <TargetFramework>netstandard2.0</TargetFramework>
+        <TargetFrameworks>net6.0;net7.0</TargetFrameworks>
         <Copyright>Mindbox 2022</Copyright>
         <PackageProjectUrl>https://github.com/mindbox-moscow/Quokka</PackageProjectUrl>
         <RepositoryUrl>https://github.com/mindbox-moscow/Quokka</RepositoryUrl>
