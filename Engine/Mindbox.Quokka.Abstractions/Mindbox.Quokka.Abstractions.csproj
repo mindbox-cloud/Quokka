@@ -5,8 +5,8 @@
         <Description>String templating library</Description>
         <TargetFrameworks>net6.0;net7.0</TargetFrameworks>
         <Copyright>Mindbox 2022</Copyright>
-        <PackageProjectUrl>https://github.com/mindbox-moscow/Quokka</PackageProjectUrl>
-        <RepositoryUrl>https://github.com/mindbox-moscow/Quokka</RepositoryUrl>
+        <PackageProjectUrl>https://github.com/mindbox-cloud/Quokka</PackageProjectUrl>
+        <RepositoryUrl>https://github.com/mindbox-cloud/Quokka</RepositoryUrl>
         <PackageTags>string templating</PackageTags>
         <AssemblyName>Mindbox.Quokka.Abstractions</AssemblyName>
         <IsPackable>true</IsPackable>
