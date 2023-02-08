@@ -6,8 +6,8 @@
     <Product>Quokka template engine</Product>
     <Description>String templating library</Description>
     <Copyright>Mindbox 2019</Copyright>
-    <PackageProjectUrl>https://github.com/mindbox-moscow/Quokka</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/mindbox-moscow/Quokka</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/mindbox-cloud/Quokka</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/mindbox-cloud/Quokka</RepositoryUrl>
     <PackageTags>string templating</PackageTags>
     <RootNamespace>Mindbox.Quokka</RootNamespace>
     <AssemblyName>Mindbox.Quokka</AssemblyName>
