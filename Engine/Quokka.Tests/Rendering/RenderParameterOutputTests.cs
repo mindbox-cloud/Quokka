@@ -150,5 +150,23 @@ namespace Mindbox.Quokka.Tests
 
 			Assert.AreEqual(expected, result);
 		}
+
+		[TestMethod]
+		public void Render_DecimalParameter_DefaultFormat()
+		{
+			var template = new Template(@"
+				${ decimalValue }
+			");
+
+			var result = template.Render(
+				new CompositeModelValue(
+					new ModelField("decimalValue", 2.489090m)));
+
+			var expected = @"
+				2.49
+			";
+
+			Assert.AreEqual(expected, result);
+		}
 	}
 }
