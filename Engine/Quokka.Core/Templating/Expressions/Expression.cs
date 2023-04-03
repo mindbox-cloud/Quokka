@@ -12,6 +12,8 @@
 // // See the License for the specific language governing permissions and
 // // limitations under the License.
 
+using System;
+
 namespace Mindbox.Quokka
 {
 	internal abstract class Expression : IExpression
@@ -32,7 +34,15 @@ namespace Mindbox.Quokka
 
 		public virtual string GetOutputValue(RenderContext renderContext)
 		{
-			return Evaluate(renderContext).GetPrimitiveValue().ToString();
+			var primitiveValue = Evaluate(renderContext).GetPrimitiveValue();
+			
+			
+			var stringValue = primitiveValue switch
+			{
+				decimal d => Math.Round(d, 2, MidpointRounding.AwayFromZero).ToString(),
+				_ => primitiveValue.ToString()
+			};
+			return stringValue;
 		}
 	}
 }

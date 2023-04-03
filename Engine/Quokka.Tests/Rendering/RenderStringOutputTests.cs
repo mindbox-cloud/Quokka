@@ -75,7 +75,7 @@ namespace Mindbox.Quokka.Tests
 					new[] { new ModelField("variable", new PrimitiveModelValue(2.53511m)) }
 				));
 
-			Assert.AreEqual("2.542.53511", result);
+			Assert.AreEqual("2.542.54", result);
 		}
 	}
 }
