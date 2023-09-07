@@ -104,4 +104,20 @@ public sealed class RenderSettingsCultureInfoTests
         
         Assert.AreEqual(expectedFormat, result);
     }
+    
+    [TestMethod]
+    [DataRow("Карл у Клары украл кораллы", "ru-RU")]
+    [DataRow("Clara stole Carl's Clarinet", "en-US")]
+    public void CapitalizeAllWordsTemplateFunction_ReturnsLocalizedResult(string input, string locale)
+    {
+        var settings = new RenderSettings { CultureInfo = new CultureInfo(locale) };
+        var expectedFormat = settings.CultureInfo.TextInfo.ToTitleCase(input);
+        
+        var template = new Template("${CapitalizeAllWords(Input)}");
+        var result = template.Render(
+            new CompositeModelValue(new ModelField("Input", input)),
+            settings);
+        
+        Assert.AreEqual(expectedFormat, result);
+    }
 }

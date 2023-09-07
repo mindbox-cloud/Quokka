@@ -27,7 +27,7 @@ namespace Mindbox.Quokka
 
 		public override string Invoke(RenderSettings settings, string value)
 		{
-			return CultureInfo.InvariantCulture.TextInfo.ToTitleCase(value);
+			return settings.CultureInfo.TextInfo.ToTitleCase(value);
 		}
 	}
 }
