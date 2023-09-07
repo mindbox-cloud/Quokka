@@ -15,6 +15,8 @@
 using System.Collections.Generic;
 using System.IO;
 
+using Mindbox.Quokka.Abstractions;
+
 namespace Mindbox.Quokka
 {
 	public interface ITemplate
@@ -26,7 +28,11 @@ namespace Mindbox.Quokka
 		ICompositeModelDefinition GetModelDefinition();
 
 		string Render(ICompositeModelValue model, ICallContextContainer callContextContainer = null);
+		
+		string Render(ICompositeModelValue model, RenderSettings settings, ICallContextContainer callContextContainer = null);
 
 		void Render(TextWriter textWriter, ICompositeModelValue model, ICallContextContainer callContextContainer = null);
+		
+		void Render(TextWriter textWriter, ICompositeModelValue model, RenderSettings settings, ICallContextContainer callContextContainer = null);
 	}
 }

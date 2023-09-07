@@ -15,6 +15,8 @@
 using System;
 using System.IO;
 
+using Mindbox.Quokka.Abstractions;
+
 namespace Mindbox.Quokka
 {
 	internal class RenderContext
@@ -23,8 +25,11 @@ namespace Mindbox.Quokka
 		public FunctionRegistry Functions { get; }
 		public ICallContextContainer CallContextContainer { get; }
 
+		public RenderSettings Settings { get; }
+
 		public RenderContext(
-			RuntimeVariableScope variableScope, FunctionRegistry functions, ICallContextContainer callContextContainer)
+			RuntimeVariableScope variableScope, FunctionRegistry functions, RenderSettings settings,
+			ICallContextContainer callContextContainer)
 		{
 			if (callContextContainer == null) 
 				throw new ArgumentNullException(nameof(callContextContainer));
@@ -32,11 +37,12 @@ namespace Mindbox.Quokka
 			VariableScope = variableScope;
 			Functions = functions;
 			CallContextContainer = callContextContainer;
+			Settings = settings;
 		}
 
 		public virtual RenderContext CreateInnerContext(RuntimeVariableScope variableScope)
 		{
-			return new RenderContext(variableScope, Functions, CallContextContainer);
+			return new RenderContext(variableScope, Functions, Settings, CallContextContainer);
 		}
 
 		public virtual void OnRenderingEnd(TextWriter resultWriter)
