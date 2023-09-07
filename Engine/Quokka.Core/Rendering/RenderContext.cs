@@ -24,7 +24,6 @@ namespace Mindbox.Quokka
 		public RuntimeVariableScope VariableScope { get; }
 		public FunctionRegistry Functions { get; }
 		public ICallContextContainer CallContextContainer { get; }
-
 		public RenderSettings Settings { get; }
 
 		public RenderContext(

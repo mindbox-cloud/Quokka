@@ -20,6 +20,7 @@ using System.Text;
 
 using Antlr4.Runtime;
 
+using Mindbox.Quokka.Abstractions;
 using Mindbox.Quokka.Generated;
 
 namespace Mindbox.Quokka
@@ -115,7 +116,12 @@ namespace Mindbox.Quokka
 			return requiredModelDefinition;
 		}
 
-		public virtual string Render(ICompositeModelValue model, ICallContextContainer callContextContainer = null)
+		public string Render(ICompositeModelValue model, ICallContextContainer callContextContainer = null)
+		{
+			return Render(model, RenderSettings.Default, callContextContainer);
+		}
+
+		public virtual string Render(ICompositeModelValue model, RenderSettings settings, ICallContextContainer callContextContainer = null)
 		{
 			if (model == null)
 				throw new ArgumentNullException(nameof(model));
@@ -133,13 +139,23 @@ namespace Mindbox.Quokka
 					(scope, contextFunctionRegistry) => new RenderContext(
 						scope,
 						contextFunctionRegistry,
+						settings,
 						effectiveCallContextContainer));
 			}
 
 			return stringBuilder.ToString();
 		}
 
-		public virtual void Render(TextWriter textWriter, ICompositeModelValue model, ICallContextContainer callContextContainer = null)
+		public void Render(TextWriter textWriter, ICompositeModelValue model, ICallContextContainer callContextContainer = null)
+		{
+			Render(textWriter, model, RenderSettings.Default, callContextContainer);
+		}
+
+		public virtual void Render(
+			TextWriter textWriter,
+			ICompositeModelValue model,
+			RenderSettings settings,
+			ICallContextContainer callContextContainer = null)
 		{
 			if (textWriter == null)
 				throw new ArgumentNullException(nameof(textWriter));
@@ -154,7 +170,7 @@ namespace Mindbox.Quokka
 				textWriter,
 				model,
 				(scope, contextFunctionRegistry) => new RenderContext(
-					scope, contextFunctionRegistry, effectiveCallContextContainer));
+					scope, contextFunctionRegistry, settings, effectiveCallContextContainer));
 		}
 
 		protected void DoRender(

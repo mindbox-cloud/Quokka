@@ -18,6 +18,8 @@ using System.IO;
 using System.Linq;
 using System.Text;
 
+using Mindbox.Quokka.Abstractions;
+
 namespace Mindbox.Quokka.Html
 {
 	internal class HtmlTemplate : Template, IHtmlTemplate
@@ -56,7 +58,7 @@ namespace Mindbox.Quokka.Html
 			return htmlContext.GetReferences();
 		}
 
-		public override string Render(ICompositeModelValue model, ICallContextContainer callContextContainer = null)
+		public override string Render(ICompositeModelValue model, RenderSettings settings, ICallContextContainer callContextContainer = null)
 		{
 			var effectiveCallContextContainer = callContextContainer ?? CallContextContainer.Empty;
 
@@ -71,6 +73,7 @@ namespace Mindbox.Quokka.Html
 						functionRegistry,
 						null,
 						null,
+						settings,
 						effectiveCallContextContainer));
 			}
 
@@ -105,7 +108,7 @@ namespace Mindbox.Quokka.Html
 			return stringBuilder.ToString();
 		}
 
-		public override void Render(TextWriter textWriter, ICompositeModelValue model, ICallContextContainer callContextContainer = null)
+		public override void Render(TextWriter textWriter, ICompositeModelValue model, RenderSettings settings, ICallContextContainer callContextContainer = null)
 		{
 			var effectiveCallContextContainer = callContextContainer ?? CallContextContainer.Empty;
 
@@ -117,6 +120,7 @@ namespace Mindbox.Quokka.Html
 						functionRegistry,
 						null,
 						null,
+						settings,
 						effectiveCallContextContainer));
 		}
 
