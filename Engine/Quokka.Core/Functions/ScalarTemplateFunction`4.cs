@@ -15,6 +15,8 @@
 using System;
 using System.Collections.Generic;
 
+using Mindbox.Quokka.Abstractions;
+
 namespace Mindbox.Quokka
 {
 	public abstract class ScalarTemplateFunction<TArgument1, TArgument2, TArgument3, TArgument4, TResult> : ScalarTemplateFunction
@@ -38,7 +40,7 @@ namespace Mindbox.Quokka
 			this.argument4 = argument4;
 		}
 
-		public abstract TResult Invoke(TArgument1 value1, TArgument2 value2, TArgument3 value3, TArgument4 value4);
+		public abstract TResult Invoke(RenderSettings settings, TArgument1 value1, TArgument2 value2, TArgument3 value3, TArgument4 value4);
 
 		internal override object GetScalarInvocationResult(
 			RenderContext renderContext,
@@ -48,6 +50,7 @@ namespace Mindbox.Quokka
 				throw new InvalidOperationException($"Function that expects 4 arguments was passed {argumentsValues.Count}");
 
 			return Invoke(
+				renderContext.Settings,
 				argument1.ConvertValue(argumentsValues[0]), 
 				argument2.ConvertValue(argumentsValues[1]), 
 				argument3.ConvertValue(argumentsValues[2]), 

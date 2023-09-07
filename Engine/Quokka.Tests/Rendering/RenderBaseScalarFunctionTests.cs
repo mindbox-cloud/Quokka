@@ -15,6 +15,8 @@
 using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
+using Mindbox.Quokka.Abstractions;
+
 namespace Mindbox.Quokka.Tests
 {
 	[TestClass]
@@ -124,7 +126,7 @@ namespace Mindbox.Quokka.Tests
 				this.callBack = callBack;
 			}
 
-			public override string Invoke(string value1)
+			public override string Invoke(RenderSettings settings, string value1)
 			{
 				callBack();
 				return $"[{value1}]";
@@ -144,7 +146,7 @@ namespace Mindbox.Quokka.Tests
 				this.callBack = callBack;
 			}
 
-			public override string Invoke(string value1, string value2)
+			public override string Invoke(RenderSettings settings, string value1, string value2)
 			{
 				callBack();
 				return $"[{value1}][{value2}]";
@@ -165,7 +167,7 @@ namespace Mindbox.Quokka.Tests
 				this.callBack = callBack;
 			}
 
-			public override string Invoke(string value1, string value2, string value3)
+			public override string Invoke(RenderSettings settings, string value1, string value2, string value3)
 			{
 				callBack();
 				return $"[{value1}][{value2}][{value3}]";
@@ -187,7 +189,7 @@ namespace Mindbox.Quokka.Tests
 				this.callBack = callBack;
 			}
 
-			public override string Invoke(string value1, string value2, string value3, string value4)
+			public override string Invoke(RenderSettings settings, string value1, string value2, string value3, string value4)
 			{
 				callBack();
 				return $"[{value1}][{value2}][{value3}][{value4}]";

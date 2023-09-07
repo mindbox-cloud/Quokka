@@ -15,6 +15,8 @@
 using System;
 using System.Linq;
 
+using Mindbox.Quokka.Abstractions;
+
 namespace Mindbox.Quokka
 {
 	internal class CapitalizeTemplateFunction : ScalarTemplateFunction<string, string>
@@ -24,7 +26,7 @@ namespace Mindbox.Quokka
 		{
 		}
 
-		public override string Invoke(string value)
+		public override string Invoke(RenderSettings settings, string value)
 		{
 			if (value == null)
 				throw new ArgumentNullException(nameof(value));

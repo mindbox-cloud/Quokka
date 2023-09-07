@@ -14,6 +14,8 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
+using Mindbox.Quokka.Abstractions;
+
 namespace Mindbox.Quokka.Tests
 {
 	[TestClass]
@@ -25,7 +27,7 @@ namespace Mindbox.Quokka.Tests
 			var email = "https://strange@email.com?some=parame&other#things";
 			var hexValue = new ToHexTemplateFunction();
 
-			var hash = hexValue.Invoke(email);
+			var hash = hexValue.Invoke(RenderSettings.Default, email);
 			Assert.AreEqual(
 				"68747470733A2F2F737472616E676540656D61696C2E636F6D3F736F6D653D706172616D65266F74686572237468696E6773",
 				hash);

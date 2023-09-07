@@ -12,6 +12,8 @@
 // // See the License for the specific language governing permissions and
 // // limitations under the License.
 
+using Mindbox.Quokka.Abstractions;
+
 namespace Mindbox.Quokka
 {
 	internal class IfTemplateFunction : ScalarTemplateFunction<bool, string, string, string>
@@ -25,7 +27,7 @@ namespace Mindbox.Quokka
 		{
 		}
 
-		public override string Invoke(bool argument1, string argument2, string argument3)
+		public override string Invoke(RenderSettings settings, bool argument1, string argument2, string argument3)
 		{
 			return argument1 ? argument2 : argument3;
 		}

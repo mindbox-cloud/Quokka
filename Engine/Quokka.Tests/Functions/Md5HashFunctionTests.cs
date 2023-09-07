@@ -14,6 +14,8 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
+using Mindbox.Quokka.Abstractions;
+
 namespace Mindbox.Quokka.Tests
 {
 	[TestClass]
@@ -25,7 +27,7 @@ namespace Mindbox.Quokka.Tests
 			var email = "strange@email.com";
 			var md5 = new Md5HashFunction();
 
-			var hash = md5.Invoke(email);
+			var hash = md5.Invoke(RenderSettings.Default, email);
 			Assert.AreEqual("152F2DD5F1F056FC761717EA5965828C", hash);
 		}
 	}

@@ -15,6 +15,8 @@
 using System;
 using System.IO;
 
+using Mindbox.Quokka.Abstractions;
+
 namespace Mindbox.Quokka.Html
 {
 	internal class HtmlRenderContext : RenderContext
@@ -32,8 +34,9 @@ namespace Mindbox.Quokka.Html
 			FunctionRegistry functions, 
 			Func<Guid, string, string> redirectLinkProcessor,
 			string identificationCode,
+			RenderSettings settings,
 			ICallContextContainer callContextContainer)
-			: this(variableScope, functions, redirectLinkProcessor, identificationCode, callContextContainer, null)
+			: this(variableScope, functions, redirectLinkProcessor, identificationCode, settings, callContextContainer, null)
 		{
 			// empty
 		}
@@ -43,9 +46,10 @@ namespace Mindbox.Quokka.Html
 			FunctionRegistry functions, 
 			Func<Guid, string, string> redirectLinkProcessor,
 			string identificationCode,
+			RenderSettings settings,
 			ICallContextContainer callContextContainer,
 			HtmlRenderContext parentRenderContext)
-			: base(variableScope, functions, callContextContainer)
+			: base(variableScope, functions, settings, callContextContainer)
 		{
 			RedirectLinkProcessor = redirectLinkProcessor;
 			IdentificationCode = identificationCode;
@@ -55,7 +59,7 @@ namespace Mindbox.Quokka.Html
 		public override RenderContext CreateInnerContext(RuntimeVariableScope variableScope)
 		{
 			return new HtmlRenderContext(
-				variableScope, Functions, RedirectLinkProcessor, IdentificationCode, CallContextContainer, this)
+				variableScope, Functions, RedirectLinkProcessor, IdentificationCode, Settings, CallContextContainer, this)
 			{
 				HasIdentificationCodeBeenRendered = HasIdentificationCodeBeenRendered
 			};

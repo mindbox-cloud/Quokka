@@ -14,6 +14,8 @@
 
 using System;
 
+using Mindbox.Quokka.Abstractions;
+
 namespace Mindbox.Quokka
 {
     internal class GetMonthTemplateFunction : ScalarTemplateFunction<DateTime, int>
@@ -25,7 +27,7 @@ namespace Mindbox.Quokka
         {
         }
 
-        public override int Invoke(DateTime dateTime)
+        public override int Invoke(RenderSettings settings, DateTime dateTime)
         {
             return dateTime.Month;
         }

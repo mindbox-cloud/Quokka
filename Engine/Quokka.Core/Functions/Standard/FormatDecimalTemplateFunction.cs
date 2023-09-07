@@ -15,6 +15,8 @@
 using System;
 using System.Globalization;
 
+using Mindbox.Quokka.Abstractions;
+
 namespace Mindbox.Quokka
 {
 	internal class FormatDecimalTemplateFunction : ScalarTemplateFunction<decimal, string, string>
@@ -27,9 +29,9 @@ namespace Mindbox.Quokka
 		{
 		}
 
-		public override string Invoke(decimal argument1, string argument2)
+		public override string Invoke(RenderSettings settings, decimal argument1, string argument2)
 		{
-			return argument1.ToString(argument2, CultureInfo.CurrentCulture);
+			return argument1.ToString(argument2, settings.CultureInfo);
 		}
 
 		private static ArgumentValueValidationResult ValidateFormat(string format)

@@ -18,6 +18,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using Mindbox.Quokka.Abstractions;
+
 namespace Mindbox.Quokka
 {
     internal class LengthTemplateFunction : ScalarTemplateFunction<string, int>
@@ -27,7 +29,7 @@ namespace Mindbox.Quokka
 		{
 		}
 
-		public override int Invoke(string value)
+		public override int Invoke(RenderSettings settings, string value)
 		{
 			return value.Length;
 		}

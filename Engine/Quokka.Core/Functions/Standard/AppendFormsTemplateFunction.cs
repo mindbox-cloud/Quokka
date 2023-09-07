@@ -14,6 +14,8 @@
 
 using System;
 
+using Mindbox.Quokka.Abstractions;
+
 namespace Mindbox.Quokka
 {
 	internal class AppendFormsTemplateFunction : ScalarTemplateFunction<decimal, string, string, string, string>
@@ -28,7 +30,7 @@ namespace Mindbox.Quokka
 		{
 		}
 
-		public override string Invoke(decimal quantity, string singularForm, string dualForm, string pluralForm)
+		public override string Invoke(RenderSettings settings, decimal quantity, string singularForm, string dualForm, string pluralForm)
 		{
 			var intQuantity = Convert.ToInt32(quantity);
 			return quantity + " " + LanguageUtility.GetQuantityForm(intQuantity, singularForm, dualForm, pluralForm);

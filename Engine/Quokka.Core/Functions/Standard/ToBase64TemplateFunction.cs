@@ -15,6 +15,8 @@
 using System;
 using System.Text;
 
+using Mindbox.Quokka.Abstractions;
+
 namespace Mindbox.Quokka
 {
 	internal class ToBase64TemplateFunction : ScalarTemplateFunction<string, string>
@@ -26,7 +28,7 @@ namespace Mindbox.Quokka
 		{
 		}
 
-		public override string Invoke(string argument1)
+		public override string Invoke(RenderSettings settings, string argument1)
 		{
 			return Convert.ToBase64String(Encoding.UTF8.GetBytes(argument1));
 		}

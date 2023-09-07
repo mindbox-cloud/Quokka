@@ -17,6 +17,8 @@ using System.Linq;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
+using Mindbox.Quokka.Abstractions;
+
 namespace Mindbox.Quokka.Tests
 {
 	[TestClass]
@@ -84,7 +86,7 @@ namespace Mindbox.Quokka.Tests
 			{
 			}
 
-			public override string Invoke(string argument)
+			public override string Invoke(RenderSettings settings, string argument)
 			{
 				return "Test";
 			}

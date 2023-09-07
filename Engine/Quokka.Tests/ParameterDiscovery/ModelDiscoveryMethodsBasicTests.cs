@@ -21,6 +21,7 @@ using System.Threading.Tasks;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
+using Mindbox.Quokka.Abstractions;
 using Mindbox.Quokka.Tests;
 
 namespace Mindbox.Quokka
@@ -431,7 +432,7 @@ namespace Mindbox.Quokka
 		    {
 		    }
 
-		    public override int Invoke(int value)
+		    public override int Invoke(RenderSettings settings, int value)
 		    {
 			    return value;
 		    }

@@ -14,6 +14,8 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
+using Mindbox.Quokka.Abstractions;
+
 namespace Mindbox.Quokka.Tests
 {
 	[TestClass]
@@ -25,7 +27,7 @@ namespace Mindbox.Quokka.Tests
 			var someString = "just-test-string";
 			var toBase64 = new ToBase64TemplateFunction();
 
-			var base64Value = toBase64.Invoke(someString);
+			var base64Value = toBase64.Invoke(RenderSettings.Default, someString);
 			Assert.AreEqual(
 				"anVzdC10ZXN0LXN0cmluZw==",
 				base64Value);

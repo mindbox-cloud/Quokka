@@ -18,6 +18,8 @@ using System.IO;
 using System.Linq;
 using System.Text;
 
+using Mindbox.Quokka.Abstractions;
+
 namespace Mindbox.Quokka.Html
 {
 	internal class HtmlTemplate : Template, IHtmlTemplate
@@ -56,7 +58,7 @@ namespace Mindbox.Quokka.Html
 			return htmlContext.GetReferences();
 		}
 
-		public override string Render(ICompositeModelValue model, ICallContextContainer callContextContainer = null)
+		public override string Render(ICompositeModelValue model, RenderSettings settings, ICallContextContainer callContextContainer = null)
 		{
 			var effectiveCallContextContainer = callContextContainer ?? CallContextContainer.Empty;
 
@@ -71,6 +73,7 @@ namespace Mindbox.Quokka.Html
 						functionRegistry,
 						null,
 						null,
+						settings,
 						effectiveCallContextContainer));
 			}
 
@@ -80,6 +83,16 @@ namespace Mindbox.Quokka.Html
 		public string Render(
 			ICompositeModelValue model,
 			Func<Guid, string, string> redirectLinkProcessor,
+			string identificationCode = null,
+			ICallContextContainer callContextContainer = null)
+		{
+			return Render(model, redirectLinkProcessor, RenderSettings.Default, identificationCode, callContextContainer);
+		}
+
+		public string Render(
+			ICompositeModelValue model,
+			Func<Guid, string, string> redirectLinkProcessor,
+			RenderSettings settings,
 			string identificationCode = null,
 			ICallContextContainer callContextContainer = null)
 		{
@@ -99,13 +112,14 @@ namespace Mindbox.Quokka.Html
 						functionRegistry,
 						redirectLinkProcessor,
 						identificationCode,
+						settings,
 						effectiveCallContextContainer));
 			}
 
 			return stringBuilder.ToString();
 		}
 
-		public override void Render(TextWriter textWriter, ICompositeModelValue model, ICallContextContainer callContextContainer = null)
+		public override void Render(TextWriter textWriter, ICompositeModelValue model, RenderSettings settings, ICallContextContainer callContextContainer = null)
 		{
 			var effectiveCallContextContainer = callContextContainer ?? CallContextContainer.Empty;
 
@@ -117,6 +131,7 @@ namespace Mindbox.Quokka.Html
 						functionRegistry,
 						null,
 						null,
+						settings,
 						effectiveCallContextContainer));
 		}
 
@@ -124,6 +139,17 @@ namespace Mindbox.Quokka.Html
 			TextWriter textWriter,
 			ICompositeModelValue model,
 			Func<Guid, string, string> redirectLinkProcessor,
+			string identificationCode = null,
+			ICallContextContainer callContextContainer = null)
+		{
+			Render(textWriter, model, redirectLinkProcessor, RenderSettings.Default, identificationCode, callContextContainer);
+		}
+
+		public void Render(
+			TextWriter textWriter,
+			ICompositeModelValue model,
+			Func<Guid, string, string> redirectLinkProcessor,
+			RenderSettings settings,
 			string identificationCode = null,
 			ICallContextContainer callContextContainer = null)
 		{
@@ -140,6 +166,7 @@ namespace Mindbox.Quokka.Html
 					functionRegistry,
 					redirectLinkProcessor,
 					identificationCode,
+					settings,
 					effectiveCallContextContainer));
 		}
 	}
