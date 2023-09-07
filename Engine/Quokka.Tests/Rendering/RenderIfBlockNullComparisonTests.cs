@@ -14,6 +14,8 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
+using Mindbox.Quokka.Abstractions;
+
 namespace Mindbox.Quokka.Tests
 {
 	[TestClass]
@@ -356,7 +358,7 @@ namespace Mindbox.Quokka.Tests
 			{
 			}
 
-			public override string Invoke(bool value)
+			public override string Invoke(RenderSettings settings, bool value)
 			{
 				return value ? null : "";
 			}

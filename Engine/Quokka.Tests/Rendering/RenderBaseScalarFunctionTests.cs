@@ -126,7 +126,7 @@ namespace Mindbox.Quokka.Tests
 				this.callBack = callBack;
 			}
 
-			public override string Invoke(string value1)
+			public override string Invoke(RenderSettings settings, string value1)
 			{
 				callBack();
 				return $"[{value1}]";

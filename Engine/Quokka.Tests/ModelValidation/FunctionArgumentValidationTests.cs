@@ -14,6 +14,8 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
+using Mindbox.Quokka.Abstractions;
+
 namespace Mindbox.Quokka.Tests
 {
 	[TestClass]
@@ -34,7 +36,7 @@ namespace Mindbox.Quokka.Tests
 					: new ArgumentValueValidationResult(false, "Test");
 			}
 
-			public override decimal Invoke(decimal value)
+			public override decimal Invoke(RenderSettings settings, decimal value)
 			{
 				return value;
 			}

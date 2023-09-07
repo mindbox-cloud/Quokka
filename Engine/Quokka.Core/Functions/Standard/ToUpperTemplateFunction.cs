@@ -14,6 +14,8 @@
 
 using System.Globalization;
 
+using Mindbox.Quokka.Abstractions;
+
 namespace Mindbox.Quokka
 {
 	internal class ToUpperTemplateFunction : ScalarTemplateFunction<string, string>
@@ -25,9 +27,9 @@ namespace Mindbox.Quokka
 		{
 		}
 
-		public override string Invoke(string argument1)
+		public override string Invoke(RenderSettings settings, string argument1)
 		{
-			return argument1.ToUpper(CultureInfo.CurrentCulture);
+			return argument1.ToUpper(settings.CultureInfo);
 		}
 	}
 }

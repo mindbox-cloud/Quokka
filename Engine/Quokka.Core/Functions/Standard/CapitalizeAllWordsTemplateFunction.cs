@@ -14,6 +14,8 @@
 
 using System.Globalization;
 
+using Mindbox.Quokka.Abstractions;
+
 namespace Mindbox.Quokka
 {
 	internal class CapitalizeAllWordsTemplateFunction : ScalarTemplateFunction<string, string>
@@ -23,7 +25,7 @@ namespace Mindbox.Quokka
 		{
 		}
 
-		public override string Invoke(string value)
+		public override string Invoke(RenderSettings settings, string value)
 		{
 			return CultureInfo.InvariantCulture.TextInfo.ToTitleCase(value);
 		}

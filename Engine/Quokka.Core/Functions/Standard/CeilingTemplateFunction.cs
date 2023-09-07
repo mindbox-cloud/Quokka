@@ -14,6 +14,8 @@
 
 using System;
 
+using Mindbox.Quokka.Abstractions;
+
 namespace Mindbox.Quokka
 {
 	public class CeilingTemplateFunction : ScalarTemplateFunction<decimal, decimal>
@@ -24,7 +26,7 @@ namespace Mindbox.Quokka
 		{
 		}
 
-		public override decimal Invoke(decimal value)
+		public override decimal Invoke(RenderSettings settings, decimal value)
 		{
 			return Math.Ceiling(value);
 		}

@@ -14,6 +14,8 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
+using Mindbox.Quokka.Abstractions;
+
 namespace Mindbox.Quokka.Tests
 {
 	[TestClass]
@@ -25,7 +27,7 @@ namespace Mindbox.Quokka.Tests
 			var email = "strange@email.com";
 			var sha256 = new Sha256HashFunction();
 
-			var hash = sha256.Invoke(email);
+			var hash = sha256.Invoke(RenderSettings.Default, email);
 			Assert.AreEqual("44B59FF2773CD61533A1CEBCBF473DB0D7960AC843AA6B346E7FB86E84827B68", hash);
 		}
 	}

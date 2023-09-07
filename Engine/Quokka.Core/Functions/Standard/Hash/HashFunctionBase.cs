@@ -16,6 +16,8 @@ using System;
 using System.Security.Cryptography;
 using System.Text;
 
+using Mindbox.Quokka.Abstractions;
+
 namespace Mindbox.Quokka
 {
 	internal abstract class HashFunctionBase : ScalarTemplateFunction<string, string>
@@ -29,7 +31,7 @@ namespace Mindbox.Quokka
 		{
 		}
 
-		public override string Invoke(string argument1)
+		public override string Invoke(RenderSettings settings, string argument1)
 		{
 			return GetHashString(argument1);
 		}

@@ -16,6 +16,8 @@ using System.Collections.Generic;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
+using Mindbox.Quokka.Abstractions;
+
 namespace Mindbox.Quokka.Tests
 {
 	[TestClass]
@@ -129,7 +131,7 @@ namespace Mindbox.Quokka.Tests
 			{
 			}
 
-			public override int Invoke(int value)
+			public override int Invoke(RenderSettings settings, int value)
 			{
 				return value;
 			}
@@ -144,7 +146,7 @@ namespace Mindbox.Quokka.Tests
 			{
 			}
 
-			public override decimal Invoke(decimal value)
+			public override decimal Invoke(RenderSettings settings, decimal value)
 			{
 				return value;
 			}
