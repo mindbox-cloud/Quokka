@@ -86,6 +86,16 @@ namespace Mindbox.Quokka.Html
 			string identificationCode = null,
 			ICallContextContainer callContextContainer = null)
 		{
+			return Render(model, redirectLinkProcessor, RenderSettings.Default, identificationCode, callContextContainer);
+		}
+
+		public string Render(
+			ICompositeModelValue model,
+			Func<Guid, string, string> redirectLinkProcessor,
+			RenderSettings settings,
+			string identificationCode = null,
+			ICallContextContainer callContextContainer = null)
+		{
 			if (model == null)
 				throw new ArgumentNullException(nameof(model));
 
@@ -102,6 +112,7 @@ namespace Mindbox.Quokka.Html
 						functionRegistry,
 						redirectLinkProcessor,
 						identificationCode,
+						settings,
 						effectiveCallContextContainer));
 			}
 
@@ -131,6 +142,17 @@ namespace Mindbox.Quokka.Html
 			string identificationCode = null,
 			ICallContextContainer callContextContainer = null)
 		{
+			Render(textWriter, model, redirectLinkProcessor, RenderSettings.Default, identificationCode, callContextContainer);
+		}
+
+		public void Render(
+			TextWriter textWriter,
+			ICompositeModelValue model,
+			Func<Guid, string, string> redirectLinkProcessor,
+			RenderSettings settings,
+			string identificationCode = null,
+			ICallContextContainer callContextContainer = null)
+		{
 			if (model == null)
 				throw new ArgumentNullException(nameof(model));
 
@@ -144,6 +166,7 @@ namespace Mindbox.Quokka.Html
 					functionRegistry,
 					redirectLinkProcessor,
 					identificationCode,
+					settings,
 					effectiveCallContextContainer));
 		}
 	}
