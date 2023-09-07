@@ -14,6 +14,8 @@
 
 using System;
 
+using Mindbox.Quokka.Abstractions;
+
 namespace Mindbox.Quokka
 {
 	internal class FormatTimeTemplateFunction : ScalarTemplateFunction<TimeSpan, string, string>
@@ -26,9 +28,9 @@ namespace Mindbox.Quokka
 		{
 		}
 
-		public override string Invoke(TimeSpan argument1, string argument2)
+		public override string Invoke(RenderSettings settings, TimeSpan argument1, string argument2)
 		{
-			return argument1.ToString(argument2);
+			return argument1.ToString(argument2, settings.CultureInfo);
 		}
 
 		private static ArgumentValueValidationResult ValidateFormat(string format)

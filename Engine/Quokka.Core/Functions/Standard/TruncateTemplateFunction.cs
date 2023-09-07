@@ -16,6 +16,8 @@ using System;
 using System.Linq;
 using System.Text;
 
+using Mindbox.Quokka.Abstractions;
+
 namespace Mindbox.Quokka
 {
     public class TruncateTemplateFunction : ScalarTemplateFunction<string, decimal, string>
@@ -35,7 +37,7 @@ namespace Mindbox.Quokka
                 : new ArgumentValueValidationResult(false, "Нельзя ограничить строку менее чем пятью символами");
         }
 
-        public override string Invoke(string inputString, decimal allowedLength)
+        public override string Invoke(RenderSettings settings, string inputString, decimal allowedLength)
         {
             var targetLength = Convert.ToInt32(allowedLength);
             if (inputString.Length <= targetLength)

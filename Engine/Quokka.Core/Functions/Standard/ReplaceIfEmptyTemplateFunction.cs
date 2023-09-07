@@ -12,6 +12,8 @@
 // // See the License for the specific language governing permissions and
 // // limitations under the License.
 
+using Mindbox.Quokka.Abstractions;
+
 namespace Mindbox.Quokka
 {
 	internal class ReplaceIfEmptyTemplateFunction : ScalarTemplateFunction<string, string, string>
@@ -24,7 +26,7 @@ namespace Mindbox.Quokka
 		{
 		}
 
-		public override string Invoke(string argument1, string argument2)
+		public override string Invoke(RenderSettings settings, string argument1, string argument2)
 		{
 			return !string.IsNullOrWhiteSpace(argument1) ? argument1 : argument2;
 		}

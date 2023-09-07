@@ -12,6 +12,8 @@
 // // See the License for the specific language governing permissions and
 // // limitations under the License.
 
+using Mindbox.Quokka.Abstractions;
+
 namespace Mindbox.Quokka
 {
 	public class SubstringTemplateFunction : ScalarTemplateFunction<string, int, string>
@@ -26,7 +28,7 @@ namespace Mindbox.Quokka
 		{
 		}
 
-		public override string Invoke(string value, int startIndex)
+		public override string Invoke(RenderSettings settings, string value, int startIndex)
 		{
 			// in templates indexing from 1 is assumed
 			return value.Substring(startIndex - 1);

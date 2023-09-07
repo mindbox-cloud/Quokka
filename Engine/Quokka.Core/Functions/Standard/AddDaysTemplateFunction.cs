@@ -14,6 +14,8 @@
 
 using System;
 
+using Mindbox.Quokka.Abstractions;
+
 namespace Mindbox.Quokka
 {
 	internal class AddDaysTemplateFunction : ScalarTemplateFunction<DateTime, decimal, DateTime>
@@ -26,7 +28,7 @@ namespace Mindbox.Quokka
 		{
 		}
 
-		public override DateTime Invoke(DateTime date, decimal daysAmount)
+		public override DateTime Invoke(RenderSettings settings, DateTime date, decimal daysAmount)
 		{
 			return date.AddDays((double)daysAmount);
 		}
