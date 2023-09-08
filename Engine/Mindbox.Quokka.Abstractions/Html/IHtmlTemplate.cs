@@ -16,6 +16,8 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 
+using Mindbox.Quokka.Abstractions;
+
 namespace Mindbox.Quokka.Html
 {
 	public interface IHtmlTemplate : ITemplate
@@ -38,10 +40,34 @@ namespace Mindbox.Quokka.Html
 			Func<Guid, string, string> redirectLinkProcessor,
 			string identificationCode, 
 			ICallContextContainer callContextContainer = null);
-
+		
+		/// <summary>
+		/// Render Html message
+		/// </summary>
+		/// <param name="model">Model for parameters</param>
+		/// <param name="settings">Settings applied to rendering process (ex. Localization for format functions)</param>
+		/// <param name="redirectLinkProcessor">Action that will be applied to each link url</param>
+		/// <param name="identificationCode">Html code that will be rendered at the end of the document (if specified)</param>
+		/// <param name="callContextContainer">Container of call context values that can be used in functions with context</param>
+		/// <returns></returns>
+		string Render(
+			ICompositeModelValue model, 
+			RenderSettings settings,
+			Func<Guid, string, string> redirectLinkProcessor,
+			string identificationCode, 
+			ICallContextContainer callContextContainer = null);
+		
 		void Render(
 			TextWriter textWriter,
 			ICompositeModelValue model,
+			Func<Guid, string, string> redirectLinkProcessor,
+			string identificationCode = null,
+			ICallContextContainer callContextContainer = null);
+		
+		void Render(
+			TextWriter textWriter,
+			ICompositeModelValue model,
+			RenderSettings settings,
 			Func<Guid, string, string> redirectLinkProcessor,
 			string identificationCode = null,
 			ICallContextContainer callContextContainer = null);

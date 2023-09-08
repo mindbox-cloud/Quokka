@@ -91,6 +91,16 @@ namespace Mindbox.Quokka.Html
 
 		public string Render(
 			ICompositeModelValue model,
+			RenderSettings settings,
+			Func<Guid, string, string> redirectLinkProcessor,
+			string identificationCode,
+			ICallContextContainer callContextContainer = null)
+		{
+			return Render(model, redirectLinkProcessor, settings, identificationCode, callContextContainer);
+		}
+
+		public string Render(
+			ICompositeModelValue model,
 			Func<Guid, string, string> redirectLinkProcessor,
 			RenderSettings settings,
 			string identificationCode = null,
@@ -143,6 +153,17 @@ namespace Mindbox.Quokka.Html
 			ICallContextContainer callContextContainer = null)
 		{
 			Render(textWriter, model, redirectLinkProcessor, RenderSettings.Default, identificationCode, callContextContainer);
+		}
+
+		public void Render(
+			TextWriter textWriter,
+			ICompositeModelValue model,
+			RenderSettings settings,
+			Func<Guid, string, string> redirectLinkProcessor,
+			string identificationCode = null,
+			ICallContextContainer callContextContainer = null)
+		{
+			Render(textWriter, model, redirectLinkProcessor, settings, identificationCode, callContextContainer);
 		}
 
 		public void Render(
