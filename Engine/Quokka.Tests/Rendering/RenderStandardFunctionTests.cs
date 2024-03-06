@@ -13,6 +13,8 @@
 // // limitations under the License.
 
 using System;
+using System.Globalization;
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Mindbox.Quokka.Tests
@@ -520,6 +522,33 @@ namespace Mindbox.Quokka.Tests
 				new CompositeModelValue(new ModelField("value", new DateTime(2018, 11, 15))));
 
 			Assert.AreEqual("2044", result);
+		}
+		
+		[TestMethod]
+		public void ToUnixTimeStamp_When_Utc()
+		{
+			var template = new Template("${ ToUnixTimeStamp(value) }");
+
+			var dt = DateTime.SpecifyKind(new DateTime(2020, 01, 01, 00, 00, 00), DateTimeKind.Utc);
+			var result = template.Render(
+				new CompositeModelValue(new ModelField("value", dt)));
+
+			Assert.AreEqual("1577836800", result);
+		}
+				
+		[TestMethod]
+		public void ToUnixTimeStamp_When_Unspecified()
+		{
+			var template = new Template("${ ToUnixTimeStamp(value) }");
+
+			var dt = new DateTime(2020, 01, 01, 00, 00, 00, DateTimeKind.Unspecified);
+			var result = template.Render(
+				new CompositeModelValue(new ModelField("value", dt)));
+
+			var utcDate = DateTime.SpecifyKind(new DateTime(2020, 01, 01, 00, 00, 00), DateTimeKind.Utc);
+			var delta = (utcDate - dt.ToUniversalTime()).TotalSeconds;
+			
+			Assert.AreEqual($"{1577836800 - delta}", result);
 		}
 	}
 }
