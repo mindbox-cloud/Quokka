@@ -247,6 +247,7 @@ namespace Mindbox.Quokka
 			yield return new CapitalizeTemplateFunction();
 			yield return new FormsTemplateFunction();
 			yield return new TruncateTemplateFunction();
+			yield return new ToUnixTimeStampTemplateFunction();
 		}
 	}
 }
