@@ -66,7 +66,7 @@ public sealed class RenderSettingsCultureInfoTests
             new CompositeModelValue(new ModelField("Date", dt)),
             settings);
 
-        var expected = dt.ToString(new CultureInfo(locale))
+        var expected = dt.ToString(new CultureInfo(locale));
 
         Assert.AreEqual(expected, result);
     }
