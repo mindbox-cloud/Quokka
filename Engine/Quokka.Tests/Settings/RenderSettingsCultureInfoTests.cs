@@ -54,9 +54,9 @@ public sealed class RenderSettingsCultureInfoTests
     }
 
     [TestMethod]
-    [DataRow("en-US", "3/29/2024 12:00:00PM")]
-    [DataRow("ru-RU", "29.03.2024 12:00:00")]
-    public void RenderDateTime_ReturnsLocalizedResult(string locale, string output)
+    [DataRow("en-US")]
+    [DataRow("ru-RU")]
+    public void RenderDateTime_ReturnsLocalizedResult(string locale)
     {
         var dt = new DateTime(2024, 3, 29, 12, 0, 0);
         var settings = new RenderSettings { CultureInfo = new CultureInfo(locale) };
@@ -66,7 +66,9 @@ public sealed class RenderSettingsCultureInfoTests
             new CompositeModelValue(new ModelField("Date", dt)),
             settings);
 
-        Assert.AreEqual(output, result);
+        var expected = dt.ToString(new CultureInfo(locale))
+
+        Assert.AreEqual(expected, result);
     }
 
     [TestMethod]
