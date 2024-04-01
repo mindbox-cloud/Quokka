@@ -27,7 +27,7 @@ namespace Mindbox.Quokka
 		public abstract void PerformSemanticAnalysis(AnalysisContext context, TypeDefinition expectedExpressionType);
 
 		public abstract void RegisterAssignmentToVariable(
-			AnalysisContext context, 
+			AnalysisContext context,
 			ValueUsageSummary destinationVariable);
 
 		public abstract bool CheckIfExpressionIsNull(RenderContext renderContext);
@@ -35,11 +35,13 @@ namespace Mindbox.Quokka
 		public virtual string GetOutputValue(RenderContext renderContext)
 		{
 			var primitiveValue = Evaluate(renderContext).GetPrimitiveValue();
-			
-			
+
+
 			var stringValue = primitiveValue switch
 			{
-				decimal d => Math.Round(d, 2, MidpointRounding.AwayFromZero).ToString(),
+				decimal d => Math.Round(d, 2, MidpointRounding.AwayFromZero)
+					.ToString(renderContext.Settings.CultureInfo),
+				DateTime d => d.ToString(renderContext.Settings.CultureInfo),
 				_ => primitiveValue.ToString()
 			};
 			return stringValue;

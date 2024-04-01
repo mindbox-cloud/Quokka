@@ -30,15 +30,47 @@ public sealed class RenderSettingsCultureInfoTests
         var dt = DateTime.UtcNow;
         var settings = new RenderSettings { CultureInfo = new CultureInfo(locale) };
         var expectedFormat = dt.ToString("MMMM", settings.CultureInfo);
-        
+
         var template = new Template("${FormatDateTime(Date, 'MMMM')}");
         var result = template.Render(
             new CompositeModelValue(new ModelField("Date", dt)),
             settings);
-        
+
         Assert.AreEqual(expectedFormat, result);
     }
-    
+
+    [TestMethod]
+    [DataRow("en-US", "24.05")]
+    [DataRow("ru-RU", "24,05")]
+    public void RenderDecimalConstant_ReturnsLocalizedResult(string locale, string output)
+    {
+        var template = new Template("${ 24.05 }");
+        var settings = new RenderSettings { CultureInfo = new CultureInfo(locale) };
+
+        var result = template.Render(
+            new CompositeModelValue(),
+            settings);
+        Assert.AreEqual(output, result);
+    }
+
+    [TestMethod]
+    [DataRow("en-US")]
+    [DataRow("ru-RU")]
+    public void RenderDateTime_ReturnsLocalizedResult(string locale)
+    {
+        var dt = new DateTime(2024, 3, 29, 12, 0, 0);
+        var settings = new RenderSettings { CultureInfo = new CultureInfo(locale) };
+
+        var template = new Template("${Date}");
+        var result = template.Render(
+            new CompositeModelValue(new ModelField("Date", dt)),
+            settings);
+
+        var expected = dt.ToString(new CultureInfo(locale));
+
+        Assert.AreEqual(expected, result);
+    }
+
     [TestMethod]
     [DataRow("en-US")]
     [DataRow("ru-RU")]
@@ -47,15 +79,15 @@ public sealed class RenderSettingsCultureInfoTests
         var dt = DateTime.UtcNow.TimeOfDay;
         var settings = new RenderSettings { CultureInfo = new CultureInfo(locale) };
         var expectedFormat = dt.ToString("g", settings.CultureInfo);
-        
+
         var template = new Template("${FormatTime(Date, 'g')}");
         var result = template.Render(
             new CompositeModelValue(new ModelField("Date", dt)),
             settings);
-        
+
         Assert.AreEqual(expectedFormat, result);
     }
-    
+
     [TestMethod]
     [DataRow("Карл у Клары украл кораллы", "ru-RU")]
     [DataRow("Clara stole Carl's Clarinet", "en-US")]
@@ -63,15 +95,15 @@ public sealed class RenderSettingsCultureInfoTests
     {
         var settings = new RenderSettings { CultureInfo = new CultureInfo(locale) };
         var expectedFormat = input.ToUpper(settings.CultureInfo);
-        
+
         var template = new Template("${ToUpper(Input)}");
         var result = template.Render(
             new CompositeModelValue(new ModelField("Input", input)),
             settings);
-        
+
         Assert.AreEqual(expectedFormat, result);
     }
-    
+
     [TestMethod]
     [DataRow("Карл у Клары украл кораллы", "ru-RU")]
     [DataRow("Clara stole Carl's Clarinet", "en-US")]
@@ -79,15 +111,15 @@ public sealed class RenderSettingsCultureInfoTests
     {
         var settings = new RenderSettings { CultureInfo = new CultureInfo(locale) };
         var expectedFormat = input.ToLower(settings.CultureInfo);
-        
+
         var template = new Template("${ToLower(Input)}");
         var result = template.Render(
             new CompositeModelValue(new ModelField("Input", input)),
             settings);
-        
+
         Assert.AreEqual(expectedFormat, result);
     }
-    
+
     [TestMethod]
     [DataRow("en-US")]
     [DataRow("ru-RU")]
@@ -96,15 +128,15 @@ public sealed class RenderSettingsCultureInfoTests
         var input = (decimal)Random.Shared.NextDouble() * 1000;
         var settings = new RenderSettings { CultureInfo = new CultureInfo(locale) };
         var expectedFormat = input.ToString("C", settings.CultureInfo);
-        
+
         var template = new Template("${FormatDecimal(Input, 'C')}");
         var result = template.Render(
             new CompositeModelValue(new ModelField("Input", input)),
             settings);
-        
+
         Assert.AreEqual(expectedFormat, result);
     }
-    
+
     [TestMethod]
     [DataRow("Карл у Клары украл кораллы", "ru-RU")]
     [DataRow("Clara stole Carl's Clarinet", "en-US")]
@@ -112,12 +144,12 @@ public sealed class RenderSettingsCultureInfoTests
     {
         var settings = new RenderSettings { CultureInfo = new CultureInfo(locale) };
         var expectedFormat = settings.CultureInfo.TextInfo.ToTitleCase(input);
-        
+
         var template = new Template("${CapitalizeAllWords(Input)}");
         var result = template.Render(
             new CompositeModelValue(new ModelField("Input", input)),
             settings);
-        
+
         Assert.AreEqual(expectedFormat, result);
     }
 }

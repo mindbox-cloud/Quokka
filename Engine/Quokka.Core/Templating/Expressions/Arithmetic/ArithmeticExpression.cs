@@ -43,7 +43,7 @@ namespace Mindbox.Quokka
 
 		public override VariableValueStorage TryGetStaticEvaluationResult()
 		{
-			return TryGetStaticValue(out double numberValue) 
+			return TryGetStaticValue(out double numberValue)
 				? new PrimitiveVariableValueStorage(NormalizeValue(numberValue))
 				: null;
 		}
@@ -53,9 +53,9 @@ namespace Mindbox.Quokka
 			var value = NormalizeValue(GetValue(renderContext));
 
 			if (value is decimal decimalValue)
-				return Math.Round(decimalValue, 2).ToString(CultureInfo.CurrentCulture);
+				return Math.Round(decimalValue, 2).ToString(renderContext.Settings.CultureInfo);
 			else if (value is int intValue)
-				return intValue.ToString();
+				return intValue.ToString(renderContext.Settings.CultureInfo);
 			else
 				throw new InvalidOperationException($"The expression result is of unexpected type {value.GetType().Name}");
 		}

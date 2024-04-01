@@ -63,7 +63,7 @@ namespace Mindbox.Quokka.Html
 			var effectiveCallContextContainer = callContextContainer ?? CallContextContainer.Empty;
 
 			var stringBuilder = new StringBuilder();
-			using (var stringWriter = new StringWriter(stringBuilder))
+			using (var stringWriter = new StringWriter(stringBuilder, settings.CultureInfo))
 			{
 				DoRender(
 					stringWriter,
@@ -112,7 +112,7 @@ namespace Mindbox.Quokka.Html
 			var effectiveCallContextContainer = callContextContainer ?? CallContextContainer.Empty;
 
 			var stringBuilder = new StringBuilder();
-			using (var stringWriter = new StringWriter(stringBuilder))
+			using (var stringWriter = new StringWriter(stringBuilder, settings.CultureInfo))
 			{
 				DoRender(
 					stringWriter,
