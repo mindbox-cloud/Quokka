@@ -23,9 +23,9 @@ namespace Mindbox.Quokka
 		public AppendFormsTemplateFunction()
 			: base(
 				"appendForms",
-				new DecimalFunctionArgument("quantity"), 
-				new StringFunctionArgument("singularForm"), 
-				new StringFunctionArgument("dualForm"), 
+				new DecimalFunctionArgument("quantity"),
+				new StringFunctionArgument("singularForm"),
+				new StringFunctionArgument("dualForm"),
 				new StringFunctionArgument("pluralForm"))
 		{
 		}
@@ -33,7 +33,7 @@ namespace Mindbox.Quokka
 		public override string Invoke(RenderSettings settings, decimal quantity, string singularForm, string dualForm, string pluralForm)
 		{
 			var intQuantity = Convert.ToInt32(quantity);
-			return quantity + " " + LanguageUtility.GetQuantityForm(intQuantity, singularForm, dualForm, pluralForm);
+			return quantity.ToString(settings.CultureInfo) + " " + LanguageUtility.GetQuantityForm(intQuantity, singularForm, dualForm, pluralForm);
 		}
 	}
 }

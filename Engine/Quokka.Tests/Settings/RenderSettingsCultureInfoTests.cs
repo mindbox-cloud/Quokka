@@ -152,4 +152,20 @@ public sealed class RenderSettingsCultureInfoTests
 
         Assert.AreEqual(expectedFormat, result);
     }
+
+    [TestMethod]
+    [DataRow("en-US", "5.7 плюшек")]
+    [DataRow("ru-RU", "5,7 плюшек")]
+    public void AppendFormsTemplateFunction_ReturnsLocalizedResult(string locale, string expected)
+    {
+        var dt = DateTime.UtcNow.TimeOfDay;
+        var settings = new RenderSettings { CultureInfo = new CultureInfo(locale) };
+
+        var template = new Template("${ appendForms(Value, \"плюшка\", \"плюшки\", \"плюшек\") }");
+        var result = template.Render(
+            new CompositeModelValue(new ModelField("Value", 5.7m)),
+            settings);
+
+        Assert.AreEqual(expected, result);
+    }
 }
