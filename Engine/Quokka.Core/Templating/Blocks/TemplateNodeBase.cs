@@ -12,6 +12,7 @@
 // // See the License for the specific language governing permissions and
 // // limitations under the License.
 
+using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
@@ -30,5 +31,13 @@ namespace Mindbox.Quokka
 		public virtual void CompileGrammarSpecificData(GrammarSpecificDataAnalysisContext context)
 		{
 		}
+
+		public virtual BlockDTO GetTreeDTO()
+		{
+			return new BlockDTO();
+		}
 	}
+
+
+
 }

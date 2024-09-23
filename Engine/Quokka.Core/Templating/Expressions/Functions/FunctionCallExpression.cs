@@ -45,7 +45,7 @@ namespace Mindbox.Quokka
 
 			context.Functions.PerformSemanticAnalysis(context, FunctionName, argumentValues, Location);
 		}
-		
+
 		public override VariableValueStorage Evaluate(RenderContext renderContext)
 		{
 			var function = renderContext.Functions.TryGetFunction(FunctionName, argumentValues);
@@ -57,7 +57,7 @@ namespace Mindbox.Quokka
 				return function.Invoke(
 					renderContext,
 					argumentValues
-						.Select((argumentValue, argumentNumber) => 
+						.Select((argumentValue, argumentNumber) =>
 							argumentValue.GetValue(renderContext, function.Arguments.GetArgument(argumentNumber)))
 						.ToList());
 			}
@@ -103,6 +103,15 @@ namespace Mindbox.Quokka
 			ValueUsageSummary destinationVariable)
 		{
 			// do nothing
+		}
+
+		public override ExpressionDTO GetTreeDTO()
+		{
+			var dto = base.GetTreeDTO();
+			dto.type = "FunctionCallExpression";
+			dto.members = argumentValues.Select(a => a.GetTreeDTO()).ToList();
+			dto.variableName = FunctionName;
+			return dto;
 		}
 	}
 }

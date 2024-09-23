@@ -22,25 +22,34 @@ using Mindbox.Quokka.Generated;
 
 namespace Mindbox.Quokka
 {
-    internal class StringExpressionVisitor : QuokkaBaseVisitor<StringExpression>
-    {
-	    public StringExpressionVisitor(VisitingContext visitingContext) 
-			: base(visitingContext)
-	    {
-	    }
+	internal class StringExpressionVisitor : QuokkaBaseVisitor<StringExpression>
+	{
+		public StringExpressionVisitor(VisitingContext visitingContext)
+		: base(visitingContext)
+		{
+		}
 
-	    public override StringExpression VisitStringConstant(QuokkaParser.StringConstantContext context)
-	    {
-			var quotedString = context.DoubleQuotedString()?.GetText() 
-				?? context.SingleQuotedString().GetText();
-		    string stringValue = quotedString.Substring(1, quotedString.Length - 2);
+		public override StringExpression VisitStringConstant(QuokkaParser.StringConstantContext context)
+		{
+			var doubleQuotedString = context.DoubleQuotedString()?.GetText();
 
-		    return new StringConstantExpression(stringValue);
+			if (doubleQuotedString != null)
+			{
+				string stringValue = doubleQuotedString.Substring(1, doubleQuotedString.Length - 2);
+				return new StringConstantExpression(stringValue, "double");
+			}
+			else
+			{
+				var singleQuotedString = context.SingleQuotedString().GetText();
+
+				string stringValue = singleQuotedString.Substring(1, singleQuotedString.Length - 2);
+				return new StringConstantExpression(stringValue, "single");
+			}
 		}
 
 		public override StringExpression VisitStringConcatenation(QuokkaParser.StringConcatenationContext context)
 		{
-			var firstOperand = 
+			var firstOperand =
 				context.stringAtom().variantValueExpression()?.Accept(new ExpressionVisitor(VisitingContext))
 					?? context.stringAtom().stringConstant().Accept(this);
 

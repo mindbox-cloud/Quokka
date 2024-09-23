@@ -20,8 +20,8 @@ namespace Mindbox.Quokka
 {
 	internal class OutputInstructionBlock : TemplateNodeBase, IStaticBlockPart
 	{
-		private readonly IExpression expression;
-		
+		public readonly IExpression expression;
+
 		public int Offset { get; }
 		public int Length { get; }
 
@@ -30,6 +30,8 @@ namespace Mindbox.Quokka
 			this.expression = expression;
 			Offset = offset;
 			Length = length;
+			// Console.WriteLine(ObjectDumper.Dump(expression, DumpStyle.CSharp));
+
 		}
 
 		public override void PerformSemanticAnalysis(AnalysisContext context)
@@ -40,6 +42,15 @@ namespace Mindbox.Quokka
 		public override void Render(TextWriter resultWriter, RenderContext renderContext)
 		{
 			resultWriter.Write(expression.GetOutputValue(renderContext));
+		}
+
+		public override BlockDTO GetTreeDTO()
+		{
+			var dto = base.GetTreeDTO();
+			dto.expression = expression.GetTreeDTO();
+			dto.type = "OutputInstructionBlock";
+
+			return dto;
 		}
 	}
 }

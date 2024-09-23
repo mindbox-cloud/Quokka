@@ -85,5 +85,7 @@ namespace Mindbox.Quokka
 				throw new UnrenderableTemplateModelException("Arithmetic operation result could not be evaluated", ex, null);
 			}
 		}
+
+
 	}
 }

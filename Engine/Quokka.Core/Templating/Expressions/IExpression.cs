@@ -25,11 +25,17 @@ namespace Mindbox.Quokka
 		void PerformSemanticAnalysis(AnalysisContext context, TypeDefinition expectedExpressionType);
 
 		void RegisterAssignmentToVariable(
-			AnalysisContext context, 
+			AnalysisContext context,
 			ValueUsageSummary destinationVariable);
 
 		string GetOutputValue(RenderContext context);
 
 		bool CheckIfExpressionIsNull(RenderContext renderContext);
+
+		public ExpressionDTO GetTreeDTO()
+		{
+			return new ExpressionDTO();
+		}
 	}
+
 }

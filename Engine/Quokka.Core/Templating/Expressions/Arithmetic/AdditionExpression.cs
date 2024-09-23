@@ -19,8 +19,8 @@ namespace Mindbox.Quokka
 {
 	internal class AdditionExpression : ArithmeticExpression
 	{
-		private readonly IReadOnlyCollection<AdditionOperand> operands;
-		
+		public readonly IReadOnlyCollection<AdditionOperand> operands;
+
 		public override TypeDefinition GetResultType(AnalysisContext context)
 		{
 			return operands.All(op => op.Expression.GetResultType(context) == TypeDefinition.Integer)

@@ -20,24 +20,32 @@ using System.Threading.Tasks;
 
 namespace Mindbox.Quokka
 {
-    internal abstract class Member
-    {
+	internal abstract class Member
+	{
 		protected Member(Location location)
 		{
 			Location = location;
 		}
 
-	    public abstract void PerformSemanticAnalysis(
-			AnalysisContext analysisContext,
-			ValueUsageSummary ownerValueUsageSummary,
-			TypeDefinition memberType);
+		public abstract void PerformSemanticAnalysis(
+		AnalysisContext analysisContext,
+		ValueUsageSummary ownerValueUsageSummary,
+		TypeDefinition memberType);
 
-	    public abstract ValueUsageSummary GetMemberVariableDefinition(ValueUsageSummary ownerValueUsageSummary);
+		public abstract ValueUsageSummary GetMemberVariableDefinition(ValueUsageSummary ownerValueUsageSummary);
 
-	    public abstract VariableValueStorage GetMemberValue(VariableValueStorage ownerValueStorage);
+		public abstract VariableValueStorage GetMemberValue(VariableValueStorage ownerValueStorage);
 
 		public abstract string StringRepresentation { get; }
 
 		public Location Location { get; }
-    }
+
+		public virtual ExpressionDTO GetTreeDTO()
+		{
+			var dto = new ExpressionDTO();
+			dto.type = "Member";
+			dto.variableName = StringRepresentation;
+			return dto;
+		}
+	}
 }

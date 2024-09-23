@@ -12,6 +12,8 @@
 // // See the License for the specific language governing permissions and
 // // limitations under the License.
 
+using System.Collections.Generic;
+
 namespace Mindbox.Quokka
 {
 	internal class NotExpression : BooleanExpression
@@ -36,6 +38,14 @@ namespace Mindbox.Quokka
 		public override bool CheckIfExpressionIsNull(RenderContext renderContext)
 		{
 			return inner.CheckIfExpressionIsNull(renderContext);
+		}
+
+		public override ExpressionDTO GetTreeDTO()
+		{
+			var dto = base.GetTreeDTO();
+			dto.type = "NotExpression";
+			dto.members = new List<ExpressionDTO> { inner.GetTreeDTO() };
+			return dto;
 		}
 	}
 }

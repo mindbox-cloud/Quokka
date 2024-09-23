@@ -19,7 +19,7 @@ namespace Mindbox.Quokka
 {
 	internal class AndExpression : BooleanExpression
 	{
-		private readonly IReadOnlyCollection<BooleanExpression> subExpressions;
+		public readonly IReadOnlyCollection<BooleanExpression> subExpressions;
 
 		public AndExpression(IEnumerable<BooleanExpression> subExpressions)
 		{
@@ -40,6 +40,14 @@ namespace Mindbox.Quokka
 		public override bool CheckIfExpressionIsNull(RenderContext renderContext)
 		{
 			return subExpressions.Any(expression => expression.CheckIfExpressionIsNull(renderContext));
+		}
+
+		public override ExpressionDTO GetTreeDTO()
+		{
+			var dto = base.GetTreeDTO();
+			dto.type = "AndExpression";
+			dto.members = subExpressions.Select(expression => expression.GetTreeDTO()).ToList();
+			return dto;
 		}
 	}
 }

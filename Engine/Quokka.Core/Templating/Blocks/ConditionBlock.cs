@@ -13,6 +13,7 @@
 // // limitations under the License.
 
 using System.IO;
+using System;
 
 namespace Mindbox.Quokka
 {
@@ -20,7 +21,7 @@ namespace Mindbox.Quokka
 	{
 		private readonly BooleanExpression conditionExpression;
 		private readonly ITemplateNode block;
-		
+
 		public ConditionBlock(BooleanExpression conditionExpression, ITemplateNode block)
 		{
 			this.block = block;
@@ -46,6 +47,15 @@ namespace Mindbox.Quokka
 		public bool ShouldRender(RenderContext renderContext)
 		{
 			return conditionExpression.GetBooleanValue(renderContext);
+		}
+
+		public override BlockDTO GetTreeDTO()
+		{
+			var result = base.GetTreeDTO();
+			result.type = "ConditionBlock";
+			result.condition = conditionExpression.GetTreeDTO();
+			result.children.Add(block.GetTreeDTO());
+			return result;
 		}
 	}
 }

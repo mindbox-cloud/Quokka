@@ -17,52 +17,61 @@ using System.Linq;
 
 namespace Mindbox.Quokka
 {
-    internal class MethodMember : Member
-    {
-	    private readonly string name;
-	    private readonly IReadOnlyList<ArgumentValue> arguments;
+	internal class MethodMember : Member
+	{
+		private readonly string name;
+		private readonly IReadOnlyList<ArgumentValue> arguments;
 
-	    private readonly MethodCall methodCall;
+		private readonly MethodCall methodCall;
 
-	    public MethodMember(string name, IEnumerable<ArgumentValue> arguments, Location location)
-			: base(location)
-	    {
-		    this.name = name;
-		    this.arguments = arguments.ToList().AsReadOnly();
+		public MethodMember(string name, IEnumerable<ArgumentValue> arguments, Location location)
+		: base(location)
+		{
+			this.name = name;
+			this.arguments = arguments.ToList().AsReadOnly();
 
-		    methodCall = BuildMethodCall();
-	    }
+			methodCall = BuildMethodCall();
+		}
 
-	    public override void PerformSemanticAnalysis(AnalysisContext analysisContext, ValueUsageSummary ownerValueUsageSummary, TypeDefinition memberType)
-	    {
-		    for (int i = 0; i < arguments.Count; i++)
-			    if (arguments[i].TryGetStaticValue() == null)
-				    analysisContext.ErrorListener.AddNonConstantMethodArgumentError(name, i + 1, Location);
+		public override void PerformSemanticAnalysis(AnalysisContext analysisContext, ValueUsageSummary ownerValueUsageSummary, TypeDefinition memberType)
+		{
+			for (int i = 0; i < arguments.Count; i++)
+				if (arguments[i].TryGetStaticValue() == null)
+					analysisContext.ErrorListener.AddNonConstantMethodArgumentError(name, i + 1, Location);
 
-		    ownerValueUsageSummary.Methods
-			    .CreateOrUpdateMember(methodCall, new ValueUsage(Location, memberType));
-	    }
+			ownerValueUsageSummary.Methods
+				.CreateOrUpdateMember(methodCall, new ValueUsage(Location, memberType));
+		}
 
-	    public override ValueUsageSummary GetMemberVariableDefinition(ValueUsageSummary ownerValueUsageSummary)
-	    {
-		    return ownerValueUsageSummary.Methods.TryGetMemberUsageSummary(methodCall);
-	    }
+		public override ValueUsageSummary GetMemberVariableDefinition(ValueUsageSummary ownerValueUsageSummary)
+		{
+			return ownerValueUsageSummary.Methods.TryGetMemberUsageSummary(methodCall);
+		}
 
-	    public override VariableValueStorage GetMemberValue(VariableValueStorage ownerValueStorage)
-	    {
-		    return ownerValueStorage.GetMethodCallResultValueStorage(methodCall);
-	    }
+		public override VariableValueStorage GetMemberValue(VariableValueStorage ownerValueStorage)
+		{
+			return ownerValueStorage.GetMethodCallResultValueStorage(methodCall);
+		}
 
-	    public override string StringRepresentation => $"{name}()";
+		public override string StringRepresentation => $"{name}()";
 
-	    private MethodCall BuildMethodCall()
-	    {
-		    var argumentValues = arguments
-			    .Select(argument => argument.TryGetStaticValue()?.GetPrimitiveValue())
-				.Where(argumentValue => argumentValue != null)
-			    .ToList();
+		private MethodCall BuildMethodCall()
+		{
+			var argumentValues = arguments
+				.Select(argument => argument.TryGetStaticValue()?.GetPrimitiveValue())
+			.Where(argumentValue => argumentValue != null)
+				.ToList();
 
-		    return new MethodCall(name, argumentValues);
-	    }
-    }
+			return new MethodCall(name, argumentValues);
+		}
+
+		public override ExpressionDTO GetTreeDTO()
+		{
+			var dto = new ExpressionDTO();
+			dto.type = "MethodMember";
+			dto.variableName = name;
+			dto.arguments = arguments.Select(argument => argument.GetTreeDTO()).ToList();
+			return dto;
+		}
+	}
 }

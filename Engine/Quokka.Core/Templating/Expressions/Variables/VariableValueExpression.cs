@@ -33,7 +33,7 @@ namespace Mindbox.Quokka
 		}
 
 		public string StringRepresentation => variableName;
-		
+
 		public override void PerformSemanticAnalysis(AnalysisContext context, TypeDefinition expectedExpressionType)
 		{
 			context.VariableScope.RegisterVariableValueUsage(
@@ -61,7 +61,7 @@ namespace Mindbox.Quokka
 		{
 			return new PrimitiveModelDefinition(TypeDefinition.Unknown);
 		}
-		
+
 		public override VariableValueStorage Evaluate(RenderContext renderContext)
 		{
 			var valueStorage = TryGetValueStorage(renderContext);
@@ -78,7 +78,7 @@ namespace Mindbox.Quokka
 			var valueStorage = TryGetValueStorage(renderContext);
 			return valueStorage == null || valueStorage.CheckIfValueIsNull();
 		}
-		
+
 		public VariableValueStorage TryGetValueStorage(RenderContext renderContext)
 		{
 			return renderContext.VariableScope.TryGetValueStorageForVariable(variableName) ??
@@ -89,12 +89,21 @@ namespace Mindbox.Quokka
 
 
 		public sealed override void RegisterAssignmentToVariable(
-			AnalysisContext context, 
+			AnalysisContext context,
 			ValueUsageSummary destinationVariable)
 		{
 			var sourceVariable = context.VariableScope.TryGetVariableDefinition(variableName);
 
 			sourceVariable.RegisterAssignmentToVariable(destinationVariable);
+		}
+
+		public override ExpressionDTO GetTreeDTO()
+		{
+			var dto = base.GetTreeDTO();
+			dto.type = "VariableValueExpression";
+			dto.variableName = variableName;
+
+			return dto;
 		}
 	}
 }

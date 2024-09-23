@@ -20,30 +20,40 @@ using System.Threading.Tasks;
 
 namespace Mindbox.Quokka
 {
-    internal class VariantValueBooleanExpression : BooleanExpression
-    {
-	    private readonly VariantValueExpression variantValueExpression;
+	internal class VariantValueBooleanExpression : BooleanExpression
+	{
+		private readonly VariantValueExpression variantValueExpression;
 
-	    public VariantValueBooleanExpression(VariantValueExpression variantValueExpression)
-	    {
-		    this.variantValueExpression = variantValueExpression;
-	    }
+		public VariantValueBooleanExpression(VariantValueExpression variantValueExpression)
+		{
+			this.variantValueExpression = variantValueExpression;
+			// Console.WriteLine("VariantValueBooleanExpression.variantValueExpression" + ObjectDumper.Dump(variantValueExpression, DumpStyle.CSharp));
 
-	    public override bool GetBooleanValue(RenderContext renderContext)
-	    {
-		    var value = variantValueExpression.Evaluate(renderContext);
-		    var booleanValue = (bool)value.GetPrimitiveValue();
-		    return booleanValue;
-	    }
+		}
 
-	    public override void PerformSemanticAnalysis(AnalysisContext context)
-	    {
-		    variantValueExpression.PerformSemanticAnalysis(context, TypeDefinition.Boolean);
-	    }
+		public override bool GetBooleanValue(RenderContext renderContext)
+		{
+			var value = variantValueExpression.Evaluate(renderContext);
+			var booleanValue = (bool)value.GetPrimitiveValue();
+			return booleanValue;
+		}
+
+		public override void PerformSemanticAnalysis(AnalysisContext context)
+		{
+			variantValueExpression.PerformSemanticAnalysis(context, TypeDefinition.Boolean);
+		}
 
 		public override bool CheckIfExpressionIsNull(RenderContext renderContext)
 		{
 			return variantValueExpression.CheckIfExpressionIsNull(renderContext);
+		}
+
+		public override ExpressionDTO GetTreeDTO()
+		{
+			var dto = base.GetTreeDTO();
+			dto.type = "VariantValueBooleanExpression";
+			dto.members = new List<ExpressionDTO> { variantValueExpression.GetTreeDTO() };
+			return dto;
 		}
 	}
 }

@@ -46,5 +46,12 @@ namespace Mindbox.Quokka
 			};
 			return stringValue;
 		}
+
+		public virtual ExpressionDTO GetTreeDTO()
+		{
+			return new ExpressionDTO();
+		}
 	}
+
+
 }

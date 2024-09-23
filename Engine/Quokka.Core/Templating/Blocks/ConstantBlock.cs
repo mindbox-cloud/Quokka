@@ -35,5 +35,14 @@ namespace Mindbox.Quokka
 		{
 			resultWriter.Write(Text);
 		}
+
+		public override BlockDTO GetTreeDTO()
+		{
+			var dto = base.GetTreeDTO();
+			dto.content = Text;
+			dto.type = "ConstantBlock";
+
+			return dto;
+		}
 	}
 }
