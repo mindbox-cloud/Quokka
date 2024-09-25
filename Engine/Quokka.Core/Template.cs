@@ -214,6 +214,11 @@ namespace Mindbox.Quokka
 			return parser.template();
 		}
 
+		public BlockDTO GetTestDTO()
+		{
+			return compiledTemplateTree.GetTreeDTO();
+		}
+
 		internal static IEnumerable<TemplateFunction> GetStandardFunctions()
 		{
 			yield return new ToUpperTemplateFunction();

@@ -1,0 +1,58 @@
+{CompositeModelDefinition}
+  Fields: {ReadOnlyDictionary<string, IModelDefinition>, Count=1}
+    { "editor", {CompositeModelDefinition}
+      Fields: {ReadOnlyDictionary<string, IModelDefinition>, Count=1}
+        { "productsArray", {CompositeModelDefinition}
+          Fields: {ReadOnlyDictionary<string, IModelDefinition>, Count=0}
+          Methods: {ReadOnlyDictionary<IMethodCallDefinition, IModelDefinition>, Count=1}
+            { {MethodCallDefinition}
+              Name: "take"
+              Arguments: {MethodArgumentDefinition[1]}
+                {MethodArgumentDefinition}
+                  Type: {PrimitiveTypeDefinition<int>}
+                    RuntimeType: int
+                    Name: "Integer"
+                  Value: 4, {ArrayModelDefinition}
+              ElementModelDefinition: {CompositeModelDefinition}
+                Fields: {ReadOnlyDictionary<string, IModelDefinition>, Count=2}
+                  { "Link", {CompositeModelDefinition}
+                    Fields: {ReadOnlyDictionary<string, IModelDefinition>, Count=0}
+                    Methods: {ReadOnlyDictionary<IMethodCallDefinition, IModelDefinition>, Count=1}
+                      { {MethodCallDefinition}
+                        Name: "withDefaultValue"
+                        Arguments: {MethodArgumentDefinition[1]}
+                          {MethodArgumentDefinition}
+                            Type: {PrimitiveTypeDefinition<string>}
+                              RuntimeType: string
+                              Name: "String"
+                            Value: "https://example.com", {PrimitiveModelDefinition}
+                        Type: {TypeDefinition}
+                          Name: "Primitive" } }
+                  { "Image", {CompositeModelDefinition}
+                    Fields: {ReadOnlyDictionary<string, IModelDefinition>, Count=0}
+                    Methods: {ReadOnlyDictionary<IMethodCallDefinition, IModelDefinition>, Count=1}
+                      { {MethodCallDefinition}
+                        Name: "wihtDefaultValue"
+                        Arguments: {MethodArgumentDefinition[1]}
+                          {MethodArgumentDefinition}
+                            Type: {PrimitiveTypeDefinition<string>}
+                              RuntimeType: string
+                              Name: "String"
+                            Value: "https://placehold.co/600x400", {PrimitiveModelDefinition}
+                        Type: {TypeDefinition}
+                          Name: "Primitive" } }
+                Methods: {ReadOnlyDictionary<IMethodCallDefinition, IModelDefinition>, Count=1}
+                  { {MethodCallDefinition}
+                    Name: "withDefaultValue"
+                    Arguments: {MethodArgumentDefinition[1]}
+                      {MethodArgumentDefinition}
+                        Type: {PrimitiveTypeDefinition<string>}
+                          RuntimeType: string
+                          Name: "String"
+                        Value: "Name", {PrimitiveModelDefinition}
+                    Type: {TypeDefinition}
+                      Name: "Primitive" }
+              Fields: {ReadOnlyDictionary<string, IModelDefinition>, Count=0}
+              Methods: {ReadOnlyDictionary<IMethodCallDefinition, IModelDefinition>, Count=0} } }
+      Methods: {ReadOnlyDictionary<IMethodCallDefinition, IModelDefinition>, Count=0} }
+  Methods: {Dictionary<IMethodCallDefinition, IModelDefinition>, Count=0}

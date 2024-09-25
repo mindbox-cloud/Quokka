@@ -47,5 +47,13 @@ namespace Mindbox.Quokka
 		{
 			return Expression.TryGetStaticEvaluationResult();
 		}
+
+		public ExpressionDTO GetTreeDTO()
+		{
+			var dto = new ExpressionDTO();
+			dto.type = "ArgumentValue";
+			dto.argumentExpression = Expression.GetTreeDTO();
+			return dto;
+		}
 	}
 }

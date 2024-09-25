@@ -17,7 +17,7 @@ namespace Mindbox.Quokka
 	internal class NegationExpression : ArithmeticExpression
 	{
 		private readonly ArithmeticExpression innerExpression;
-		
+
 		public override TypeDefinition GetResultType(AnalysisContext context)
 		{
 			return innerExpression.GetResultType(context);
@@ -41,6 +41,14 @@ namespace Mindbox.Quokka
 		public override bool CheckIfExpressionIsNull(RenderContext renderContext)
 		{
 			return innerExpression.CheckIfExpressionIsNull(renderContext);
+		}
+
+		public override ExpressionDTO GetTreeDTO()
+		{
+			var dto = base.GetTreeDTO();
+			dto.type = "NegationExpression";
+			dto.members.Add(innerExpression.GetTreeDTO());
+			return dto;
 		}
 	}
 }

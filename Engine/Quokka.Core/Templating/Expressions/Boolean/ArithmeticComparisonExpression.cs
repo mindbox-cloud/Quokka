@@ -50,9 +50,9 @@ namespace Mindbox.Quokka
 				case ComparisonOperation.GreaterThan:
 					return (leftValue - rightValue) > epsilon;
 				case ComparisonOperation.LessThanOrEquals:
-					return ((rightValue - leftValue) > epsilon) 
+					return ((rightValue - leftValue) > epsilon)
 						|| (Math.Abs(leftValue - rightValue) < epsilon);
-                case ComparisonOperation.GreaterThanOrEquals:
+				case ComparisonOperation.GreaterThanOrEquals:
 					return ((leftValue - rightValue) > epsilon)
 						|| (Math.Abs(leftValue - rightValue) < epsilon);
 				default:
@@ -69,6 +69,20 @@ namespace Mindbox.Quokka
 		public override bool CheckIfExpressionIsNull(RenderContext renderContext)
 		{
 			return left.CheckIfExpressionIsNull(renderContext) || right.CheckIfExpressionIsNull(renderContext);
+		}
+
+		public override ExpressionDTO GetTreeDTO()
+		{
+
+			var dto = base.GetTreeDTO();
+
+			dto.members.Add(left.GetTreeDTO());
+			dto.members.Add(right.GetTreeDTO());
+			dto.type = "ArithmeticComparisonExpression";
+			dto.comparisonOperation = operation.ToString();
+
+
+			return dto;
 		}
 	}
 }

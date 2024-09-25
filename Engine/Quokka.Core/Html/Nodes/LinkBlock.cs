@@ -25,8 +25,8 @@ namespace Mindbox.Quokka.Html
 		public int Offset => hrefValue.Offset;
 		public int Length => hrefValue.Length;
 
-		private readonly AttributeValue hrefValue;
-		private readonly AttributeValue nameValue;
+		public readonly AttributeValue hrefValue;
+		public readonly AttributeValue nameValue;
 
 		private readonly Guid uniqueKey;
 
@@ -87,5 +87,14 @@ namespace Mindbox.Quokka.Html
 					uniqueKey,
 					isConstant: !hrefValue.TextComponents.OfType<OutputInstructionBlock>().Any()));
 		}
+
+		public override BlockDTO GetTreeDTO()
+		{
+			var result = base.GetTreeDTO();
+			result.type = "LinkBlock";
+			result.children = hrefValue.TextComponents.Select(c => c.GetTreeDTO()).ToList();
+			return result;
+		}
+
 	}
 }

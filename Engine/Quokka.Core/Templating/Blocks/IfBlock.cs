@@ -15,16 +15,19 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System;
 
 namespace Mindbox.Quokka
 {
 	internal class IfBlock : TemplateNodeBase
 	{
-		private readonly IReadOnlyCollection<ConditionBlock> conditions;
+		public readonly IReadOnlyCollection<ConditionBlock> conditions;
 
 		public IfBlock(IEnumerable<ConditionBlock> conditions)
 		{
 			this.conditions = conditions.ToList().AsReadOnly();
+			// Console.WriteLine(ObjectDumper.Dump(conditions, DumpStyle.CSharp));
+
 		}
 
 		public override void PerformSemanticAnalysis(AnalysisContext context)
@@ -49,6 +52,14 @@ namespace Mindbox.Quokka
 		{
 			foreach (var condition in conditions)
 				condition.CompileGrammarSpecificData(context);
+		}
+
+		public override BlockDTO GetTreeDTO()
+		{
+			var result = base.GetTreeDTO();
+			result.type = "IfBlock";
+			result.children = conditions.Select(c => c.GetTreeDTO()).ToList();
+			return result;
 		}
 	}
 }

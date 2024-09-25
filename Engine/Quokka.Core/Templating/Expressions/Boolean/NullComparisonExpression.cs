@@ -29,7 +29,7 @@ namespace Mindbox.Quokka
 		{
 			if (comparisonOperation != ComparisonOperation.Equals && comparisonOperation != ComparisonOperation.NotEquals)
 				throw new ArgumentOutOfRangeException(nameof(comparisonOperation));
-			
+
 			this.variantValueExpression = variantValueExpression;
 			this.comparisonOperation = comparisonOperation;
 		}
@@ -57,6 +57,15 @@ namespace Mindbox.Quokka
 		public override bool CheckIfExpressionIsNull(RenderContext renderContext)
 		{
 			return false;
+		}
+		public override ExpressionDTO GetTreeDTO()
+		{
+			var dto = base.GetTreeDTO();
+			dto.type = "NullComparisonExpression";
+			dto.members = new List<ExpressionDTO> { variantValueExpression.GetTreeDTO() };
+			dto.comparisonOperation = comparisonOperation.ToString() ?? "";
+
+			return dto;
 		}
 	}
 }

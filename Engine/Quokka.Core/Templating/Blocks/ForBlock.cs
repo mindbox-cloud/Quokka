@@ -27,7 +27,7 @@ namespace Mindbox.Quokka
 
 		public ForBlock(
 			ITemplateNode block,
-			string iterationVariableName, 
+			string iterationVariableName,
 			Location iterationVariableLocation,
 			VariantValueExpression enumerableExpression)
 		{
@@ -78,6 +78,16 @@ namespace Mindbox.Quokka
 		public override void CompileGrammarSpecificData(GrammarSpecificDataAnalysisContext context)
 		{
 			block?.CompileGrammarSpecificData(context);
+		}
+
+		public override BlockDTO GetTreeDTO()
+		{
+			var result = base.GetTreeDTO();
+			result.type = "ForBlock";
+			result.iterationVariableName = iterationVariableName;
+			result.expression = enumerableExpression.GetTreeDTO();
+			result.children.Add(block.GetTreeDTO());
+			return result;
 		}
 	}
 }

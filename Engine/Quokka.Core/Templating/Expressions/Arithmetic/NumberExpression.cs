@@ -24,7 +24,7 @@ namespace Mindbox.Quokka
 		{
 			this.number = number;
 		}
-		
+
 		public override TypeDefinition GetResultType(AnalysisContext context)
 		{
 			return Math.Abs(number % 1) < Double.Epsilon
@@ -51,6 +51,14 @@ namespace Mindbox.Quokka
 		{
 			value = number;
 			return true;
+		}
+
+		public override ExpressionDTO GetTreeDTO()
+		{
+			var dto = base.GetTreeDTO();
+			dto.type = "NumberExpression";
+			dto.number = number;
+			return dto;
 		}
 	}
 }

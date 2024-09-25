@@ -12,6 +12,7 @@
 // // See the License for the specific language governing permissions and
 // // limitations under the License.
 
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -21,7 +22,7 @@ namespace Mindbox.Quokka
 {
 	internal class TemplateBlock : TemplateNodeBase
 	{
-		private readonly IReadOnlyCollection<ITemplateNode> children;
+		public readonly IReadOnlyCollection<ITemplateNode> children;
 
 		public override bool IsConstant
 		{
@@ -33,6 +34,8 @@ namespace Mindbox.Quokka
 			this.children = children
 				.ToList()
 				.AsReadOnly();
+			// Console.WriteLine(ObjectDumper.Dump(children, DumpStyle.CSharp));
+
 		}
 
 		public static TemplateBlock Empty()
@@ -48,6 +51,8 @@ namespace Mindbox.Quokka
 
 		public override void Render(TextWriter resultWriter, RenderContext renderContext)
 		{
+
+			// Console.WriteLine(ObjectDumper.Dump(children, DumpStyle.CSharp));
 			foreach (var child in children)
 				child.Render(resultWriter, renderContext);
 		}
@@ -56,6 +61,17 @@ namespace Mindbox.Quokka
 		{
 			foreach (var child in children)
 				child.CompileGrammarSpecificData(context);
+		}
+
+		public override BlockDTO GetTreeDTO()
+		{
+			var dto = new BlockDTO()
+			{
+				type = "TemplateBlock",
+				children = children.Select(child => child.GetTreeDTO()).ToList()
+			};
+
+			return dto;
 		}
 	}
 }

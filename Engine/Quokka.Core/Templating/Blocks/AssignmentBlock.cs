@@ -45,5 +45,14 @@ namespace Mindbox.Quokka
 
 			renderContext.VariableScope.TrySetValueStorageForVariable(variableName, valueStorage);
 		}
+
+		public override BlockDTO GetTreeDTO()
+		{
+			var dto = base.GetTreeDTO();
+			dto.type = "AssignmentBlock";
+			dto.assignmentVariableName = variableName;
+			dto.expression = value.GetTreeDTO();
+			return dto;
+		}
 	}
 }

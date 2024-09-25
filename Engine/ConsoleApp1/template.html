@@ -1,0 +1,327 @@
+@{ for row in tableRows(editor.segment, 1) }
+@{ for cell in row.cells }
+@{ if not IsEmpty(cell.Value.Url) and not IsEmpty(cell.Value.pictureurl) and not
+IsEmpty(Recipient.LastReceivedPromoCode.WithTypeAutoProse.Value) and not IsEmpty(cell.Value.AdditionalData.NKKSticker1)}
+
+<table>
+  <tr>
+    <td align="center" style="padding:0;Margin:0">
+      <table class="es-header-body" cellspacing="0" cellpadding="0" bgcolor="#ffffff" align="center" role="none"
+        style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;background-color:#FFFFFF;width:600px">
+
+
+        <tr>
+          <td align="left" style="padding:0;Margin:0">
+            <table cellpadding="0" cellspacing="0" width="100%" role="none"
+              style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px">
+              <tr>
+                <td class="es-m-p0b" align="left"
+                  style="Margin:0;padding-bottom:10px;padding-right:20px;padding-left:25px;padding-top:40px">
+                  <table cellpadding="0" cellspacing="0" class="es-left" align="left" role="none"
+                    style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;float:left">
+                    <tr>
+                      <td align="left" style="padding:0;Margin:0;width:256px">
+                        <table cellpadding="0" cellspacing="0" width="100%" role="presentation"
+                          style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px">
+                          <tr>
+                            <td style="padding:0;Margin:0;padding-bottom:5px;padding-top:10px;font-size:0px"
+                              align="center">
+                              <a href="https://www.mann-ivanov-ferber.ru/auth/ticket/${Ticket.EmailAuthenticationHexTicket}/?redirect=${cell.Value.Url}#/?tween-paperbook-promo=${Recipient.LastReceivedPromoCode.WithTypeAutoProse.Value}"
+                                target="_blank"
+                                style="-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;text-decoration:underline;color:#3D85C6;font-size:14px">
+                                <img class="adapt-img" src="${cell.Value.pictureurl}" alt
+                                  style="display:block;border:0;outline:none;text-decoration:none;-ms-interpolation-mode:bicubic"
+                                  width="256" height="auto"></a>
+                            </td>
+                          </tr>
+                        </table>
+                      </td>
+                    </tr>
+                  </table>
+                  <table cellpadding="0" cellspacing="0" class="es-right" align="right" role="none"
+                    style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;float:right">
+                    <tr>
+                      <td align="left" style="padding:0;Margin:0;width:284px">
+                        <table cellpadding="0" cellspacing="0" width="100%" role="presentation"
+                          style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px">
+                          <tr>
+                            <td align="center" class="es-m-p0t es-m-p10b es-m-p10r es-m-p10l"
+                              style="Margin:0;padding-bottom:5px;padding-top:15px;padding-left:15px;padding-right:15px">
+                              <p
+                                style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:georgia,times,&#39;times new roman&#39;,serif;line-height:27px;color:#96ae00;font-size:18px">
+                                <em>${cell.Value.AdditionalData.NKKSticker1}</em>
+                              </p>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td align="center" class="es-m-p20t"
+                              style="padding:0;Margin:0;padding-top:15px;padding-bottom:15px;padding-left:15px">
+                              <p
+                                style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:arial,&#39;helvetica neue&#39;,helvetica,sans-serif;line-height:18px;color:#282323;font-size:12px">
+                                Скидка на любую книгу<br>еще
+                                -10% по
+                                промокоду
+                                <strong>${Recipient.LastReceivedPromoCode.WithTypeAutoProse.Value}</strong>.
+                                Суммируется с акцией на сайте
+                              </p>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td align="center" style="padding:0;Margin:0;font-size:0">
+                              <table border="0" width="100%" height="100%" cellpadding="0" cellspacing="0"
+                                role="presentation"
+                                style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px">
+                                <tr>
+                                  <td
+                                    style="padding:0;Margin:0;border-bottom:0px solid #cccccc;background:none;height:1px;width:100%;margin:0px">
+                                  </td>
+                                </tr>
+                              </table>
+                            </td>
+                          </tr>
+                        </table>
+                      </td>
+                    </tr>
+                    @{ if cell.Value.AdditionalData.AttributePaperAuthUserHaveOrderPrice != null}
+
+                    @{ if cell.Value.AdditionalData.AttributePaperAuthUserPrice != null}
+
+                    @{ if cell.Value.AdditionalData.AttributePaperPrice != null}
+
+                    @{ if cell.Value.AdditionalData.AttributePaperAuthUserHaveOrderPrice
+                    = cell.Value.AdditionalData.AttributePaperAuthUserPrice }
+                    <tr>
+                      <td align="left" style="padding:0;Margin:0;width:284px">
+                        <table cellpadding="0" cellspacing="0" width="100%" role="presentation"
+                          style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px">
+                          <tr>
+                            <td align="center" class="es-m-p10b" style="padding:0;Margin:0;padding-top:5px">
+                              <p
+                                style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:arial,&#39;helvetica neue&#39;,helvetica,sans-serif;line-height:48px;color:#2d0503;font-size:30px">
+                                <span style="font-size:40px;line-height:48px"><strong>@{
+                                    if
+                                    cell.Value.AdditionalData.AttributePaperPrice*(90-(100-cell.Value.AdditionalData.AttributePaperAuthUserPrice*100/cell.Value.AdditionalData.AttributePaperPrice))/100
+                                    < (cell.Value.AdditionalData.AttributePaperPrice* 0.5)}
+                                      ${(cell.Value.AdditionalData.AttributePaperPrice* 0.5) | formatDecimal("N0")}
+                                      @{else}
+                                      ${1*(cell.Value.AdditionalData.AttributePaperPrice*(90-(100-cell.Value.AdditionalData.AttributePaperAuthUserPrice*100/cell.Value.AdditionalData.AttributePaperPrice))/100)
+                                      | formatDecimal("N0")} @{ end if }</strong>
+                                      <span style="font-size:36px"><strong><span
+                                            style="line-height:120%">₽</span></strong></span></span>
+                                <span style="font-size:22px;line-height:26px"><s style="text-decoration:line-through">
+                                    ${cell.Value.AdditionalData.AttributePaperPrice
+                                    |
+                                    formatDecimal("N0")}<span
+                                      style="font-size:19px;line-height:23px">₽</span></s></span>
+                              </p>
+                            </td>
+                          </tr>
+                        </table>
+                      </td>
+                    </tr>
+
+                    @{ else if cell.Value.AdditionalData.AttributePaperAuthUserHaveOrderPrice
+                    > cell.Value.AdditionalData.AttributePaperAuthUserPrice
+                    or
+                    cell.Value.AdditionalData.AttributePaperAuthUserHaveOrderPrice
+                    < cell.Value.AdditionalData.AttributePaperAuthUserPrice } 
+                    
+                    <tr>
+                      <td align="left" style="padding:0;Margin:0;width:284px">
+                        <table cellpadding="0" cellspacing="0" width="100%" role="presentation"
+                          style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px">
+                          <tr>
+                            <td align="center" class="es-m-p10b" style="padding:0;Margin:0;padding-top:5px">
+                              <p
+                                style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:arial,&#39;helvetica neue&#39;,helvetica,sans-serif;line-height:48px;color:#2d0503;font-size:30px">
+                                <span style="font-size:40px;line-height:48px">
+
+                                  <strong>
+
+                                    @{ if cell.Value.AdditionalData.AttributePaperAuthUserHaveOrderPrice * 0.9 <
+                                      (cell.Value.AdditionalData.AttributePaperPrice * 0.5)}
+                                  
+                                      ${(cell.Value.AdditionalData.AttributePaperPrice* 0.5) | formatDecimal("N0")}
+                                  
+                                      @{else} 
+                                      
+                                      ${cell.Value.AdditionalData.AttributePaperAuthUserHaveOrderPrice * 0.9 | formatDecimal("N0")} 
+                                      
+                                      @{ end if } 
+                                    
+                                    </strong>
+                                      <span style="font-size:36px">
+                                        <strong>
+                                          <span style="line-height:120%">₽</span>
+                                        </strong>
+                                      </span>
+                                </span>
+                                <span style="font-size:22px;line-height:26px">
+                                  <s style="text-decoration:line-through">
+
+                                    ${cell.Value.AdditionalData.AttributePaperPrice | formatDecimal("N0")}
+                                    <span style="font-size:19px;line-height:23px">₽</span>
+                                  </s>
+                                </span>
+                              </p>
+                            </td>
+                          </tr>
+                        </table>
+                      </td>
+              </tr> 
+              
+              @{else} 
+              
+              <tr>
+                <td align="left" style="padding:0;Margin:0;width:284px">
+                  <table cellpadding="0" cellspacing="0" width="100%" role="presentation"
+                    style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px">
+                    <tr>
+                      <td align="center" class="es-m-p10b" style="padding:0;Margin:0;padding-top:5px">
+                        <p
+                          style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:arial,&#39;helvetica neue&#39;,helvetica,sans-serif;line-height:48px;color:#2d0503;font-size:30px">
+                          <span
+                            style="font-size:40px;line-height:48px"><strong>
+                              
+                              ${cell.Value.AdditionalData.AttributePaperPrice
+                              | formatDecimal("N0")}
+                            
+                            </strong><span style="font-size:36px"><strong><span
+                                  style="line-height:120%">
+                                  ₽</span></strong></span></span>
+                          <span style="font-size:22px;line-height:26px"><s style="text-decoration:line-through">
+                            
+                            @{
+                              if
+                              cell.Value.AdditionalData.AttributePaperPrice*(90-(100-cell.Value.AdditionalData.AttributePaperAuthUserPrice*100/cell.Value.AdditionalData.AttributePaperPrice))/100
+                              < (cell.Value.AdditionalData.AttributePaperPrice* 0.5)}
+                                ${(cell.Value.AdditionalData.AttributePaperPrice* 0.5) | formatDecimal("N0")} @{else}
+                                ${1*(cell.Value.AdditionalData.AttributePaperPrice*(90-(100-cell.Value.AdditionalData.AttributePaperAuthUserPrice*100/cell.Value.AdditionalData.AttributePaperPrice))/100)
+                                | formatDecimal("N0")} @{ end if }<span style="font-size:19px;line-height:23px">
+                                ₽</span></s></span>
+                        </p>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr> 
+              @{ end if } @{end if} @{end if} @{end if} 
+              
+              <tr>
+                <td align="left" style="padding:0;Margin:0;width:284px">
+                  <table cellpadding="0" cellspacing="0" width="100%" role="presentation"
+                    style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px">
+                    <tr>
+                      <td style="padding:0;Margin:0">
+                        <table cellpadding="0" cellspacing="0" width="100%" class="es-menu" role="presentation"
+                          style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px">
+                          <tr class="links">
+                            <td align="center" width="34%"
+                              style="Margin:0;padding-left:5px;padding-right:5px;padding-top:13px;padding-bottom:14px;border:0"
+                              bgcolor="#18a0fb"><a target="_blank"
+                                style="-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;text-decoration:none;display:block;font-family:helvetica,&#39;helvetica neue&#39;,arial,verdana,sans-serif;color:#ffffff;font-size:14px"
+                                href="${cell.Value.Url}/#/?tween-paperbook-promo=${Recipient.LastReceivedPromoCode.WithTypeAutoProse.Value}">Бумажная</a>
+                            </td> @{ if
+                            cell.Value.AdditionalData.AttributeElectroPrice
+                            != null} <td align="center" width="43%"
+                              style="Margin:0;padding-left:5px;padding-right:5px;padding-top:13px;padding-bottom:14px;border:0;border-left:1px solid #ffffff"
+                              bgcolor="#18a0fb"><a target="_blank"
+                                style="-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;text-decoration:none;display:block;font-family:helvetica,&#39;helvetica neue&#39;,arial,verdana,sans-serif;color:#ffffff;font-size:14px"
+                                href="${cell.Value.Url}/#/?tween-ebook-promo=${Recipient.LastReceivedPromoCode.WithTypeAutoProse.Value}">Электронная</a>
+                            </td> @{end if} @{ if
+                            cell.Value.AdditionalData.AttributeAudioPrice
+                            != null} <td align="center" width="23%"
+                              style="Margin:0;padding-left:5px;padding-right:5px;padding-top:13px;padding-bottom:14px;border:0;border-left:1px solid #ffffff"
+                              bgcolor="#18a0fb"><a target="_blank"
+                                style="-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;text-decoration:none;display:block;font-family:helvetica,&#39;helvetica neue&#39;,arial,verdana,sans-serif;color:#ffffff;font-size:14px"
+                                href="${cell.Value.Url}/#/?tween-audiobook-promo=${Recipient.LastReceivedPromoCode.WithTypeAutoProse.Value}">Аудио</a>
+                            </td> @{end if}
+                          </tr>
+                        </table>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+              <tr>
+                <td align="left" style="padding:0;Margin:0;width:277px">
+                  <table cellpadding="0" cellspacing="0" width="100%" role="presentation"
+                    style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px">
+                    <tr>
+                      <td align="center" style="padding:0;Margin:0;padding-bottom:5px;font-size:0">
+                        <table border="0" width="100%" height="100%" cellpadding="0" cellspacing="0" role="presentation"
+                          style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px">
+                          <tr>
+                            <td
+                              style="padding:0;Margin:0;border-bottom:0px solid #cccccc;background:unset;height:1px;width:100%;margin:0px">
+                            </td>
+                          </tr>
+                        </table>
+                      </td>
+                    </tr> @{ if
+                    cell.Value.AdditionalData.StrokiMtsElectroUrl !=
+                    null and cell.Value.AdditionalData.StrokiMtsAudioUrl !=
+                    null} <tr>
+                      <td style="padding:0;Margin:0">
+                        <table cellpadding="0" cellspacing="0" width="100%" class="es-menu es-menu-9oyj59wj"
+                          role="presentation"
+                          style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px">
+                          <tr class="links-images-left"> @{ if not
+                            isempty(cell.Value.AdditionalData.StrokiMtsElectroUrl)
+                            } <td align="center" valign="top" width="50%" class="es-adapt-td"
+                              style="Margin:0;padding-left:5px;padding-right:5px;padding-top:10px;padding-bottom:10px;border:0"
+                              bgcolor="#efefef"><a target="_blank"
+                                href="${cell.Value.AdditionalData.StrokiMtsElectroUrl}"
+                                style="-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;text-decoration:none;display:block;font-family:helvetica,&#39;helvetica neue&#39;,arial,verdana,sans-serif;color:#333333;font-size:11px"><img
+                                  src="https://email-images.mindbox.ru/dbfcf33c-0390-4d72-b0ca-128d238f1d9f/10.png"
+                                  alt="Читать в&nbsp;СТРОКАХ" title="Читать в&nbsp;СТРОКАХ" align="absmiddle"
+                                  height="17" width="16"
+                                  style="display:inline-block!important;border:0;outline:none;text-decoration:none;-ms-interpolation-mode:bicubic;padding-right:5px;vertical-align:middle">Читать
+                                в&nbsp;СТРОКАХ</a> </td>@{end
+                            if} 
+                            
+                            @{
+                            if not
+                            isempty(cell.Value.AdditionalData.StrokiMtsAudioUrl)
+                            } <td align="center" valign="top" width="50%" class="es-adapt-td"
+                              style="Margin:0;padding-left:5px;padding-right:5px;padding-top:10px;padding-bottom:10px;border:0;border-left:1px solid #ffffff"
+                              bgcolor="#efefef"><a target="_blank" href="${cell.Value.AdditionalData.StrokiMtsAudioUrl}"
+                                style="-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;text-decoration:none;display:block;font-family:helvetica,&#39;helvetica neue&#39;,arial,verdana,sans-serif;color:#333333;font-size:11px"><img
+                                  src="https://email-images.mindbox.ru/dbfcf33c-0390-4d72-b0ca-128d238f1d9f/10.png"
+                                  alt="Слушать в&nbsp;СТРОКАХ" title="Слушать в&nbsp;СТРОКАХ" align="absmiddle"
+                                  height="17" width="16"
+                                  style="display:inline-block!important;border:0;outline:none;text-decoration:none;-ms-interpolation-mode:bicubic;padding-right:5px;vertical-align:middle">Слушать
+                                в&nbsp;СТРОКАХ</a> </td>@{end
+                            if}
+                          </tr>
+                        </table>
+                      </td>
+                    </tr> @{end if} 
+                    
+                    @{ if not
+                    isempty(cell.Value.AdditionalData.OzonUrl) or not
+                    isempty(cell.Value.AdditionalData.LabirintUrl) or not
+                    isempty(cell.Value.AdditionalData.WildberriesPaperBookUrl)
+                    or not
+                    isempty(cell.Value.AdditionalData.ChitaiGorodPaperBookUrl)}
+                    <tr>
+                      <td align="center" class="es-m-p20t" style="padding:0;Margin:0;padding-top:30px">
+                        <p
+                          style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:arial,&#39;helvetica neue&#39;,helvetica,sans-serif;line-height:18px;color:#282323;font-size:12px">
+                          Где еще купить:</p>
+                      </td>
+                    </tr>@{end if}
+                  </table>
+                </td>
+              </tr>
+
+            </table>
+          </td>
+        </tr>
+
+      </table>
+    </td>
+  </tr>
+</table>
+
+@{end if} @{end for} @{end for}

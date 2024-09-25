@@ -12,6 +12,7 @@
 // // See the License for the specific language governing permissions and
 // // limitations under the License.
 
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -21,7 +22,7 @@ namespace Mindbox.Quokka
 {
 	internal class StaticBlock : TemplateNodeBase
 	{
-		private readonly IReadOnlyCollection<IStaticBlockPart> children;
+		public readonly IReadOnlyCollection<IStaticBlockPart> children;
 
 		public override bool IsConstant
 		{
@@ -31,6 +32,7 @@ namespace Mindbox.Quokka
 		public StaticBlock(IEnumerable<IStaticBlockPart> children)
 		{
 			this.children = children.ToList().AsReadOnly();
+			// Console.WriteLine(ObjectDumper.Dump(children, DumpStyle.CSharp));
 		}
 
 		public override void PerformSemanticAnalysis(AnalysisContext context)
@@ -41,6 +43,8 @@ namespace Mindbox.Quokka
 
 		public override void Render(TextWriter resultWriter, RenderContext renderContext)
 		{
+
+
 			foreach (var child in children)
 				child.Render(resultWriter, renderContext);
 		}
@@ -49,6 +53,15 @@ namespace Mindbox.Quokka
 		{
 			foreach (var child in children)
 				child.CompileGrammarSpecificData(context);
+		}
+
+		public override BlockDTO GetTreeDTO()
+		{
+			var result = base.GetTreeDTO();
+			result.type = "StaticBlock";
+			foreach (var child in children)
+				result.children.Add(child.GetTreeDTO());
+			return result;
 		}
 	}
 }

@@ -28,5 +28,7 @@ namespace Mindbox.Quokka
 		/// Compile data that is specific to the language (html, plaintext) that is used outside of control instructions.
 		/// </summary>
 		void CompileGrammarSpecificData(GrammarSpecificDataAnalysisContext context);
+
+		BlockDTO GetTreeDTO();
 	}
 }

@@ -30,5 +30,12 @@ namespace Mindbox.Quokka
 		{
 			return false;
 		}
+
+		public override ExpressionDTO GetTreeDTO()
+		{
+			var dto = base.GetTreeDTO();
+			dto.type = "TrueExpression";
+			return dto;
+		}
 	}
 }

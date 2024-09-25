@@ -26,7 +26,7 @@ namespace Mindbox.Quokka
 		private readonly IExpression secondOperand;
 
 		public StringConcatenationExpression(
-			IExpression firstOperand, 
+			IExpression firstOperand,
 			IExpression secondOperand)
 		{
 			if (firstOperand == null)
@@ -59,6 +59,17 @@ namespace Mindbox.Quokka
 		public override VariableValueStorage TryGetStaticEvaluationResult()
 		{
 			return null;
+		}
+
+		public override ExpressionDTO GetTreeDTO()
+		{
+			var dto = base.GetTreeDTO();
+			dto.members = new List<ExpressionDTO>
+			{
+				firstOperand.GetTreeDTO(),
+				secondOperand.GetTreeDTO()
+			};
+			return dto;
 		}
 	}
 }
