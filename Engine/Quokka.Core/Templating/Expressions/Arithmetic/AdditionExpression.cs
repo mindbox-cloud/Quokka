@@ -49,5 +49,13 @@ namespace Mindbox.Quokka
 			foreach (var operand in operands)
 				operand.Expression.PerformSemanticAnalysis(context);
 		}
+
+		public override ExpressionDTO GetTreeDTO()
+		{
+			var dto = base.GetTreeDTO();
+			dto.type = "AdditionExpression";
+			dto.members = operands.Select(op => op.GetTreeDTO()).ToList();
+			return dto;
+		}
 	}
 }

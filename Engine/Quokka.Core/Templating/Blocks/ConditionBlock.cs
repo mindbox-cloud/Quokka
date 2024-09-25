@@ -54,7 +54,10 @@ namespace Mindbox.Quokka
 			var result = base.GetTreeDTO();
 			result.type = "ConditionBlock";
 			result.condition = conditionExpression.GetTreeDTO();
-			result.children.Add(block.GetTreeDTO());
+			if (block != null)
+			{
+				result.children.Add(block.GetTreeDTO());
+			}
 			return result;
 		}
 	}

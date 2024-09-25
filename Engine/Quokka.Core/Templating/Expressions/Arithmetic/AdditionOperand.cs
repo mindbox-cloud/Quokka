@@ -34,7 +34,7 @@ namespace Mindbox.Quokka
 		{
 			return new MinusOperand(expression);
 		}
-		
+
 		private class PlusOperand : AdditionOperand
 		{
 			public PlusOperand(ArithmeticExpression expression)
@@ -45,6 +45,15 @@ namespace Mindbox.Quokka
 			public override double Calculate(double leftOperand, RenderContext renderContext)
 			{
 				return leftOperand + Expression.GetValue(renderContext);
+			}
+
+			public override ExpressionDTO GetTreeDTO()
+			{
+				var dto = base.GetTreeDTO();
+				dto.type = "PlusOperand";
+				dto.operandExpression = Expression.GetTreeDTO();
+
+				return dto;
 			}
 		}
 
@@ -59,6 +68,20 @@ namespace Mindbox.Quokka
 			{
 				return leftOperand - Expression.GetValue(renderContext);
 			}
+
+			public override ExpressionDTO GetTreeDTO()
+			{
+				var dto = base.GetTreeDTO();
+				dto.type = "MinusOperand";
+				dto.operandExpression = Expression.GetTreeDTO();
+
+				return dto;
+			}
 		}
+		public virtual ExpressionDTO GetTreeDTO()
+		{
+			return new ExpressionDTO();
+		}
+
 	}
 }

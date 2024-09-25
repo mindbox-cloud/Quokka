@@ -49,6 +49,10 @@ namespace Mindbox.Quokka
 
 		[DataMember]
 		public string iterationVariableName { get; set; } = "";
+
+		[DataMember]
+		public string? assignmentVariableName { get; set; } = "";
+
 		[DataMember]
 		public ExpressionDTO condition { get; set; } = new ExpressionDTO();
 
@@ -92,5 +96,7 @@ namespace Mindbox.Quokka
 
 		[DataMember]
 		public ExpressionDTO? argumentExpression { get; set; }
+		[DataMember]
+		public ExpressionDTO? operandExpression { get; set; }
 	}
 }

@@ -54,7 +54,7 @@ namespace Mindbox.Quokka
 		{
 			var dto = base.GetTreeDTO();
 			dto.type = "Multiplication";
-			dto.members = operands.Select(op => op.Expression.GetTreeDTO()).ToList();
+			dto.members = operands.Select(op => op.GetTreeDTO()).ToList();
 			return dto;
 		}
 	}
