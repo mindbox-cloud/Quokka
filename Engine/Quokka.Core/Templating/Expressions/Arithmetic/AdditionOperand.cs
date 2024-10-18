@@ -14,7 +14,7 @@
 
 namespace Mindbox.Quokka
 {
-	internal abstract class AdditionOperand
+	internal abstract class AdditionOperand : IVisitable
 	{
 		public ArithmeticExpression Expression { get; }
 
@@ -24,6 +24,8 @@ namespace Mindbox.Quokka
 		}
 
 		public abstract double Calculate(double leftOperand, RenderContext renderContext);
+		
+		public abstract void Accept(ITreeVisitor treeVisitor);
 
 		public static AdditionOperand Plus(ArithmeticExpression expression)
 		{
@@ -46,6 +48,15 @@ namespace Mindbox.Quokka
 			{
 				return leftOperand + Expression.GetValue(renderContext);
 			}
+
+			public override void Accept(ITreeVisitor treeVisitor)
+			{
+				treeVisitor.VisitPlusOperand();
+
+				Expression.Accept(treeVisitor);
+			
+				treeVisitor.EndVisit();
+			}
 		}
 
 		private class MinusOperand : AdditionOperand
@@ -58,6 +69,15 @@ namespace Mindbox.Quokka
 			public override double Calculate(double leftOperand, RenderContext renderContext)
 			{
 				return leftOperand - Expression.GetValue(renderContext);
+			}
+
+			public override void Accept(ITreeVisitor treeVisitor)
+			{
+				treeVisitor.VisitMinusOperand();
+
+				Expression.Accept(treeVisitor);
+			
+				treeVisitor.EndVisit();
 			}
 		}
 	}

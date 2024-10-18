@@ -58,5 +58,14 @@ namespace Mindbox.Quokka
 		{
 			return false;
 		}
+
+		public override void Accept(ITreeVisitor treeVisitor)
+		{
+			treeVisitor.VisitNullComparisonExpression(comparisonOperation.ToString());
+			
+			variantValueExpression.Accept(treeVisitor);
+			
+			treeVisitor.EndVisit();
+		}
 	}
 }

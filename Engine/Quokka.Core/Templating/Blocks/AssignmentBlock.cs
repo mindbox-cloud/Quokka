@@ -45,5 +45,14 @@ namespace Mindbox.Quokka
 
 			renderContext.VariableScope.TrySetValueStorageForVariable(variableName, valueStorage);
 		}
+
+		public override void Accept(ITreeVisitor treeVisitor)
+		{
+			treeVisitor.VisitAssignmentBlock(variableName);
+			
+			value.Accept(treeVisitor);
+
+			treeVisitor.EndVisit();
+		}
 	}
 }

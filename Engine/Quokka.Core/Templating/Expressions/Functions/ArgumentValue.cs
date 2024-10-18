@@ -14,7 +14,7 @@
 
 namespace Mindbox.Quokka
 {
-	internal class ArgumentValue
+	internal class ArgumentValue : IVisitable
 	{
 		public IExpression Expression { get; }
 
@@ -46,6 +46,15 @@ namespace Mindbox.Quokka
 		public VariableValueStorage TryGetStaticValue()
 		{
 			return Expression.TryGetStaticEvaluationResult();
+		}
+
+		public void Accept(ITreeVisitor treeVisitor)
+		{
+			treeVisitor.VisitArgumentValue();
+			
+			Expression.Accept(treeVisitor);
+			
+			treeVisitor.EndVisit();
 		}
 	}
 }

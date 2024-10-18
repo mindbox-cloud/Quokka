@@ -50,5 +50,15 @@ namespace Mindbox.Quokka
 			foreach (var condition in conditions)
 				condition.CompileGrammarSpecificData(context);
 		}
+
+		public override void Accept(ITreeVisitor treeVisitor)
+		{
+			treeVisitor.VisitIfBlock();
+
+			foreach (var condition in conditions)
+				condition.Accept(treeVisitor);
+			
+			treeVisitor.EndVisit();
+		}
 	}
 }

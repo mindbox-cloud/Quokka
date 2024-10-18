@@ -47,5 +47,14 @@ namespace Mindbox.Quokka
 		{
 			return variantValueExpression.CheckIfExpressionIsNull(renderContext);
 		}
+
+		public override void Accept(ITreeVisitor treeVisitor)
+		{
+			treeVisitor.VisitVariantValueArithmeticExpression();
+			
+			variantValueExpression.Accept(treeVisitor);
+			
+			treeVisitor.EndVisit();
+		}
 	}
 }

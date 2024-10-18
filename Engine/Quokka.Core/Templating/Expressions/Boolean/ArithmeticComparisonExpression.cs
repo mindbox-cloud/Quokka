@@ -70,5 +70,15 @@ namespace Mindbox.Quokka
 		{
 			return left.CheckIfExpressionIsNull(renderContext) || right.CheckIfExpressionIsNull(renderContext);
 		}
+
+		public override void Accept(ITreeVisitor treeVisitor)
+		{
+			treeVisitor.VisitArithmeticComparisonExpression(operation.ToString());
+			
+			left.Accept(treeVisitor);
+			right.Accept(treeVisitor);
+			
+			treeVisitor.EndVisit();
+		}
 	}
 }

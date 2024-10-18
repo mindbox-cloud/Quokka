@@ -16,7 +16,7 @@ using System.IO;
 
 namespace Mindbox.Quokka
 {
-	internal interface ITemplateNode
+	internal interface ITemplateNode : IVisitable
 	{
 		bool IsConstant { get; }
 

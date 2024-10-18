@@ -20,7 +20,7 @@ using System.Threading.Tasks;
 
 namespace Mindbox.Quokka
 {
-    internal abstract class Member
+    internal abstract class Member : IVisitable
     {
 		protected Member(Location location)
 		{
@@ -39,5 +39,7 @@ namespace Mindbox.Quokka
 		public abstract string StringRepresentation { get; }
 
 		public Location Location { get; }
-    }
+
+		public abstract void Accept(ITreeVisitor treeVisitor);
+	}
 }

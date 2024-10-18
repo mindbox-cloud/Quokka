@@ -17,10 +17,12 @@ namespace Mindbox.Quokka
 	internal class StringConstantExpression : StringExpression
 	{
 		private readonly string stringValue;
+		private readonly string quoteType;
 
-		public StringConstantExpression(string stringValue)
+		public StringConstantExpression(string stringValue, string quoteType)
 		{
 			this.stringValue = stringValue;
+			this.quoteType = quoteType;
 		}
 
 		public override void PerformSemanticAnalysis(AnalysisContext context, TypeDefinition expectedExpressionType)
@@ -40,6 +42,12 @@ namespace Mindbox.Quokka
 		public override bool CheckIfExpressionIsNull(RenderContext renderContext)
 		{
 			return false;
+		}
+
+		public override void Accept(ITreeVisitor treeVisitor)
+		{
+			treeVisitor.VisitStringConstantExpression(stringValue, quoteType);
+			treeVisitor.EndVisit();
 		}
 	}
 }

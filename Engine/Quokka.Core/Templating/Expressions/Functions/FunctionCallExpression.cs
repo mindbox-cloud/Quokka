@@ -98,6 +98,16 @@ namespace Mindbox.Quokka
 			return evaluationResult.CheckIfValueIsNull();
 		}
 
+		public override void Accept(ITreeVisitor treeVisitor)
+		{
+			treeVisitor.VisitFunctionCallExpression(FunctionName);
+
+			foreach (var argumentValue in argumentValues)
+				argumentValue.Accept(treeVisitor);
+			
+			treeVisitor.EndVisit();
+		}
+
 		public sealed override void RegisterAssignmentToVariable(
 			AnalysisContext context,
 			ValueUsageSummary destinationVariable)

@@ -33,6 +33,16 @@ namespace Mindbox.Quokka
 			return operands.Any(operand => operand.Expression.CheckIfExpressionIsNull(renderContext));
 		}
 
+		public override void Accept(ITreeVisitor treeVisitor)
+		{
+			treeVisitor.VisitAdditionExpression();
+
+			foreach (var operand in operands)
+				operand.Accept(treeVisitor);
+			
+			treeVisitor.EndVisit();
+		}
+
 		public AdditionExpression(IEnumerable<AdditionOperand> operands)
 		{
 			this.operands = operands.ToList().AsReadOnly();

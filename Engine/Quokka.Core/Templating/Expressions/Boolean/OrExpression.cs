@@ -45,5 +45,15 @@ namespace Mindbox.Quokka
 		{
 			return subExpressions.Any(expression => expression.CheckIfExpressionIsNull(renderContext));
 		}
+
+		public override void Accept(ITreeVisitor treeVisitor)
+		{
+			treeVisitor.VisitOrExpression();
+
+			foreach (var subExpression in subExpressions)
+				subExpression.Accept(treeVisitor);
+			
+			treeVisitor.EndVisit();
+		}
 	}
 }

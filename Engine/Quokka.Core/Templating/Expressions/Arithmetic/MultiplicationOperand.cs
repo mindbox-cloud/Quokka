@@ -14,7 +14,7 @@
 
 namespace Mindbox.Quokka
 {
-	internal abstract class MultiplicationOperand
+	internal abstract class MultiplicationOperand : IVisitable
 	{
 		public ArithmeticExpression Expression { get; }
 
@@ -35,6 +35,8 @@ namespace Mindbox.Quokka
 			return new DivOperand(expression);
 		}
 		
+		public abstract void Accept(ITreeVisitor treeVisitor);
+		
 		private class MultOperand : MultiplicationOperand
 		{
 			public MultOperand(ArithmeticExpression expression)
@@ -45,6 +47,15 @@ namespace Mindbox.Quokka
 			public override double Calculate(double leftOperand, RenderContext renderContext)
 			{
 				return leftOperand * Expression.GetValue(renderContext);
+			}
+			
+			public override void Accept(ITreeVisitor treeVisitor)
+			{
+				treeVisitor.VisitMultOperand();
+				
+				Expression.Accept(treeVisitor);
+				
+				treeVisitor.EndVisit();
 			}
 		}
 
@@ -58,6 +69,15 @@ namespace Mindbox.Quokka
 			public override double Calculate(double leftOperand, RenderContext renderContext)
 			{
 				return leftOperand / Expression.GetValue(renderContext);
+			}
+
+			public override void Accept(ITreeVisitor treeVisitor)
+			{
+				treeVisitor.VisitDivOperand();
+				
+				Expression.Accept(treeVisitor);
+				
+				treeVisitor.EndVisit();
 			}
 		}
 	}

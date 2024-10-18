@@ -14,7 +14,7 @@
 
 namespace Mindbox.Quokka
 {
-	internal interface IExpression
+	internal interface IExpression : IVisitable
 	{
 		VariableValueStorage TryGetStaticEvaluationResult();
 

@@ -26,6 +26,12 @@ namespace Mindbox.Quokka
 
 	    public override string StringRepresentation => fieldName;
 
+		public override void Accept(ITreeVisitor treeVisitor)
+		{
+			treeVisitor.VisitFieldMember(StringRepresentation);
+			treeVisitor.EndVisit();
+		}
+
 		public override void PerformSemanticAnalysis(AnalysisContext analysisContext, ValueUsageSummary ownerValueUsageSummary, TypeDefinition memberType)
 	    {
 		    ownerValueUsageSummary.Fields.CreateOrUpdateMember(fieldName, new ValueUsage(Location, memberType));

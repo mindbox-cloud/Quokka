@@ -31,11 +31,20 @@ namespace Mindbox.Quokka
 
 	    public override StringExpression VisitStringConstant(QuokkaParser.StringConstantContext context)
 	    {
-			var quotedString = context.DoubleQuotedString()?.GetText() 
-				?? context.SingleQuotedString().GetText();
-		    string stringValue = quotedString.Substring(1, quotedString.Length - 2);
+			var doubleQuotedString = context.DoubleQuotedString()?.GetText();
 
-		    return new StringConstantExpression(stringValue);
+			if (doubleQuotedString != null)
+			{
+				string stringValue = doubleQuotedString.Substring(1, doubleQuotedString.Length - 2);
+				return new StringConstantExpression(stringValue, "double");
+			}
+			else
+			{
+				var singleQuotedString = context.SingleQuotedString().GetText();
+
+				string stringValue = singleQuotedString.Substring(1, singleQuotedString.Length - 2);
+				return new StringConstantExpression(stringValue, "single");
+			}
 		}
 
 		public override StringExpression VisitStringConcatenation(QuokkaParser.StringConcatenationContext context)

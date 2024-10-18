@@ -120,6 +120,18 @@ namespace Mindbox.Quokka
 			return false;
 		}
 
+		public override void Accept(ITreeVisitor treeVisitor)
+		{
+			treeVisitor.VisitMemberValueExpression();
+
+			ownerExpression.Accept(treeVisitor);
+
+			foreach (var member in members)
+				member.Accept(treeVisitor);
+			
+			treeVisitor.EndVisit();
+		}
+
 		public sealed override void RegisterAssignmentToVariable(
 			AnalysisContext context,
 			ValueUsageSummary destinationVariable)

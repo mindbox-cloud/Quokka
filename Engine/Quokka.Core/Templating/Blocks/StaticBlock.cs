@@ -50,5 +50,15 @@ namespace Mindbox.Quokka
 			foreach (var child in children)
 				child.CompileGrammarSpecificData(context);
 		}
+
+		public override void Accept(ITreeVisitor treeVisitor)
+		{
+			treeVisitor.VisitStaticBlock();
+
+			foreach (var child in children)
+				child.Accept(treeVisitor);
+			
+			treeVisitor.EndVisit();
+		}
 	}
 }
