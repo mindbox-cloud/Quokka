@@ -250,7 +250,7 @@ namespace Mindbox.Quokka
 			yield return new ToUnixTimeStampTemplateFunction();
 		}
 
-		public void Accept(ITreeVisitor treeVisitor)
+		public void Accept(ITemplateVisitor treeVisitor)
 		{
 			compiledTemplateTree.Accept(treeVisitor);
 		}

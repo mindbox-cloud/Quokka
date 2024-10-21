@@ -50,7 +50,7 @@ namespace Mindbox.Quokka
 			return operands.Any(operand => operand.Expression.CheckIfExpressionIsNull(renderContext));
 		}
 
-		public override void Accept(ITreeVisitor treeVisitor)
+		public override void Accept(ITemplateVisitor treeVisitor)
 		{
 			treeVisitor.VisitMultiplicationExpression();
 

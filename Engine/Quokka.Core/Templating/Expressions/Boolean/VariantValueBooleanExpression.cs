@@ -46,7 +46,7 @@ namespace Mindbox.Quokka
 			return variantValueExpression.CheckIfExpressionIsNull(renderContext);
 		}
 
-		public override void Accept(ITreeVisitor treeVisitor)
+		public override void Accept(ITemplateVisitor treeVisitor)
 		{
 			treeVisitor.VisitVariantValueBooleanExpression();
 			

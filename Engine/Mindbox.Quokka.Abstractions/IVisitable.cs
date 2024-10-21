@@ -16,5 +16,5 @@ namespace Mindbox.Quokka;
 
 public interface IVisitable
 {
-    void Accept(ITreeVisitor treeVisitor);
+    void Accept(ITemplateVisitor treeVisitor);
 }

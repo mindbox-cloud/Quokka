@@ -18,7 +18,7 @@ namespace Mindbox.Quokka.Tests;
 
 using System.Collections.Generic;
 
-public class TestTreeVisitor : ITreeVisitor
+public class TestTreeVisitor : ITemplateVisitor
 {
     public List<string> VisitedNodes { get; } = new ();
 

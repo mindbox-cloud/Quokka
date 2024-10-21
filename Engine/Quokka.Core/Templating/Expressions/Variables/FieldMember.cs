@@ -26,7 +26,7 @@ namespace Mindbox.Quokka
 
 	    public override string StringRepresentation => fieldName;
 
-		public override void Accept(ITreeVisitor treeVisitor)
+		public override void Accept(ITemplateVisitor treeVisitor)
 		{
 			treeVisitor.VisitFieldMember(StringRepresentation);
 			treeVisitor.EndVisit();

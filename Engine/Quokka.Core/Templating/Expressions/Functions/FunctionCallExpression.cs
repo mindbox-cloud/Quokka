@@ -98,7 +98,7 @@ namespace Mindbox.Quokka
 			return evaluationResult.CheckIfValueIsNull();
 		}
 
-		public override void Accept(ITreeVisitor treeVisitor)
+		public override void Accept(ITemplateVisitor treeVisitor)
 		{
 			treeVisitor.VisitFunctionCallExpression(FunctionName);
 

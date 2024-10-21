@@ -40,6 +40,6 @@ namespace Mindbox.Quokka
 
 		public Location Location { get; }
 
-		public abstract void Accept(ITreeVisitor treeVisitor);
+		public abstract void Accept(ITemplateVisitor treeVisitor);
 	}
 }

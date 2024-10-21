@@ -79,7 +79,7 @@ namespace Mindbox.Quokka
 			return valueStorage == null || valueStorage.CheckIfValueIsNull();
 		}
 
-		public override void Accept(ITreeVisitor treeVisitor)
+		public override void Accept(ITemplateVisitor treeVisitor)
 		{
 			treeVisitor.VisitVariableValueExpression(variableName);
 			treeVisitor.EndVisit();

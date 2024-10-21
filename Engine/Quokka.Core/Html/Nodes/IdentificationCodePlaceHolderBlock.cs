@@ -41,7 +41,7 @@ namespace Mindbox.Quokka.Html
 			}
 		}
 
-		public override void Accept(ITreeVisitor treeVisitor)
+		public override void Accept(ITemplateVisitor treeVisitor)
 		{
 			treeVisitor.VisitIdentificationCodePlaceHolderBlock();
 			treeVisitor.EndVisit();

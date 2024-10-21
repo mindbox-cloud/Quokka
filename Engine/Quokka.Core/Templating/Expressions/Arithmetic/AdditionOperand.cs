@@ -25,7 +25,7 @@ namespace Mindbox.Quokka
 
 		public abstract double Calculate(double leftOperand, RenderContext renderContext);
 		
-		public abstract void Accept(ITreeVisitor treeVisitor);
+		public abstract void Accept(ITemplateVisitor treeVisitor);
 
 		public static AdditionOperand Plus(ArithmeticExpression expression)
 		{
@@ -49,7 +49,7 @@ namespace Mindbox.Quokka
 				return leftOperand + Expression.GetValue(renderContext);
 			}
 
-			public override void Accept(ITreeVisitor treeVisitor)
+			public override void Accept(ITemplateVisitor treeVisitor)
 			{
 				treeVisitor.VisitPlusOperand();
 
@@ -71,7 +71,7 @@ namespace Mindbox.Quokka
 				return leftOperand - Expression.GetValue(renderContext);
 			}
 
-			public override void Accept(ITreeVisitor treeVisitor)
+			public override void Accept(ITemplateVisitor treeVisitor)
 			{
 				treeVisitor.VisitMinusOperand();
 

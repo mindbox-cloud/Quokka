@@ -80,7 +80,7 @@ namespace Mindbox.Quokka
 			block?.CompileGrammarSpecificData(context);
 		}
 
-		public override void Accept(ITreeVisitor treeVisitor)
+		public override void Accept(ITemplateVisitor treeVisitor)
 		{
 			treeVisitor.VisitForBlock(iterationVariableName);
 			

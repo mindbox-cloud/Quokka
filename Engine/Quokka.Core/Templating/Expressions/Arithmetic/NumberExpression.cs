@@ -37,7 +37,7 @@ namespace Mindbox.Quokka
 			return false;
 		}
 
-		public override void Accept(ITreeVisitor treeVisitor)
+		public override void Accept(ITemplateVisitor treeVisitor)
 		{
 			treeVisitor.VisitNumberExpression(number);
 			treeVisitor.EndVisit();

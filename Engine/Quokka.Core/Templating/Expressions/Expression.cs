@@ -47,6 +47,6 @@ namespace Mindbox.Quokka
 			return stringValue;
 		}
 
-		public abstract void Accept(ITreeVisitor treeVisitor);
+		public abstract void Accept(ITemplateVisitor treeVisitor);
 	}
 }

@@ -48,7 +48,7 @@ namespace Mindbox.Quokka
 			return Expression.TryGetStaticEvaluationResult();
 		}
 
-		public void Accept(ITreeVisitor treeVisitor)
+		public void Accept(ITemplateVisitor treeVisitor)
 		{
 			treeVisitor.VisitArgumentValue();
 			

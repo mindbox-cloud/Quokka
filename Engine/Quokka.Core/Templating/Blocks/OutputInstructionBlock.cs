@@ -42,7 +42,7 @@ namespace Mindbox.Quokka
 			resultWriter.Write(expression.GetOutputValue(renderContext));
 		}
 
-		public override void Accept(ITreeVisitor treeVisitor)
+		public override void Accept(ITemplateVisitor treeVisitor)
 		{
 			treeVisitor.VisitOutputInstructionBlock();
 			

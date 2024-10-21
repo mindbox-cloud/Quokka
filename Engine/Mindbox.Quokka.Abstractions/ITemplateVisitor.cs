@@ -16,7 +16,7 @@ using System.Collections.Generic;
 
 namespace Mindbox.Quokka;
 
-public interface ITreeVisitor
+public interface ITemplateVisitor
 {
     void EndVisit();
     void VisitTemplateBlock();

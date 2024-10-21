@@ -51,7 +51,7 @@ namespace Mindbox.Quokka
 				condition.CompileGrammarSpecificData(context);
 		}
 
-		public override void Accept(ITreeVisitor treeVisitor)
+		public override void Accept(ITemplateVisitor treeVisitor)
 		{
 			treeVisitor.VisitIfBlock();
 

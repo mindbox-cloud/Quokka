@@ -48,7 +48,7 @@ namespace Mindbox.Quokka
 			return conditionExpression.GetBooleanValue(renderContext);
 		}
 		
-		public override void Accept(ITreeVisitor treeVisitor)
+		public override void Accept(ITemplateVisitor treeVisitor)
 		{
 			treeVisitor.VisitConditionBlock();
 

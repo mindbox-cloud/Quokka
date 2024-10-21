@@ -35,7 +35,7 @@ namespace Mindbox.Quokka
 			return new DivOperand(expression);
 		}
 		
-		public abstract void Accept(ITreeVisitor treeVisitor);
+		public abstract void Accept(ITemplateVisitor treeVisitor);
 		
 		private class MultOperand : MultiplicationOperand
 		{
@@ -49,7 +49,7 @@ namespace Mindbox.Quokka
 				return leftOperand * Expression.GetValue(renderContext);
 			}
 			
-			public override void Accept(ITreeVisitor treeVisitor)
+			public override void Accept(ITemplateVisitor treeVisitor)
 			{
 				treeVisitor.VisitMultOperand();
 				
@@ -71,7 +71,7 @@ namespace Mindbox.Quokka
 				return leftOperand / Expression.GetValue(renderContext);
 			}
 
-			public override void Accept(ITreeVisitor treeVisitor)
+			public override void Accept(ITemplateVisitor treeVisitor)
 			{
 				treeVisitor.VisitDivOperand();
 				

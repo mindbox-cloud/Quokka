@@ -31,6 +31,6 @@ namespace Mindbox.Quokka
 		{
 		}
 
-		public abstract void Accept(ITreeVisitor treeVisitor);
+		public abstract void Accept(ITemplateVisitor treeVisitor);
 	}
 }

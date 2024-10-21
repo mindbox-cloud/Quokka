@@ -88,7 +88,7 @@ namespace Mindbox.Quokka.Html
 					isConstant: !hrefValue.TextComponents.OfType<OutputInstructionBlock>().Any()));
 		}
 
-		public override void Accept(ITreeVisitor treeVisitor)
+		public override void Accept(ITemplateVisitor treeVisitor)
 		{
 			treeVisitor.VisitLinkBlock();
 
