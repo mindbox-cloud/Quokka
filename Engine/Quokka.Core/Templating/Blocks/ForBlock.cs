@@ -84,7 +84,7 @@ namespace Mindbox.Quokka
 		{
 			treeVisitor.VisitForBlock(iterationVariableName);
 			
-			block.Accept(treeVisitor);
+			block?.Accept(treeVisitor);
 			enumerableExpression.Accept(treeVisitor);
 			
 			treeVisitor.EndVisit();

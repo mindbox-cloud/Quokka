@@ -52,7 +52,7 @@ namespace Mindbox.Quokka
 		{
 			treeVisitor.VisitConditionBlock();
 
-			block.Accept(treeVisitor);
+			block?.Accept(treeVisitor);
 			conditionExpression.Accept(treeVisitor);
 			
 			treeVisitor.EndVisit();
