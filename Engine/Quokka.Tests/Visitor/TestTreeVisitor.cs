@@ -20,7 +20,7 @@ using System.Collections.Generic;
 
 public class TestTreeVisitor : ITreeVisitor
 {
-    public List<string> VisitedNodes { get; } = [];
+    public List<string> VisitedNodes { get; } = new ();
 
     public void EndVisit()
     {
