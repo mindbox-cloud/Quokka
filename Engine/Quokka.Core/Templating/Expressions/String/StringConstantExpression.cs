@@ -17,9 +17,9 @@ namespace Mindbox.Quokka
 	internal class StringConstantExpression : StringExpression
 	{
 		private readonly string stringValue;
-		private readonly string quoteType;
+		private readonly QuoteType quoteType;
 
-		public StringConstantExpression(string stringValue, string quoteType)
+		public StringConstantExpression(string stringValue, QuoteType quoteType)
 		{
 			this.stringValue = stringValue;
 			this.quoteType = quoteType;
@@ -46,7 +46,7 @@ namespace Mindbox.Quokka
 
 		public override void Accept(ITemplateVisitor treeVisitor)
 		{
-			treeVisitor.VisitStringConstantExpression(stringValue, quoteType);
+			treeVisitor.VisitStringConstantExpression(stringValue, quoteType.ToString());
 			treeVisitor.EndVisit();
 		}
 	}

@@ -36,14 +36,14 @@ namespace Mindbox.Quokka
 			if (doubleQuotedString != null)
 			{
 				string stringValue = doubleQuotedString.Substring(1, doubleQuotedString.Length - 2);
-				return new StringConstantExpression(stringValue, "double");
+				return new StringConstantExpression(stringValue, QuoteType.Double);
 			}
 			else
 			{
 				var singleQuotedString = context.SingleQuotedString().GetText();
 
 				string stringValue = singleQuotedString.Substring(1, singleQuotedString.Length - 2);
-				return new StringConstantExpression(stringValue, "single");
+				return new StringConstantExpression(stringValue, QuoteType.Single);
 			}
 		}
 
