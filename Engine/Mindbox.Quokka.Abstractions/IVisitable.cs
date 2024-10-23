@@ -1,4 +1,4 @@
-﻿// // Copyright 2022 Mindbox Ltd
+// // Copyright 2022 Mindbox Ltd
 // //
 // // Licensed under the Apache License, Version 2.0 (the "License");
 // // you may not use this file except in compliance with the License.
@@ -12,21 +12,9 @@
 // // See the License for the specific language governing permissions and
 // // limitations under the License.
 
-using System.IO;
+namespace Mindbox.Quokka;
 
-namespace Mindbox.Quokka
+public interface IVisitable
 {
-	internal interface ITemplateNode : IVisitable
-	{
-		bool IsConstant { get; }
-
-		void PerformSemanticAnalysis(AnalysisContext context);
-
-		void Render(TextWriter resultWriter, RenderContext renderContext);
-
-		/// <summary>
-		/// Compile data that is specific to the language (html, plaintext) that is used outside of control instructions.
-		/// </summary>
-		void CompileGrammarSpecificData(GrammarSpecificDataAnalysisContext context);
-	}
+    void Accept(ITemplateVisitor treeVisitor);
 }

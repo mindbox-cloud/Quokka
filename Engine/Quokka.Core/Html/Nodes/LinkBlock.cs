@@ -87,5 +87,15 @@ namespace Mindbox.Quokka.Html
 					uniqueKey,
 					isConstant: !hrefValue.TextComponents.OfType<OutputInstructionBlock>().Any()));
 		}
+
+		public override void Accept(ITemplateVisitor treeVisitor)
+		{
+			treeVisitor.VisitLinkBlock();
+
+			foreach (var textComponent in hrefValue.TextComponents)
+				textComponent.Accept(treeVisitor);
+			
+			treeVisitor.EndVisit();
+		}
 	}
 }

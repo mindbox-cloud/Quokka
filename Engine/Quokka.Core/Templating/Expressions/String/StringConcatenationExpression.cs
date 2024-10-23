@@ -43,6 +43,16 @@ namespace Mindbox.Quokka
 			return false;
 		}
 
+		public override void Accept(ITemplateVisitor treeVisitor)
+		{
+			treeVisitor.VisitStringConcatenationExpression();
+			
+			firstOperand.Accept(treeVisitor);
+			secondOperand.Accept(treeVisitor);
+			
+			treeVisitor.EndVisit();
+		}
+
 		public override VariableValueStorage Evaluate(RenderContext renderContext)
 		{
 			return new PrimitiveVariableValueStorage(

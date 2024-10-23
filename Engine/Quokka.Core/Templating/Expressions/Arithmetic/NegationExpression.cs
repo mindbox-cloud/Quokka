@@ -42,5 +42,14 @@ namespace Mindbox.Quokka
 		{
 			return innerExpression.CheckIfExpressionIsNull(renderContext);
 		}
+
+		public override void Accept(ITemplateVisitor treeVisitor)
+		{
+			treeVisitor.VisitNegationExpression();
+
+			innerExpression.Accept(treeVisitor);
+			
+			treeVisitor.EndVisit();
+		}
 	}
 }

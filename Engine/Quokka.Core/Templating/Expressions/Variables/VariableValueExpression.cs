@@ -78,7 +78,13 @@ namespace Mindbox.Quokka
 			var valueStorage = TryGetValueStorage(renderContext);
 			return valueStorage == null || valueStorage.CheckIfValueIsNull();
 		}
-		
+
+		public override void Accept(ITemplateVisitor treeVisitor)
+		{
+			treeVisitor.VisitVariableValueExpression(variableName);
+			treeVisitor.EndVisit();
+		}
+
 		public VariableValueStorage TryGetValueStorage(RenderContext renderContext)
 		{
 			return renderContext.VariableScope.TryGetValueStorageForVariable(variableName) ??

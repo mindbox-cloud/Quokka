@@ -37,6 +37,12 @@ namespace Mindbox.Quokka
 			return false;
 		}
 
+		public override void Accept(ITemplateVisitor treeVisitor)
+		{
+			treeVisitor.VisitNumberExpression(number);
+			treeVisitor.EndVisit();
+		}
+
 		public override double GetValue(RenderContext renderContext)
 		{
 			return number;

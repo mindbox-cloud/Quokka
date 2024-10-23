@@ -79,5 +79,15 @@ namespace Mindbox.Quokka
 		{
 			block?.CompileGrammarSpecificData(context);
 		}
+
+		public override void Accept(ITemplateVisitor treeVisitor)
+		{
+			treeVisitor.VisitForBlock(iterationVariableName);
+			
+			block?.Accept(treeVisitor);
+			enumerableExpression.Accept(treeVisitor);
+			
+			treeVisitor.EndVisit();
+		}
 	}
 }

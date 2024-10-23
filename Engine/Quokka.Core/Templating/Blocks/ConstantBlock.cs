@@ -35,5 +35,11 @@ namespace Mindbox.Quokka
 		{
 			resultWriter.Write(Text);
 		}
+
+		public override void Accept(ITemplateVisitor treeVisitor)
+		{
+			treeVisitor.VisitConstantBlock(Text);
+			treeVisitor.EndVisit();
+		}
 	}
 }

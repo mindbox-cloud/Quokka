@@ -30,5 +30,11 @@ namespace Mindbox.Quokka
 		{
 			return false;
 		}
+
+		public override void Accept(ITemplateVisitor treeVisitor)
+		{
+			treeVisitor.VisitTrueExpression();
+			treeVisitor.EndVisit();
+		}
 	}
 }

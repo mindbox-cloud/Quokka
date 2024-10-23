@@ -30,5 +30,7 @@ namespace Mindbox.Quokka
 		public virtual void CompileGrammarSpecificData(GrammarSpecificDataAnalysisContext context)
 		{
 		}
+
+		public abstract void Accept(ITemplateVisitor treeVisitor);
 	}
 }

@@ -40,5 +40,11 @@ namespace Mindbox.Quokka.Html
 				htmlRenderContext.LogIdentificationCodeRendering();
 			}
 		}
+
+		public override void Accept(ITemplateVisitor treeVisitor)
+		{
+			treeVisitor.VisitIdentificationCodePlaceHolderBlock();
+			treeVisitor.EndVisit();
+		}
 	}
 }

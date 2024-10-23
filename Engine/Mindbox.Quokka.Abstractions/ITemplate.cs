@@ -19,7 +19,7 @@ using Mindbox.Quokka.Abstractions;
 
 namespace Mindbox.Quokka
 {
-	public interface ITemplate
+	public interface ITemplate : IVisitable
 	{
 		bool IsConstant { get; }
 

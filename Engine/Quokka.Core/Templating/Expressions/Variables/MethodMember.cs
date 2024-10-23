@@ -55,7 +55,17 @@ namespace Mindbox.Quokka
 
 	    public override string StringRepresentation => $"{name}()";
 
-	    private MethodCall BuildMethodCall()
+		public override void Accept(ITemplateVisitor treeVisitor)
+		{
+			treeVisitor.VisitMethodMember(name);
+
+			foreach (var argument in arguments)
+				argument.Accept(treeVisitor);
+			
+			treeVisitor.EndVisit();
+		}
+
+		private MethodCall BuildMethodCall()
 	    {
 		    var argumentValues = arguments
 			    .Select(argument => argument.TryGetStaticValue()?.GetPrimitiveValue())

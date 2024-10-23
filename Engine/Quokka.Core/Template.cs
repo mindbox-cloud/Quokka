@@ -249,6 +249,11 @@ namespace Mindbox.Quokka
 			yield return new TruncateTemplateFunction();
 			yield return new ToUnixTimeStampTemplateFunction();
 		}
+
+		public void Accept(ITemplateVisitor treeVisitor)
+		{
+			compiledTemplateTree.Accept(treeVisitor);
+		}
 	}
 }
 
