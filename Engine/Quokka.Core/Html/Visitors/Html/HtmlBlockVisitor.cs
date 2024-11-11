@@ -36,6 +36,12 @@ namespace Mindbox.Quokka.Html
 			{
 				return TryGetLinkNodeFromTagAttributes(attributes);
 			}
+
+			if (tagName.Equals("body", StringComparison.InvariantCultureIgnoreCase))
+			{
+				return new PreHeaderPlaceHolderBlock(context.LeftAngularBracket().Symbol.StartIndex);
+			}
+
 			return null;
 		}
 

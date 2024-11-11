@@ -33,12 +33,14 @@ namespace Mindbox.Quokka.Html
 		/// <param name="model">Model for parameters</param>
 		/// <param name="redirectLinkProcessor">Action that will be applied to each link url</param>
 		/// <param name="identificationCode">Html code that will be rendered at the end of the document (if specified)</param>
+		/// <param name="preHeader">Html code that will be rendered at the beginning of the document (if specified)</param>
 		/// <param name="callContextContainer">Container of call context values that can be used in functions with context</param>
 		/// <returns>Rendered Html message</returns>
 		string Render(
 			ICompositeModelValue model, 
 			Func<Guid, string, string> redirectLinkProcessor,
 			string identificationCode, 
+			string preHeader,
 			ICallContextContainer callContextContainer = null);
 		
 		/// <summary>
@@ -48,6 +50,7 @@ namespace Mindbox.Quokka.Html
 		/// <param name="settings">Settings applied to rendering process (ex. Localization for format functions)</param>
 		/// <param name="redirectLinkProcessor">Action that will be applied to each link url</param>
 		/// <param name="identificationCode">Html code that will be rendered at the end of the document (if specified)</param>
+		/// <param name="preHeader">Html code that will be rendered at the beginning of the document (if specified)</param>
 		/// <param name="callContextContainer">Container of call context values that can be used in functions with context</param>
 		/// <returns></returns>
 		string Render(
@@ -55,6 +58,7 @@ namespace Mindbox.Quokka.Html
 			RenderSettings settings,
 			Func<Guid, string, string> redirectLinkProcessor,
 			string identificationCode, 
+			string preHeader,
 			ICallContextContainer callContextContainer = null);
 		
 		void Render(
@@ -62,6 +66,7 @@ namespace Mindbox.Quokka.Html
 			ICompositeModelValue model,
 			Func<Guid, string, string> redirectLinkProcessor,
 			string identificationCode = null,
+			string preHeader = null,
 			ICallContextContainer callContextContainer = null);
 		
 		void Render(
@@ -70,6 +75,7 @@ namespace Mindbox.Quokka.Html
 			RenderSettings settings,
 			Func<Guid, string, string> redirectLinkProcessor,
 			string identificationCode = null,
+			string preHeader= null,
 			ICallContextContainer callContextContainer = null);
 	}
 }
