@@ -201,4 +201,9 @@ public class TestTemplateVisitor : ITemplateVisitor
     {
         VisitedNodes.Add("VisitIdentificationCodePlaceHolderBlock");
     }
+
+    public void VisitPreHeaderPlaceHolderBlock()
+    {
+        VisitedNodes.Add("VisitPreHeaderPlaceHolderBlock");
+    }
 }

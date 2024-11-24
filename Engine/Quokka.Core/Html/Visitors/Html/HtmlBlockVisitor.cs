@@ -39,7 +39,7 @@ namespace Mindbox.Quokka.Html
 
 			if (tagName.Equals("body", StringComparison.InvariantCultureIgnoreCase))
 			{
-				return new PreHeaderPlaceHolderBlock(context.LeftAngularBracket().Symbol.StartIndex);
+				return new PreHeaderPlaceHolderBlock(context.RightAngularBracket().Symbol.StopIndex + 1);
 			}
 
 			return null;

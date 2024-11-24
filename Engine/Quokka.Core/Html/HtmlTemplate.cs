@@ -91,7 +91,7 @@ namespace Mindbox.Quokka.Html
 			return Render(model, redirectLinkProcessor, RenderSettings.Default, identificationCode, preHeader, callContextContainer);
 		}
 
-		public string Render(// его дергаем в МТА рендере
+		public string Render(
 			ICompositeModelValue model,
 			RenderSettings settings,
 			Func<Guid, string, string> redirectLinkProcessor,
@@ -117,7 +117,10 @@ namespace Mindbox.Quokka.Html
 
 			var stringBuilder = new StringBuilder();
 			var checkVisitor = new CheckForPreHeaderVisitor();
-			this.Accept(checkVisitor);
+			Accept(checkVisitor);
+
+			if (!checkVisitor.PreHeaderNodeWasVisited)
+				stringBuilder.Append(preHeader);
 			
 			using (var stringWriter = new StringWriter(stringBuilder, settings.CultureInfo))
 			{
@@ -159,10 +162,9 @@ namespace Mindbox.Quokka.Html
 			ICompositeModelValue model,
 			Func<Guid, string, string> redirectLinkProcessor,
 			string identificationCode = null,
-			string preHeader = null,
 			ICallContextContainer callContextContainer = null)
 		{
-			Render(textWriter, model, redirectLinkProcessor, RenderSettings.Default, identificationCode, preHeader, callContextContainer);
+			Render(textWriter, model, redirectLinkProcessor, RenderSettings.Default, identificationCode, callContextContainer);
 		}
 
 		public void Render(
@@ -171,10 +173,9 @@ namespace Mindbox.Quokka.Html
 			RenderSettings settings,
 			Func<Guid, string, string> redirectLinkProcessor,
 			string identificationCode = null,
-			string preHeader = null,
 			ICallContextContainer callContextContainer = null)
 		{
-			Render(textWriter, model, redirectLinkProcessor, settings, identificationCode, preHeader, callContextContainer);
+			Render(textWriter, model, redirectLinkProcessor, settings, identificationCode, callContextContainer);
 		}
 
 		public void Render(
@@ -183,7 +184,6 @@ namespace Mindbox.Quokka.Html
 			Func<Guid, string, string> redirectLinkProcessor,
 			RenderSettings settings,
 			string identificationCode = null,
-			string preHeader = null,
 			ICallContextContainer callContextContainer = null)
 		{
 			if (model == null)
@@ -199,7 +199,7 @@ namespace Mindbox.Quokka.Html
 					functionRegistry,
 					redirectLinkProcessor,
 					identificationCode,
-					preHeader,
+					null,
 					settings,
 					effectiveCallContextContainer));
 		}

@@ -24,7 +24,7 @@ internal class PreHeaderPlaceHolderBlock(int offset) : TemplateNodeBase, IStatic
     public override void Render(TextWriter resultWriter, RenderContext renderContext)
     {
         var htmlRenderContext = (HtmlRenderContext)renderContext;
-        if (htmlRenderContext.PreHeader != null && !htmlRenderContext.HasIdentificationCodeBeenRendered)
+        if (htmlRenderContext.PreHeader != null && !htmlRenderContext.HasPreHeaderBeenRendered)
         {
             resultWriter.Write(htmlRenderContext.PreHeader);
             htmlRenderContext.LogPreHeaderRendering();

@@ -66,7 +66,6 @@ namespace Mindbox.Quokka.Html
 			ICompositeModelValue model,
 			Func<Guid, string, string> redirectLinkProcessor,
 			string identificationCode = null,
-			string preHeader = null,
 			ICallContextContainer callContextContainer = null);
 		
 		void Render(
@@ -75,7 +74,6 @@ namespace Mindbox.Quokka.Html
 			RenderSettings settings,
 			Func<Guid, string, string> redirectLinkProcessor,
 			string identificationCode = null,
-			string preHeader= null,
 			ICallContextContainer callContextContainer = null);
 	}
 }

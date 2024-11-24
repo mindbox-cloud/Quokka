@@ -69,7 +69,7 @@ namespace Mindbox.Quokka.Html
 				variableScope, Functions, RedirectLinkProcessor, IdentificationCode, PreHeader, Settings, CallContextContainer, this)
 			{
 				HasIdentificationCodeBeenRendered = HasIdentificationCodeBeenRendered,
-				HasPreHeaderBeenRendered = HasIdentificationCodeBeenRendered
+				HasPreHeaderBeenRendered = HasPreHeaderBeenRendered
 			};
 		}
 
