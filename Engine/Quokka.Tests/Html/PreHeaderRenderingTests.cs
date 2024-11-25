@@ -30,7 +30,7 @@ public class PreHeaderRenderingTests
     private const string PreHeaderTestValue = "<text>Aboba</text>";
 
     [TestMethod]
-    public void Html_PreHeader_LogicLess_ValidBody_RenderedBeforeBody()
+    public void Html_PreHeader_LogicLess_ValidBody_RenderedAfterOpeningBody()
     {
         var htmlTemplate = new HtmlTemplate(
             @"
@@ -63,7 +63,7 @@ public class PreHeaderRenderingTests
     }
 	
 	[TestMethod]
-	public void Html_PreHeader_LogicLess_OnlyOpeningBody_RenderedBeforeBody()
+	public void Html_PreHeader_LogicLess_OnlyOpeningBody_RenderedAfterOpeningBody()
 	{
 		var htmlTemplate = new HtmlTemplate(@"<body>Hello");
 
@@ -142,9 +142,9 @@ public class PreHeaderRenderingTests
 	public void NonHtml_PreHeader_RenderedInTheBeginning()
 	{
 		var htmlTemplate = new HtmlTemplate(
-			@"Just a string");
+			"Just a string");
 
-		var expected = $@"{PreHeaderTestValue}Just a string";
+		var expected = $"{PreHeaderTestValue}Just a string";
 
 		var actual = htmlTemplate.Render(
 			new CompositeModelValue(),
