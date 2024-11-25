@@ -16,10 +16,15 @@ using System.IO;
 
 namespace Mindbox.Quokka.Html;
 
-internal class PreHeaderPlaceHolderBlock(int offset) : TemplateNodeBase, IStaticBlockPart
+internal class PreHeaderPlaceHolderBlock : TemplateNodeBase, IStaticBlockPart
 {
-    public int Offset { get; } = offset;
+    public int Offset { get; }
     public int Length => 0;
+    
+    public PreHeaderPlaceHolderBlock(int offset)
+    {
+        Offset = offset;
+    }
 
     public override void Render(TextWriter resultWriter, RenderContext renderContext)
     {
