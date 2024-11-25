@@ -81,7 +81,7 @@ public class TemplateVisitorTests
 			},
 			new object[]
 			{
-				"<html><body> Hello </body></html>",//
+				"<html><body> Hello </body></html>",
 				new[]
 				{
 					"VisitTemplateBlock",
