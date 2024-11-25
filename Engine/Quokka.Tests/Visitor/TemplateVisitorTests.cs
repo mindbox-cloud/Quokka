@@ -81,12 +81,16 @@ public class TemplateVisitorTests
 			},
 			new object[]
 			{
-				"<html><body> Hello </body></html>",
+				"<html><body> Hello </body></html>",//
 				new[]
 				{
 					"VisitTemplateBlock",
 					"VisitStaticBlock",
-					"VisitConstantBlock: \u003chtml\u003e\u003cbody\u003e Hello ",
+					"VisitConstantBlock: \u003chtml\u003e\u003cbody\u003e",
+					"EndVisit",
+					"VisitPreHeaderPlaceHolderBlock",
+					"EndVisit",
+					"VisitConstantBlock:  Hello ",
 					"EndVisit",
 					"VisitIdentificationCodePlaceHolderBlock",
 					"EndVisit",
