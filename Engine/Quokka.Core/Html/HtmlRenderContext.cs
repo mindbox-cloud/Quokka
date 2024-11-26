@@ -28,15 +28,20 @@ namespace Mindbox.Quokka.Html
 		public Func<Guid, string, string> RedirectLinkProcessor { get; } 
 
 		public string IdentificationCode { get; } 
+		
+		public bool HasPreHeaderBeenRendered { get; private set; }
+		
+		public string PreHeader { get; } 
 
 		public HtmlRenderContext(
 			RuntimeVariableScope variableScope,
 			FunctionRegistry functions, 
 			Func<Guid, string, string> redirectLinkProcessor,
 			string identificationCode,
+			string preHeader,
 			RenderSettings settings,
 			ICallContextContainer callContextContainer)
-			: this(variableScope, functions, redirectLinkProcessor, identificationCode, settings, callContextContainer, null)
+			: this(variableScope, functions, redirectLinkProcessor, identificationCode, preHeader, settings, callContextContainer, null)
 		{
 			// empty
 		}
@@ -46,6 +51,7 @@ namespace Mindbox.Quokka.Html
 			FunctionRegistry functions, 
 			Func<Guid, string, string> redirectLinkProcessor,
 			string identificationCode,
+			string preHeader,
 			RenderSettings settings,
 			ICallContextContainer callContextContainer,
 			HtmlRenderContext parentRenderContext)
@@ -53,15 +59,17 @@ namespace Mindbox.Quokka.Html
 		{
 			RedirectLinkProcessor = redirectLinkProcessor;
 			IdentificationCode = identificationCode;
+			PreHeader = preHeader;
 			this.parentRenderContext = parentRenderContext;
 		}
 
 		public override RenderContext CreateInnerContext(RuntimeVariableScope variableScope)
 		{
 			return new HtmlRenderContext(
-				variableScope, Functions, RedirectLinkProcessor, IdentificationCode, Settings, CallContextContainer, this)
+				variableScope, Functions, RedirectLinkProcessor, IdentificationCode, PreHeader, Settings, CallContextContainer, this)
 			{
-				HasIdentificationCodeBeenRendered = HasIdentificationCodeBeenRendered
+				HasIdentificationCodeBeenRendered = HasIdentificationCodeBeenRendered,
+				HasPreHeaderBeenRendered = HasPreHeaderBeenRendered
 			};
 		}
 
@@ -76,6 +84,13 @@ namespace Mindbox.Quokka.Html
 			HasIdentificationCodeBeenRendered = true;
 			if (parentRenderContext != null)
 				parentRenderContext.HasIdentificationCodeBeenRendered = true;
+		}
+		
+		public void LogPreHeaderRendering()
+		{
+			HasPreHeaderBeenRendered = true;
+			if (parentRenderContext != null)
+				parentRenderContext.HasPreHeaderBeenRendered = true;
 		}
 	}
 }

@@ -62,6 +62,7 @@ namespace Mindbox.Quokka.Tests
 
 			Assert.AreEqual(expected, actual);
 		}
+		
 
 		[TestMethod]
 		public void Html_IdentificationCode_EndBodyInsideIfBlock_ConditionTrue()

@@ -54,4 +54,6 @@ public interface ITemplateVisitor
     void VisitMinusOperand();
     void VisitVariableValueExpression(string variableName);
     void VisitIdentificationCodePlaceHolderBlock();
+    void VisitPreHeaderPlaceHolderBlock();
+
 }
