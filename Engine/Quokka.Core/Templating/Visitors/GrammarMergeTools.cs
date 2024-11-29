@@ -95,7 +95,7 @@ namespace Mindbox.Quokka
 							outerBlockPosition = currentInnerBlockEnd + 1;
 
 							var nextInnerBlockIndex = currentInnerBlockIndex + 1;
-							var nextInnerBlock = innerGrammarBlocks.Count > nextInnerBlockIndex //start
+							var nextInnerBlock = innerGrammarBlocks.Count > nextInnerBlockIndex
 													? innerGrammarBlocks[nextInnerBlockIndex]
 													: null;
 
@@ -131,7 +131,6 @@ namespace Mindbox.Quokka
 							outerBlockPosition = outerBlockEnd + 1;
 						}
 					}
-					
 				}
 			}
 
