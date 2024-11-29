@@ -96,8 +96,8 @@ namespace Mindbox.Quokka
 
 							var nextInnerBlockIndex = currentInnerBlockIndex + 1;
 							var nextInnerBlock = innerGrammarBlocks.Count > nextInnerBlockIndex
-									? innerGrammarBlocks[nextInnerBlockIndex]
-									: null;
+								? innerGrammarBlocks[nextInnerBlockIndex]
+								: null;
 
 							// There is a constant portion of outer grammar block that immediately follows the inner grammar block.
 							// This portion must be added to the result stream.
@@ -108,14 +108,10 @@ namespace Mindbox.Quokka
 									throw new InvalidOperationException("Inner grammar block ends in a non-constant block");
 
 								var triviaLength = nextInnerBlock == null || nextInnerBlock.Offset > outerBlockEnd
-										? outerBlock.Length - outerBlockPosition + outerBlock.Offset
-										: nextInnerBlock.Offset - outerBlockPosition;
+									? outerBlock.Length - outerBlockPosition + outerBlock.Offset
+									: nextInnerBlock.Offset - outerBlockPosition;
 
-								var trailingTriviaBlock = new ConstantBlock(
-									GetSubstringOfCodePoints(
-										constantOuterBlock.Text,
-										outerBlockPosition - outerBlock.Offset,
-										triviaLength),
+								var trailingTriviaBlock = new ConstantBlock(GetSubstringOfCodePoints(constantOuterBlock.Text, outerBlockPosition - outerBlock.Offset, triviaLength),
 									outerBlockPosition,
 									triviaLength);
 								result.Add(trailingTriviaBlock);
