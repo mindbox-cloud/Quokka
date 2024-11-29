@@ -88,7 +88,8 @@ namespace Mindbox.Quokka
 							result.Add(currentInnerBlock);
 						}
 
-						// Current inner grammar block is fully contained within current outer grammar block.
+						// Current inner grammar block is fully contained within current outer grammar block
+						// or grammar block is zero length and precedes current outer grammar block.
 						if (currentInnerBlockEnd <= outerBlockEnd)
 						{
 							outerBlockPosition = currentInnerBlockEnd + 1;
@@ -100,7 +101,7 @@ namespace Mindbox.Quokka
 
 							// There is a constant portion of outer grammar block that immediately follows the inner grammar block.
 							// This portion must be added to the result stream.
-							if (currentInnerBlockEnd < outerBlockEnd)
+							if (currentInnerBlockEnd < outerBlockEnd && currentInnerBlockEnd + 1 != outerBlockPosition)
 							{
 								var constantOuterBlock = outerBlock as ConstantBlock;
 								if (constantOuterBlock == null)
@@ -110,8 +111,7 @@ namespace Mindbox.Quokka
 									? outerBlock.Length - outerBlockPosition + outerBlock.Offset
 									: nextInnerBlock.Offset - outerBlockPosition;
 
-								var trailingTriviaBlock = new ConstantBlock(
-									GetSubstringOfCodePoints(constantOuterBlock.Text, outerBlockPosition - outerBlock.Offset, triviaLength),
+								var trailingTriviaBlock = new ConstantBlock(GetSubstringOfCodePoints(constantOuterBlock.Text, outerBlockPosition - outerBlock.Offset, triviaLength),
 									outerBlockPosition,
 									triviaLength);
 								result.Add(trailingTriviaBlock);

@@ -17,6 +17,8 @@ using System.Linq;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
+using Mindbox.Quokka.Html;
+
 namespace Mindbox.Quokka.Tests.Html
 {
 	[TestClass]
@@ -137,6 +139,71 @@ namespace Mindbox.Quokka.Tests.Html
 			Assert.AreEqual("YYYYY", result[3].Text);
 			Assert.AreEqual("${ param }", result[4].Text);
 			Assert.AreEqual("0123456789A", result[5].Text);
+		}
+		
+		[TestMethod]
+		public void HtmlMerge_ZeroLengthInnerBlockRightBetweenToOuterConstatnts()
+		{
+			var outer = new List<IStaticBlockPart>
+			{
+				new ConstantBlock("1234512345", 0, 10),
+				new ConstantBlock("abcdeabcde", 10, 10),
+			};
+
+			var inner = new List<IStaticBlockPart>
+			{
+				new PreHeaderPlaceHolderBlock(10)
+			};
+
+			var result = GrammarMergeTools.MergeInnerAndOuterBlocks(outer, inner)
+				.ToList();
+
+			Assert.AreEqual("1234512345", (result[0] as ConstantBlock).Text);
+			Assert.AreEqual(10, (result[1] as PreHeaderPlaceHolderBlock).Offset);
+			Assert.AreEqual("abcdeabcde", (result[2] as ConstantBlock).Text);
+		}
+		
+		[TestMethod]
+		public void HtmlMerge_ZeroLengthInnerBlockInsideOuter()
+		{
+			var outer = new List<IStaticBlockPart>
+			{
+				new ConstantBlock("1234554321", 0, 10),
+			};
+
+			var inner = new List<IStaticBlockPart>
+			{
+				new PreHeaderPlaceHolderBlock(5)
+			};
+
+			var result = GrammarMergeTools.MergeInnerAndOuterBlocks(outer, inner)
+				.ToList();
+
+			Assert.AreEqual("12345", (result[0] as ConstantBlock).Text);
+			Assert.AreEqual(5, (result[1] as PreHeaderPlaceHolderBlock).Offset);
+			Assert.AreEqual("54321", (result[2] as ConstantBlock).Text);
+		}
+		
+		[TestMethod]
+		public void HtmlMerge_ZeroLengthInnerBlockBeforeNonConstant()
+		{
+			var outer = new List<IStaticBlockPart>
+			{
+				new ConstantBlock("1234512345", 0, 10),
+				new OutputInstructionBlock(new StringConstantExpression("value", QuoteType.Double), 10, 10),
+			};
+
+			var inner = new List<IStaticBlockPart>
+			{
+				new PreHeaderPlaceHolderBlock(10)
+			};
+
+			var result = GrammarMergeTools.MergeInnerAndOuterBlocks(outer, inner)
+				.ToList();
+
+			Assert.AreEqual("1234512345", (result[0] as ConstantBlock).Text);
+			Assert.AreEqual(10, (result[1] as PreHeaderPlaceHolderBlock).Offset);
+			Assert.AreEqual(10, (result[2] as OutputInstructionBlock).Offset);
 		}
 	}
 }
