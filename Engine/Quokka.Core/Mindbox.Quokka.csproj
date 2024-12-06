@@ -1,17 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
-    <TargetFrameworks>net6.0;net7.0</TargetFrameworks>
+  <PropertyGroup>    
     <NoWarn>1701;1702;1705;3021</NoWarn>
-    <Company>Mindbox</Company>
-    <Product>Quokka template engine</Product>
-    <Description>String templating library</Description>
-    <Copyright>Mindbox 2019</Copyright>
-    <PackageProjectUrl>https://github.com/mindbox-cloud/Quokka</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/mindbox-cloud/Quokka</RepositoryUrl>
-    <PackageTags>string templating</PackageTags>
     <RootNamespace>Mindbox.Quokka</RootNamespace>
     <AssemblyName>Mindbox.Quokka</AssemblyName>
-    <Authors>Mindbox</Authors>
     <IsPackable>true</IsPackable>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -26,7 +17,7 @@
     <Folder Include="Html\Generated\" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Antlr4.Runtime.Standard" Version="4.8.0" />
+    <PackageReference Include="Antlr4.Runtime.Standard" Version="4.13.1" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Mindbox.Quokka.Abstractions\Mindbox.Quokka.Abstractions.csproj" />

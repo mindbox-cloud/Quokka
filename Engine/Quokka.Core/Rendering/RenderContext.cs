@@ -30,8 +30,7 @@ namespace Mindbox.Quokka
 			RuntimeVariableScope variableScope, FunctionRegistry functions, RenderSettings settings,
 			ICallContextContainer callContextContainer)
 		{
-			if (callContextContainer == null) 
-				throw new ArgumentNullException(nameof(callContextContainer));
+			ArgumentNullException.ThrowIfNull(callContextContainer);
 
 			VariableScope = variableScope;
 			Functions = functions;

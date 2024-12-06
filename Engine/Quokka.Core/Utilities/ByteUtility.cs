@@ -31,8 +31,7 @@ namespace Mindbox.Quokka
 
 		public static string ToHexString(IEnumerable<byte> values)
 		{
-			if (values == null)
-				throw new ArgumentNullException(nameof(values));
+			ArgumentNullException.ThrowIfNull(values);
 
 			var result = new StringBuilder();
 			foreach (var value in values)

@@ -29,10 +29,8 @@ namespace Mindbox.Quokka
 			IExpression firstOperand, 
 			IExpression secondOperand)
 		{
-			if (firstOperand == null)
-				throw new ArgumentNullException(nameof(firstOperand));
-			if (secondOperand == null)
-				throw new ArgumentNullException(nameof(secondOperand));
+			ArgumentNullException.ThrowIfNull(firstOperand);
+			ArgumentNullException.ThrowIfNull(secondOperand);
 
 			this.firstOperand = firstOperand;
 			this.secondOperand = secondOperand;

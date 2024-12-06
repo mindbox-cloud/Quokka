@@ -28,9 +28,8 @@ namespace Mindbox.Quokka
 
 		public override string Invoke(RenderSettings settings, string value)
 		{
-			if (value == null)
-				throw new ArgumentNullException(nameof(value));
-
+			ArgumentNullException.ThrowIfNull(value);
+			
 			var parts = value.Split(" ".ToCharArray(), StringSplitOptions.RemoveEmptyEntries)
 				.Select((str, i) => i == 0 ? Capitalize(str) : str);
 
@@ -39,13 +38,11 @@ namespace Mindbox.Quokka
 		
 		private static string Capitalize(string value)
 		{
-			if (value == null)
-				throw new ArgumentNullException(nameof(value));
-
+			ArgumentNullException.ThrowIfNull(value);
 			if (value == string.Empty)
 				return value;
 
-			return value.Substring(0, 1).ToUpper() + value.Substring(1);
+			return value[..1].ToUpper() + value[1..];
 		}
 	}
 }

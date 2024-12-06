@@ -25,8 +25,7 @@ namespace Mindbox.Quokka
 
 		protected TemplateFunctionArgument(string name, bool allowsNull = false)
 		{
-			if (string.IsNullOrWhiteSpace(name))
-				throw new ArgumentException("Argument name should not be null or blank", nameof(name));
+			ArgumentException.ThrowIfNullOrEmpty(name);
 
 			Name = name;
 			AllowsNull = allowsNull;

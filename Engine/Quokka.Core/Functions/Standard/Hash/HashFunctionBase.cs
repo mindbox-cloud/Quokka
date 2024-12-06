@@ -38,15 +38,12 @@ namespace Mindbox.Quokka
 
 		private string GetHashString(string value)
 		{
-			if (value == null)
-				throw new ArgumentNullException(nameof(value));
+			ArgumentNullException.ThrowIfNull(value);
 
-			using (var hashAlgorithm = CreateHashAlgorithm())
-			{
-				var plainBytes = Encoding.UTF8.GetBytes(value);
-				var encodedBytes = hashAlgorithm.ComputeHash(plainBytes);
-				return ByteUtility.ToHexString(encodedBytes);
-			}
+			using var hashAlgorithm = CreateHashAlgorithm();
+			var plainBytes = Encoding.UTF8.GetBytes(value);
+			var encodedBytes = hashAlgorithm.ComputeHash(plainBytes);
+			return ByteUtility.ToHexString(encodedBytes);
 		}
 	}
 }

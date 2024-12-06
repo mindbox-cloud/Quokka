@@ -25,8 +25,7 @@ namespace Mindbox.Quokka
 		public ArrayVariableValueStorage(IArrayModelValue modelValue)
 			: base(modelValue)
 		{
-			if (modelValue == null)
-				throw new ArgumentNullException(nameof(modelValue));
+			ArgumentNullException.ThrowIfNull(modelValue);
 			
 			elements = modelValue
 				.Elements

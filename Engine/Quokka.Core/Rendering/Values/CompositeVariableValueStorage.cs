@@ -28,8 +28,7 @@ namespace Mindbox.Quokka
 
 		public CompositeVariableValueStorage(ICompositeModelValue modelValue)
 		{
-			if (modelValue == null)
-				throw new ArgumentNullException(nameof(modelValue));
+			ArgumentNullException.ThrowIfNull(modelValue);
 
 			ModelValue = modelValue;
 
@@ -49,10 +48,8 @@ namespace Mindbox.Quokka
 
 		public CompositeVariableValueStorage(string fieldName, VariableValueStorage fieldValueStorage)
 		{
-			if (fieldName == null)
-				throw new ArgumentNullException(nameof(fieldName));
-			if (fieldValueStorage == null)
-				throw new ArgumentNullException(nameof(fieldValueStorage));
+			ArgumentNullException.ThrowIfNull(fieldName);
+			ArgumentNullException.ThrowIfNull(fieldValueStorage);
 
 			fields = new Dictionary<string, VariableValueStorage>(StringComparer.InvariantCultureIgnoreCase)
 			{
