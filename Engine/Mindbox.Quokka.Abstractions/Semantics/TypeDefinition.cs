@@ -108,17 +108,15 @@ namespace Mindbox.Quokka
 
 		internal static TypeDefinition GetTypeDefinitionFromModelDefinition(IModelDefinition modelDefinition)
 		{
-			if (modelDefinition == null)
-				throw new ArgumentNullException(nameof(modelDefinition));
+			ArgumentNullException.ThrowIfNull(modelDefinition);
 
-			if (modelDefinition is IArrayModelDefinition)
-				return Array;
-			else if (modelDefinition is ICompositeModelDefinition)
-				return Composite;
-			else if (modelDefinition is IPrimitiveModelDefinition primitiveDefinition)
-				return primitiveDefinition.Type;
-			else
-				throw new InvalidOperationException("Unsupported model definition");
+			return modelDefinition switch
+			{
+				IArrayModelDefinition => Array,
+				ICompositeModelDefinition => Composite,
+				IPrimitiveModelDefinition primitiveDefinition => primitiveDefinition.Type,
+				_ => throw new InvalidOperationException("Unsupported model definition")
+			};
 		}
 
 		internal static TypeDefinition GetResultingTypeForMultipleOccurrences<TTypedObject>(

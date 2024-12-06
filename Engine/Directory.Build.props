@@ -1,9 +1,21 @@
 <Project>
     <PropertyGroup>
+        <TargetFrameworks>net7.0;net8.0;net9.0</TargetFrameworks>
         <LangVersion>latest</LangVersion>
+        <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+        <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+        <NuGetAuditMode>all</NuGetAuditMode>
+        <Company>Mindbox</Company>
+        <Product>Quokka template engine</Product>
+        <Description>String templating library</Description>
+        <Copyright>Mindbox 2019</Copyright>
+        <PackageProjectUrl>https://github.com/mindbox-cloud/Quokka</PackageProjectUrl>
+        <RepositoryUrl>https://github.com/mindbox-cloud/Quokka</RepositoryUrl>
+        <PackageTags>string templating</PackageTags>
+        <Authors>Mindbox</Authors>
     </PropertyGroup>
 
     <PropertyGroup>
-        <VersionPrefix>7.0.2</VersionPrefix>
+        <VersionPrefix>8.0.0</VersionPrefix>
     </PropertyGroup>
 </Project>

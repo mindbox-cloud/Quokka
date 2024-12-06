@@ -46,10 +46,8 @@ namespace Mindbox.Quokka
 			Func<VisitingContext, IQuokkaVisitor<StaticBlock>> staticBlockVisitorCreator = null,
 			IEnumerable<SemanticErrorSubListenerBase> semanticErrorSubListeners = null)
 		{
-			if (templateText == null)
-				throw new ArgumentNullException(nameof(templateText));
-			if (functionRegistry == null)
-				throw new ArgumentNullException(nameof(functionRegistry));
+			ArgumentNullException.ThrowIfNull(templateText);
+			ArgumentNullException.ThrowIfNull(functionRegistry);
 
 			this.functionRegistry = functionRegistry;
 
@@ -123,8 +121,8 @@ namespace Mindbox.Quokka
 
 		public virtual string Render(ICompositeModelValue model, RenderSettings settings, ICallContextContainer callContextContainer = null)
 		{
-			if (model == null)
-				throw new ArgumentNullException(nameof(model));
+			ArgumentNullException.ThrowIfNull(model);
+			
 			if (Errors.Any())
 				throw new TemplateContainsErrorsException(Errors);
 
@@ -157,10 +155,9 @@ namespace Mindbox.Quokka
 			RenderSettings settings,
 			ICallContextContainer callContextContainer = null)
 		{
-			if (textWriter == null)
-				throw new ArgumentNullException(nameof(textWriter));
-			if (model == null)
-				throw new ArgumentNullException(nameof(model));
+			ArgumentNullException.ThrowIfNull(textWriter);
+			ArgumentNullException.ThrowIfNull(model);
+			
 			if (Errors.Any())
 				throw new TemplateContainsErrorsException(Errors);
 
