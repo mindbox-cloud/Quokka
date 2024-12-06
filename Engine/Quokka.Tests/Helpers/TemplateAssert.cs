@@ -32,8 +32,7 @@ namespace Mindbox.Quokka.Tests
 			ICompositeModelDefinition expected,
 			ICompositeModelDefinition actual)
 		{
-			if (expected == null)
-				throw new ArgumentNullException(nameof(expected));
+			ArgumentNullException.ThrowIfNull(expected);
 
 			Assert.IsNotNull(actual);
 

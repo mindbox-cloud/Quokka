@@ -110,8 +110,7 @@ namespace Mindbox.Quokka.Html
 			string preHeader = null,
 			ICallContextContainer callContextContainer = null)
 		{
-			if (model == null)
-				throw new ArgumentNullException(nameof(model));
+			ArgumentNullException.ThrowIfNull(model);
 
 			var effectiveCallContextContainer = callContextContainer ?? CallContextContainer.Empty;
 
@@ -186,8 +185,7 @@ namespace Mindbox.Quokka.Html
 			string identificationCode = null,
 			ICallContextContainer callContextContainer = null)
 		{
-			if (model == null)
-				throw new ArgumentNullException(nameof(model));
+			ArgumentNullException.ThrowIfNull(model);
 
 			var effectiveCallContextContainer = callContextContainer ?? CallContextContainer.Empty;
 

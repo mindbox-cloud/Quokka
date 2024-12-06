@@ -33,8 +33,7 @@ namespace Mindbox.Quokka
 			IEnumerable<IModelMethod> methods = null)
 			: base(fields, methods)
 		{
-			if (elements == null)
-				throw new ArgumentNullException(nameof(elements));
+			ArgumentNullException.ThrowIfNull(elements);
 
 			Elements = elements
 				.ToList()

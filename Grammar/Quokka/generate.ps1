@@ -4,7 +4,7 @@ function GenerateGrammarFiles ($grammarFile, $directory)
 
 	& java `
 		"-jar" `
-		"..\..\Tools\antlr-4.7-complete.jar" `
+		"../../Tools/antlr-4.13.2-complete.jar" `
 		"$grammarFile" `
 		"-lib" $directory `
 		"-encoding" "UTF-8" `
@@ -17,8 +17,8 @@ function GenerateGrammarFiles ($grammarFile, $directory)
 }
 
 $scriptPath = split-path -parent $MyInvocation.MyCommand.Definition
-$generatedDirectory = "..\..\Engine\Quokka.Core\Generated"
-$generatedHtmlDirectory = "..\..\Engine\Quokka.Core\Html\Generated"
+$generatedDirectory = "../../Engine/Quokka.Core/Generated"
+$generatedHtmlDirectory = "../../Engine/Quokka.Core/Html/Generated"
 
 GenerateGrammarFiles (Join-Path $scriptPath "QuokkaLex.g4") $generatedDirectory
 GenerateGrammarFiles (Join-Path $scriptPath "Quokka.g4") $generatedDirectory

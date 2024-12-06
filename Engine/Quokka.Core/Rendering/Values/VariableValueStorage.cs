@@ -47,20 +47,15 @@ namespace Mindbox.Quokka
 
 		protected static VariableValueStorage CreateStorageForValue(IModelValue value)
 		{
-			if (value == null)
-				throw new ArgumentNullException(nameof(value));
+			ArgumentNullException.ThrowIfNull(value);
 
-			switch (value)
+			return value switch
 			{
-				case IPrimitiveModelValue primitiveValue:
-					return new PrimitiveVariableValueStorage(primitiveValue);
-				case IArrayModelValue arrayValue:
-					return new ArrayVariableValueStorage(arrayValue);
-				case ICompositeModelValue compositeValue:
-					return new CompositeVariableValueStorage(compositeValue);
-				default:
-					throw new NotSupportedException($"Unsupported parameter value type {value.GetType().Name}");
-			}
+				IPrimitiveModelValue primitiveValue => new PrimitiveVariableValueStorage(primitiveValue),
+				IArrayModelValue arrayValue => new ArrayVariableValueStorage(arrayValue),
+				ICompositeModelValue compositeValue => new CompositeVariableValueStorage(compositeValue),
+				_ => throw new NotSupportedException($"Unsupported parameter value type {value.GetType().Name}")
+			};
 		}
 	}
 }

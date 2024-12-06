@@ -26,21 +26,20 @@ namespace Mindbox.Quokka
 			IEnumerable<ICompositeModelDefinition> definitions,
 			out IList<ITemplateError> errors)
 		{
-			if (definitions == null)
-				throw new ArgumentNullException(nameof(definitions));
+			ArgumentNullException.ThrowIfNull(definitions);
 
 			var errorListener = new ModelDefinitionErrorListener();
 
 			var definitionList = definitions.ToList();
 			if (!definitionList.Any())
 			{
-				errors = new ITemplateError[0];
+				errors = Array.Empty<ITemplateError>();
 				return new CompositeModelDefinition(new Dictionary<string, IModelDefinition>());
 			}
 
 			if (definitionList.Count == 1)
 			{
-				errors = new ITemplateError[0];
+				errors = Array.Empty<ITemplateError>();
 				return definitionList[0];
 			}
 
@@ -105,7 +104,7 @@ namespace Mindbox.Quokka
 			// It's easier to just filter out the Unknown as they don't affect the resulting definition in any way
 			// (unless all values are of Unknown type, in which case the result is also Unknown).
 
-			// This needs to be rewrited in a more obvious manner, probably when the type system is reimplemented.
+			// This needs to be rewritten in a more obvious manner, probably when the type system is reimplemented.
 
 			var meaningfulValues = allValues.Where(
 					value =>

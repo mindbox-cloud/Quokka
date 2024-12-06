@@ -50,9 +50,7 @@ namespace Mindbox.Quokka
 
 		internal override decimal ConvertValue(VariableValueStorage value)
 		{
-			if (value == null)
-				throw new ArgumentNullException(nameof(value));
-
+			ArgumentNullException.ThrowIfNull(value);
 			return Convert.ToDecimal(value.GetPrimitiveValue());
 		}
 	}
@@ -90,9 +88,8 @@ namespace Mindbox.Quokka
 
 		internal override int ConvertValue(VariableValueStorage value)
 		{
-			if (value == null)
-				throw new ArgumentNullException(nameof(value));
-
+			ArgumentNullException.ThrowIfNull(value);
+			
 			return Convert.ToInt32(value.GetPrimitiveValue());
 		}
 	}
@@ -119,6 +116,6 @@ namespace Mindbox.Quokka
 			ErrorMessage = errorMessage;
 		}
 
-		public static ArgumentValueValidationResult Valid { get; } = new ArgumentValueValidationResult(true);
+		public static ArgumentValueValidationResult Valid { get; } = new(true);
 	}
 }
