@@ -1,0 +1,5 @@
+﻿<Solution>
+  <Project Path="Mindbox.Quokka.Abstractions\Mindbox.Quokka.Abstractions.csproj" Type="Classic C#" />
+  <Project Path="Quokka.Core\Mindbox.Quokka.csproj" Type="Classic C#" />
+  <Project Path="Quokka.Tests\Mindbox.Quokka.Tests.csproj" Type="Classic C#" />
+</Solution>

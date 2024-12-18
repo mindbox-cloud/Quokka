@@ -29,13 +29,13 @@ jobs:
         dotnet-version: 9
 
     - name: Build
-      run: dotnet build Engine/Quokka.sln --configuration Release
+      run: dotnet build Engine/Quokka.slnx --configuration Release
       
     - name: Test
-      run: dotnet test Engine/Quokka.sln --no-build --configuration Release
+      run: dotnet test Engine/Quokka.slnx --no-build --configuration Release
       
     - name: Pack
-      run: dotnet pack Engine/Quokka.sln -c Release
+      run: dotnet pack Engine/Quokka.slnx -c Release
 
     - name: Publish
       run: dotnet nuget push **/*.nupkg -k ${{secrets.MINDBOX_NUGET_AUTH_TOKEN}} -s https://www.nuget.org/api/v2/package
