@@ -26,22 +26,19 @@ jobs:
         dotnet-version: 9
         
     - name: Build
-      run: dotnet build Engine/Quokka.sln --configuration Release
-      
-    - name: Test
-      run: dotnet test Engine/Quokka.sln --no-build --configuration Release
-
+      run: dotnet build Engine/Quokka.slnx --configuration Release
+ 
     - name: Run tests net7
       run: >
-        dotnet test Engine/Quokka.sln --no-build -c Release -f net7.0 --logger "trx;LogFileName=test-results-net7.trx" || true
+        dotnet test Engine/Quokka.slnx --no-build -c Release -f net7.0 --logger "trx;LogFileName=test-results-net7.trx" || true
         
     - name: Run tests net8
       run: >
-        dotnet test Engine/Quokka.sln --no-build -c Release -f net8.0 --logger "trx;LogFileName=test-results-net8.trx" || true
+        dotnet test Engine/Quokka.slnx --no-build -c Release -f net8.0 --logger "trx;LogFileName=test-results-net8.trx" || true
 
     - name: Run tests net9
       run: >
-        dotnet test Engine/Quokka.sln --no-build -c Release -f net9.0 --logger "trx;LogFileName=test-results-net9.trx" --collect:"XPlat Code Coverage" --results-directory coverage || true
+        dotnet test Engine/Quokka.slnx --no-build -c Release -f net9.0 --logger "trx;LogFileName=test-results-net9.trx" --collect:"XPlat Code Coverage" --results-directory coverage || true
 
     - name: Test report
       uses: dorny/test-reporter@v1
