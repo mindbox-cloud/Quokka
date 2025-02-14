@@ -264,3 +264,4 @@ Grammar/Quokka/target/generated-sources/antlr4/.gitignore
 
 Grammar/Quokka/.antlr/*
 Grammar/Quokka/input.txt
+.vscode/settings.json

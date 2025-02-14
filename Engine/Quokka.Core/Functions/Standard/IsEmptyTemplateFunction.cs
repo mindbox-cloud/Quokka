@@ -44,6 +44,10 @@ namespace Mindbox.Quokka
 				if (value is string stringValue)
 					isEmpty = string.IsNullOrWhiteSpace(stringValue);
 			}
+			else if (storage is ArrayVariableValueStorage arrayVariableValueStorage)
+			{
+				isEmpty = !arrayVariableValueStorage.GetElements().Any();
+			}
 			return new PrimitiveVariableValueStorage(isEmpty);
 		}
 	}
