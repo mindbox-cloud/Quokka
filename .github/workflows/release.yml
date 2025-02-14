@@ -26,7 +26,10 @@ jobs:
     - name: Setup .NET 9.0
       uses: actions/setup-dotnet@v4
       with:
-        dotnet-version: 9
+        dotnet-version: |
+          7
+          8
+          9
 
     - name: Build
       run: dotnet build Engine/Quokka.slnx --configuration Release
