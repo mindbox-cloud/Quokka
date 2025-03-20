@@ -300,7 +300,43 @@ namespace Mindbox.Quokka.Tests
 					new ModelField("DateOffset", 1.5m)));
 
 			Assert.AreEqual("2016.01.02 12:00:00", result);
-		}
+		}		
+		
+		[TestMethod]
+		public void Render_AddHours_PositiveInt_Works()
+		{
+			var template = new Template("${ formatDateTime(AddHours(Date, 3), 'yyyy.MM.dd HH:mm:ss') }");
+
+			var result = template.Render(
+				new CompositeModelValue(
+					new ModelField("Date", new DateTime(2016, 01, 01, 15, 03, 05))));
+
+			Assert.AreEqual("2016.01.01 18:03:05", result);
+		}	
+		
+		[TestMethod]
+		public void Render_AddHours_NegativeInt_Works()
+		{
+			var template = new Template("${ formatDateTime(AddHours(Date, -3), 'yyyy.MM.dd HH:mm:ss') }");
+
+			var result = template.Render(
+				new CompositeModelValue(
+					new ModelField("Date", new DateTime(2016, 01, 01, 15, 03, 05))));
+
+			Assert.AreEqual("2016.01.01 12:03:05", result);
+		}	
+		
+		[TestMethod]
+		public void Render_AddHours_PositiveDecimal_Works()
+		{
+			var template = new Template("${ formatDateTime(AddHours(Date, 1.5), 'yyyy.MM.dd HH:mm:ss') }");
+
+			var result = template.Render(
+				new CompositeModelValue(
+					new ModelField("Date", new DateTime(2016, 01, 01, 15, 03, 05))));
+
+			Assert.AreEqual("2016.01.01 16:33:05", result);
+		}	
 
 		[TestMethod]
 		[ExpectedException(typeof(TemplateContainsErrorsException))]
