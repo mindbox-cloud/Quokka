@@ -51,12 +51,12 @@ namespace Mindbox.Quokka
 
 			Boolean = new PrimitiveTypeDefinition<bool>("Boolean", Primitive, 10);
 			Decimal = new PrimitiveTypeDefinition<decimal>("Decimal", Primitive, 15);
-			Integer = new PrimitiveTypeDefinition<int>("Integer", Decimal, 20);
+			Integer = new PrimitiveTypeDefinition<long>("Integer", Decimal, 20);
 			String = new PrimitiveTypeDefinition<string>("String", Primitive, 10);
 			DateTime = new PrimitiveTypeDefinition<DateTime>("DateTime", Primitive, 15);
 			TimeSpan = new PrimitiveTypeDefinition<TimeSpan>("TimeSpan", Primitive, 15);
 
-			primitiveTypeMap = new ReadOnlyDictionary<Type, TypeDefinition>(
+			primitiveTypeMap = new Dictionary<Type, TypeDefinition>(
 				new []
 				{
 					Boolean,
@@ -68,6 +68,8 @@ namespace Mindbox.Quokka
 				}
 				.Cast<IPrimitiveTypeDefinition>()
 				.ToDictionary(type => type.RuntimeType, type => (TypeDefinition)type));
+			
+			((Dictionary<Type, TypeDefinition>)primitiveTypeMap).Add(typeof(int), Integer);
 
 		}
 

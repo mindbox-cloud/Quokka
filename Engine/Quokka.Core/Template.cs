@@ -228,6 +228,7 @@ namespace Mindbox.Quokka
 			yield return new ChooseRandomTextFunction();
 			yield return new FloorTemplateFunction();
 			yield return new CeilingTemplateFunction();
+			yield return new SqrtTemplateFunction();
 			yield return new SubstringTemplateFunction();
 			yield return new SubstringWithLengthTemplateFunction();
 			yield return new LengthTemplateFunction();
