@@ -13,6 +13,7 @@
 // // limitations under the License.
 
 using System;
+using System.Collections.Generic;
 
 namespace Mindbox.Quokka.Html
 {
@@ -22,13 +23,20 @@ namespace Mindbox.Quokka.Html
 		public string RedirectUrl { get; }
 		public string Name { get; }
 		public bool IsConstant { get; }
+		public IReadOnlyDictionary<string, string> Attributes { get; }
 
-		public Reference(string redirectUrl, string name, Guid uniqueKey, bool isConstant)
+		public Reference(
+			string redirectUrl,
+			string name,
+			Guid uniqueKey,
+			bool isConstant,
+			IReadOnlyDictionary<string, string> attributes = null)
 		{
 			RedirectUrl = redirectUrl;
 			Name = name;
 			UniqueKey = uniqueKey;
 			IsConstant = isConstant;
+			Attributes = attributes ?? new Dictionary<string, string>(StringComparer.InvariantCultureIgnoreCase);
 		}
 	}
 }

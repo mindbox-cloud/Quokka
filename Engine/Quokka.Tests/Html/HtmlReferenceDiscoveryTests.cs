@@ -383,5 +383,59 @@ namespace Mindbox.Quokka.Tests.Html
 				},
 				references);
 		}
+
+		[TestMethod]
+		public void Html_ReferenceDiscovery_AHref_SingleDataAttribute_PopulatesAttributes()
+		{
+			var template = new HtmlTemplate(
+				"<a href=\"http://example.com\" data-custom=\"value-42\">Test</a>");
+			var references = template.GetReferences();
+
+			Assert.AreEqual(1, references.Count);
+			ReferencesAssert.ContainsAttribute(references[0], "data-custom", "value-42");
+		}
+
+		[TestMethod]
+		public void Html_ReferenceDiscovery_AHref_MultipleDataAttributes_AllPopulated()
+		{
+			var template = new HtmlTemplate(
+				"<a href=\"http://example.com\" data-foo=\"bar\" data-name=\"Link name\">Test</a>");
+			var references = template.GetReferences();
+
+			Assert.AreEqual(1, references.Count);
+			ReferencesAssert.ContainsAttribute(references[0], "data-foo", "bar");
+			ReferencesAssert.ContainsAttribute(references[0], "data-name", "Link name");
+		}
+
+		[TestMethod]
+		public void Html_ReferenceDiscovery_AHref_AttributeWithoutValue_EmptyString()
+		{
+			var template = new HtmlTemplate(
+				"<a href=\"http://example.com\" data-custom>Test</a>");
+			var references = template.GetReferences();
+
+			Assert.AreEqual(1, references.Count);
+			ReferencesAssert.ContainsAttribute(references[0], "data-custom", string.Empty);
+		}
+
+		[TestMethod]
+		public void Html_ReferenceDiscovery_AHref_NoExtraAttributes_AttributesEmpty()
+		{
+			var template = new HtmlTemplate("<a href=\"http://example.com\">Test</a>");
+			var references = template.GetReferences();
+
+			Assert.AreEqual(1, references.Count);
+			ReferencesAssert.DoesNotContainAttribute(references[0], "data-custom");
+		}
+
+		[TestMethod]
+		public void Html_ReferenceDiscovery_AHref_HrefIsIncludedInAttributes()
+		{
+			var template = new HtmlTemplate("<a href=\"http://example.com\">Test</a>");
+			var references = template.GetReferences();
+
+			Assert.AreEqual(1, references.Count);
+			ReferencesAssert.ContainsAttribute(references[0], "href", "http://example.com");
+		}
 	}
 }

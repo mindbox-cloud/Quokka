@@ -40,5 +40,23 @@ namespace Mindbox.Quokka.Tests
 				Assert.AreEqual(expectedElement.IsConstant, actualElement.IsConstant);
 			}
 		}
+
+		public static void ContainsAttribute(Reference reference, string attributeName, string expectedValue)
+		{
+			Assert.IsTrue(
+				reference.Attributes.ContainsKey(attributeName),
+				$"Reference does not contain attribute '{attributeName}'");
+			Assert.AreEqual(
+				expectedValue,
+				reference.Attributes[attributeName],
+				$"Attribute '{attributeName}' has unexpected value");
+		}
+
+		public static void DoesNotContainAttribute(Reference reference, string attributeName)
+		{
+			Assert.IsFalse(
+				reference.Attributes.ContainsKey(attributeName),
+				$"Reference unexpectedly contains attribute '{attributeName}'");
+		}
 	}
 }
