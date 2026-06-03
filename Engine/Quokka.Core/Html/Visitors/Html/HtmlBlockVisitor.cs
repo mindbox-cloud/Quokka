@@ -66,22 +66,27 @@ namespace Mindbox.Quokka.Html
 
 		private IStaticBlockPart TryGetLinkNodeFromTagAttributes(IEnumerable<QuokkaHtml.AttributeContext> attributes)
 		{
-			var hrefAttributeValueVisitor = new AttributeValueVisitor(ParsingContext);
+			var attributeValueVisitor = new AttributeValueVisitor(ParsingContext);
 
 			AttributeValue hrefValue = null;
 			AttributeValue nameValue = null;
+			var allAttributes = new Dictionary<string, string>(StringComparer.InvariantCultureIgnoreCase);
 
 			foreach (var attribute in attributes)
 			{
 				var attributeName = attribute.TAG_NAME().GetText();
+				var attributeValue = attribute.attributeValue()?.Accept(attributeValueVisitor);
+
 				if (attributeName.Equals("href", StringComparison.InvariantCultureIgnoreCase))
-					hrefValue = attribute.attributeValue()?.Accept(hrefAttributeValueVisitor);
+					hrefValue = attributeValue;
 				if (attributeName.Equals("data-name", StringComparison.InvariantCultureIgnoreCase))
-					nameValue = attribute.attributeValue()?.Accept(hrefAttributeValueVisitor);
+					nameValue = attributeValue;
+
+				allAttributes[attributeName] = attributeValue?.Text ?? string.Empty;
 			}
 
 			return hrefValue != null
-				? new LinkBlock(hrefValue, nameValue)
+				? new LinkBlock(hrefValue, nameValue, allAttributes)
 				: null;
 		}
 	}
