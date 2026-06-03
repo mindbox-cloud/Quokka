@@ -27,13 +27,15 @@ namespace Mindbox.Quokka.Html
 
 		private readonly AttributeValue hrefValue;
 		private readonly AttributeValue nameValue;
+		private readonly IReadOnlyDictionary<string, string> attributes;
 
 		private readonly Guid uniqueKey;
 
-		public LinkBlock(AttributeValue hrefValue, AttributeValue nameValue)
+		public LinkBlock(AttributeValue hrefValue, AttributeValue nameValue, IReadOnlyDictionary<string, string> attributes)
 		{
 			this.hrefValue = hrefValue;
 			this.nameValue = nameValue;
+			this.attributes = attributes;
 			uniqueKey = Guid.NewGuid();
 		}
 
@@ -85,7 +87,8 @@ namespace Mindbox.Quokka.Html
 					hrefValue.Text,
 					nameValue?.Text,
 					uniqueKey,
-					isConstant: !hrefValue.TextComponents.OfType<OutputInstructionBlock>().Any()));
+					isConstant: !hrefValue.TextComponents.OfType<OutputInstructionBlock>().Any(),
+					attributes: attributes));
 		}
 
 		public override void Accept(ITemplateVisitor treeVisitor)
