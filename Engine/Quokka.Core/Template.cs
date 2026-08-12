@@ -217,6 +217,8 @@ namespace Mindbox.Quokka
 			yield return new ToLowerTemplateFunction();
 			yield return new ReplaceIfEmptyTemplateFunction();
 			yield return new FormatDecimalTemplateFunction();
+			yield return new FormatMoneyTemplateFunction();
+			yield return new FormatMoneyWithDisplayModeTemplateFunction();
 			yield return new FormatDateTimeTemplateFunction();
 			yield return new FormatTimeTemplateFunction();
 			yield return new IfTemplateFunction();
