@@ -21,9 +21,9 @@ namespace Mindbox.Quokka
 		public FormatMoneyWithDisplayModeTemplateFunction()
 			: base(
 				"formatMoney",
-				new DecimalFunctionArgument("amount"),
+				new DecimalFunctionArgument("amount", allowsNull: true),
 				new StringFunctionArgument("currencyCode", allowsNull: true),
-				new StringFunctionArgument("displayMode", valueValidator: ValidateDisplayMode))
+				new StringFunctionArgument("displayMode", allowsNull: true, valueValidator: ValidateDisplayMode))
 		{
 		}
 

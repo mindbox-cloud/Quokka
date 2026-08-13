@@ -30,7 +30,7 @@ namespace Mindbox.Quokka.Tests
 		[DataRow("RUB", "1 234 567,89 ₽")]
 		[DataRow("PLN", "1 234 567,89 zł")]
 		[DataRow("EUR", "1.234.567,89 €")]
-		[DataRow("BRL", "R$1.234.567,89")]
+		[DataRow("BRL", "R$ 1.234.567,89")]
 		[DataRow("CHF", "CHF 1'234'567.89")]
 		[DataRow("INR", "₹12,34,567.89")]
 		public void FormatMoney_GroupsDigitsTheWayTheCurrencyDoes(string currencyCode, string expected)
@@ -104,6 +104,54 @@ namespace Mindbox.Quokka.Tests
 		public void FormatMoney_WithUnknownCurrencyCode_FallsBackToAmountAndCode()
 		{
 			Assert.AreEqual("1,234.56 XYZ", RenderMoney("1234.56", "XYZ"));
+		}
+
+		[TestMethod]
+		[DataRow("PKR", "1,235 PKR")]
+		[DataRow("TND", "1,234.560 TND")]
+		public void FormatMoney_WithUnlistedCurrency_StillUsesItsMinorUnits(string currencyCode, string expected)
+		{
+			Assert.AreEqual(expected, RenderMoney("1234.56", currencyCode));
+		}
+
+		[TestMethod]
+		public void FormatMoney_WithAmountRoundingToZero_DoesNotRenderSignedZero()
+		{
+			Assert.AreEqual("$0.00", RenderMoney("-0.004", "USD"));
+		}
+
+		[TestMethod]
+		[DataRow("SYMBOL")]
+		[DataRow(" code ")]
+		public void FormatMoney_WithDifferentlyCasedDisplayMode_IsAccepted(string displayMode)
+		{
+			var result = RenderMoney("1234.56", "USD", displayMode);
+
+			Assert.AreNotEqual("$1,234.56", result);
+		}
+
+		[TestMethod]
+		public void FormatMoney_WithNullAmount_RendersZero()
+		{
+			var template = new Template("${ formatMoney(Amount, 'USD') }");
+
+			var result = template.Render(
+				new CompositeModelValue(new ModelField("Amount", (string)null)));
+
+			Assert.AreEqual("$0.00", result);
+		}
+
+		[TestMethod]
+		public void FormatMoney_WithNullDisplayMode_FallsBackToNarrowSymbol()
+		{
+			var template = new Template("${ formatMoney(Amount, 'USD', DisplayMode) }");
+
+			var result = template.Render(
+				new CompositeModelValue(
+					new ModelField("Amount", 1234.56m),
+					new ModelField("DisplayMode", (string)null)));
+
+			Assert.AreEqual("$1,234.56", result);
 		}
 
 		[TestMethod]

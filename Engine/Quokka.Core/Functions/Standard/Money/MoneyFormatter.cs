@@ -13,8 +13,6 @@
 // // limitations under the License.
 
 using System;
-using System.Collections.Generic;
-using System.Globalization;
 
 namespace Mindbox.Quokka
 {
@@ -27,54 +25,45 @@ namespace Mindbox.Quokka
 		private const string MinusSign = "-";
 		private const string Space = " ";
 
-		private static readonly IReadOnlyDictionary<CurrencyNumberStyle, NumberFormatInfo> numberFormatsByStyle =
-			new Dictionary<CurrencyNumberStyle, NumberFormatInfo>
-			{
-				[CurrencyNumberStyle.CommaGroupDotDecimal] = CreateNumberFormat(",", ".", [3]),
-				[CurrencyNumberStyle.DotGroupCommaDecimal] = CreateNumberFormat(".", ",", [3]),
-				[CurrencyNumberStyle.SpaceGroupCommaDecimal] = CreateNumberFormat(Space, ",", [3]),
-				[CurrencyNumberStyle.ApostropheGroupDotDecimal] = CreateNumberFormat("'", ".", [3]),
-				[CurrencyNumberStyle.IndianGroupDotDecimal] = CreateNumberFormat(",", ".", [3, 2])
-			};
-
 		public static bool IsSupportedDisplayMode(string displayMode) =>
-			displayMode is NarrowSymbolDisplayMode or SymbolDisplayMode or CodeDisplayMode;
+			displayMode == null || IsMode(displayMode, NarrowSymbolDisplayMode)
+				|| IsMode(displayMode, SymbolDisplayMode)
+				|| IsMode(displayMode, CodeDisplayMode);
 
 		public static string Format(decimal amount, string currencyCode, string displayMode)
 		{
-			var trimmedCode = currencyCode?.Trim();
-			var format = CurrencyFormats.TryGet(trimmedCode);
-			var numberFormat = numberFormatsByStyle[format?.NumberStyle ?? CurrencyNumberStyle.CommaGroupDotDecimal];
-			var formattedAmount = Math.Abs(amount).ToString("N" + (format?.DecimalPlaces ?? 2), numberFormat);
-			var sign = amount < 0 ? MinusSign : string.Empty;
+			var code = currencyCode?.Trim();
+			var format = CurrencyFormats.TryGet(code);
+			var decimalPlaces = format?.DecimalPlaces ?? CurrencyAmountFormats.DecimalPlacesForUnlistedCode(code);
+			var absolute = Math.Round(Math.Abs(amount), decimalPlaces, MidpointRounding.AwayFromZero);
+
+			var formattedAmount = absolute.ToString(
+				format?.AmountFormat ?? CurrencyAmountFormats.ForDecimalPlaces(decimalPlaces),
+				format?.NumberFormat ?? CurrencyNumberFormats.Default);
+
+			var sign = amount < 0 && absolute != decimal.Zero ? MinusSign : string.Empty;
 
 			if (format == null)
-				return string.IsNullOrEmpty(trimmedCode)
+				return string.IsNullOrEmpty(code)
 					? sign + formattedAmount
-					: sign + formattedAmount + Space + trimmedCode.ToUpperInvariant();
+					: sign + formattedAmount + Space + code.ToUpperInvariant();
 
-			if (displayMode == CodeDisplayMode)
-				return sign + formattedAmount + Space + trimmedCode.ToUpperInvariant();
+			if (IsMode(displayMode, CodeDisplayMode))
+				return sign + formattedAmount + Space + code.ToUpperInvariant();
 
-			var symbol = displayMode == SymbolDisplayMode ? format.Symbol : format.NarrowSymbol;
+			var symbol = IsMode(displayMode, SymbolDisplayMode) ? format.Symbol : format.NarrowSymbol;
 
 			if (format.SymbolFollowsAmount)
 				return sign + formattedAmount + Space + symbol;
 
-			var symbolSeparator = char.IsLetter(symbol[symbol.Length - 1]) ? Space : string.Empty;
+			var needsSpace = format.SpaceAfterSymbol || char.IsLetter(symbol[symbol.Length - 1]);
 
-			return sign + symbol + symbolSeparator + formattedAmount;
+			return needsSpace
+				? sign + symbol + Space + formattedAmount
+				: sign + symbol + formattedAmount;
 		}
 
-		private static NumberFormatInfo CreateNumberFormat(
-			string groupSeparator,
-			string decimalSeparator,
-			int[] groupSizes) =>
-			new()
-			{
-				NumberGroupSeparator = groupSeparator,
-				NumberDecimalSeparator = decimalSeparator,
-				NumberGroupSizes = groupSizes
-			};
+		private static bool IsMode(string displayMode, string mode) =>
+			string.Equals(displayMode?.Trim(), mode, StringComparison.OrdinalIgnoreCase);
 	}
 }

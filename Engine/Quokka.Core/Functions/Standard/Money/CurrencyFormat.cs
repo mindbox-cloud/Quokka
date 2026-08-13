@@ -12,6 +12,8 @@
 // // See the License for the specific language governing permissions and
 // // limitations under the License.
 
+using System.Globalization;
+
 namespace Mindbox.Quokka
 {
 	internal sealed class CurrencyFormat
@@ -21,13 +23,16 @@ namespace Mindbox.Quokka
 			string symbol,
 			int decimalPlaces,
 			CurrencyNumberStyle numberStyle = CurrencyNumberStyle.CommaGroupDotDecimal,
-			bool symbolFollowsAmount = false)
+			bool symbolFollowsAmount = false,
+			bool spaceAfterSymbol = false)
 		{
 			NarrowSymbol = narrowSymbol;
 			Symbol = symbol;
 			DecimalPlaces = decimalPlaces;
-			NumberStyle = numberStyle;
 			SymbolFollowsAmount = symbolFollowsAmount;
+			SpaceAfterSymbol = spaceAfterSymbol;
+			AmountFormat = CurrencyAmountFormats.ForDecimalPlaces(decimalPlaces);
+			NumberFormat = CurrencyNumberFormats.Get(numberStyle);
 		}
 
 		public string NarrowSymbol { get; }
@@ -36,8 +41,12 @@ namespace Mindbox.Quokka
 
 		public int DecimalPlaces { get; }
 
-		public CurrencyNumberStyle NumberStyle { get; }
-
 		public bool SymbolFollowsAmount { get; }
+
+		public bool SpaceAfterSymbol { get; }
+
+		public string AmountFormat { get; }
+
+		public NumberFormatInfo NumberFormat { get; }
 	}
 }
