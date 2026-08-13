@@ -33,6 +33,17 @@ namespace Mindbox.Quokka.Tests
 		[DataRow("BRL", "R$ 1.234.567,89")]
 		[DataRow("CHF", "CHF 1'234'567.89")]
 		[DataRow("INR", "₹12,34,567.89")]
+		[DataRow("ARS", "$ 1.234.567,89")]
+		[DataRow("CLP", "$1.234.568")]
+		[DataRow("COP", "$ 1.234.568")]
+		[DataRow("CZK", "1 234 567,89 Kč")]
+		[DataRow("DKK", "1.234.567,89 kr")]
+		[DataRow("ISK", "1.234.568 kr")]
+		[DataRow("NOK", "1 234 567,89 kr")]
+		[DataRow("SEK", "1 234 567,89 kr")]
+		[DataRow("TRY", "₺1.234.567,89")]
+		[DataRow("UAH", "1 234 567,89 ₴")]
+		[DataRow("ZAR", "R 1 234 567,89")]
 		public void FormatMoney_GroupsDigitsTheWayTheCurrencyDoes(string currencyCode, string expected)
 		{
 			Assert.AreEqual(expected, RenderMoney("1234567.89", currencyCode));
@@ -115,19 +126,24 @@ namespace Mindbox.Quokka.Tests
 		}
 
 		[TestMethod]
-		public void FormatMoney_WithAmountRoundingToZero_DoesNotRenderSignedZero()
+		[DataRow("-0.004", "USD", "$0.00")]
+		[DataRow("-0.4", "JPY", "¥0")]
+		[DataRow("0", "USD", "$0.00")]
+		public void FormatMoney_WithAmountRoundingToZero_DoesNotRenderSignedZero(
+			string amount,
+			string currencyCode,
+			string expected)
 		{
-			Assert.AreEqual("$0.00", RenderMoney("-0.004", "USD"));
+			Assert.AreEqual(expected, RenderMoney(amount, currencyCode));
 		}
 
 		[TestMethod]
-		[DataRow("SYMBOL")]
-		[DataRow(" code ")]
-		public void FormatMoney_WithDifferentlyCasedDisplayMode_IsAccepted(string displayMode)
+		[DataRow("SYMBOL", "US$1,234.56")]
+		[DataRow(" code ", "1,234.56 USD")]
+		[DataRow("NarrowSymbol", "$1,234.56")]
+		public void FormatMoney_WithDifferentlyCasedDisplayMode_ResolvesTheSameMode(string displayMode, string expected)
 		{
-			var result = RenderMoney("1234.56", "USD", displayMode);
-
-			Assert.AreNotEqual("$1,234.56", result);
+			Assert.AreEqual(expected, RenderMoney("1234.56", "USD", displayMode));
 		}
 
 		[TestMethod]
