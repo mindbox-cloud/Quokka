@@ -1,0 +1,12 @@
+version: 2
+
+updates:
+  # CLDR data behind tools/currency-table. A bump changes the generated currency
+  # table, so it must arrive as its own reviewable pull request rather than
+  # riding in on an unrelated change.
+  - package-ecosystem: npm
+    directory: /tools/currency-table
+    schedule:
+      interval: monthly
+    commit-message:
+      prefix: "chore(cldr)"
