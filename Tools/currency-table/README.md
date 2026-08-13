@@ -7,8 +7,9 @@ hermetic and every data change shows up as a reviewable diff.
 
 The CLDR version is pinned so that the CI check below is deterministic and so that a
 CLDR release lands as its own reviewable change rather than inside an unrelated pull
-request — a data change moves the money in every tenant's emails. Dependabot raises that
-bump monthly; regenerate and commit the result:
+request — a data change moves the money in every tenant's emails. This repository has no
+dependency bot, so the bump is manual; the CI check below is what stops the table from
+drifting unnoticed in the meantime. To take a new CLDR release:
 
     npm ci
     npm run generate
