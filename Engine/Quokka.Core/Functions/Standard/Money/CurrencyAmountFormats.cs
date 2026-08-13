@@ -12,8 +12,7 @@
 // // See the License for the specific language governing permissions and
 // // limitations under the License.
 
-using System;
-using System.Collections.Generic;
+using System.Globalization;
 
 namespace Mindbox.Quokka
 {
@@ -23,41 +22,14 @@ namespace Mindbox.Quokka
 
 		private static readonly string[] formatsByDecimalPlaces = ["N0", "N1", "N2", "N3", "N4"];
 
-		private static readonly IReadOnlyDictionary<string, int> decimalPlacesByCodeOutsideTheTable =
-			new Dictionary<string, int>(StringComparer.OrdinalIgnoreCase)
+		public static readonly NumberFormatInfo NumberFormat = NumberFormatInfo.ReadOnly(
+			new NumberFormatInfo
 			{
-				["AFN"] = 0,
-				["ALL"] = 0,
-				["BIF"] = 0,
-				["CLF"] = 4,
-				["DJF"] = 0,
-				["GNF"] = 0,
-				["IQD"] = 0,
-				["IRR"] = 0,
-				["KMF"] = 0,
-				["LAK"] = 0,
-				["LYD"] = 3,
-				["MGA"] = 0,
-				["MMK"] = 0,
-				["PKR"] = 0,
-				["PYG"] = 0,
-				["RWF"] = 0,
-				["SOS"] = 0,
-				["SYP"] = 0,
-				["TND"] = 3,
-				["UGX"] = 0,
-				["VUV"] = 0,
-				["XAF"] = 0,
-				["XOF"] = 0,
-				["XPF"] = 0,
-				["YER"] = 0
-			};
+				NumberGroupSeparator = ",",
+				NumberDecimalSeparator = ".",
+				NumberGroupSizes = [3]
+			});
 
 		public static string ForDecimalPlaces(int decimalPlaces) => formatsByDecimalPlaces[decimalPlaces];
-
-		public static int DecimalPlacesForUnlistedCode(string currencyCode) =>
-			currencyCode != null && decimalPlacesByCodeOutsideTheTable.TryGetValue(currencyCode, out var decimalPlaces)
-				? decimalPlaces
-				: DefaultDecimalPlaces;
 	}
 }

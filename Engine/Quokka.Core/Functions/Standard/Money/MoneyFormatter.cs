@@ -26,7 +26,8 @@ namespace Mindbox.Quokka
 		private const string Space = " ";
 
 		public static bool IsSupportedDisplayMode(string displayMode) =>
-			displayMode == null || IsMode(displayMode, NarrowSymbolDisplayMode)
+			displayMode == null
+				|| IsMode(displayMode, NarrowSymbolDisplayMode)
 				|| IsMode(displayMode, SymbolDisplayMode)
 				|| IsMode(displayMode, CodeDisplayMode);
 
@@ -34,12 +35,12 @@ namespace Mindbox.Quokka
 		{
 			var code = currencyCode?.Trim();
 			var format = CurrencyFormats.TryGet(code);
-			var decimalPlaces = format?.DecimalPlaces ?? CurrencyAmountFormats.DecimalPlacesForUnlistedCode(code);
+			var decimalPlaces = format?.DecimalPlaces ?? CurrencyAmountFormats.DefaultDecimalPlaces;
 			var absolute = Math.Round(Math.Abs(amount), decimalPlaces, MidpointRounding.AwayFromZero);
 
 			var formattedAmount = absolute.ToString(
 				format?.AmountFormat ?? CurrencyAmountFormats.ForDecimalPlaces(decimalPlaces),
-				format?.NumberFormat ?? CurrencyNumberFormats.Default);
+				CurrencyAmountFormats.NumberFormat);
 
 			var sign = amount < 0 && absolute != decimal.Zero ? MinusSign : string.Empty;
 
@@ -49,18 +50,12 @@ namespace Mindbox.Quokka
 					: sign + formattedAmount + Space + code.ToUpperInvariant();
 
 			if (IsMode(displayMode, CodeDisplayMode))
-				return sign + formattedAmount + Space + code.ToUpperInvariant();
+				return sign + code.ToUpperInvariant() + Space + formattedAmount;
 
 			var symbol = IsMode(displayMode, SymbolDisplayMode) ? format.Symbol : format.NarrowSymbol;
+			var separator = format.SpaceAfterSymbol || char.IsLetter(symbol[symbol.Length - 1]) ? Space : string.Empty;
 
-			if (format.SymbolFollowsAmount)
-				return sign + formattedAmount + Space + symbol;
-
-			var needsSpace = format.SpaceAfterSymbol || char.IsLetter(symbol[symbol.Length - 1]);
-
-			return needsSpace
-				? sign + symbol + Space + formattedAmount
-				: sign + symbol + formattedAmount;
+			return sign + symbol + separator + formattedAmount;
 		}
 
 		private static bool IsMode(string displayMode, string mode) =>
