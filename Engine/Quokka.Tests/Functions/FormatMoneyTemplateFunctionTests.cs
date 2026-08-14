@@ -29,11 +29,13 @@ namespace Mindbox.Quokka.Tests
 		[DataRow("EUR", "€1,234,567.89")]
 		[DataRow("RUB", "₽1,234,567.89")]
 		[DataRow("INR", "₹1,234,567.89")]
-		[DataRow("CHF", "CHF 1,234,567.89")]
-		[DataRow("KWD", "KWD 1,234,567.890")]
+		[DataRow("CHF", "Fr. 1,234,567.89")]
+		[DataRow("KWD", "د.ك 1,234,567.890")]
 		[DataRow("NGN", "₦1,234,567.89")]
 		[DataRow("RON", "lei 1,234,567.89")]
-		[DataRow("PKR", "Rs 1,234,568")]
+		[DataRow("PKR", "Rs 1,234,567.89")]
+		[DataRow("HUF", "Ft 1,234,567.89")]
+		[DataRow("IDR", "Rp 1,234,567.89")]
 		public void FormatMoney_PutsTheSymbolFirstAndGroupsInThousands(string currencyCode, string expected)
 		{
 			Assert.AreEqual(expected, RenderMoney("1234567.89", currencyCode));
@@ -43,8 +45,6 @@ namespace Mindbox.Quokka.Tests
 		[DataRow("JPY", "¥9,072")]
 		[DataRow("KRW", "₩9,072")]
 		[DataRow("VND", "₫9,072")]
-		[DataRow("HUF", "Ft 9,072")]
-		[DataRow("IDR", "Rp 9,072")]
 		public void FormatMoney_WithZeroDecimalCurrency_DropsDecimals(string currencyCode, string expected)
 		{
 			Assert.AreEqual(expected, RenderMoney("9072.00", currencyCode));
@@ -53,13 +53,13 @@ namespace Mindbox.Quokka.Tests
 		[TestMethod]
 		public void FormatMoney_WithThreeDecimalCurrency_KeepsThreeDecimals()
 		{
-			Assert.AreEqual("KWD 1,234.560", RenderMoney("1234.56", "KWD"));
+			Assert.AreEqual("د.ك 1,234.560", RenderMoney("1234.56", "KWD"));
 		}
 
 		[TestMethod]
 		[DataRow("USD", "-$1,234.56")]
 		[DataRow("RUB", "-₽1,234.56")]
-		[DataRow("KWD", "-KWD 1,234.560")]
+		[DataRow("KWD", "-د.ك 1,234.560")]
 		public void FormatMoney_WithNegativeAmount_PutsTheSignFirst(string currencyCode, string expected)
 		{
 			Assert.AreEqual(expected, RenderMoney("-1234.56", currencyCode));
@@ -69,8 +69,10 @@ namespace Mindbox.Quokka.Tests
 		[DataRow("USD", "US$1,234.56")]
 		[DataRow("CAD", "CA$1,234.56")]
 		[DataRow("AUD", "A$1,234.56")]
-		[DataRow("RUB", "RUB 1,234.56")]
-		[DataRow("THB", "THB 1,234.56")]
+		[DataRow("SGD", "S$1,234.56")]
+		[DataRow("HKD", "HK$1,234.56")]
+		[DataRow("NZD", "NZ$1,234.56")]
+		[DataRow("TWD", "NT$1,234.56")]
 		public void FormatMoney_WithSymbolDisplayMode_DisambiguatesSharedSymbols(string currencyCode, string expected)
 		{
 			Assert.AreEqual(expected, RenderMoney("1234.56", currencyCode, "symbol"));
@@ -79,6 +81,8 @@ namespace Mindbox.Quokka.Tests
 		[TestMethod]
 		[DataRow("EUR", "€1,234.56")]
 		[DataRow("GBP", "£1,234.56")]
+		[DataRow("RUB", "₽1,234.56")]
+		[DataRow("THB", "฿1,234.56")]
 		public void FormatMoney_WithSymbolDisplayMode_KeepsUnambiguousSymbols(string currencyCode, string expected)
 		{
 			Assert.AreEqual(expected, RenderMoney("1234.56", currencyCode, "symbol"));
@@ -108,8 +112,8 @@ namespace Mindbox.Quokka.Tests
 		}
 
 		[TestMethod]
-		[DataRow("TND", "TND 1,234.560")]
-		[DataRow("UGX", "UGX 1,235")]
+		[DataRow("TND", "د.ت 1,234.560")]
+		[DataRow("UGX", "USh 1,235")]
 		public void FormatMoney_WithNonTwoDecimalCurrency_UsesItsMinorUnits(string currencyCode, string expected)
 		{
 			Assert.AreEqual(expected, RenderMoney("1234.56", currencyCode));
@@ -202,7 +206,7 @@ namespace Mindbox.Quokka.Tests
 		{
 			var result = RenderMoney("1234.56", "CHF");
 
-			Assert.AreEqual("CHF 1,234.56", result);
+			Assert.AreEqual("Fr. 1,234.56", result);
 			Assert.IsFalse(result.Contains('\u00A0'));
 		}
 

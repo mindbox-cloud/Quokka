@@ -43,7 +43,10 @@ namespace Mindbox.Quokka
 				return sign + code.ToUpperInvariant() + Space + formattedAmount;
 
 			var symbol = displayMode == CurrencyDisplayMode.Symbol ? format.Symbol : format.NarrowSymbol;
-			var separator = format.SpaceAfterSymbol || char.IsLetter(symbol[symbol.Length - 1]) ? Space : string.Empty;
+			var lastCharacter = symbol[symbol.Length - 1];
+			var separator = format.SpaceAfterSymbol || char.IsLetter(lastCharacter) || lastCharacter == '.'
+				? Space
+				: string.Empty;
 
 			return sign + symbol + separator + formattedAmount;
 		}
