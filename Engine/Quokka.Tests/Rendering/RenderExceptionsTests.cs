@@ -39,8 +39,7 @@ namespace Mindbox.Quokka
 		[ExpectedException(typeof(UnrenderableTemplateModelException), AllowDerivedTypes = true)]
 		public void Render_DivisionByZero_UnrendereableException()
 		{
-			var template = new DefaultTemplateFactory(new[] { new FaultyFunction() })
-				.CreateTemplate("${ 5 / 0 }");
+			var template = new Template("${ 5 / 0 }");
 			template.Render(new CompositeModelValue());
 		}
 

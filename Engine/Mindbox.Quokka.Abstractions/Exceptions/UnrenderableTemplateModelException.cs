@@ -45,7 +45,8 @@ namespace Mindbox.Quokka
 
 		/// <summary>
 		/// The source text of the failed expression as it is written in the template,
-		/// e.g. "cart.total / cart.itemCount". <c>Null</c> if the text can't be restored.
+		/// e.g. "cart.total / cart.itemCount", truncated if it is too long.
+		/// <c>Null</c> if the text can't be restored.
 		/// </summary>
 		public string Expression { get; }
 
@@ -72,12 +73,12 @@ namespace Mindbox.Quokka
 			: base(BuildMessage(errorText, details, expression, location), inner)
 		{
 			Location = location;
-			Expression = expression;
+			Expression = string.IsNullOrWhiteSpace(expression) ? null : expression;
 
 			Data[QuokkaExceptionData.ErrorText] = errorText;
 
-			if (expression != null)
-				Data[QuokkaExceptionData.Expression] = expression;
+			if (Expression != null)
+				Data[QuokkaExceptionData.Expression] = Expression;
 
 			FillLocationData(location);
 		}

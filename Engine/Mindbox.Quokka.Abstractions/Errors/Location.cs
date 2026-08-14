@@ -25,7 +25,7 @@ namespace Mindbox.Quokka
 		public int Line { get; }
 
 		/// <summary>
-		/// Column index (1-based)
+		/// Column index (0-based)
 		/// </summary>
 		public int Column { get; }
 

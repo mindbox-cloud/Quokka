@@ -14,6 +14,8 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
+using Mindbox.Quokka.Abstractions;
+
 namespace Mindbox.Quokka.Tests
 {
 	[TestClass]
@@ -156,6 +158,55 @@ namespace Mindbox.Quokka.Tests
 			Assert.AreEqual("1:3", exception.Data[QuokkaExceptionData.Location]);
 			Assert.AreEqual(1, exception.Data[QuokkaExceptionData.Line]);
 			Assert.AreEqual(3, exception.Data[QuokkaExceptionData.Column]);
+		}
+
+		[TestMethod]
+		public void Render_DivisionByZeroInFunctionArgument_ReportsArithmeticError()
+		{
+			var template = new DefaultTemplateFactory(new[] { new EchoFunction() })
+				.CreateTemplate("${ echo(Total / OrderCount) }");
+
+			var exception = Assert.ThrowsException<ArithmeticOperationException>(
+				() => template.Render(
+					new CompositeModelValue(
+						new ModelField("Total", 500),
+						new ModelField("OrderCount", 0))));
+
+			Assert.AreEqual(ArithmeticErrorReason.DivisionByZero, exception.Reason);
+			Assert.AreEqual("Total / OrderCount", exception.Expression);
+		}
+
+		[TestMethod]
+		public void Render_FailedExpressionLongerThanLimit_TruncatesReportedExpression()
+		{
+			var template = new Template(
+				"${ TheFirstVeryLongVariableName + TheSecondVeryLongVariableName "
+					+ "+ TheThirdVeryLongVariableName + TheFourthVeryLongVariableName / DivisorWhichHappensToBeZero }");
+
+			var exception = Assert.ThrowsException<ArithmeticOperationException>(
+				() => template.Render(
+					new CompositeModelValue(
+						new ModelField("TheFirstVeryLongVariableName", 1),
+						new ModelField("TheSecondVeryLongVariableName", 2),
+						new ModelField("TheThirdVeryLongVariableName", 3),
+						new ModelField("TheFourthVeryLongVariableName", 4),
+						new ModelField("DivisorWhichHappensToBeZero", 0))));
+
+			Assert.AreEqual(101, exception.Expression.Length);
+			Assert.IsTrue(exception.Expression.EndsWith("…"));
+		}
+
+		private class EchoFunction : ScalarTemplateFunction<decimal, decimal>
+		{
+			public EchoFunction()
+				: base("echo", new DecimalFunctionArgument("number"))
+			{
+			}
+
+			public override decimal Invoke(RenderSettings settings, decimal value)
+			{
+				return value;
+			}
 		}
 	}
 }

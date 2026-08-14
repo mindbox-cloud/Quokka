@@ -15,7 +15,8 @@
 namespace Mindbox.Quokka
 {
 	/// <summary>
-	/// Keys of the <see cref="System.Exception.Data"/> entries filled in by template exceptions.
+	/// Keys of the <see cref="System.Exception.Data"/> entries filled in by runtime render errors
+	/// (<see cref="UnrenderableTemplateModelException"/> and its descendants).
 	/// The entries hold the parts the exception message is built from, so that the calling code
 	/// can render its own message (e.g. a localized one) without parsing the message text.
 	/// </summary>

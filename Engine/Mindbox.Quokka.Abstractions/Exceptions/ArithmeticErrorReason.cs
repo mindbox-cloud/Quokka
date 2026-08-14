@@ -21,7 +21,8 @@ namespace Mindbox.Quokka
 	public enum ArithmeticErrorReason
 	{
 		/// <summary>
-		/// The result is infinite. Within a template this is only reachable by dividing by zero.
+		/// The result is infinite. Within a template this practically always means a division by zero;
+		/// an overflow of intermediate values to infinity is also reported this way.
 		/// </summary>
 		DivisionByZero,
 

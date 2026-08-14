@@ -23,8 +23,8 @@ namespace Mindbox.Quokka
 		public Location Location { get; }
 
 		/// <summary>
-		/// The expression as it is written in the template. <c>Null</c> for expressions
-		/// whose text can't be restored from the parse tree.
+		/// The expression as it is written in the template, truncated if it is too long.
+		/// <c>Null</c> for expressions whose text can't be restored from the parse tree.
 		/// </summary>
 		public string Text { get; }
 
