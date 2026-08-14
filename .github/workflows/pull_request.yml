@@ -26,7 +26,7 @@ jobs:
         dotnet-version: 9
 
     - name: Check the currency table matches CLDR
-      working-directory: tools/currency-table
+      working-directory: Tools/currency-table
       run: |
         npm ci
         npm run generate
