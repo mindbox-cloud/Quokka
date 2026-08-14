@@ -1,5 +1,5 @@
-// Regenerates Engine/Quokka.Core/Functions/Standard/Money/CurrencyFormats.g.cs from the CLDR data
-// packages pinned in package.json. Run `npm ci && npm run generate` in this directory.
+// Regenerates Engine/Quokka.Core/Functions/Standard/Money/CurrencyFormats.g.cs from the CLDR
+// data vendored in ./cldr. Run `node generate.mjs`; it needs nothing but Node.
 // The output is committed; CI re-runs this and fails if the committed file differs.
 
 import fs from 'node:fs';
@@ -10,10 +10,10 @@ const here = path.dirname(fileURLToPath(import.meta.url));
 const LOCALE = 'en-001';
 const OUTPUT = path.resolve(here, '../../Engine/Quokka.Core/Functions/Standard/Money/CurrencyFormats.g.cs');
 
-const read = relative => JSON.parse(fs.readFileSync(path.resolve(here, 'node_modules', relative), 'utf8'));
+const read = name => JSON.parse(fs.readFileSync(path.resolve(here, 'cldr', name), 'utf8'));
 
-const symbols = read(`cldr-numbers-full/main/${LOCALE}/currencies.json`).main[LOCALE].numbers.currencies;
-const fractions = read('cldr-core/supplemental/currencyData.json').supplemental.currencyData.fractions;
+const symbols = read('currencies-en-001.json').main[LOCALE].numbers.currencies;
+const fractions = read('currencyData.json').supplemental.currencyData.fractions;
 const decimalPlacesOf = code => Number((fractions[code] ?? fractions.DEFAULT)._digits);
 const escape = value => value.replace(/\\/g, '\\\\').replace(/"/g, '\\"');
 
@@ -31,7 +31,7 @@ if (entries.length === 0)
 
 entries[entries.length - 1] = entries.at(-1).replace(/,$/, '');
 
-const cldrVersion = read('cldr-core/package.json').version;
+const cldrVersion = fs.readFileSync(path.resolve(here, 'cldr/VERSION'), 'utf8').trim();
 const source = `// // Copyright 2022 Mindbox Ltd
 // //
 // // Licensed under the Apache License, Version 2.0 (the "License");

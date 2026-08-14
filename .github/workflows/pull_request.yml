@@ -26,11 +26,9 @@ jobs:
         dotnet-version: 9
 
     - name: Check the currency table matches CLDR
-      working-directory: Tools/currency-table
       run: |
-        npm ci
-        npm run generate
-        git diff --exit-code -- ../../Engine/Quokka.Core/Functions/Standard/Money/CurrencyFormats.g.cs
+        node Tools/currency-table/generate.mjs
+        git diff --exit-code -- Engine/Quokka.Core/Functions/Standard/Money/CurrencyFormats.g.cs
 
     - name: Build
       run: dotnet build Engine/Quokka.slnx --configuration Release

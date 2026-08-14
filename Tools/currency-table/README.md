@@ -1,20 +1,28 @@
 # Currency table generator
 
 `Engine/Quokka.Core/Functions/Standard/Money/CurrencyFormats.g.cs` is generated from the
-Unicode CLDR data packages pinned in `package.json` — currency symbols from
-`cldr-numbers-full`, minor units from `cldr-core`. It is committed so that builds stay
-hermetic and every data change shows up as a reviewable diff.
+Unicode CLDR data vendored in `cldr/` — currency symbols from `currencies-en-001.json`,
+minor units from `currencyData.json`, both copied verbatim from the release named in
+`cldr/VERSION`.
 
-The CLDR version is pinned so that the CI check below is deterministic and so that a
-CLDR release lands as its own reviewable change rather than inside an unrelated pull
-request — a data change moves the money in every tenant's emails. Renovate raises that
-bump; regenerate and commit the result:
+Regenerate with Node and nothing else:
 
-    npm ci
-    npm run generate
+    node generate.mjs
 
-CI runs the same two commands and fails if the committed file differs, so the table
-cannot be edited by hand and cannot silently drift from the pinned CLDR.
+CI runs the same command and fails if the committed file differs, so the table can be
+neither edited by hand nor left behind when the data changes.
+
+To take a newer CLDR release, replace the two files and the version, then regenerate:
+
+    V=48.2.0
+    curl -sfo cldr/currencies-en-001.json https://unpkg.com/cldr-numbers-full@$V/main/en-001/currencies.json
+    curl -sfo cldr/currencyData.json      https://unpkg.com/cldr-core@$V/supplemental/currencyData.json
+    echo $V > cldr/VERSION
+    node generate.mjs
+
+The two files are vendored rather than installed because the packages carrying them are
+forty megabytes of every locale on earth, and this needs one locale and one supplemental
+table. Vendoring also keeps the build off the network.
 
 Every currency CLDR carries is generated, not a curated subset — the engine renders
 templates for every integration, not just one, and a subset would silently downgrade any
