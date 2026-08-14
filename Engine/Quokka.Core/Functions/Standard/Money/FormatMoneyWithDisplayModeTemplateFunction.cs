@@ -29,17 +29,17 @@ namespace Mindbox.Quokka
 
 		public override string Invoke(RenderSettings settings, decimal amount, string currencyCode, string displayMode)
 		{
-			return MoneyFormatter.Format(amount, currencyCode, displayMode);
+			return MoneyFormatter.Format(amount, currencyCode, CurrencyDisplayModes.ParseOrDefault(displayMode));
 		}
 
 		private static ArgumentValueValidationResult ValidateDisplayMode(string displayMode)
 		{
-			return MoneyFormatter.IsSupportedDisplayMode(displayMode)
+			return CurrencyDisplayModes.TryParse(displayMode, out _)
 				? ArgumentValueValidationResult.Valid
 				: new ArgumentValueValidationResult(
 					false,
-					$"Display mode should be one of: {MoneyFormatter.NarrowSymbolDisplayMode}, "
-						+ $"{MoneyFormatter.SymbolDisplayMode}, {MoneyFormatter.CodeDisplayMode}");
+					$"Display mode should be one of: {CurrencyDisplayModes.NarrowSymbolName}, "
+						+ $"{CurrencyDisplayModes.SymbolName}, {CurrencyDisplayModes.CodeName}");
 		}
 	}
 }

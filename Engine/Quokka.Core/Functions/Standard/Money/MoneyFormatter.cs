@@ -18,20 +18,10 @@ namespace Mindbox.Quokka
 {
 	internal static class MoneyFormatter
 	{
-		public const string NarrowSymbolDisplayMode = "narrowSymbol";
-		public const string SymbolDisplayMode = "symbol";
-		public const string CodeDisplayMode = "code";
-
 		private const string MinusSign = "-";
 		private const string Space = " ";
 
-		public static bool IsSupportedDisplayMode(string displayMode) =>
-			displayMode == null
-				|| IsMode(displayMode, NarrowSymbolDisplayMode)
-				|| IsMode(displayMode, SymbolDisplayMode)
-				|| IsMode(displayMode, CodeDisplayMode);
-
-		public static string Format(decimal amount, string currencyCode, string displayMode)
+		public static string Format(decimal amount, string currencyCode, CurrencyDisplayMode displayMode)
 		{
 			var code = currencyCode?.Trim();
 			var format = CurrencyFormats.TryGet(code);
@@ -49,16 +39,13 @@ namespace Mindbox.Quokka
 					? sign + formattedAmount
 					: sign + formattedAmount + Space + code.ToUpperInvariant();
 
-			if (IsMode(displayMode, CodeDisplayMode))
+			if (displayMode == CurrencyDisplayMode.Code)
 				return sign + code.ToUpperInvariant() + Space + formattedAmount;
 
-			var symbol = IsMode(displayMode, SymbolDisplayMode) ? format.Symbol : format.NarrowSymbol;
+			var symbol = displayMode == CurrencyDisplayMode.Symbol ? format.Symbol : format.NarrowSymbol;
 			var separator = format.SpaceAfterSymbol || char.IsLetter(symbol[symbol.Length - 1]) ? Space : string.Empty;
 
 			return sign + symbol + separator + formattedAmount;
 		}
-
-		private static bool IsMode(string displayMode, string mode) =>
-			string.Equals(displayMode?.Trim(), mode, StringComparison.OrdinalIgnoreCase);
 	}
 }

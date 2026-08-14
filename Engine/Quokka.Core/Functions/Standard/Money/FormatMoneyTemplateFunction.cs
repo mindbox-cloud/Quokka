@@ -28,7 +28,7 @@ namespace Mindbox.Quokka
 
 		public override string Invoke(RenderSettings settings, decimal amount, string currencyCode)
 		{
-			return MoneyFormatter.Format(amount, currencyCode, MoneyFormatter.NarrowSymbolDisplayMode);
+			return MoneyFormatter.Format(amount, currencyCode, CurrencyDisplayMode.NarrowSymbol);
 		}
 	}
 }
