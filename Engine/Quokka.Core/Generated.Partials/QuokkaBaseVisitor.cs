@@ -15,6 +15,7 @@
 using System;
 
 using Antlr4.Runtime;
+using Antlr4.Runtime.Misc;
 using Antlr4.Runtime.Tree;
 
 namespace Mindbox.Quokka.Generated
@@ -26,6 +27,16 @@ namespace Mindbox.Quokka.Generated
 		protected Location GetLocationFromToken(IToken token)
 		{
 			return new Location(token.Line, token.Column);
+		}
+
+		protected ExpressionSource GetExpressionSource(ParserRuleContext context)
+		{
+			var lastToken = context.Stop;
+			var text = lastToken != null && lastToken.StopIndex >= context.Start.StartIndex
+				? context.Start.InputStream.GetText(new Interval(context.Start.StartIndex, lastToken.StopIndex))
+				: null;
+
+			return new ExpressionSource(GetLocationFromToken(context.Start), text);
 		}
 
 		protected QuokkaBaseVisitor(VisitingContext visitingContext)

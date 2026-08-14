@@ -30,12 +30,24 @@ namespace Mindbox.Quokka
 			: base(message)
 		{
 			Location = location;
+			FillLocationData(location);
 		}
 
 		public UnrenderableTemplateModelException(string message, Exception inner, Location location)
 			: base(message, inner)
 		{
 			Location = location;
+			FillLocationData(location);
+		}
+
+		private void FillLocationData(Location location)
+		{
+			if (location == null)
+				return;
+
+			Data[QuokkaExceptionData.Location] = location.ToString();
+			Data[QuokkaExceptionData.Line] = location.Line;
+			Data[QuokkaExceptionData.Column] = location.Column;
 		}
 	}
 }

@@ -19,6 +19,13 @@ namespace Mindbox.Quokka
 {
 	internal abstract class ArithmeticExpression : Expression
 	{
+		private readonly ExpressionSource source;
+
+		protected ArithmeticExpression(ExpressionSource source)
+		{
+			this.source = source;
+		}
+
 		public abstract double GetValue(RenderContext renderContext);
 
 		public abstract void PerformSemanticAnalysis(AnalysisContext context);
@@ -67,7 +74,7 @@ namespace Mindbox.Quokka
 			// do nothing
 		}
 
-		private static object NormalizeValue(double value)
+		private object NormalizeValue(double value)
 		{
 			try
 			{
@@ -82,8 +89,18 @@ namespace Mindbox.Quokka
 			}
 			catch (OverflowException ex)
 			{
-				throw new UnrenderableTemplateModelException("Arithmetic operation result could not be evaluated", ex, null);
+				throw new ArithmeticOperationException(GetErrorReason(value), source?.Text, source?.Location, ex);
 			}
+		}
+
+		private static ArithmeticErrorReason GetErrorReason(double value)
+		{
+			if (Double.IsNaN(value))
+				return ArithmeticErrorReason.NotANumber;
+
+			return Double.IsInfinity(value)
+				? ArithmeticErrorReason.DivisionByZero
+				: ArithmeticErrorReason.ResultOutOfRange;
 		}
 	}
 }

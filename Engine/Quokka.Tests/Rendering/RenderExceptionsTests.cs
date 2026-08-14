@@ -36,7 +36,7 @@ namespace Mindbox.Quokka
 		}
 
 		[TestMethod]
-		[ExpectedException(typeof(UnrenderableTemplateModelException))]
+		[ExpectedException(typeof(UnrenderableTemplateModelException), AllowDerivedTypes = true)]
 		public void Render_DivisionByZero_UnrendereableException()
 		{
 			var template = new DefaultTemplateFactory(new[] { new FaultyFunction() })
