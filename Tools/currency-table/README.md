@@ -16,5 +16,7 @@ bump; regenerate and commit the result:
 CI runs the same two commands and fails if the committed file differs, so the table
 cannot be edited by hand and cannot silently drift from the pinned CLDR.
 
-`shopify-currencies.txt` lists the currency codes Shopify accepts as presentment
-currencies; anything outside it falls back to "amount + ISO code" at render time.
+Every currency CLDR carries is generated, not a curated subset — the engine renders
+templates for every integration, not just one, and a subset would silently downgrade any
+currency a payment provider adds later. A code CLDR does not know falls back to
+"amount + ISO code" at render time.

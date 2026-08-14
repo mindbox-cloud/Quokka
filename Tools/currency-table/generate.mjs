@@ -14,22 +14,14 @@ const read = relative => JSON.parse(fs.readFileSync(path.resolve(here, 'node_mod
 
 const symbols = read(`cldr-numbers-full/main/${LOCALE}/currencies.json`).main[LOCALE].numbers.currencies;
 const fractions = read('cldr-core/supplemental/currencyData.json').supplemental.currencyData.fractions;
-const codes = fs.readFileSync(path.resolve(here, 'shopify-currencies.txt'), 'utf8').trim().split(/\s+/);
-
 const decimalPlacesOf = code => Number((fractions[code] ?? fractions.DEFAULT)._digits);
 const escape = value => value.replace(/\\/g, '\\\\').replace(/"/g, '\\"');
 
-const missing = [];
 const entries = [];
-for (const code of codes) {
+for (const code of Object.keys(symbols).sort()) {
 	const entry = symbols[code];
-	if (!entry) {
-		missing.push(code);
-		continue;
-	}
-
-	const narrow = entry['symbol-alt-narrow'] ?? entry.symbol;
-	const symbol = entry.symbol;
+	const symbol = entry.symbol ?? code;
+	const narrow = entry['symbol-alt-narrow'] ?? symbol;
 	const decimals = decimalPlacesOf(code);
 	entries.push(`\t\t\t\t["${code}"] = new("${escape(narrow)}", "${escape(symbol)}", ${decimals}),`);
 }
@@ -81,5 +73,3 @@ ${entries.join('\n')}
 
 fs.writeFileSync(OUTPUT, source);
 console.log(`wrote ${entries.length} currencies from CLDR ${cldrVersion}`);
-if (missing.length > 0)
-	console.log(`not present in CLDR: ${missing.join(', ')}`);
