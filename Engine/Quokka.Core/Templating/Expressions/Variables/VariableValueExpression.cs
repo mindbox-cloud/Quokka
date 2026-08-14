@@ -67,8 +67,11 @@ namespace Mindbox.Quokka
 			var valueStorage = TryGetValueStorage(renderContext);
 			if (valueStorage == null || valueStorage.CheckIfValueIsNull())
 				throw new UnrenderableTemplateModelException(
-					$"An attempt to use the value of variable \"{variableName}\" which happens to be null",
-					variableLocation);
+					UnrenderableTemplateModelException.NullValueErrorText,
+					null,
+					variableName,
+					variableLocation,
+					null);
 
 			return valueStorage;
 		}
@@ -89,8 +92,11 @@ namespace Mindbox.Quokka
 		{
 			return renderContext.VariableScope.TryGetValueStorageForVariable(variableName) ??
 					throw new UnrenderableTemplateModelException(
-						$"Value for variable {variableName} not found",
-						variableLocation);
+						UnrenderableTemplateModelException.ValueNotFoundErrorText,
+						null,
+						variableName,
+						variableLocation,
+						null);
 		}
 
 

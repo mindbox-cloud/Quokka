@@ -61,9 +61,67 @@ namespace Mindbox.Quokka
 						new ArrayModelValue())));
 		}
 
+		[TestMethod]
+		public void Render_NullVariableValue_ReportsExpressionAndLocation()
+		{
+			var template = new Template("Hello, ${ FirstName }!");
+
+			var exception = Assert.ThrowsException<UnrenderableTemplateModelException>(
+				() => template.Render(
+					new CompositeModelValue(
+						new ModelField("FirstName", new PrimitiveModelValue(null)))));
+
+			Assert.AreEqual("An attempt to use a null value in \"FirstName\" at 1:10", exception.Message);
+			Assert.AreEqual("FirstName", exception.Expression);
+		}
+
+		[TestMethod]
+		public void Render_VariableValueNotFound_ReportsExpressionAndLocation()
+		{
+			var template = new Template("@{ if 1 < 0 }@{ set a = 5 }@{ end if }${ a }");
+
+			var exception = Assert.ThrowsException<UnrenderableTemplateModelException>(
+				() => template.Render(new CompositeModelValue()));
+
+			Assert.AreEqual("Value for variable not found in \"a\" at 1:41", exception.Message);
+		}
+
+		[TestMethod]
+		public void Render_FunctionInvocationError_ReportsExpressionLocationAndDataParts()
+		{
+			var template = new DefaultTemplateFactory(new[] { new FaultyFunction() })
+				.CreateTemplate("${ fail() }");
+
+			var exception = Assert.ThrowsException<UnrenderableTemplateModelException>(
+				() => template.Render(new CompositeModelValue()));
+
+			Assert.AreEqual("Function invocation resulted in error in \"fail()\" at 1:3", exception.Message);
+			Assert.AreEqual(
+				UnrenderableTemplateModelException.FunctionFailedErrorText,
+				exception.Data[QuokkaExceptionData.ErrorText]);
+			Assert.AreEqual("fail()", exception.Data[QuokkaExceptionData.Expression]);
+			Assert.AreEqual("1:3", exception.Data[QuokkaExceptionData.Location]);
+			Assert.AreEqual(1, exception.Data[QuokkaExceptionData.Line]);
+			Assert.AreEqual(3, exception.Data[QuokkaExceptionData.Column]);
+		}
+
+		[TestMethod]
+		public void Render_FunctionRuntimeError_ReportsFunctionMessageExpressionAndLocation()
+		{
+			var template = new DefaultTemplateFactory(new[] { new PickyFunction() })
+				.CreateTemplate("${ picky() }");
+
+			var exception = Assert.ThrowsException<UnrenderableTemplateModelException>(
+				() => template.Render(new CompositeModelValue()));
+
+			Assert.AreEqual(
+				"Function invocation resulted in error: Argument must be positive in \"picky()\" at 1:3",
+				exception.Message);
+		}
+
 		private class FaultyFunction : ScalarTemplateFunction
 	    {
-		    public FaultyFunction() 
+		    public FaultyFunction()
 				: base("fail", typeof(int))
 		    {
 		    }
@@ -75,5 +133,20 @@ namespace Mindbox.Quokka
 			    throw new Exception("Error");
 		    }
 	    }
+
+		private class PickyFunction : ScalarTemplateFunction
+		{
+			public PickyFunction()
+				: base("picky", typeof(int))
+			{
+			}
+
+			internal override object GetScalarInvocationResult(
+				RenderContext renderContext,
+				IList<VariableValueStorage> argumentsValues)
+			{
+				throw new FunctionCallRuntimeException("Argument must be positive", null);
+			}
+		}
     }
 }

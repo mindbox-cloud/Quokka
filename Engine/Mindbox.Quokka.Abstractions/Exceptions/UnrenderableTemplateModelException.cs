@@ -24,7 +24,30 @@ namespace Mindbox.Quokka
 	[Serializable]
 	public class UnrenderableTemplateModelException : TemplateException
 	{
+		/// <summary>
+		/// The error text of a null value usage, without the expression and the location appended to it.
+		/// </summary>
+		public const string NullValueErrorText = "An attempt to use a null value";
+
+		/// <summary>
+		/// The error text of a variable whose value is not present in the model,
+		/// without the expression and the location appended to it.
+		/// </summary>
+		public const string ValueNotFoundErrorText = "Value for variable not found";
+
+		/// <summary>
+		/// The error text of a failed template function call, without the failure details,
+		/// the expression and the location appended to it.
+		/// </summary>
+		public const string FunctionFailedErrorText = "Function invocation resulted in error";
+
 		public Location Location { get; }
+
+		/// <summary>
+		/// The source text of the failed expression as it is written in the template,
+		/// e.g. "cart.total / cart.itemCount". <c>Null</c> if the text can't be restored.
+		/// </summary>
+		public string Expression { get; }
 
 		public UnrenderableTemplateModelException(string message, Location location)
 			: base(message)
@@ -38,6 +61,41 @@ namespace Mindbox.Quokka
 		{
 			Location = location;
 			FillLocationData(location);
+		}
+
+		public UnrenderableTemplateModelException(
+			string errorText,
+			string details,
+			string expression,
+			Location location,
+			Exception inner)
+			: base(BuildMessage(errorText, details, expression, location), inner)
+		{
+			Location = location;
+			Expression = expression;
+
+			Data[QuokkaExceptionData.ErrorText] = errorText;
+
+			if (expression != null)
+				Data[QuokkaExceptionData.Expression] = expression;
+
+			FillLocationData(location);
+		}
+
+		private static string BuildMessage(string errorText, string details, string expression, Location location)
+		{
+			var message = errorText;
+
+			if (!string.IsNullOrWhiteSpace(details))
+				message += $": {details}";
+
+			if (!string.IsNullOrWhiteSpace(expression))
+				message += $" in \"{expression}\"";
+
+			if (location != null)
+				message += $" at {location}";
+
+			return message;
 		}
 
 		private void FillLocationData(Location location)

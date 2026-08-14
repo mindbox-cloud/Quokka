@@ -547,7 +547,7 @@ namespace Mindbox.Quokka.Tests
 			catch (UnrenderableTemplateModelException exception)
 			{
 				Assert.AreEqual(
-					"An attempt to use the value of \"cell.Value\" expression which happens to be null",
+					"An attempt to use a null value in \"cell.Value\" at 4:14",
 					exception.Message);
 				return;
 			}

@@ -33,27 +33,16 @@ namespace Mindbox.Quokka
 		/// </summary>
 		public ArithmeticErrorReason Reason { get; }
 
-		/// <summary>
-		/// The source text of the failed expression as it is written in the template,
-		/// e.g. "cart.total / cart.itemCount". <c>Null</c> if the text can't be restored.
-		/// </summary>
-		public string Expression { get; }
-
 		public ArithmeticOperationException(
 			ArithmeticErrorReason reason,
 			string expression,
 			Location location,
 			Exception inner)
-			: base(BuildMessage(reason, expression, location), inner, location)
+			: base(ErrorText, GetReasonText(reason), expression, location, inner)
 		{
 			Reason = reason;
-			Expression = expression;
 
-			Data[QuokkaExceptionData.ErrorText] = ErrorText;
 			Data[QuokkaExceptionData.Reason] = reason.ToString();
-
-			if (expression != null)
-				Data[QuokkaExceptionData.Expression] = expression;
 		}
 
 		/// <summary>
@@ -75,19 +64,6 @@ namespace Mindbox.Quokka
 				default:
 					throw new ArgumentOutOfRangeException(nameof(reason), reason, null);
 			}
-		}
-
-		private static string BuildMessage(ArithmeticErrorReason reason, string expression, Location location)
-		{
-			var message = $"{ErrorText}: {GetReasonText(reason)}";
-
-			if (!string.IsNullOrWhiteSpace(expression))
-				message += $" in \"{expression}\"";
-
-			if (location != null)
-				message += $" at {location}";
-
-			return message;
 		}
 	}
 }

@@ -22,15 +22,17 @@ namespace Mindbox.Quokka
 	{
 		public string FunctionName { get; }
 
-		public Location Location { get; }
+		public Location Location => source.Location;
+
+		private readonly ExpressionSource source;
 
 		private readonly IReadOnlyList<ArgumentValue> argumentValues;
 
-		public FunctionCallExpression(string functionName, IEnumerable<ArgumentValue> argumentValues, Location location)
+		public FunctionCallExpression(string functionName, IEnumerable<ArgumentValue> argumentValues, ExpressionSource source)
 		{
 			FunctionName = functionName;
 			this.argumentValues = argumentValues.ToList().AsReadOnly();
-			Location = location;
+			this.source = source;
 		}
 
 		public override void PerformSemanticAnalysis(AnalysisContext context, TypeDefinition expectedExpressionType)
@@ -63,14 +65,21 @@ namespace Mindbox.Quokka
 			}
 			catch (FunctionCallRuntimeException targetException)
 			{
-				throw new UnrenderableTemplateModelException(targetException.Message, targetException, Location);
+				throw new UnrenderableTemplateModelException(
+					UnrenderableTemplateModelException.FunctionFailedErrorText,
+					targetException.Message,
+					source.Text ?? FunctionName,
+					source.Location,
+					targetException);
 			}
 			catch (Exception ex)
 			{
 				throw new UnrenderableTemplateModelException(
-					$"Function {FunctionName} invocation resulted in error",
-					ex,
-					Location);
+					UnrenderableTemplateModelException.FunctionFailedErrorText,
+					null,
+					source.Text ?? FunctionName,
+					source.Location,
+					ex);
 			}
 		}
 
