@@ -43,7 +43,8 @@ namespace Mindbox.Quokka
 			treeVisitor.EndVisit();
 		}
 
-		public AdditionExpression(IEnumerable<AdditionOperand> operands)
+		public AdditionExpression(ExpressionSource source, IEnumerable<AdditionOperand> operands)
+			: base(source)
 		{
 			this.operands = operands.ToList().AsReadOnly();
 		}

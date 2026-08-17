@@ -20,7 +20,8 @@ namespace Mindbox.Quokka
 	{
 		private readonly double number;
 
-		public NumberExpression(double number)
+		public NumberExpression(ExpressionSource source, double number)
+			: base(source)
 		{
 			this.number = number;
 		}

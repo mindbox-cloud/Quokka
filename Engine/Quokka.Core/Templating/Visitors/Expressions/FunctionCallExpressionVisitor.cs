@@ -51,7 +51,7 @@ namespace Mindbox.Quokka
 			return new FunctionCallExpression(
 				functionNameToken.GetText(),
 				arguments,
-				GetLocationFromToken(functionNameToken.Symbol));
+				GetExpressionSource(context));
 		}
 	}
 }

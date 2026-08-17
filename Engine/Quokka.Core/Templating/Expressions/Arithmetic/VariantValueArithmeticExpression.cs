@@ -20,7 +20,8 @@ namespace Mindbox.Quokka
     {
 	    private readonly VariantValueExpression variantValueExpression;
 
-	    public VariantValueArithmeticExpression(VariantValueExpression variantValueExpression)
+	    public VariantValueArithmeticExpression(ExpressionSource source, VariantValueExpression variantValueExpression)
+			: base(source)
 	    {
 		    this.variantValueExpression = variantValueExpression;
 	    }

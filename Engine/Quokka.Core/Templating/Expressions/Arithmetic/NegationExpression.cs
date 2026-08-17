@@ -23,7 +23,8 @@ namespace Mindbox.Quokka
 			return innerExpression.GetResultType(context);
 		}
 
-		public NegationExpression(ArithmeticExpression innerExpression)
+		public NegationExpression(ExpressionSource source, ArithmeticExpression innerExpression)
+			: base(source)
 		{
 			this.innerExpression = innerExpression;
 		}

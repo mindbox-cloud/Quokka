@@ -45,7 +45,7 @@ namespace Mindbox.Quokka
 				.Skip(1)
 				.Select(child => child.Accept(new AdditionalExpressionVisitor(VisitingContext))));
 
-			return new AdditionExpression(operands);
+			return new AdditionExpression(GetExpressionSource(context), operands);
 		}
 
 		public override ArithmeticExpression VisitMultiplicationExpression(QuokkaParser.MultiplicationExpressionContext context)
@@ -67,26 +67,30 @@ namespace Mindbox.Quokka
 				.Skip(1)
 				.Select(child => child.Accept(new MultiplicativeExpressionVisitor(VisitingContext))));
 
-			return new MultiplicationExpression(operands);
+			return new MultiplicationExpression(GetExpressionSource(context), operands);
 		}
 
 		public override ArithmeticExpression VisitNegationExpression(QuokkaParser.NegationExpressionContext context)
 		{
-			return new NegationExpression(Visit(context.arithmeticAtom()));
+			return new NegationExpression(GetExpressionSource(context), Visit(context.arithmeticAtom()));
 		}
 
 		public override ArithmeticExpression VisitArithmeticAtom(QuokkaParser.ArithmeticAtomContext context)
 		{
 			var number = context.Number();
 			if (number != null)
-				return new NumberExpression(double.Parse(number.GetText(), CultureInfo.InvariantCulture));
+				return new NumberExpression(
+					GetExpressionSource(context),
+					double.Parse(number.GetText(), CultureInfo.InvariantCulture));
 
 			return base.VisitArithmeticAtom(context);
 		}
 
 		public override ArithmeticExpression VisitVariantValueExpression(QuokkaParser.VariantValueExpressionContext context)
 		{
-			return new VariantValueArithmeticExpression(context.Accept(new VariantValueExpressionVisitor(VisitingContext)));
+			return new VariantValueArithmeticExpression(
+				GetExpressionSource(context),
+				context.Accept(new VariantValueExpressionVisitor(VisitingContext)));
 		}
 
 		protected override ArithmeticExpression AggregateResult(ArithmeticExpression aggregate, ArithmeticExpression nextResult)
