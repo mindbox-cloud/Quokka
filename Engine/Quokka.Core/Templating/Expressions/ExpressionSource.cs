@@ -15,27 +15,23 @@
 namespace Mindbox.Quokka
 {
 	/// <summary>
-	/// Location in a template string
+	/// The place an expression comes from within the template text. Kept by the compiled expression
+	/// so that runtime errors can point at the exact expression which failed.
 	/// </summary>
-	public sealed class Location
+	internal sealed class ExpressionSource
 	{
-		/// <summary>
-		/// Line index (1-based)
-		/// </summary>
-		public int Line { get; }
+		public Location Location { get; }
 
 		/// <summary>
-		/// Column index (0-based)
+		/// The expression as it is written in the template, truncated if it is too long.
+		/// <c>Null</c> for expressions whose text can't be restored from the parse tree.
 		/// </summary>
-		public int Column { get; }
+		public string Text { get; }
 
-		public Location(int line, int column)
+		public ExpressionSource(Location location, string text)
 		{
-			Line = line;
-			Column = column;
+			Location = location;
+			Text = text;
 		}
-
-		public override string ToString()
-			=> $"{Line}:{Column}";
 	}
 }

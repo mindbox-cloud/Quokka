@@ -28,7 +28,8 @@ namespace Mindbox.Quokka
 						: TypeDefinition.Decimal;
 		}
 
-		public MultiplicationExpression(IEnumerable<MultiplicationOperand> operands)
+		public MultiplicationExpression(ExpressionSource source, IEnumerable<MultiplicationOperand> operands)
+			: base(source)
 		{
 			this.operands = operands.ToList().AsReadOnly();
 		}

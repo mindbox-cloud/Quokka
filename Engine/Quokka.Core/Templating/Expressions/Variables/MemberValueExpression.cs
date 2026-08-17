@@ -95,8 +95,11 @@ namespace Mindbox.Quokka
 									    .Take(i + 1)));
 
 					throw new UnrenderableTemplateModelException(
-						$"An attempt to use the value of \"{memberChainStringRepresentation}\" expression which happens to be null",
-						location);
+						UnrenderableTemplateModelException.NullValueErrorText,
+						null,
+						memberChainStringRepresentation,
+						location,
+						null);
 				}
 		    }
 

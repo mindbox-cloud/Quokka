@@ -15,27 +15,25 @@
 namespace Mindbox.Quokka
 {
 	/// <summary>
-	/// Location in a template string
+	/// The reason why an arithmetic operation result could not be evaluated.
+	/// Meant to be used by the calling code to build its own message, e.g. a localized one.
 	/// </summary>
-	public sealed class Location
+	public enum ArithmeticErrorReason
 	{
 		/// <summary>
-		/// Line index (1-based)
+		/// The result is infinite. Within a template this practically always means a division by zero;
+		/// an overflow of intermediate values to infinity is also reported this way.
 		/// </summary>
-		public int Line { get; }
+		DivisionByZero,
 
 		/// <summary>
-		/// Column index (0-based)
+		/// The result is not a number, e.g. when zero is divided by zero.
 		/// </summary>
-		public int Column { get; }
+		NotANumber,
 
-		public Location(int line, int column)
-		{
-			Line = line;
-			Column = column;
-		}
-
-		public override string ToString()
-			=> $"{Line}:{Column}";
+		/// <summary>
+		/// The result is a finite number, but it is too large to be represented as a template value.
+		/// </summary>
+		ResultOutOfRange
 	}
 }
