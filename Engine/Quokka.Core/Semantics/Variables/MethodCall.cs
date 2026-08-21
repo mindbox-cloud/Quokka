@@ -22,12 +22,15 @@ namespace Mindbox.Quokka
     {
 		public string Name { get; }
 
+	    public int? CallOrdinal { get; }
+
 	    private readonly IReadOnlyList<object> argumentValues;
 
-	    public MethodCall(string name, IReadOnlyList<object> argumentValues)
+	    public MethodCall(string name, IReadOnlyList<object> argumentValues, int? callOrdinal = null)
 	    {
 		    Name = name;
 		    this.argumentValues = argumentValues;
+		    CallOrdinal = callOrdinal;
 	    }
 
 	    public IMethodCallDefinition ToMethodCallDefinition()
@@ -39,7 +42,8 @@ namespace Mindbox.Quokka
 						    new MethodArgumentDefinition(
 							    TypeDefinition.GetTypeDefinitionByRuntimeType(argumentValue.GetType()),
 							    argumentValue))
-				    .ToArray());
+				    .ToArray(),
+			    CallOrdinal);
 	    }
 
 	    public bool Equals(MethodCall other)
@@ -50,6 +54,9 @@ namespace Mindbox.Quokka
 			    return true;
 
 		    if (!StringComparer.OrdinalIgnoreCase.Equals(Name, other.Name))
+			    return false;
+
+		    if (CallOrdinal != other.CallOrdinal)
 			    return false;
 
 		    if (argumentValues.Count != other.argumentValues.Count)
@@ -91,7 +98,9 @@ namespace Mindbox.Quokka
 
 	    public override string ToString()
 	    {
-		    return $"{Name}({string.Join(", ", argumentValues)})";
+		    var callOrdinalSuffix = CallOrdinal == null ? string.Empty : $"#{CallOrdinal}";
+
+		    return $"{Name}({string.Join(", ", argumentValues)}){callOrdinalSuffix}";
 	    }
     }
 }

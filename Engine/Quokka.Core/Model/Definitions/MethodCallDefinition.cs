@@ -24,10 +24,16 @@ namespace Mindbox.Quokka
 
 		public IReadOnlyList<IMethodArgumentDefinition> Arguments { get; }
 
-	    internal MethodCallDefinition(string name, IReadOnlyList<IMethodArgumentDefinition> arguments)
+		public int? CallOrdinal { get; }
+
+	    internal MethodCallDefinition(
+		    string name,
+		    IReadOnlyList<IMethodArgumentDefinition> arguments,
+		    int? callOrdinal = null)
 	    {
 		    Name = name;
 		    Arguments = arguments;
+		    CallOrdinal = callOrdinal;
 	    }
 
 		public bool Equals(IMethodCallDefinition other)
@@ -36,6 +42,9 @@ namespace Mindbox.Quokka
 				return false;
 
 			if (!StringComparer.OrdinalIgnoreCase.Equals(Name, other.Name))
+				return false;
+
+			if (CallOrdinal != other.CallOrdinal)
 				return false;
 
 			if (Arguments.Count != other.Arguments.Count)
@@ -75,7 +84,8 @@ namespace Mindbox.Quokka
 		}
 
 		public override string ToString() => 
-			$"{Name}({string.Join(", ", Arguments.Select(arg => $"{arg.Type.Name}: {arg.Value}"))})";
+			$"{Name}({string.Join(", ", Arguments.Select(arg => $"{arg.Type.Name}: {arg.Value}"))})"
+			+ (CallOrdinal == null ? string.Empty : $"#{CallOrdinal}");
 	}
 
 

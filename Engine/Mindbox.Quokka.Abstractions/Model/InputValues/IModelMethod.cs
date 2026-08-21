@@ -22,6 +22,12 @@ namespace Mindbox.Quokka
 
 		IReadOnlyList<object> Arguments { get; }
 
+		/// <summary>
+		/// The <see cref="IMethodCallDefinition.CallOrdinal"/> of the call this value belongs to,
+		/// or <c>null</c> for a value shared by all the calls of an idempotent method.
+		/// </summary>
+		int? CallOrdinal { get; }
+
 	    IModelValue Value { get; }
 	}
 }

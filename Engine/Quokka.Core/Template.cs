@@ -44,7 +44,8 @@ namespace Mindbox.Quokka
 			FunctionRegistry functionRegistry,
 			bool throwIfErrorsEncountered = true,
 			Func<VisitingContext, IQuokkaVisitor<StaticBlock>> staticBlockVisitorCreator = null,
-			IEnumerable<SemanticErrorSubListenerBase> semanticErrorSubListeners = null)
+			IEnumerable<SemanticErrorSubListenerBase> semanticErrorSubListeners = null,
+			IEnumerable<string> nonIdempotentMethodNames = null)
 		{
 			ArgumentNullException.ThrowIfNull(templateText);
 			ArgumentNullException.ThrowIfNull(functionRegistry);
@@ -69,7 +70,8 @@ namespace Mindbox.Quokka
 				{
 					VisitingContext visitingContext = new VisitingContext(
 						syntaxErrorListener,
-						staticBlockVisitorCreator ?? (context => new StaticBlockVisitor(context)));
+						staticBlockVisitorCreator ?? (context => new StaticBlockVisitor(context)),
+						nonIdempotentMethodNames);
 
 					compiledTemplateTree = new RootTemplateVisitor(visitingContext).Visit(templateParseTree);
 

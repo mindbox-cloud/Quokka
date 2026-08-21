@@ -38,10 +38,14 @@ namespace Mindbox.Quokka
 
 	    public override Member VisitMethodCall(QuokkaParser.MethodCallContext context)
 	    {
+		    var name = context.Identifier().GetText();
+		    var argumentList = context.argumentList();
+
 			return new MethodMember(
-				context.Identifier().GetText(),
-				context.argumentList().Accept(new ArgumentListVisitor(VisitingContext)),
-				GetLocationFromToken(context.Identifier().Symbol));
+				name,
+				argumentList.Accept(new ArgumentListVisitor(VisitingContext)),
+				GetLocationFromToken(context.Identifier().Symbol),
+				VisitingContext.GetNextCallOrdinal(name, argumentList.GetText()));
 	    }
     }
 }

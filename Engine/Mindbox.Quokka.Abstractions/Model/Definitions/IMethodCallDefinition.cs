@@ -20,5 +20,11 @@ namespace Mindbox.Quokka
     {
         string Name { get; }
         IReadOnlyList<IMethodArgumentDefinition> Arguments { get; }
+
+        /// <summary>
+        /// The 1-based number of this call among the calls of a non-idempotent method with the same name and arguments,
+        /// or <c>null</c> if the method is idempotent and all its identical calls share a single definition.
+        /// </summary>
+        int? CallOrdinal { get; }
     }
 }

@@ -21,14 +21,20 @@ namespace Mindbox.Quokka
     {
 	    private readonly string name;
 	    private readonly IReadOnlyList<ArgumentValue> arguments;
+	    private readonly int? callOrdinal;
 
 	    private readonly MethodCall methodCall;
 
-	    public MethodMember(string name, IEnumerable<ArgumentValue> arguments, Location location)
+	    public MethodMember(
+		    string name,
+		    IEnumerable<ArgumentValue> arguments,
+		    Location location,
+		    int? callOrdinal = null)
 			: base(location)
 	    {
 		    this.name = name;
 		    this.arguments = arguments.ToList().AsReadOnly();
+		    this.callOrdinal = callOrdinal;
 
 		    methodCall = BuildMethodCall();
 	    }
@@ -72,7 +78,7 @@ namespace Mindbox.Quokka
 				.Where(argumentValue => argumentValue != null)
 			    .ToList();
 
-		    return new MethodCall(name, argumentValues);
+		    return new MethodCall(name, argumentValues, callOrdinal);
 	    }
     }
 }

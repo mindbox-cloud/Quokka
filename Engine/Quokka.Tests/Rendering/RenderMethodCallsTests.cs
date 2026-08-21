@@ -43,6 +43,23 @@ namespace Mindbox.Quokka
 	    }
 
 	    [TestMethod]
+	    public void Render_NonIdempotentMethodCall_IdenticalCalls_RenderTheirOwnValues()
+	    {
+		    var template = new DefaultTemplateFactory(nonIdempotentMethodNames: new[] { "SkipMemorized" })
+			    .CreateTemplate("${ Object.SkipMemorized() }/${ Object.SkipMemorized() }");
+
+		    var result = template.Render(
+			    new CompositeModelValue(
+				    new ModelField(
+					    "Object",
+					    new CompositeModelValue(
+						    new ModelMethod("SkipMemorized", Array.Empty<object>(), "first", 1),
+						    new ModelMethod("SkipMemorized", Array.Empty<object>(), "second", 2)))));
+
+		    Assert.AreEqual("first/second", result);
+	    }
+
+	    [TestMethod]
 	    public void Render_MethodCall_WithoutArguments_MethodChain()
 	    {
 		    var template = new Template("${ Object.GetNumbers().First() }");

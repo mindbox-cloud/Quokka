@@ -13,6 +13,7 @@
 // // limitations under the License.
 
 using System;
+using System.Collections.Generic;
 
 using Mindbox.Quokka.Generated;
 
@@ -22,19 +23,42 @@ namespace Mindbox.Quokka
 	{
 		private readonly Func<VisitingContext, IQuokkaVisitor<StaticBlock>> staticBlockFactoryMethod;
 
+		private readonly HashSet<string> nonIdempotentMethodNames;
+
+		private readonly Dictionary<(string Name, string Arguments), int> nonIdempotentMethodCallCounts = new();
+
 		public SyntaxErrorListener ErrorListener { get; }
 
 		public VisitingContext(
 			SyntaxErrorListener errorListener,
-			Func<VisitingContext, IQuokkaVisitor<StaticBlock>> staticBlockFactoryMethod)
+			Func<VisitingContext, IQuokkaVisitor<StaticBlock>> staticBlockFactoryMethod,
+			IEnumerable<string> nonIdempotentMethodNames = null)
 		{
 			this.staticBlockFactoryMethod = staticBlockFactoryMethod;
+			this.nonIdempotentMethodNames = new HashSet<string>(
+				nonIdempotentMethodNames ?? Array.Empty<string>(),
+				StringComparer.OrdinalIgnoreCase);
 			ErrorListener = errorListener;
 		}
 
 		public IQuokkaVisitor<StaticBlock> CreateStaticBlockVisitor()
 		{
 			return staticBlockFactoryMethod(this);
+		}
+
+		public int? GetNextCallOrdinal(string methodName, string argumentsSource)
+		{
+			if (!nonIdempotentMethodNames.Contains(methodName))
+				return null;
+
+			var callKey = (methodName.ToLowerInvariant(), (argumentsSource ?? string.Empty).ToLowerInvariant());
+			var callOrdinal = nonIdempotentMethodCallCounts.TryGetValue(callKey, out var previousCallOrdinal)
+				? previousCallOrdinal + 1
+				: 1;
+
+			nonIdempotentMethodCallCounts[callKey] = callOrdinal;
+
+			return callOrdinal;
 		}
 	}
 }

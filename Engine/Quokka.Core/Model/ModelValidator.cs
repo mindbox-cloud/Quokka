@@ -101,7 +101,7 @@ namespace Mindbox.Quokka
 			var requiredMethods = requiredModelDefinition.Methods.ToList();
 			var actualMethods = model
 				.Methods
-				.ToDictionary(method => new MethodCall(method.Name, method.Arguments));
+				.ToDictionary(method => new MethodCall(method.Name, method.Arguments, method.CallOrdinal));
 
 			foreach (var requiredMethod in requiredMethods)
 			{
@@ -111,7 +111,8 @@ namespace Mindbox.Quokka
 
 				var requiredMethodCall = new MethodCall(
 					requiredMethod.Key.Name,
-					requiredMethod.Key.Arguments.Select(arg => arg.Value).ToArray());
+					requiredMethod.Key.Arguments.Select(arg => arg.Value).ToArray(),
+					requiredMethod.Key.CallOrdinal);
 
 				if (!actualMethods.TryGetValue(requiredMethodCall, out IModelMethod actualMethod))
 				{

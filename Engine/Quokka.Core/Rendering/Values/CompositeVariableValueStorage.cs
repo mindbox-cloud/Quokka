@@ -42,7 +42,7 @@ namespace Mindbox.Quokka
 			methods = modelValue
 				.Methods
 				.ToDictionary(
-					method => new MethodCall(method.Name, method.Arguments), 
+					method => new MethodCall(method.Name, method.Arguments, method.CallOrdinal), 
 					method => method.Value != null ? CreateStorageForValue(method.Value) : null);
 		}
 
