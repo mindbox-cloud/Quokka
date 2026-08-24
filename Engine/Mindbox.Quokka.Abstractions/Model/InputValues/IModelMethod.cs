@@ -22,6 +22,11 @@ namespace Mindbox.Quokka
 
 		IReadOnlyList<object> Arguments { get; }
 
+		/// <summary>
+		/// Occurrence number of the call this value belongs to (1-based), null for idempotent methods
+		/// </summary>
+		int? OccurrenceNumber => null;
+
 	    IModelValue Value { get; }
 	}
 }

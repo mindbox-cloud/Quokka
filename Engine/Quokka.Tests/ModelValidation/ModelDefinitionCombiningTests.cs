@@ -12,6 +12,7 @@
 // // See the License for the specific language governing permissions and
 // // limitations under the License.
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -259,6 +260,47 @@ namespace Mindbox.Quokka.Tests
 				new CompositeModelDefinition(new Dictionary<string, IModelDefinition>
 				{
 					{ "Primitive1", new PrimitiveModelDefinition(TypeDefinition.Integer) }
+				}),
+				combinedDefinition);
+		}
+
+		[TestMethod]
+		public void DefinitionCombining_NonIdempotentCalls_AreMatchedByOccurrenceNumber()
+		{
+			var factory = new DefaultTemplateFactory(nonIdempotentMethodNames: new[] { "Refresh" });
+
+			var definition1 = factory
+				.CreateTemplate("${ Object.Refresh().X }${ Object.Refresh().Y }")
+				.GetModelDefinition();
+			var definition2 = factory
+				.CreateTemplate("${ Object.Refresh().X }")
+				.GetModelDefinition();
+
+			var combinedDefinition = factory.CombineModelDefinition(new[] { definition1, definition2 });
+
+			TemplateAssert.AreCompositeModelDefinitionsEqual(
+				new CompositeModelDefinition(new Dictionary<string, IModelDefinition>
+				{
+					{
+						"Object", new CompositeModelDefinition(
+							methods: new Dictionary<IMethodCallDefinition, IModelDefinition>
+							{
+								{
+									new MethodCallDefinition("Refresh", Array.Empty<IMethodArgumentDefinition>(), 1),
+									new CompositeModelDefinition(new Dictionary<string, IModelDefinition>
+									{
+										{ "X", new PrimitiveModelDefinition(TypeDefinition.Primitive) }
+									})
+								},
+								{
+									new MethodCallDefinition("Refresh", Array.Empty<IMethodArgumentDefinition>(), 2),
+									new CompositeModelDefinition(new Dictionary<string, IModelDefinition>
+									{
+										{ "Y", new PrimitiveModelDefinition(TypeDefinition.Primitive) }
+									})
+								}
+							})
+					}
 				}),
 				combinedDefinition);
 		}

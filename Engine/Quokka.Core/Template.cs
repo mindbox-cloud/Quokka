@@ -44,7 +44,8 @@ namespace Mindbox.Quokka
 			FunctionRegistry functionRegistry,
 			bool throwIfErrorsEncountered = true,
 			Func<VisitingContext, IQuokkaVisitor<StaticBlock>> staticBlockVisitorCreator = null,
-			IEnumerable<SemanticErrorSubListenerBase> semanticErrorSubListeners = null)
+			IEnumerable<SemanticErrorSubListenerBase> semanticErrorSubListeners = null,
+			IEnumerable<string> nonIdempotentMethodNames = null)
 		{
 			ArgumentNullException.ThrowIfNull(templateText);
 			ArgumentNullException.ThrowIfNull(functionRegistry);
@@ -75,10 +76,11 @@ namespace Mindbox.Quokka
 
 					IsConstant = compiledTemplateTree.IsConstant;
 
-					var analysisContext = new AnalysisContext
-						(new CompilationVariableScope(),
+					var analysisContext = new AnalysisContext(
+						new CompilationVariableScope(),
 						functionRegistry,
-						semanticErrorListener);
+						semanticErrorListener,
+						nonIdempotentMethodNames);
 
 					compiledTemplateTree.PerformSemanticAnalysis(analysisContext);
 					analysisContext.VariableScope.Compile(analysisContext);

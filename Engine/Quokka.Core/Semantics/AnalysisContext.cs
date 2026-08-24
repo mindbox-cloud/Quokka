@@ -13,11 +13,14 @@
 // // limitations under the License.
 
 using System;
+using System.Collections.Generic;
 
 namespace Mindbox.Quokka
 {
 	internal class AnalysisContext
 	{
+		private readonly HashSet<string> nonIdempotentMethodNames;
+
 		public CompilationVariableScope VariableScope { get; }
 		public FunctionRegistry Functions { get; }
 		public ISemanticErrorListener ErrorListener { get; }
@@ -25,11 +28,33 @@ namespace Mindbox.Quokka
 		public AnalysisContext(
 			CompilationVariableScope variableScope,
 			FunctionRegistry functions,
-			ISemanticErrorListener errorListener)
+			ISemanticErrorListener errorListener,
+			IEnumerable<string> nonIdempotentMethodNames = null)
+			: this(
+				variableScope,
+				functions,
+				errorListener,
+				new HashSet<string>(
+					nonIdempotentMethodNames ?? Array.Empty<string>(),
+					StringComparer.OrdinalIgnoreCase))
+		{
+		}
+
+		private AnalysisContext(
+			CompilationVariableScope variableScope,
+			FunctionRegistry functions,
+			ISemanticErrorListener errorListener,
+			HashSet<string> nonIdempotentMethodNames)
 		{
 			VariableScope = variableScope;
 			Functions = functions;
 			ErrorListener = errorListener;
+			this.nonIdempotentMethodNames = nonIdempotentMethodNames;
+		}
+
+		public bool IsMethodNonIdempotent(string methodName)
+		{
+			return nonIdempotentMethodNames.Contains(methodName);
 		}
 
 		public AnalysisContext CreateNestedScopeContext()
@@ -37,7 +62,8 @@ namespace Mindbox.Quokka
 			return new AnalysisContext(
 				VariableScope.CreateChildScope(),
 				Functions,
-				ErrorListener);
+				ErrorListener,
+				nonIdempotentMethodNames);
 		}
 	}
 }

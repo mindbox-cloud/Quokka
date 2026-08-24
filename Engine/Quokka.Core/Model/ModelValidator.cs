@@ -71,9 +71,7 @@ namespace Mindbox.Quokka
 
 			foreach (var requiredField in requiredFields)
 			{
-				var fieldFullName = modelPrefix == null
-										? requiredField.Key
-										: $"{modelPrefix}.{requiredField.Key}";
+				var fieldFullName = GetFullName(modelPrefix, requiredField.Key);
 
 				if (!actualFields.TryGetValue(requiredField.Key, out IModelField actualField))
 				{
@@ -101,26 +99,30 @@ namespace Mindbox.Quokka
 			var requiredMethods = requiredModelDefinition.Methods.ToList();
 			var actualMethods = model
 				.Methods
-				.ToDictionary(method => new MethodCall(method.Name, method.Arguments));
+				.GroupBy(method => new MethodCall(method.Name, method.Arguments, method.OccurrenceNumber))
+				.ToDictionary(group => group.Key, group => group.ToList());
 
 			foreach (var requiredMethod in requiredMethods)
 			{
-				var methodFullName = modelPrefix == null
-										? requiredMethod.Key.ToString()
-										: $"{modelPrefix}.{requiredMethod.Key}";
+				var methodFullName = GetFullName(modelPrefix, requiredMethod.Key);
 
 				var requiredMethodCall = new MethodCall(
 					requiredMethod.Key.Name,
-					requiredMethod.Key.Arguments.Select(arg => arg.Value).ToArray());
+					requiredMethod.Key.Arguments.Select(arg => arg.Value).ToArray(),
+					requiredMethod.Key.OccurrenceNumber);
 
-				if (!actualMethods.TryGetValue(requiredMethodCall, out IModelMethod actualMethod))
+				if (!actualMethods.TryGetValue(requiredMethodCall, out var actualMethodValues))
 				{
 					validationContext.AddError($"Method call result for {methodFullName} not found");
 				}
 				else
 				{
+					if (actualMethodValues.Count > 1)
+						validationContext.AddError(
+							$"Method call result for {methodFullName} is provided more than once");
+
 					var requiredValue = requiredMethod.Value;
-					var actualValue = actualMethod.Value;
+					var actualValue = actualMethodValues[0].Value;
 
 					if (actualValue == null)
 						validationContext.AddError($"Field {methodFullName} value is null");
@@ -128,6 +130,11 @@ namespace Mindbox.Quokka
 						ValidateValue(validationContext, requiredValue, actualValue, methodFullName);
 				}
 			}
+		}
+
+		private static string GetFullName(string modelPrefix, object member)
+		{
+			return modelPrefix == null ? member.ToString() : $"{modelPrefix}.{member}";
 		}
 
 		private void ValidateValue(

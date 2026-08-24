@@ -20,5 +20,10 @@ namespace Mindbox.Quokka
     {
         string Name { get; }
         IReadOnlyList<IMethodArgumentDefinition> Arguments { get; }
+
+        /// <summary>
+        /// Occurrence number of a non-idempotent method call (1-based), null for idempotent methods
+        /// </summary>
+        int? OccurrenceNumber => null;
     }
 }
