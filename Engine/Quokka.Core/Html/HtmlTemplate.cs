@@ -27,13 +27,15 @@ namespace Mindbox.Quokka.Html
 		internal HtmlTemplate(
 			string templateText,
 			FunctionRegistry functionRegistry,
-			bool throwIfErrorsEncountered = true)
+			bool throwIfErrorsEncountered = true,
+			IEnumerable<string> nonIdempotentMethodNames = null)
 			: base(
 				templateText,
 				functionRegistry,
 				throwIfErrorsEncountered,
 				context => new HtmlStaticBlockVisitor(context),
-				new[] { new HtmlSemanticErrorSubListener() })
+				new[] { new HtmlSemanticErrorSubListener() },
+				nonIdempotentMethodNames)
 		{
 		}
 

@@ -43,6 +43,41 @@ namespace Mindbox.Quokka
 	    }
 
 	    [TestMethod]
+	    public void Render_NonIdempotentMethodCalls_EachCallRendersItsOwnValue()
+	    {
+		    var template = new DefaultTemplateFactory(nonIdempotentMethodNames: new[] { "Refresh" })
+			    .CreateTemplate("${ Object.Refresh() }/${ Object.Refresh() }");
+
+		    var result = template.Render(
+			    new CompositeModelValue(
+				    new ModelField(
+					    "Object",
+					    new CompositeModelValue(
+						    new ModelMethod("Refresh", Array.Empty<object>(), "first", 1),
+						    new ModelMethod("Refresh", Array.Empty<object>(), "second", 2)))));
+
+		    Assert.AreEqual("first/second", result);
+	    }
+
+	    [TestMethod]
+	    public void Render_MethodCall_TwoValuesForTheSameCall_ReportsIt()
+	    {
+		    var template = new DefaultTemplateFactory(nonIdempotentMethodNames: new[] { "Refresh" })
+			    .CreateTemplate("${ Object.Refresh() }");
+
+		    var exception = Assert.ThrowsException<InvalidTemplateModelException>(
+			    () => template.Render(
+				    new CompositeModelValue(
+					    new ModelField(
+						    "Object",
+						    new CompositeModelValue(
+							    new ModelMethod("Refresh", Array.Empty<object>(), "first", 1),
+							    new ModelMethod("Refresh", Array.Empty<object>(), "second", 1))))));
+
+		    StringAssert.Contains(exception.Message, "is provided more than once");
+	    }
+
+	    [TestMethod]
 	    public void Render_MethodCall_WithoutArguments_MethodChain()
 	    {
 		    var template = new Template("${ Object.GetNumbers().First() }");

@@ -22,7 +22,7 @@ namespace Mindbox.Quokka
 	    private readonly string name;
 	    private readonly IReadOnlyList<ArgumentValue> arguments;
 
-	    private readonly MethodCall methodCall;
+	    private MethodCall methodCall;
 
 	    public MethodMember(string name, IEnumerable<ArgumentValue> arguments, Location location)
 			: base(location)
@@ -38,6 +38,14 @@ namespace Mindbox.Quokka
 		    for (int i = 0; i < arguments.Count; i++)
 			    if (arguments[i].TryGetStaticValue() == null)
 				    analysisContext.ErrorListener.AddNonConstantMethodArgumentError(name, i + 1, Location);
+
+		    if (methodCall.OccurrenceNumber == null && analysisContext.IsMethodNonIdempotent(name))
+		    {
+			    var previousOccurrenceCount = ownerValueUsageSummary.Methods.Items
+				    .Count(item => item.Key.HasSameSignature(methodCall));
+
+			    methodCall = methodCall.WithOccurrenceNumber(previousOccurrenceCount + 1);
+		    }
 
 		    ownerValueUsageSummary.Methods
 			    .CreateOrUpdateMember(methodCall, new ValueUsage(Location, memberType));

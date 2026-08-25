@@ -24,6 +24,7 @@ namespace Mindbox.Quokka
     {
 		public string Name { get; }
 	    public IReadOnlyList<object> Arguments { get; }
+	    public int? OccurrenceNumber { get; }
 		public IModelValue Value { get; }
 
 	    public ModelMethod(string name, IModelValue value)
@@ -36,15 +37,16 @@ namespace Mindbox.Quokka
 	    {
 	    }
 		
-	    public ModelMethod(string name, IEnumerable<object> arguments, IModelValue value)
+	    public ModelMethod(string name, IEnumerable<object> arguments, IModelValue value, int? occurrenceNumber = null)
 	    {
 		    Name = name;
 		    Arguments = arguments.ToArray();
+		    OccurrenceNumber = occurrenceNumber;
 		    Value = value;
 	    }
 
-	    public ModelMethod(string name, IEnumerable<object> arguments, object primitiveValue)
-		    : this(name, arguments, new PrimitiveModelValue(primitiveValue))
+	    public ModelMethod(string name, IEnumerable<object> arguments, object primitiveValue, int? occurrenceNumber = null)
+		    : this(name, arguments, new PrimitiveModelValue(primitiveValue), occurrenceNumber)
 	    {
 	    }
 	}

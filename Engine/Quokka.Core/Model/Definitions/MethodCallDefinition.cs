@@ -24,10 +24,16 @@ namespace Mindbox.Quokka
 
 		public IReadOnlyList<IMethodArgumentDefinition> Arguments { get; }
 
-	    internal MethodCallDefinition(string name, IReadOnlyList<IMethodArgumentDefinition> arguments)
+		public int? OccurrenceNumber { get; }
+
+	    internal MethodCallDefinition(
+		    string name,
+		    IReadOnlyList<IMethodArgumentDefinition> arguments,
+		    int? occurrenceNumber = null)
 	    {
 		    Name = name;
 		    Arguments = arguments;
+		    OccurrenceNumber = occurrenceNumber;
 	    }
 
 		public bool Equals(IMethodCallDefinition other)
@@ -36,6 +42,9 @@ namespace Mindbox.Quokka
 				return false;
 
 			if (!StringComparer.OrdinalIgnoreCase.Equals(Name, other.Name))
+				return false;
+
+			if (OccurrenceNumber != other.OccurrenceNumber)
 				return false;
 
 			if (Arguments.Count != other.Arguments.Count)
@@ -74,8 +83,12 @@ namespace Mindbox.Quokka
 			return StringComparer.OrdinalIgnoreCase.GetHashCode(Name);
 		}
 
-		public override string ToString() => 
-			$"{Name}({string.Join(", ", Arguments.Select(arg => $"{arg.Type.Name}: {arg.Value}"))})";
+		public override string ToString()
+		{
+			var arguments = string.Join(", ", Arguments.Select(arg => $"{arg.Type.Name}: {arg.Value}"));
+
+			return OccurrenceNumber == null ? $"{Name}({arguments})" : $"{Name}({arguments})#{OccurrenceNumber}";
+		}
 	}
 
 

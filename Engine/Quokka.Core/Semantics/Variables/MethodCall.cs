@@ -22,12 +22,15 @@ namespace Mindbox.Quokka
     {
 		public string Name { get; }
 
+		public int? OccurrenceNumber { get; }
+
 	    private readonly IReadOnlyList<object> argumentValues;
 
-	    public MethodCall(string name, IReadOnlyList<object> argumentValues)
+	    public MethodCall(string name, IReadOnlyList<object> argumentValues, int? occurrenceNumber = null)
 	    {
 		    Name = name;
 		    this.argumentValues = argumentValues;
+		    OccurrenceNumber = occurrenceNumber;
 	    }
 
 	    public IMethodCallDefinition ToMethodCallDefinition()
@@ -39,7 +42,13 @@ namespace Mindbox.Quokka
 						    new MethodArgumentDefinition(
 							    TypeDefinition.GetTypeDefinitionByRuntimeType(argumentValue.GetType()),
 							    argumentValue))
-				    .ToArray());
+				    .ToArray(),
+			    OccurrenceNumber);
+	    }
+
+	    public MethodCall WithOccurrenceNumber(int occurrenceNumber)
+	    {
+		    return new MethodCall(Name, argumentValues, occurrenceNumber);
 	    }
 
 	    public bool Equals(MethodCall other)
@@ -49,6 +58,11 @@ namespace Mindbox.Quokka
 		    if (ReferenceEquals(this, other))
 			    return true;
 
+		    return OccurrenceNumber == other.OccurrenceNumber && HasSameSignature(other);
+	    }
+
+	    public bool HasSameSignature(MethodCall other)
+	    {
 		    if (!StringComparer.OrdinalIgnoreCase.Equals(Name, other.Name))
 			    return false;
 
@@ -91,7 +105,9 @@ namespace Mindbox.Quokka
 
 	    public override string ToString()
 	    {
-		    return $"{Name}({string.Join(", ", argumentValues)})";
+		    var arguments = string.Join(", ", argumentValues);
+
+		    return OccurrenceNumber == null ? $"{Name}({arguments})" : $"{Name}({arguments})#{OccurrenceNumber}";
 	    }
     }
 }

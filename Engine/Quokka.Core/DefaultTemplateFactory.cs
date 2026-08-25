@@ -12,6 +12,7 @@
 // // See the License for the specific language governing permissions and
 // // limitations under the License.
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -23,23 +24,36 @@ namespace Mindbox.Quokka
 	{
 		private readonly FunctionRegistry functionRegistry;
 
-		public DefaultTemplateFactory(IEnumerable<TemplateFunction> additionalFunctions = null)
+		private readonly IReadOnlyCollection<string> nonIdempotentMethodNames;
+
+		public DefaultTemplateFactory(
+			IEnumerable<TemplateFunction> additionalFunctions = null,
+			IEnumerable<string> nonIdempotentMethodNames = null)
 		{
 			var functions = new List<TemplateFunction>(Template.GetStandardFunctions());
 			if (additionalFunctions != null)
 				functions.AddRange(additionalFunctions);
 			
 			functionRegistry = new FunctionRegistry(functions);
+			this.nonIdempotentMethodNames = nonIdempotentMethodNames?.ToArray() ?? Array.Empty<string>();
 		}
 
 		public ITemplate CreateTemplate(string templateText)
 		{
-			return new Template(templateText, functionRegistry,  true);
+			return new Template(
+				templateText,
+				functionRegistry,
+				true,
+				nonIdempotentMethodNames: nonIdempotentMethodNames);
 		}
 
 		public ITemplate TryCreateTemplate(string templateText, out IList<ITemplateError> errors)
 		{
-			var template = new Template(templateText, functionRegistry, false);
+			var template = new Template(
+				templateText,
+				functionRegistry,
+				false,
+				nonIdempotentMethodNames: nonIdempotentMethodNames);
 			errors = template.Errors;
 
 			return errors.Any() ? null : template;
@@ -47,12 +61,12 @@ namespace Mindbox.Quokka
 
 		public IHtmlTemplate CreateHtmlTemplate(string templateText)
 		{
-			return new HtmlTemplate(templateText, functionRegistry, true);
+			return new HtmlTemplate(templateText, functionRegistry, true, nonIdempotentMethodNames);
 		}
 
 		public IHtmlTemplate TryCreateHtmlTemplate(string templateText, out IList<ITemplateError> errors)
 		{
-			var template = new HtmlTemplate(templateText, functionRegistry, false);
+			var template = new HtmlTemplate(templateText, functionRegistry, false, nonIdempotentMethodNames);
 			errors = template.Errors;
 
 			return errors.Any() ? null : template;
