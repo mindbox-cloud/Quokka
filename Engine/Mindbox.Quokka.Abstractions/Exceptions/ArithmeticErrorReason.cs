@@ -34,6 +34,11 @@ namespace Mindbox.Quokka
 		/// <summary>
 		/// The result is a finite number, but it is too large to be represented as a template value.
 		/// </summary>
-		ResultOutOfRange
+		ResultOutOfRange,
+
+		/// <summary>
+		/// An operand value can't be used as a number, e.g. an empty or a non-numeric string.
+		/// </summary>
+		InvalidOperand
 	}
 }

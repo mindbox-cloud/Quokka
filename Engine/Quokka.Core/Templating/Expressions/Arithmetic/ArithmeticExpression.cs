@@ -89,8 +89,15 @@ namespace Mindbox.Quokka
 			}
 			catch (OverflowException ex)
 			{
-				throw new ArithmeticOperationException(GetErrorReason(value), source?.Text, source?.Location, ex);
+				throw CreateArithmeticOperationException(GetErrorReason(value), ex);
 			}
+		}
+
+		protected ArithmeticOperationException CreateArithmeticOperationException(
+			ArithmeticErrorReason reason,
+			Exception inner)
+		{
+			return new ArithmeticOperationException(reason, source?.Text, source?.Location, inner);
 		}
 
 		private static ArithmeticErrorReason GetErrorReason(double value)

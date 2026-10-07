@@ -196,6 +196,50 @@ namespace Mindbox.Quokka.Tests
 			Assert.IsTrue(exception.Expression.EndsWith("…"));
 		}
 
+		[TestMethod]
+		public void Render_EmptyStringAssignedInLoopAndCompared_ReportsInvalidOperandExpressionAndLocation()
+		{
+			var template = new Template(
+				"@{ for product in Products }@{ set discount = product.Discount }"
+					+ "@{ if discount > 0 }Discount!@{ end if }@{ end for }");
+
+			var exception = Assert.ThrowsException<ArithmeticOperationException>(
+				() => template.Render(
+					new CompositeModelValue(
+						new ModelField(
+							"Products",
+							new ArrayModelValue(
+								new CompositeModelValue(
+									new ModelField("Discount", "")))))));
+
+			Assert.AreEqual(ArithmeticErrorReason.InvalidOperand, exception.Reason);
+			Assert.AreEqual("discount", exception.Expression);
+			Assert.AreEqual(
+				"Arithmetic operation result could not be evaluated: the value is not a number "
+					+ "in \"discount\" at 1:70",
+				exception.Message);
+		}
+
+		[TestMethod]
+		public void Render_NonNumericStringAssignedAndUsedInArithmetic_ReportsInvalidOperand()
+		{
+			var template = new Template(
+				"@{ for product in Products }@{ set price = product.Price }${ price * 2 }@{ end for }");
+
+			var exception = Assert.ThrowsException<ArithmeticOperationException>(
+				() => template.Render(
+					new CompositeModelValue(
+						new ModelField(
+							"Products",
+							new ArrayModelValue(
+								new CompositeModelValue(
+									new ModelField("Price", "free")))))));
+
+			Assert.AreEqual(ArithmeticErrorReason.InvalidOperand, exception.Reason);
+			Assert.AreEqual("price", exception.Expression);
+			Assert.IsInstanceOfType(exception, typeof(UnrenderableTemplateModelException));
+		}
+
 		private class EchoFunction : ScalarTemplateFunction<decimal, decimal>
 		{
 			public EchoFunction()
