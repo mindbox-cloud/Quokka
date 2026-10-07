@@ -36,7 +36,16 @@ namespace Mindbox.Quokka
 
 	    public override double GetValue(RenderContext renderContext)
 	    {
-			return Convert.ToDouble(variantValueExpression.Evaluate(renderContext).GetPrimitiveValue());
+			var value = variantValueExpression.Evaluate(renderContext).GetPrimitiveValue();
+
+			try
+			{
+				return Convert.ToDouble(value);
+			}
+			catch (Exception ex) when (ex is FormatException or InvalidCastException)
+			{
+				throw CreateArithmeticOperationException(ArithmeticErrorReason.InvalidOperand, ex);
+			}
 		}
 
 	    public override void PerformSemanticAnalysis(AnalysisContext context)

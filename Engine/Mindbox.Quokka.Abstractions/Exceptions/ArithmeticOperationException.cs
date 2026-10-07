@@ -18,7 +18,8 @@ namespace Mindbox.Quokka
 {
 	/// <summary>
 	/// This exception occurs when an arithmetic operation within a template produces a result
-	/// which can't be used as a template value: an infinite one, a not-a-number one or an out of range one.
+	/// which can't be used as a template value: an infinite one, a not-a-number one or an out of range one,
+	/// or when an operand value can't be used as a number.
 	/// </summary>
 	[Serializable]
 	public class ArithmeticOperationException : UnrenderableTemplateModelException
@@ -60,6 +61,9 @@ namespace Mindbox.Quokka
 
 				case ArithmeticErrorReason.ResultOutOfRange:
 					return "the result is out of the supported number range";
+
+				case ArithmeticErrorReason.InvalidOperand:
+					return "the value is not a number";
 
 				default:
 					throw new ArgumentOutOfRangeException(nameof(reason), reason, null);
