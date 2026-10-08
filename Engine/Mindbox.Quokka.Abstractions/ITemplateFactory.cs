@@ -22,10 +22,24 @@ namespace Mindbox.Quokka
 	{
 		ITemplate CreateTemplate(string templateText);
 
+		ITemplate CreateTemplate(string templateText, bool widenAssignedValueTypes);
+
 		ITemplate TryCreateTemplate(string templateText, out IList<ITemplateError> errors);
+
+		ITemplate TryCreateTemplate(
+			string templateText,
+			bool widenAssignedValueTypes,
+			out IList<ITemplateError> errors);
 
 		IHtmlTemplate CreateHtmlTemplate(string templateText);
 
+		IHtmlTemplate CreateHtmlTemplate(string templateText, bool widenAssignedValueTypes);
+
 		IHtmlTemplate TryCreateHtmlTemplate(string templateText, out IList<ITemplateError> errors);
+
+		IHtmlTemplate TryCreateHtmlTemplate(
+			string templateText,
+			bool widenAssignedValueTypes,
+			out IList<ITemplateError> errors);
 	}
 }

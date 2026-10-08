@@ -89,28 +89,15 @@ namespace Mindbox.Quokka.Tests
 		[DataRow("@{ set amount = \"abc\" }${ amount + 1 }")]
 		public void WideningEnabled_ConflictingVariableUsages_TemplateHasErrors(string templateText)
 		{
-			var template = CreateFactory(widenAssignedValueTypes: true).TryCreateTemplate(templateText, out var errors);
+			var template = new DefaultTemplateFactory()
+				.TryCreateTemplate(templateText, widenAssignedValueTypes: true, out var errors);
 
 			Assert.IsNull(template);
 			Assert.AreNotEqual(0, errors.Count);
 		}
 
 		[TestMethod]
-		public void Factory_WideningProviderIsEvaluatedOnEveryTemplateCreation()
-		{
-			var widen = false;
-			var factory = new DefaultTemplateFactory(widenAssignedValueTypes: () => widen);
-
-			var modelBefore = factory.TryCreateTemplate(AmountResetToZeroTemplate, out _).GetModelDefinition();
-			widen = true;
-			var modelAfter = factory.TryCreateTemplate(AmountResetToZeroTemplate, out _).GetModelDefinition();
-
-			AssertOrderFieldType(modelBefore, "TotalAmount", TypeDefinition.Integer);
-			AssertOrderFieldType(modelAfter, "TotalAmount", TypeDefinition.Decimal);
-		}
-
-		[TestMethod]
-		public void Factory_WithoutWideningProvider_KeepsPreviousTyping()
+		public void Factory_OverloadWithoutWideningFlag_KeepsPreviousTyping()
 		{
 			var model = new DefaultTemplateFactory().TryCreateTemplate(AmountResetToZeroTemplate, out _).GetModelDefinition();
 
@@ -118,22 +105,29 @@ namespace Mindbox.Quokka.Tests
 		}
 
 		[TestMethod]
+		public void Factory_ThrowingOverloadWithWideningEnabled_FieldIsDecimal()
+		{
+			var model = new DefaultTemplateFactory()
+				.CreateTemplate(AmountResetToZeroTemplate, widenAssignedValueTypes: true)
+				.GetModelDefinition();
+
+			AssertOrderFieldType(model, "TotalAmount", TypeDefinition.Decimal);
+		}
+
+		[TestMethod]
 		public void HtmlTemplate_WideningEnabled_IntegerLiteralAssignedToVariableBoundToField_FieldIsDecimal()
 		{
-			var template = CreateFactory(widenAssignedValueTypes: true).TryCreateHtmlTemplate(AmountResetToZeroTemplate, out var errors);
+			var template = new DefaultTemplateFactory()
+				.TryCreateHtmlTemplate(AmountResetToZeroTemplate, widenAssignedValueTypes: true, out var errors);
 
 			Assert.AreEqual(0, errors.Count);
 			AssertOrderFieldType(template.GetModelDefinition(), "TotalAmount", TypeDefinition.Decimal);
 		}
 
-		private static DefaultTemplateFactory CreateFactory(bool widenAssignedValueTypes)
-		{
-			return new DefaultTemplateFactory(widenAssignedValueTypes: () => widenAssignedValueTypes);
-		}
-
 		private static ICompositeModelDefinition CreateModel(string templateText, bool widenAssignedValueTypes)
 		{
-			var template = CreateFactory(widenAssignedValueTypes).TryCreateTemplate(templateText, out var errors);
+			var template = new DefaultTemplateFactory()
+				.TryCreateTemplate(templateText, widenAssignedValueTypes, out var errors);
 
 			Assert.AreEqual(0, errors.Count, string.Join("; ", errors));
 			return template.GetModelDefinition();
