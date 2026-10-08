@@ -24,19 +24,22 @@ namespace Mindbox.Quokka
 		public CompilationVariableScope VariableScope { get; }
 		public FunctionRegistry Functions { get; }
 		public ISemanticErrorListener ErrorListener { get; }
+		public bool WidenAssignedValueTypes { get; }
 
 		public AnalysisContext(
 			CompilationVariableScope variableScope,
 			FunctionRegistry functions,
 			ISemanticErrorListener errorListener,
-			IEnumerable<string> nonIdempotentMethodNames = null)
+			IEnumerable<string> nonIdempotentMethodNames = null,
+			bool widenAssignedValueTypes = false)
 			: this(
 				variableScope,
 				functions,
 				errorListener,
 				new HashSet<string>(
 					nonIdempotentMethodNames ?? Array.Empty<string>(),
-					StringComparer.OrdinalIgnoreCase))
+					StringComparer.OrdinalIgnoreCase),
+				widenAssignedValueTypes)
 		{
 		}
 
@@ -44,11 +47,13 @@ namespace Mindbox.Quokka
 			CompilationVariableScope variableScope,
 			FunctionRegistry functions,
 			ISemanticErrorListener errorListener,
-			HashSet<string> nonIdempotentMethodNames)
+			HashSet<string> nonIdempotentMethodNames,
+			bool widenAssignedValueTypes)
 		{
 			VariableScope = variableScope;
 			Functions = functions;
 			ErrorListener = errorListener;
+			WidenAssignedValueTypes = widenAssignedValueTypes;
 			this.nonIdempotentMethodNames = nonIdempotentMethodNames;
 		}
 
@@ -63,7 +68,8 @@ namespace Mindbox.Quokka
 				VariableScope.CreateChildScope(),
 				Functions,
 				ErrorListener,
-				nonIdempotentMethodNames);
+				nonIdempotentMethodNames,
+				WidenAssignedValueTypes);
 		}
 	}
 }

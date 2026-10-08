@@ -40,20 +40,35 @@ namespace Mindbox.Quokka
 
 		public ITemplate CreateTemplate(string templateText)
 		{
+			return CreateTemplate(templateText, widenAssignedValueTypes: false);
+		}
+
+		public ITemplate CreateTemplate(string templateText, bool widenAssignedValueTypes)
+		{
 			return new Template(
 				templateText,
 				functionRegistry,
 				true,
-				nonIdempotentMethodNames: nonIdempotentMethodNames);
+				nonIdempotentMethodNames: nonIdempotentMethodNames,
+				widenAssignedValueTypes: widenAssignedValueTypes);
 		}
 
 		public ITemplate TryCreateTemplate(string templateText, out IList<ITemplateError> errors)
+		{
+			return TryCreateTemplate(templateText, widenAssignedValueTypes: false, out errors);
+		}
+
+		public ITemplate TryCreateTemplate(
+			string templateText,
+			bool widenAssignedValueTypes,
+			out IList<ITemplateError> errors)
 		{
 			var template = new Template(
 				templateText,
 				functionRegistry,
 				false,
-				nonIdempotentMethodNames: nonIdempotentMethodNames);
+				nonIdempotentMethodNames: nonIdempotentMethodNames,
+				widenAssignedValueTypes: widenAssignedValueTypes);
 			errors = template.Errors;
 
 			return errors.Any() ? null : template;
@@ -61,12 +76,35 @@ namespace Mindbox.Quokka
 
 		public IHtmlTemplate CreateHtmlTemplate(string templateText)
 		{
-			return new HtmlTemplate(templateText, functionRegistry, true, nonIdempotentMethodNames);
+			return CreateHtmlTemplate(templateText, widenAssignedValueTypes: false);
+		}
+
+		public IHtmlTemplate CreateHtmlTemplate(string templateText, bool widenAssignedValueTypes)
+		{
+			return new HtmlTemplate(
+				templateText,
+				functionRegistry,
+				true,
+				nonIdempotentMethodNames,
+				widenAssignedValueTypes);
 		}
 
 		public IHtmlTemplate TryCreateHtmlTemplate(string templateText, out IList<ITemplateError> errors)
 		{
-			var template = new HtmlTemplate(templateText, functionRegistry, false, nonIdempotentMethodNames);
+			return TryCreateHtmlTemplate(templateText, widenAssignedValueTypes: false, out errors);
+		}
+
+		public IHtmlTemplate TryCreateHtmlTemplate(
+			string templateText,
+			bool widenAssignedValueTypes,
+			out IList<ITemplateError> errors)
+		{
+			var template = new HtmlTemplate(
+				templateText,
+				functionRegistry,
+				false,
+				nonIdempotentMethodNames,
+				widenAssignedValueTypes);
 			errors = template.Errors;
 
 			return errors.Any() ? null : template;
