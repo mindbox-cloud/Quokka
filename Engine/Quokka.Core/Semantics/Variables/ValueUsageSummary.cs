@@ -69,31 +69,51 @@ namespace Mindbox.Quokka
 			}
 		}
 
-		public void Compile(ISemanticErrorListener errorListener)
+		public void Compile(AnalysisContext context)
 		{
 			if (usages.First().Intention == VariableUsageIntention.Read
 					&& usages.Any(u => u.Intention == VariableUsageIntention.Write))
-				errorListener.AddVariableUsageBeforeAssignmentError(this, usages.First().Location);
+				context.ErrorListener.AddVariableUsageBeforeAssignmentError(this, usages.First().Location);
 
-			Fields.Items.ToList().ForEach(f => f.Value.Compile(errorListener));
+			Fields.Items.ToList().ForEach(f => f.Value.Compile(context));
 
-			Methods.Items.ToList().ForEach(f => f.Value.Compile(errorListener));
+			Methods.Items.ToList().ForEach(f => f.Value.Compile(context));
 
-			EnumerationResultUsageSummaries?.ToList().ForEach(f => f.Compile(errorListener));
+			EnumerationResultUsageSummaries?.ToList().ForEach(f => f.Compile(context));
+
+			var assignedVariableUsages = assignedVariables.SelectMany(v => v.GetAllUsagesExcept(this));
+			if (context.WidenAssignedValueTypes)
+				assignedVariableUsages = assignedVariableUsages.Select(WidenToTypeFamily);
 
 			compiledType = TypeDefinition.GetResultingTypeForMultipleOccurrences(
-				usages.Concat(assignedVariables.SelectMany(v => v.GetAllUsagesExcept(this))).ToList(),
+				usages.Concat(assignedVariableUsages).ToList(),
 				occurence => occurence.RequiredType,
-				(occurence, correctType) => errorListener.AddInconsistentVariableTypingError(
+				(occurence, correctType) => context.ErrorListener.AddInconsistentVariableTypingError(
 					this,
 					occurence,
 					correctType));
 		}
 
-		private ValueUsageSummary EnsureCompiled(ISemanticErrorListener errorListener)
+		private static ValueUsage WidenToTypeFamily(ValueUsage usage)
+		{
+			if (usage.Intention != VariableUsageIntention.Write)
+				return usage;
+
+			var family = usage.RequiredType;
+			while (family.BaseType != null
+					&& family.BaseType != TypeDefinition.Primitive
+					&& family.BaseType != TypeDefinition.Unknown)
+				family = family.BaseType;
+
+			return family == usage.RequiredType
+				? usage
+				: new ValueUsage(usage.Location, family, VariableUsageIntention.Write);
+		}
+
+		private ValueUsageSummary EnsureCompiled(AnalysisContext context)
 		{
 			if (compiledType == null)
-				Compile(errorListener);
+				Compile(context);
 
 			return this;
 		}
@@ -152,9 +172,9 @@ namespace Mindbox.Quokka
 			enumerationResultUsageSummaries.Add(usageSummary);
 		}
 
-		private IModelDefinition ToModelDefinition(ISemanticErrorListener errorListener)
+		private IModelDefinition ToModelDefinition(AnalysisContext context)
 		{
-			EnsureCompiled(errorListener);
+			EnsureCompiled(context);
 
 			if (compiledType.IsAssignableTo(TypeDefinition.Composite))
 			{
@@ -162,16 +182,16 @@ namespace Mindbox.Quokka
 					Fields.Items
 						.ToDictionary(
 							kvp => kvp.Key,
-							kvp => kvp.Value.ToModelDefinition(errorListener),
+							kvp => kvp.Value.ToModelDefinition(context),
 							StringComparer.InvariantCultureIgnoreCase));
 
 				var methods = new ReadOnlyDictionary<IMethodCallDefinition, IModelDefinition>(
 					Methods.Items
 						.ToDictionary(
 							kvp => kvp.Key.ToMethodCallDefinition(),
-							kvp => kvp.Value.ToModelDefinition(errorListener)));
+							kvp => kvp.Value.ToModelDefinition(context)));
 
-				CheckForFieldsAndMethodsNameConflicts(errorListener);
+				CheckForFieldsAndMethodsNameConflicts(context.ErrorListener);
 
 				if (compiledType == TypeDefinition.Array)
 				{
@@ -181,7 +201,7 @@ namespace Mindbox.Quokka
 						collectionElementDefinition = Merge(
 								$"{FullName}[]",
 								enumerationResultUsageSummaries)
-							.ToModelDefinition(errorListener);
+							.ToModelDefinition(context);
 					}
 					else
 					{
@@ -320,7 +340,7 @@ namespace Mindbox.Quokka
 		
 		public static ICompositeModelDefinition ConvertCollectionToModelDefinition(
 			MemberCollection<string> fields,
-			ISemanticErrorListener errorListener)
+			AnalysisContext context)
 		{
 			return new CompositeModelDefinition(
 				new ReadOnlyDictionary<string, IModelDefinition>(
@@ -328,7 +348,7 @@ namespace Mindbox.Quokka
 						.Where(s => s.Value.IsReadOnly)
 						.ToDictionary(
 							kvp => kvp.Key,
-							kvp => kvp.Value.ToModelDefinition(errorListener),
+							kvp => kvp.Value.ToModelDefinition(context),
 							StringComparer.InvariantCultureIgnoreCase)),
 				null);
 		}

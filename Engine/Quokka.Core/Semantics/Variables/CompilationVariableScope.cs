@@ -80,7 +80,7 @@ namespace Mindbox.Quokka
 			}
 
 			foreach (var item in Variables.Items)
-				item.Value.Compile(context.ErrorListener);
+				item.Value.Compile(context);
 
 			foreach (var childScope in childScopes)
 				childScope.Compile(context);

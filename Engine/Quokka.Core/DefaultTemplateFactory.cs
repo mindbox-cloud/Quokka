@@ -26,9 +26,12 @@ namespace Mindbox.Quokka
 
 		private readonly IReadOnlyCollection<string> nonIdempotentMethodNames;
 
+		private readonly Func<bool> widenAssignedValueTypes;
+
 		public DefaultTemplateFactory(
 			IEnumerable<TemplateFunction> additionalFunctions = null,
-			IEnumerable<string> nonIdempotentMethodNames = null)
+			IEnumerable<string> nonIdempotentMethodNames = null,
+			Func<bool> widenAssignedValueTypes = null)
 		{
 			var functions = new List<TemplateFunction>(Template.GetStandardFunctions());
 			if (additionalFunctions != null)
@@ -36,6 +39,7 @@ namespace Mindbox.Quokka
 			
 			functionRegistry = new FunctionRegistry(functions);
 			this.nonIdempotentMethodNames = nonIdempotentMethodNames?.ToArray() ?? Array.Empty<string>();
+			this.widenAssignedValueTypes = widenAssignedValueTypes;
 		}
 
 		public ITemplate CreateTemplate(string templateText)
@@ -44,7 +48,8 @@ namespace Mindbox.Quokka
 				templateText,
 				functionRegistry,
 				true,
-				nonIdempotentMethodNames: nonIdempotentMethodNames);
+				nonIdempotentMethodNames: nonIdempotentMethodNames,
+				widenAssignedValueTypes: ShouldWidenAssignedValueTypes());
 		}
 
 		public ITemplate TryCreateTemplate(string templateText, out IList<ITemplateError> errors)
@@ -53,7 +58,8 @@ namespace Mindbox.Quokka
 				templateText,
 				functionRegistry,
 				false,
-				nonIdempotentMethodNames: nonIdempotentMethodNames);
+				nonIdempotentMethodNames: nonIdempotentMethodNames,
+				widenAssignedValueTypes: ShouldWidenAssignedValueTypes());
 			errors = template.Errors;
 
 			return errors.Any() ? null : template;
@@ -61,12 +67,22 @@ namespace Mindbox.Quokka
 
 		public IHtmlTemplate CreateHtmlTemplate(string templateText)
 		{
-			return new HtmlTemplate(templateText, functionRegistry, true, nonIdempotentMethodNames);
+			return new HtmlTemplate(
+				templateText,
+				functionRegistry,
+				true,
+				nonIdempotentMethodNames,
+				ShouldWidenAssignedValueTypes());
 		}
 
 		public IHtmlTemplate TryCreateHtmlTemplate(string templateText, out IList<ITemplateError> errors)
 		{
-			var template = new HtmlTemplate(templateText, functionRegistry, false, nonIdempotentMethodNames);
+			var template = new HtmlTemplate(
+				templateText,
+				functionRegistry,
+				false,
+				nonIdempotentMethodNames,
+				ShouldWidenAssignedValueTypes());
 			errors = template.Errors;
 
 			return errors.Any() ? null : template;
@@ -82,6 +98,11 @@ namespace Mindbox.Quokka
 		public ICompositeModelDefinition CombineModelDefinition(IEnumerable<ICompositeModelDefinition> definitions)
 		{
 			return ModelDefinitionTools.CombineModelDefinitions(definitions);
+		}
+
+		private bool ShouldWidenAssignedValueTypes()
+		{
+			return widenAssignedValueTypes?.Invoke() ?? false;
 		}
 	}
 }

@@ -45,7 +45,8 @@ namespace Mindbox.Quokka
 			bool throwIfErrorsEncountered = true,
 			Func<VisitingContext, IQuokkaVisitor<StaticBlock>> staticBlockVisitorCreator = null,
 			IEnumerable<SemanticErrorSubListenerBase> semanticErrorSubListeners = null,
-			IEnumerable<string> nonIdempotentMethodNames = null)
+			IEnumerable<string> nonIdempotentMethodNames = null,
+			bool widenAssignedValueTypes = false)
 		{
 			ArgumentNullException.ThrowIfNull(templateText);
 			ArgumentNullException.ThrowIfNull(functionRegistry);
@@ -80,13 +81,14 @@ namespace Mindbox.Quokka
 						new CompilationVariableScope(),
 						functionRegistry,
 						semanticErrorListener,
-						nonIdempotentMethodNames);
+						nonIdempotentMethodNames,
+						widenAssignedValueTypes);
 
 					compiledTemplateTree.PerformSemanticAnalysis(analysisContext);
 					analysisContext.VariableScope.Compile(analysisContext);
 					requiredModelDefinition = ValueUsageSummary.ConvertCollectionToModelDefinition(
 						analysisContext.VariableScope.Variables,
-						semanticErrorListener);
+						analysisContext);
 				}
 
 				Errors =
