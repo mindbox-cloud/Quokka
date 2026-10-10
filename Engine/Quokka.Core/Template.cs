@@ -19,6 +19,8 @@ using System.Linq;
 using System.Text;
 
 using Antlr4.Runtime;
+using Antlr4.Runtime.Atn;
+using Antlr4.Runtime.Misc;
 
 using Mindbox.Quokka.Abstractions;
 using Mindbox.Quokka.Generated;
@@ -203,6 +205,8 @@ namespace Mindbox.Quokka
 			compiledTemplateTree.CompileGrammarSpecificData(context);
 		}
 
+		internal static Action<string, string> SllParseTreeVerifier;
+
 		private QuokkaParser.TemplateContext ParseTemplateText(string templateText, SyntaxErrorListener syntaxErrorListener)
 		{
 			var inputStream = new CodePointCharStream(templateText);
@@ -210,9 +214,36 @@ namespace Mindbox.Quokka
 
 			var parser = new QuokkaParser(commonTokenStream);
 			parser.RemoveErrorListeners();
+
+			if (TryParseWithSll(parser, out var sllParseTree))
+			{
+				SllParseTreeVerifier?.Invoke(templateText, sllParseTree.ToStringTree(parser));
+				return sllParseTree;
+			}
+
+			commonTokenStream.Seek(0);
+			parser.Reset();
+			parser.ErrorHandler = new DefaultErrorStrategy();
+			parser.Interpreter.PredictionMode = PredictionMode.LL;
 			parser.AddErrorListener(syntaxErrorListener);
 
 			return parser.template();
+		}
+
+		private static bool TryParseWithSll(QuokkaParser parser, out QuokkaParser.TemplateContext parseTree)
+		{
+			parser.Interpreter.PredictionMode = PredictionMode.SLL;
+			parser.ErrorHandler = new BailErrorStrategy();
+			try
+			{
+				parseTree = parser.template();
+				return true;
+			}
+			catch (ParseCanceledException)
+			{
+				parseTree = null;
+				return false;
+			}
 		}
 
 		internal static IEnumerable<TemplateFunction> GetStandardFunctions()

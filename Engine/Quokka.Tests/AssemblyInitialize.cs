@@ -12,6 +12,7 @@
 // // See the License for the specific language governing permissions and
 // // limitations under the License.
 
+using System;
 using System.Globalization;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -24,6 +25,16 @@ namespace Mindbox.Quokka.Tests
         public static void AssemblyInitialize(TestContext context)
         {
             CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
+            Template.SllParseTreeVerifier = QuokkaParsing.VerifySllParseTreeEqualsLl;
+        }
+
+        [AssemblyCleanup]
+        public static void AssemblyCleanup()
+        {
+            Assert.AreEqual(
+                0,
+                QuokkaParsing.SllParseTreeMismatches.Count,
+                string.Join(Environment.NewLine + Environment.NewLine, QuokkaParsing.SllParseTreeMismatches));
         }
     }
 }
