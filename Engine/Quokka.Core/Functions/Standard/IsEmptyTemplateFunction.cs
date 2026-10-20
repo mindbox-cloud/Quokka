@@ -27,13 +27,15 @@ namespace Mindbox.Quokka
 		{
 		}
 		
-		internal override VariableValueStorage Invoke(RenderContext renderContext, IList<VariableValueStorage> argumentsValues)
+		internal override VariableValueStorage Invoke(
+			RenderContext renderContext,
+			DeferredArguments deferredArguments)
 		{
-			if (argumentsValues.Count != 1)
-				throw new InvalidOperationException($"Function that expects 1 argument was passed {argumentsValues.Count}");
+			if (deferredArguments.Count != 1)
+				throw new InvalidOperationException($"Function that expects 1 argument was passed {deferredArguments.Count}");
 
 			var isEmpty = false;
-			var storage = argumentsValues.Single();
+			var storage = deferredArguments.Evaluate(0);
 			if (storage.CheckIfValueIsNull())
 			{
 				isEmpty = true;

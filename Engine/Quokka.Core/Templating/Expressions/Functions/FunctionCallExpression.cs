@@ -54,14 +54,17 @@ namespace Mindbox.Quokka
 			if (function == null)
 				throw new InvalidOperationException($"Function {FunctionName} not found");
 
-			var arguments = argumentValues
-				.Select((argumentValue, argumentNumber) =>
-					argumentValue.GetValue(renderContext, function.Arguments.GetArgument(argumentNumber)))
-				.ToList();
-
+			Exception argumentError = null;
 			try
 			{
-				return function.Invoke(renderContext, arguments);
+				return function.Invoke(
+					renderContext,
+					new DeferredArguments(renderContext, function, argumentValues, ref argumentError));
+			}
+			catch (Exception ex) when (ex == argumentError)
+			{
+				// Errors of argument expressions are reported as they are, not as errors of the function.
+				throw;
 			}
 			catch (FunctionCallRuntimeException targetException)
 			{

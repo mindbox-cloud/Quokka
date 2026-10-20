@@ -45,7 +45,17 @@ namespace Mindbox.Quokka
 		{
 		}
 
-		internal abstract VariableValueStorage Invoke(RenderContext renderContext, IList<VariableValueStorage> argumentsValues);
+		/// <summary>
+		/// Invokes the function. The function decides which of its arguments are evaluated
+		/// and evaluates them with <see cref="DeferredArguments.Evaluate"/> during the invocation.
+		/// An exception thrown by <see cref="DeferredArguments.Evaluate"/> is an error of the argument expression:
+		/// it is reported with the expression and location of the argument only if it leaves the invocation as is,
+		/// an exception that replaces it is reported as an error of the function.
+		/// Each call of <see cref="DeferredArguments.Evaluate"/> evaluates the argument again.
+		/// </summary>
+		internal abstract VariableValueStorage Invoke(
+			RenderContext renderContext,
+			DeferredArguments deferredArguments);
 
 		internal bool Accepts(IReadOnlyList<ArgumentValue> arguments)
 		{

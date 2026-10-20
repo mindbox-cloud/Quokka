@@ -27,9 +27,11 @@ namespace Mindbox.Quokka
 		{
 		}
 
-		internal override VariableValueStorage Invoke(RenderContext renderContext, IList<VariableValueStorage> argumentsValues)
+		internal override VariableValueStorage Invoke(
+			RenderContext renderContext,
+			DeferredArguments deferredArguments)
 		{
-			var collection = argumentsValues[0].GetElements();
+			var collection = deferredArguments.Evaluate(0).GetElements();
 			return new PrimitiveVariableValueStorage(collection.Count());
 		}
 	}

@@ -30,7 +30,7 @@ namespace Mindbox.Quokka
 
 		protected abstract TResult Invoke(TContext context, TArgument value);
 
-		internal sealed override object GetContextScalarInvocationResult(TContext context, IList<VariableValueStorage> argumentsValues)
+		internal sealed override object GetContextScalarInvocationResult(TContext context, IReadOnlyList<VariableValueStorage> argumentsValues)
 		{
 			if (argumentsValues.Count != 1)
 				throw new InvalidOperationException($"Function that expects 1 argument was passed {argumentsValues.Count}");

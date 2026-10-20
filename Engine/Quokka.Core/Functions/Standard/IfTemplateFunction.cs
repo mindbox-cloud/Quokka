@@ -12,24 +12,45 @@
 // // See the License for the specific language governing permissions and
 // // limitations under the License.
 
-using Mindbox.Quokka.Abstractions;
+using System;
 
 namespace Mindbox.Quokka
 {
-	internal class IfTemplateFunction : ScalarTemplateFunction<bool, string, string, string>
+	internal class IfTemplateFunction : TemplateFunction
 	{
+		private static readonly BoolFunctionArgument conditionArgument = new("condition");
+		private static readonly StringFunctionArgument trueValueArgument = new("trueValue");
+		private static readonly StringFunctionArgument falseValueArgument = new("falseValue");
+
 		public IfTemplateFunction()
 			: base(
 				  "if",
-				  new BoolFunctionArgument("condition"), 
-				  new StringFunctionArgument("trueValue"),
-				  new StringFunctionArgument("falseValue"))
+				  new PrimitiveModelDefinition(TypeDefinition.String),
+				  conditionArgument,
+				  trueValueArgument,
+				  falseValueArgument)
 		{
 		}
 
-		public override string Invoke(RenderSettings settings, bool argument1, string argument2, string argument3)
+		/// <summary>
+		/// Evaluates the condition and then only the chosen value. The value that is not chosen isn't evaluated,
+		/// so a null value in it (e.g. the one the condition checks for) can't fail the rendering.
+		/// Fields used in it are still required by the model.
+		/// </summary>
+		internal override VariableValueStorage Invoke(
+			RenderContext renderContext,
+			DeferredArguments deferredArguments)
 		{
-			return argument1 ? argument2 : argument3;
+			if (deferredArguments.Count != 3)
+				throw new InvalidOperationException($"Function that expects 3 arguments was passed {deferredArguments.Count}");
+
+			var condition = conditionArgument.ConvertValue(deferredArguments.Evaluate(0));
+
+			var chosenValue = condition
+				? trueValueArgument.ConvertValue(deferredArguments.Evaluate(1))
+				: falseValueArgument.ConvertValue(deferredArguments.Evaluate(2));
+
+			return new PrimitiveVariableValueStorage(chosenValue);
 		}
 	}
 }
