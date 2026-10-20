@@ -41,7 +41,7 @@ namespace Mindbox.Quokka
 
 		internal override object GetScalarInvocationResult(
 			RenderContext renderContext,
-			IList<VariableValueStorage> argumentsValues)
+			IReadOnlyList<VariableValueStorage> argumentsValues)
 		{
 			if (argumentsValues.Count != 3)
 				throw new InvalidOperationException($"Function that expects 3 arguments was passed {argumentsValues.Count}");

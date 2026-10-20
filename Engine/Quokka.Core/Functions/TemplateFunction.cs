@@ -46,12 +46,11 @@ namespace Mindbox.Quokka
 		}
 
 		/// <summary>
-		/// Invokes the function. An argument is evaluated only when its value provider is called,
-		/// so the function decides which of its arguments are evaluated.
+		/// Invokes the function. The function decides which of its arguments are evaluated.
 		/// </summary>
 		internal abstract VariableValueStorage Invoke(
 			RenderContext renderContext,
-			IReadOnlyList<Func<VariableValueStorage>> argumentValueProviders);
+			DeferredArguments deferredArguments);
 
 		internal bool Accepts(IReadOnlyList<ArgumentValue> arguments)
 		{

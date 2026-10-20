@@ -12,7 +12,6 @@
 // // See the License for the specific language governing permissions and
 // // limitations under the License.
 
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -30,9 +29,9 @@ namespace Mindbox.Quokka
 
 		internal override VariableValueStorage Invoke(
 			RenderContext renderContext,
-			IReadOnlyList<Func<VariableValueStorage>> argumentValueProviders)
+			DeferredArguments deferredArguments)
 		{
-			var collection = argumentValueProviders[0]().GetElements();
+			var collection = deferredArguments.Evaluate(0).GetElements();
 			return new PrimitiveVariableValueStorage(collection.Count());
 		}
 	}

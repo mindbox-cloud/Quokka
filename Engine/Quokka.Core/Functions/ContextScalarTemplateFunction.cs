@@ -33,11 +33,11 @@ namespace Mindbox.Quokka
 		{
 		}
 
-		internal abstract object GetContextScalarInvocationResult(TContext context, IList<VariableValueStorage> argumentsValues);
+		internal abstract object GetContextScalarInvocationResult(TContext context, IReadOnlyList<VariableValueStorage> argumentsValues);
 
 		internal sealed override object GetScalarInvocationResult(
 			RenderContext renderContext, 
-			IList<VariableValueStorage> argumentsValues)
+			IReadOnlyList<VariableValueStorage> argumentsValues)
 		{
 			var contextValue = renderContext.GetCallContextValue<TContext>();
 

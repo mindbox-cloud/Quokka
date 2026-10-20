@@ -78,7 +78,7 @@ namespace Mindbox.Quokka.Tests
 
 			internal override object GetScalarInvocationResult(
 				RenderContext renderContext,
-				IList<VariableValueStorage> argumentsValues)
+				IReadOnlyList<VariableValueStorage> argumentsValues)
 			{
 				throw new Exception("Error");
 			}

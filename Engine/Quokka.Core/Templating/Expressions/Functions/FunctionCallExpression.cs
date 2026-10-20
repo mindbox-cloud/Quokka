@@ -55,16 +55,11 @@ namespace Mindbox.Quokka
 			if (function == null)
 				throw new InvalidOperationException($"Function {FunctionName} not found");
 
-			var argumentValueProviders = argumentValues
-				.Select((argumentValue, argumentNumber) => (Func<VariableValueStorage>)(() =>
-					EvaluateArgument(renderContext, argumentValue, function.Arguments.GetArgument(argumentNumber))))
-				.ToList();
-
 			try
 			{
-				return function.Invoke(renderContext, argumentValueProviders);
+				return function.Invoke(renderContext, new DeferredArguments(renderContext, function, argumentValues));
 			}
-			catch (ArgumentEvaluationException argumentException)
+			catch (DeferredArguments.EvaluationException argumentException)
 			{
 				// Errors of argument expressions are reported as they are, not as errors of the function.
 				ExceptionDispatchInfo.Capture(argumentException.InnerException).Throw();
@@ -87,33 +82,6 @@ namespace Mindbox.Quokka
 					source.Text ?? FunctionName,
 					source.Location,
 					ex);
-			}
-		}
-
-		private static VariableValueStorage EvaluateArgument(
-			RenderContext renderContext,
-			ArgumentValue argumentValue,
-			TemplateFunctionArgument templateFunctionArgument)
-		{
-			try
-			{
-				return argumentValue.GetValue(renderContext, templateFunctionArgument);
-			}
-			catch (Exception ex)
-			{
-				throw new ArgumentEvaluationException(ex);
-			}
-		}
-
-		/// <summary>
-		/// Carries an error of an argument expression through the function invocation,
-		/// so that it isn't reported as an error of the function itself.
-		/// </summary>
-		private sealed class ArgumentEvaluationException : Exception
-		{
-			public ArgumentEvaluationException(Exception inner)
-				: base(inner.Message, inner)
-			{
 			}
 		}
 

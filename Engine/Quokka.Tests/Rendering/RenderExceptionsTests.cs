@@ -127,7 +127,7 @@ namespace Mindbox.Quokka
 
 		    internal override object GetScalarInvocationResult(
 				RenderContext renderContext,
-				IList<VariableValueStorage> argumentsValues)
+				IReadOnlyList<VariableValueStorage> argumentsValues)
 		    {
 			    throw new Exception("Error");
 		    }
@@ -142,7 +142,7 @@ namespace Mindbox.Quokka
 
 			internal override object GetScalarInvocationResult(
 				RenderContext renderContext,
-				IList<VariableValueStorage> argumentsValues)
+				IReadOnlyList<VariableValueStorage> argumentsValues)
 			{
 				throw new FunctionCallRuntimeException("Argument must be positive", null);
 			}

@@ -87,10 +87,10 @@ namespace Mindbox.Quokka
 
 		internal override VariableValueStorage Invoke(
 			RenderContext renderContext,
-			IReadOnlyList<Func<VariableValueStorage>> argumentValueProviders)
+			DeferredArguments deferredArguments)
 		{
-			var collectionElements = argumentValueProviders[0]().GetElements().ToList();
-			int rowSize = Convert.ToInt32(argumentValueProviders[1]().GetPrimitiveValue());
+			var collectionElements = deferredArguments.Evaluate(0).GetElements().ToList();
+			int rowSize = Convert.ToInt32(deferredArguments.Evaluate(1).GetPrimitiveValue());
 
 			// This must be validated at compile-time so it's ok to just die here.
 			if (rowSize < 1)

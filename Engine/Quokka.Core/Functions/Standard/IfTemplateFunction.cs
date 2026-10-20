@@ -13,28 +13,16 @@
 // // limitations under the License.
 
 using System;
-using System.Collections.Generic;
 
 namespace Mindbox.Quokka
 {
 	internal class IfTemplateFunction : TemplateFunction
 	{
-		private readonly BoolFunctionArgument conditionArgument;
-		private readonly StringFunctionArgument trueValueArgument;
-		private readonly StringFunctionArgument falseValueArgument;
+		private static readonly BoolFunctionArgument conditionArgument = new("condition");
+		private static readonly StringFunctionArgument trueValueArgument = new("trueValue");
+		private static readonly StringFunctionArgument falseValueArgument = new("falseValue");
 
 		public IfTemplateFunction()
-			: this(
-				  new BoolFunctionArgument("condition"),
-				  new StringFunctionArgument("trueValue"),
-				  new StringFunctionArgument("falseValue"))
-		{
-		}
-
-		private IfTemplateFunction(
-			BoolFunctionArgument conditionArgument,
-			StringFunctionArgument trueValueArgument,
-			StringFunctionArgument falseValueArgument)
 			: base(
 				  "if",
 				  new PrimitiveModelDefinition(TypeDefinition.String),
@@ -42,24 +30,25 @@ namespace Mindbox.Quokka
 				  trueValueArgument,
 				  falseValueArgument)
 		{
-			this.conditionArgument = conditionArgument;
-			this.trueValueArgument = trueValueArgument;
-			this.falseValueArgument = falseValueArgument;
 		}
 
 		/// <summary>
-		/// Evaluates the condition and then only the chosen value, so that the value that is not chosen
-		/// can't fail the rendering (e.g. by using a null value the condition checks for).
+		/// Evaluates the condition and then only the chosen value. The value that is not chosen isn't evaluated,
+		/// so a null value in it (e.g. the one the condition checks for) can't fail the rendering.
+		/// Fields used in it are still required by the model.
 		/// </summary>
 		internal override VariableValueStorage Invoke(
 			RenderContext renderContext,
-			IReadOnlyList<Func<VariableValueStorage>> argumentValueProviders)
+			DeferredArguments deferredArguments)
 		{
-			var condition = conditionArgument.ConvertValue(argumentValueProviders[0]());
+			if (deferredArguments.Count != 3)
+				throw new InvalidOperationException($"Function that expects 3 arguments was passed {deferredArguments.Count}");
+
+			var condition = conditionArgument.ConvertValue(deferredArguments.Evaluate(0));
 
 			var chosenValue = condition
-				? trueValueArgument.ConvertValue(argumentValueProviders[1]())
-				: falseValueArgument.ConvertValue(argumentValueProviders[2]());
+				? trueValueArgument.ConvertValue(deferredArguments.Evaluate(1))
+				: falseValueArgument.ConvertValue(deferredArguments.Evaluate(2));
 
 			return new PrimitiveVariableValueStorage(chosenValue);
 		}

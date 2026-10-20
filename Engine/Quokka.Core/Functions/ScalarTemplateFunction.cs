@@ -14,7 +14,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Mindbox.Quokka
 {
@@ -46,15 +45,15 @@ namespace Mindbox.Quokka
 
 		internal abstract object GetScalarInvocationResult(
 			RenderContext renderContext,
-			IList<VariableValueStorage> argumentsValues);
+			IReadOnlyList<VariableValueStorage> argumentsValues);
 
 		internal sealed override VariableValueStorage Invoke(
 			RenderContext renderContext,
-			IReadOnlyList<Func<VariableValueStorage>> argumentValueProviders)
+			DeferredArguments deferredArguments)
 		{
-			var argumentsValues = argumentValueProviders
-				.Select(argumentValueProvider => argumentValueProvider())
-				.ToList();
+			var argumentsValues = new VariableValueStorage[deferredArguments.Count];
+			for (var argumentNumber = 0; argumentNumber < argumentsValues.Length; argumentNumber++)
+				argumentsValues[argumentNumber] = deferredArguments.Evaluate(argumentNumber);
 
 			return new PrimitiveVariableValueStorage(GetScalarInvocationResult(renderContext, argumentsValues));
 		}
