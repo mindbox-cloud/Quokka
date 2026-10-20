@@ -91,6 +91,29 @@ namespace Mindbox.Quokka.Tests
 			AssertFunctionFailed(exception, "failWithText('a')");
 		}
 
+		[TestMethod]
+		public void Render_FunctionHandlesArgumentError_ReceivesTheErrorOfTheArgument()
+		{
+			var fallbackFunction = new FallbackFunction();
+			var template = new DefaultTemplateFactory(new[] { fallbackFunction })
+				.CreateTemplate("${ fallback(formatDecimal(1 / Zero, '0'), 'none') }");
+
+			var result = template.Render(new CompositeModelValue(new ModelField("Zero", 0m)));
+
+			Assert.AreEqual("none", result);
+			Assert.AreEqual(typeof(ArithmeticOperationException), fallbackFunction.CaughtExceptionType);
+		}
+
+		[TestMethod]
+		public void Render_FunctionReplacesArgumentError_ReportsTheFunctionError()
+		{
+			var exception = CatchRenderError(
+				CreateTemplate("${ replaceError(formatDecimal(1 / Zero, '0')) }"),
+				new CompositeModelValue(new ModelField("Zero", 0m)));
+
+			AssertFunctionFailed(exception, "replaceError(formatDecimal(1 / Zero, '0'))");
+		}
+
 		private static ITemplate CreateTemplate(string templateText)
 		{
 			return new DefaultTemplateFactory(
@@ -98,7 +121,8 @@ namespace Mindbox.Quokka.Tests
 					{
 						new FailingIntegerFunction(),
 						new FailingTextFunction(),
-						new RejectingTextFunction()
+						new RejectingTextFunction(),
+						new ErrorReplacingFunction()
 					})
 				.CreateTemplate(templateText);
 		}
@@ -172,6 +196,56 @@ namespace Mindbox.Quokka.Tests
 			public override string Invoke(RenderSettings settings, string value)
 			{
 				throw new FunctionCallRuntimeException("Text is rejected", null);
+			}
+		}
+
+		private class FallbackFunction : TemplateFunction
+		{
+			public Type CaughtExceptionType { get; private set; }
+
+			public FallbackFunction()
+				: base(
+					"fallback",
+					new PrimitiveModelDefinition(TypeDefinition.String),
+					new StringFunctionArgument("value"),
+					new StringFunctionArgument("fallbackValue"))
+			{
+			}
+
+			internal override VariableValueStorage Invoke(RenderContext renderContext, DeferredArguments deferredArguments)
+			{
+				try
+				{
+					return deferredArguments.Evaluate(0);
+				}
+				catch (Exception ex)
+				{
+					CaughtExceptionType = ex.GetType();
+					return deferredArguments.Evaluate(1);
+				}
+			}
+		}
+
+		private class ErrorReplacingFunction : TemplateFunction
+		{
+			public ErrorReplacingFunction()
+				: base(
+					"replaceError",
+					new PrimitiveModelDefinition(TypeDefinition.String),
+					new StringFunctionArgument("value"))
+			{
+			}
+
+			internal override VariableValueStorage Invoke(RenderContext renderContext, DeferredArguments deferredArguments)
+			{
+				try
+				{
+					return deferredArguments.Evaluate(0);
+				}
+				catch (Exception ex)
+				{
+					throw new InvalidOperationException("Value is not available", ex);
+				}
 			}
 		}
 	}

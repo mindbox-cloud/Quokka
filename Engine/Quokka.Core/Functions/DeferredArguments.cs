@@ -19,29 +19,34 @@ namespace Mindbox.Quokka
 {
 	/// <summary>
 	/// Arguments of a function call. An argument is evaluated only when <see cref="Evaluate"/> is called,
-	/// so the function decides which of its arguments are evaluated.
+	/// so the function decides which of its arguments are evaluated. It is a ref struct, so the arguments
+	/// can't be evaluated after the invocation of the function, where their errors couldn't be reported.
 	/// </summary>
-	internal sealed class DeferredArguments
+	internal readonly ref struct DeferredArguments
 	{
 		private readonly RenderContext renderContext;
 		private readonly TemplateFunction function;
 		private readonly IReadOnlyList<ArgumentValue> argumentValues;
+		private readonly ref Exception argumentError;
 
+		/// <param name="argumentError">Receives the last error of an argument expression,
+		/// so that the caller can tell it from an error of the function itself.</param>
 		public DeferredArguments(
 			RenderContext renderContext,
 			TemplateFunction function,
-			IReadOnlyList<ArgumentValue> argumentValues)
+			IReadOnlyList<ArgumentValue> argumentValues,
+			ref Exception argumentError)
 		{
 			this.renderContext = renderContext;
 			this.function = function;
 			this.argumentValues = argumentValues;
+			this.argumentError = ref argumentError;
 		}
 
 		public int Count => argumentValues.Count;
 
 		/// <summary>
-		/// Evaluates the argument. An error of the argument expression is thrown as <see cref="EvaluationException"/>,
-		/// so that it isn't reported as an error of the function itself.
+		/// Evaluates the argument. Each call evaluates it again.
 		/// </summary>
 		public VariableValueStorage Evaluate(int argumentNumber)
 		{
@@ -54,18 +59,8 @@ namespace Mindbox.Quokka
 			}
 			catch (Exception ex)
 			{
-				throw new EvaluationException(ex);
-			}
-		}
-
-		/// <summary>
-		/// Carries an error of an argument expression through the function invocation.
-		/// </summary>
-		internal sealed class EvaluationException : Exception
-		{
-			public EvaluationException(Exception inner)
-				: base(inner.Message, inner)
-			{
+				argumentError = ex;
+				throw;
 			}
 		}
 	}

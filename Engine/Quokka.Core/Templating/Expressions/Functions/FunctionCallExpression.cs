@@ -15,7 +15,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.ExceptionServices;
 
 namespace Mindbox.Quokka
 {
@@ -55,14 +54,16 @@ namespace Mindbox.Quokka
 			if (function == null)
 				throw new InvalidOperationException($"Function {FunctionName} not found");
 
+			Exception argumentError = null;
 			try
 			{
-				return function.Invoke(renderContext, new DeferredArguments(renderContext, function, argumentValues));
+				return function.Invoke(
+					renderContext,
+					new DeferredArguments(renderContext, function, argumentValues, ref argumentError));
 			}
-			catch (DeferredArguments.EvaluationException argumentException)
+			catch (Exception ex) when (ex == argumentError)
 			{
 				// Errors of argument expressions are reported as they are, not as errors of the function.
-				ExceptionDispatchInfo.Capture(argumentException.InnerException).Throw();
 				throw;
 			}
 			catch (FunctionCallRuntimeException targetException)
