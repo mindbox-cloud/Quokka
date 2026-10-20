@@ -47,6 +47,25 @@ namespace Mindbox.Quokka
 
 		internal abstract VariableValueStorage Invoke(RenderContext renderContext, IList<VariableValueStorage> argumentsValues);
 
+		/// <summary>
+		/// Invokes the function with arguments that are evaluated only when requested.
+		/// By default every argument is evaluated in order before the function is invoked.
+		/// </summary>
+		/// <remarks>
+		/// Functions that control which of their arguments are evaluated (like <c>if</c>) override this method.
+		/// This mechanism isn't available for third-party functions.
+		/// </remarks>
+		internal virtual VariableValueStorage InvokeWithDeferredArguments(
+			RenderContext renderContext,
+			IReadOnlyList<Func<VariableValueStorage>> argumentValueProviders)
+		{
+			var argumentsValues = new List<VariableValueStorage>(argumentValueProviders.Count);
+			foreach (var argumentValueProvider in argumentValueProviders)
+				argumentsValues.Add(argumentValueProvider());
+
+			return Invoke(renderContext, argumentsValues);
+		}
+
 		internal bool Accepts(IReadOnlyList<ArgumentValue> arguments)
 		{
 			// only overload by arguments count is currently supported
