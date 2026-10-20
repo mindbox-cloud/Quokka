@@ -51,10 +51,6 @@ namespace Mindbox.Quokka
 		/// Invokes the function with arguments that are evaluated only when requested.
 		/// By default every argument is evaluated in order before the function is invoked.
 		/// </summary>
-		/// <remarks>
-		/// Functions that control which of their arguments are evaluated (like <c>if</c>) override this method.
-		/// This mechanism isn't available for third-party functions.
-		/// </remarks>
 		internal virtual VariableValueStorage InvokeWithDeferredArguments(
 			RenderContext renderContext,
 			IReadOnlyList<Func<VariableValueStorage>> argumentValueProviders)
