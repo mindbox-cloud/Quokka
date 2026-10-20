@@ -62,7 +62,7 @@ namespace Mindbox.Quokka
 
 			try
 			{
-				return function.InvokeWithDeferredArguments(renderContext, argumentValueProviders);
+				return function.Invoke(renderContext, argumentValueProviders);
 			}
 			catch (ArgumentEvaluationException argumentException)
 			{

@@ -15,35 +15,43 @@
 using System;
 using System.Collections.Generic;
 
-using Mindbox.Quokka.Abstractions;
-
 namespace Mindbox.Quokka
 {
-	internal class IfTemplateFunction : ScalarTemplateFunction<bool, string, string, string>
+	internal class IfTemplateFunction : TemplateFunction
 	{
-		private static readonly BoolFunctionArgument conditionArgument = new("condition");
-		private static readonly StringFunctionArgument trueValueArgument = new("trueValue");
-		private static readonly StringFunctionArgument falseValueArgument = new("falseValue");
+		private readonly BoolFunctionArgument conditionArgument;
+		private readonly StringFunctionArgument trueValueArgument;
+		private readonly StringFunctionArgument falseValueArgument;
 
 		public IfTemplateFunction()
+			: this(
+				  new BoolFunctionArgument("condition"),
+				  new StringFunctionArgument("trueValue"),
+				  new StringFunctionArgument("falseValue"))
+		{
+		}
+
+		private IfTemplateFunction(
+			BoolFunctionArgument conditionArgument,
+			StringFunctionArgument trueValueArgument,
+			StringFunctionArgument falseValueArgument)
 			: base(
 				  "if",
+				  new PrimitiveModelDefinition(TypeDefinition.String),
 				  conditionArgument,
 				  trueValueArgument,
 				  falseValueArgument)
 		{
-		}
-
-		public override string Invoke(RenderSettings settings, bool argument1, string argument2, string argument3)
-		{
-			return argument1 ? argument2 : argument3;
+			this.conditionArgument = conditionArgument;
+			this.trueValueArgument = trueValueArgument;
+			this.falseValueArgument = falseValueArgument;
 		}
 
 		/// <summary>
 		/// Evaluates the condition and then only the chosen value, so that the value that is not chosen
 		/// can't fail the rendering (e.g. by using a null value the condition checks for).
 		/// </summary>
-		internal override VariableValueStorage InvokeWithDeferredArguments(
+		internal override VariableValueStorage Invoke(
 			RenderContext renderContext,
 			IReadOnlyList<Func<VariableValueStorage>> argumentValueProviders)
 		{
