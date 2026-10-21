@@ -39,20 +39,20 @@ namespace Mindbox.Quokka.Tests
 		public void Render_TableRows_ArgumentFails_ReportsTheArgumentError()
 		{
 			var exception = CatchRenderError(
-				CreateTemplate("@{ for row in tableRows(Collection, fail(2)) }row@{ end for }"),
+				CreateTemplate("@{ for row in tableRows(Collection, failInt(2)) }row@{ end for }"),
 				CreateCollectionModel());
 
-			AssertFunctionFailed(exception, "fail(2)");
+			AssertFunctionFailed(exception, "failInt(2)");
 		}
 
 		[TestMethod]
 		public void Render_Count_ArgumentFails_ReportsTheArgumentError()
 		{
 			var exception = CatchRenderError(
-				CreateTemplate("${ count(tableRows(Collection, fail(2))) }"),
+				CreateTemplate("${ count(tableRows(Collection, failInt(2))) }"),
 				CreateCollectionModel());
 
-			AssertFunctionFailed(exception, "fail(2)");
+			AssertFunctionFailed(exception, "failInt(2)");
 		}
 
 		[TestMethod]
@@ -163,7 +163,7 @@ namespace Mindbox.Quokka.Tests
 		private class FailingIntegerFunction : ScalarTemplateFunction<int, int>
 		{
 			public FailingIntegerFunction()
-				: base("fail", new IntegerFunctionArgument("value"))
+				: base("failInt", new IntegerFunctionArgument("value"))
 			{
 			}
 
