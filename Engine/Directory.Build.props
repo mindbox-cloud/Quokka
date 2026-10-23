@@ -16,6 +16,6 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <VersionPrefix>8.10.0</VersionPrefix>
+        <VersionPrefix>8.11.0</VersionPrefix>
     </PropertyGroup>
 </Project>
