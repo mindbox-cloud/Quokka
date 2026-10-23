@@ -30,7 +30,7 @@ namespace Mindbox.Quokka
 
 		public override bool Invoke(RenderSettings settings, string value, string search)
 		{
-			if (value == null || string.IsNullOrWhiteSpace(search))
+			if (value == null || search == null)
 				return false;
 
 			return value.Contains(search, StringComparison.OrdinalIgnoreCase);

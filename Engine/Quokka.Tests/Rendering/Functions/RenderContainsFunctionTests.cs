@@ -31,9 +31,12 @@ public class RenderContainsFunctionTests
 	}
 
 	[TestMethod]
-	public void U2_Contains_FindsSubstring()
+	[DataRow("english for adults", "english")]
+	[DataRow("высшая математика", "математика")]
+	[DataRow("Course for Adults", "adults")]
+	public void U2_Contains_FindsSubstring(string value, string search)
 	{
-		Assert.AreEqual(true.ToString(), Render("english for adults", "english"));
+		Assert.AreEqual(true.ToString(), Render(value, search));
 	}
 
 	[TestMethod]
@@ -56,6 +59,18 @@ public class RenderContainsFunctionTests
 	}
 
 	[TestMethod]
+	public void U4_Contains_NullValueInsideIfBlock_HidesBlockAndRendersRest()
+	{
+		var template = new Template("@{ if contains(Tariff, \"математика\") }block|@{ end if }tail");
+
+		var result = template.Render(
+			new CompositeModelValue(
+				new ModelField("Tariff", new PrimitiveModelValue(null))));
+
+		Assert.AreEqual("tail", result);
+	}
+
+	[TestMethod]
 	[DataRow("")]
 	[DataRow("   ")]
 	public void U5_Contains_EmptyOrWhitespaceValue_ReturnsFalse(string value)
@@ -64,11 +79,14 @@ public class RenderContainsFunctionTests
 	}
 
 	[TestMethod]
-	[DataRow("")]
-	[DataRow("   ")]
-	public void U6_Contains_EmptyOrWhitespaceSearch_ReturnsFalse(string search)
+	[DataRow("english for adults", "", true)]
+	[DataRow("", "", true)]
+	[DataRow("english for adults", " ", true)]
+	[DataRow("english for adults", "   ", false)]
+	[DataRow("english   for adults", "   ", true)]
+	public void U6_Contains_EmptyOrWhitespaceSearch_FoundLikeAnySubstring(string value, string search, bool expected)
 	{
-		Assert.AreEqual(false.ToString(), Render("english for adults", search));
+		Assert.AreEqual(expected.ToString(), Render(value, search));
 	}
 
 	[TestMethod]
@@ -118,14 +136,14 @@ public class RenderContainsFunctionTests
 	}
 
 	[TestMethod]
-	public void Property_Contains_FindsAnyInsertedNonBlankSubstringIgnoringCase()
+	public void Property_Contains_FindsAnyInsertedSubstringIgnoringCase()
 	{
 		var random = new Random(5730);
 
 		for (var i = 0; i < 500; i++)
 		{
 			var prefix = RandomText(random, 0, 12);
-			var search = RandomNonBlankText(random);
+			var search = RandomText(random, 1, 5);
 			var suffix = RandomText(random, 0, 12);
 
 			Assert.AreEqual(
@@ -136,16 +154,15 @@ public class RenderContainsFunctionTests
 	}
 
 	[TestMethod]
-	public void Property_Contains_BlankSearch_AlwaysFalse()
+	public void Property_Contains_EmptySearch_AlwaysFound()
 	{
 		var random = new Random(5730);
 
 		for (var i = 0; i < 500; i++)
 		{
 			var value = RandomText(random, 0, 20);
-			var blank = new string(' ', random.Next(0, 4));
 
-			Assert.AreEqual(false.ToString(), Render(value, blank), $"value: '{value}'");
+			Assert.AreEqual(true.ToString(), Render(value, string.Empty), $"value: '{value}'");
 		}
 	}
 
@@ -165,17 +182,5 @@ public class RenderContainsFunctionTests
 	{
 		var length = random.Next(minLength, maxLength + 1);
 		return new string(Enumerable.Range(0, length).Select(_ => Alphabet[random.Next(Alphabet.Length)]).ToArray());
-	}
-
-	private static string RandomNonBlankText(Random random)
-	{
-		string text;
-		do
-		{
-			text = RandomText(random, 1, 5);
-		}
-		while (string.IsNullOrWhiteSpace(text));
-
-		return text;
 	}
 }
