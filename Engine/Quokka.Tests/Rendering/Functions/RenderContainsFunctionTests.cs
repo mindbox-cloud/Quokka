@@ -60,7 +60,7 @@ public class RenderContainsFunctionTests
 	[DataRow("   ")]
 	public void U5_Contains_EmptyOrWhitespaceValue_ReturnsFalse(string value)
 	{
-		Assert.AreEqual(false.ToString(), Render(value, " "));
+		Assert.AreEqual(false.ToString(), Render(value, "english"));
 	}
 
 	[TestMethod]
