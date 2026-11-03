@@ -26,6 +26,8 @@ namespace Mindbox.Quokka
 
 		private readonly IReadOnlyCollection<string> nonIdempotentMethodNames;
 
+		public IReadOnlyList<TemplateFunction> Functions { get; }
+
 		public DefaultTemplateFactory(
 			IEnumerable<TemplateFunction> additionalFunctions = null,
 			IEnumerable<string> nonIdempotentMethodNames = null)
@@ -34,6 +36,7 @@ namespace Mindbox.Quokka
 			if (additionalFunctions != null)
 				functions.AddRange(additionalFunctions);
 			
+			Functions = functions.AsReadOnly();
 			functionRegistry = new FunctionRegistry(functions);
 			this.nonIdempotentMethodNames = nonIdempotentMethodNames?.ToArray() ?? Array.Empty<string>();
 		}
