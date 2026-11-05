@@ -14,6 +14,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Mindbox.Quokka
 {
@@ -22,6 +23,15 @@ namespace Mindbox.Quokka
 		internal ArgumentList Arguments { get; }
 		public IModelDefinition ReturnValueDefinition { get; }
 		public string Name { get; }
+
+		public IReadOnlyList<TemplateFunctionParameter> Parameters =>
+			Arguments.Arguments
+				.Append(Arguments.VariadicArgument)
+				.Where(argument => argument != null)
+				.Select(argument => new TemplateFunctionParameter(argument.Name, argument.Type, argument.AllowsNull))
+				.ToArray();
+
+		public int? VariadicMinCount => Arguments.VariadicMinCount;
 
 		protected TemplateFunction(
 			string name,

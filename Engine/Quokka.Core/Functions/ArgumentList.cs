@@ -64,6 +64,10 @@ namespace Mindbox.Quokka
 			}
 		}
 
+		internal virtual TemplateFunctionArgument VariadicArgument => null;
+
+		internal virtual int? VariadicMinCount => null;
+
 		internal virtual bool CheckArgumentNumber(IReadOnlyList<ArgumentValue> arguments)
 		{
 			return Arguments.Count == arguments.Count;
